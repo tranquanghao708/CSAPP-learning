@@ -115,3 +115,18 @@ Như thế công thức này dùng để tính giá trị của dãy nhị phân
 Và chúng ta tiến hành thực hiện tính toán : `2**(N-1)-1 = 7` và giá trị 7 này chính là giá trị lớn nhất của hệ binary 4 bit
 
 ![alt text](image6.png)
+
+vậy còn giá trị nhỏ nhất thì sao?
+
+- Giá trị nhỏ nhất là phần mà bit MSB chạm 1, nghĩa là ta có `0111` là phần bit lớn nhất của số dương theo hệ có dấu signed rồi nhưng ta cộng 1 bit nữa là `1000` MSB = 1 , số âm là `-8` thì đó chính xác là phần nhỏ nhất rồi. Tương đương với công thức `-2**(N-1)`
+
+vậy từ các phép tính trên thì miền giá trị là `[-8 , 7]` theo số nguyên
+
+một vài lưu ý mà tôi được thẩm từ cuốn CSAPP là, miền giá trị theo hệ signed mã bù hai là **không đối xứng** ví dụ tôi có:
+
+| miền giá trị 4 bit | -8 | -7 | -6 | -5 | -4 | -3 | -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|--------------------|----|----|----|----|----|----|----|----|---|---|---|---|---|---|---|---|
+
+tất nhiên theo bản, bạn thấy nó có 8 số âm và 8 số không âm nên là `TMin = -8` và `TMax = 7` vì sao bạn thấy có 8 số âm và không âm đều đều cả hai nhưng TMin và TMax lại có sự chênh lệch là 1 đơn vị ?
+
+- Bạn thấy số 0? đó chính là lý do lớn nhất, số 0 theo hệ không âm nhưng lại không góp phần làm tăng giá trị bên dãy số dương nên TMax bị trừ 1
