@@ -35,7 +35,7 @@ với đoạn nhị phân 1 là 1001001100010 ta lập bảng
 
 | Bit vị trí | 12 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
 |------------|----|----|----|---|---|---|---|---|---|---|---|---|---|
-| Giá trị    | 1  | 0  | 0  | 1 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 1 | 0 |
+| bit    | 1  | 0  | 0  | 1 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 1 | 0 |
 
 
 Trọng số lần lượt các bit : -4096 (Số MSB) , 2048, 1024... 
@@ -53,3 +53,5 @@ Trọng số lần lượt các bit : -4096 (Số MSB) , 2048, 1024...
 Ví dụ : `2**12 = -4096` (do là signed thì MSB = 1 ta phải thêm âm vô) , bằng chứng cho kết quả :
 
 ![alt text](image1.png)
+
+- Để tiết kiệm thời gian, tôi chỉ lấy những bit 
