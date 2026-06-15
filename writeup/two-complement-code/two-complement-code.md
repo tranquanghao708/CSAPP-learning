@@ -2,13 +2,17 @@
 
 **mục lục**
 
-- 1.Mã bù hai
+- 1.[Mã bù hai](#mã-bù-hai)
 
 	- 1.1.Mã bù hai là gì ?
 
-	- 1.2. Cách đọc bit parrent sang số nguyên ?
+	- 1.2.Cách đọc bit parrent sang số nguyên ?
 
-	- 1.3.
+	- 1.3.Miền giá trị biểu diễn được
+
+	- 1.4.Chuyển đổi giữa unsigned và signed
+
+	- 1.5.Vì sao gọi là mã bù hai?
 
 - 2.Tràn số
 
