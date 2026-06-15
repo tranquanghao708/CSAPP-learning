@@ -108,5 +108,10 @@ tính tổng lại : `1024 + 512 + 128 + 64 + 4 = 1732`
 
 	- `N` : là số lượng bit ví dụ ta muốn tính 4 bit như `0000 -> 1111` thì ta đưa số 4 vào
 
-	- `-1` : bởi vì trừ 1 đi là để tránh các số nó bị tràn sang MSB và làm cho `MSB = 1` điều đó là số âm
+	- `-1` : bởi vì ta đếm từ số 0, nên N bit tạo ra hai giá trị khác nhau chênh lệch là 1.Nên giá trị lớn nhất của dãy binary là 2**N-1
 
+Như thế công thức này dùng để tính giá trị của dãy nhị phân không dấu unsigned là `1111` nhưng chúng ta muốn tính dãy nhị phân có dấu signed là `0111` mà ? vậy thì chúng ta thực hiện trừ 1 thêm đi cho phép lũy thừa, phép toán chỉ xem và tính các dãy bit còn lại và không tính bit MSB , kết quả của biểu thức sẽ như vậy : `2**(N-1)-1`
+
+Và chúng ta tiến hành thực hiện tính toán : `2**(N-1)-1 = 7` và giá trị 7 này chính là giá trị lớn nhất của hệ binary 4 bit
+
+![alt text](image6.png)
