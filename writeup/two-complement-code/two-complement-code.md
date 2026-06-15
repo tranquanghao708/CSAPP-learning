@@ -18,7 +18,7 @@
 
 # Mã bù hai
 
-**1.1.Mã bù hai là gì và nguyên lý?**
+**1.1.Mã bù hai là gì?**
 
 - Mã bù hai Bit MSB có trọng số `−2**(w−1)` , các bit còn lại có trọng số dương như bình thường
 
@@ -93,3 +93,20 @@ từ bảng ta có làn lượt là : `1024 , 512 , 128 , 64 và 4`
 tính tổng lại : `1024 + 512 + 128 + 64 + 4 = 1732`
 
 ![alt text](image5.png)
+
+**1.3.Miền giá trị biểu diễn được**
+
+- Miền gía trị biểu diễn được là định nghĩa một dãy binary nó có thể chứa trọng số thấp nhất (MIN) và trọng số cao nhất (MAX) là bao nhiêu tính từ âm đến dương. Ví dụ với một dãy binary 4 bit :
+
+4 bit có miền giá trị âm `1000` MSB = 1, tới dương `0111` MSB = 0 và để biết số nguyên nhỏ nhất và cao nhất thì ta có hai cách :
+
+- 1. là chúng ta đếm thủ công hoặc là dịch binary ra ở các trang website, hoặc là dùng lệnh để dịch ra số nguyên
+
+- 2. là chúng ta sử dụng biểu thức huyền thoại mà kiến trúc máy tính, CSAPP thường hay đề cập tới. Tính số nguyên cao nhất của binary 4 bit, ở đây tôi dùng công thức huyền thoại là `2**N-1`, nói sơ qua về công thức này thì:
+
+	- `2` : là hệ cơ số của binary
+
+	- `N` : là số lượng bit ví dụ ta muốn tính 4 bit như `0000 -> 1111` thì ta đưa số 4 vào
+
+	- `-1` : bởi vì trừ 1 đi là để tránh các số nó bị tràn sang MSB và làm cho `MSB = 1` điều đó là số âm
+
