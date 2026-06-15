@@ -14,7 +14,9 @@
 
 **1.1.Mã bù hai là gì và nguyên lý?**
 
-- Mã bù hai là cách biểu diễn signed của trọng số MSB luôn là số âm. Nghĩa là, nếu `MSB = 1` đó là số âm còn `MSB = 0` đó là số dương
+- Mã bù hai Bit MSB có trọng số `−2**(w−1)` , các bit còn lại có trọng số dương như bình thường
+
+- là cách biểu diễn signed của trọng số MSB luôn là số âm. Nghĩa là, nếu `MSB = 1` đó là số âm còn `MSB = 0` thuộc miền không âm (số 0) hoặc dương
 
 **nguyên lý**
 
@@ -24,7 +26,7 @@ chúng ta thấy có cái `SIGMA`, đó là công thức tính giá trị của 
 
 - Do tôi không biết tính sigma, đơn giản là tôi chưa học tới chương trình đó nên tôi sẽ thực hiện tính nhị phân theo cái cách mà tôi được học như sau :
 
-giả sử tôi có một đoạn nhị phân signed có MSB là 1 : `1001001100010`
+giả sử tôi có một đoạn nhị phân 13 bit signed có MSB là 1 : `1001001100010`
 
 và một đoạn nhị phân signed nhưng lại có MSB là 0 : `011011000100`
 
@@ -64,4 +66,6 @@ Ví dụ : `2**12 = -4096` (do là signed thì MSB = 1 ta phải thêm âm vô) 
 
 ta có lần lượt các trọng số bit 1 như sau : `-4096 , 512 , 64 , 32 , 2`
 
-Và ta tiến hành cộng chúng lại để ra giá trị của chúng : `(-4096) + 512 + 64 + 32 + 2 = -3486` giá trị của bit `1001001100010` là -3486
+Và ta tiến hành cộng chúng lại để ra giá trị của chúng : `(-4096) + 512 + 64 + 32 + 2 = -3486` giá trị của bit `1001001100010` là `-3486`
+
+![alt text](image3.png)
