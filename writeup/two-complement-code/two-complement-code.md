@@ -208,9 +208,9 @@ bạn nhìn thấy nó là một dãy `111111111111111` và hiểu lầm MSB = 1
 
 ![alt text](image12.png)
 
-giờ đây bạn thấy điều gì lạ không, chúng ta lấy output ở ảnh 0x8000 là `1000000000000000` đi so sánh với ảnh trước là `111111111111111`, bạn thấy nó chênh lệch 1 đơn vị và phần `111111111111111` nó thấp hơn 1 đơn vị. Để dễ dàng cho việc so sánh tôi sẽ sắp xếp nó :
+giờ đây bạn thấy điều gì lạ không, chúng ta lấy output ở ảnh 0x8000 là `1000000000000000` đi so sánh với ảnh trước là `111111111111111`, bạn thấy nó chênh lệch 1 đơn vị và phần `111111111111111` nó thấp hơn 1 đơn vị. Để dễ dàng cho việc so sánh tôi sẽ sắp xếp nó và thêm số 0 vào cho chuẩn 16 bit  :
 
-| Tmax | 111111111111111|
+| Tmax |0111111111111111|
 |------|----------------|
 | Tmin |1000000000000000|
 
@@ -349,3 +349,5 @@ từ value trên bảng cộng tổng lại : `(-32768) + 16384 + 2048 + 1024 + 
 kết quả ra `-12345` chính xác với kết quả mà CSAPP cho. Suy ra, kết luận của tôi `binary giữ nguyên` là đúng
 
 </details>
+
+từ đó cũng như thế thôi, bit nhị phân vẫn y nguyên là nó. Cách đọc mới quyết định giá trị của nó là gì và chính cách đọc mới thay đổi 
