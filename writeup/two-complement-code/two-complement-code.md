@@ -349,6 +349,15 @@ từ value trên bảng cộng tổng lại : `(-32768) + 16384 + 2048 + 1024 + 
 
 kết quả ra `-12345` chính xác với kết quả mà CSAPP cho. Suy ra, kết luận của tôi `binary giữ nguyên` là đúng
 
+Dạng bit của số -12345 (Short - 2 bytes):
+
+ Bit Pattern:  1  1  0  0  1  1  1  1  1  1  0  0  0  1  1  1
+               |  |__________________________________________
+               |                       |
+           [Bit MSB]           [Các bit còn lại]
+  Signed:   -32768      +            45123            = -12345
+  Unsigned:  32768      +            45123            =  53191
+
 </details>
 
 từ đó cũng như thế thôi, bit nhị phân vẫn y nguyên là nó. Cách đọc mới quyết định giá trị của nó là gì và chính cách đọc mới thay đổi, chúng ta có thể chuyển đổi được cách đọc bởi vì nhị phân đã đổi đâu? nên đọc một đoạn mã đó vẫn có thể thây đổi được
