@@ -233,4 +233,16 @@ chúng ta thấy có một điểm lạ, tại sao nó lại thêm `0xffff` vào
 
 ![alt text](image14.png)
 
+> gọn hơn : dấu ... nghĩa là sau các tham số cố định, có thể truyền thêm bao nhiêu đối số tùy ý.
+
+Nếu như thế thì nó liên quan gì tới việc thêm 0xffff vào vaddr?
+
+- Khi ta truyền short vào printf, nó không biết đó là short nó chỉ biết một đống đối số sau `const char` và chuẩn C quy định, trước khi truyền vào hàm variadic thì các kiểu dữ liệu sau bị ép sang int :
+
+| các type bị ép sang int |
+|-------------------------|
+| signed char | char |
+| unsigned char | short |
+| unsigned short |
+
 </details>
