@@ -287,3 +287,15 @@ dựa theo bảng, chúng ta có thể thấy bit vẫn là bit, nó vẫn giữ
 
 ![alt text](image16.png)
 
+nhìn vào dòng mã mà họ đưa trong sách :
+
+```c
+For example, consider the following code:
+
+ 	short int v = -12345;
+ 	unsigned short uv = (unsigned short) v;
+	printf("v = %d, uv = %u\n", v, uv);
+```
+
+> When run on a two’s-complement machine, it generates the following output:
+> v = -12345, uv = 53191
