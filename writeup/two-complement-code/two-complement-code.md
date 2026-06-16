@@ -241,8 +241,10 @@ Nếu như thế thì nó liên quan gì tới việc thêm 0xffff vào vaddr?
 
 | các type bị ép sang int |
 |-------------------------|
-| signed char | char |
-| unsigned char | short |
+| signed char | 
+| unsigned char | 
 | unsigned short |
+| char |
+| short |
 
 </details>
