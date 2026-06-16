@@ -269,3 +269,16 @@ chúng ta tiếp tục `ni` và output sẽ giống y chang :
 vì đơn giản đó là Tmin theo signed, và khi MSB = 1 rồi thì mọi con số đều là âm hết nếu theo hệ bù hai signed 
 
 **1.4.Chuyển đổi giữa unsigned và signed**
+
+- Mọi binary ví dụ `11111111` đều có thể được diễn giải khác nhau tùy kiểu dữ liệu, bù hai signed diễn giải nó là `-1` nhưng theo unsigned nó là `255` nhưng bit nó vẫn là `11111111` không thay đổi ở bậc nhị phân, chỉ có cách diễn giải mới là bậc thay đổi vì thế gía trị cũng thay đổi theo
+
+- Nội dung ở mục này không đi kèm công thức cao siêu gì, chỉ là diễn giải cách đọc khác nhau khi làm việc với bit. Ví dụ :
+
+ta có số `10` bây giờ hãy đọc nó theo hệ thập phân `mười` nhưng đọc nó theo hệ nhị phân `hai` số đó vẫn là `10` không chỉnh gì thêm chỉ khác cách đọc. Cách sát hơn nữa là `unsigned` và `signed`, ta có bảng so sánh như sau :
+
+|binary | 11111111 | 10000001 | 10 |
+|-------|----------|----------|----|
+| unsigned | -1 | -127 | -2 |
+| signed | 255 | 129 | 2 |
+
+dựa theo bảng, chúng ta có thể thấy bit vẫn là bit, nó vẫn giữ nguyên đó không chỉnh sửa. Nhưng, giá trị bị thay đổi bởi vì 2 cách đọc hệ khác nhau 
