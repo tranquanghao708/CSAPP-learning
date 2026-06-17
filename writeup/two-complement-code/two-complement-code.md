@@ -364,9 +364,9 @@ trong CSAPP có đề cập tới hai khái niệm này vậy tôi cần biết 
 
 
 
->[!NOTE]
->nếu x < 0 thì `x + 2**N` 
->nếu x >= 0 thì vẫn giữ nguyên x
+> [!NOTE]
+> nếu x < 0 thì `x + 2**N` 
+> nếu x >= 0 thì vẫn giữ nguyên x
 
 trong đó x là giá trị số nguyên N là số bit `2**N` là biểu thức tính gía trị toàn diện bit ví dụ 4 bit nó sẽ tính `1111` là bao nhiêu. Nói sơ qua thì T2U chủ yếu covert cái số có dấu (signed) sang không dấu (unsigned) điển hình là số âm sang số dương, nếu số âm thì nó sẽ chuyển đổi còn nếu số dương thì nó giữ nguyên gồm cả 0.
 
