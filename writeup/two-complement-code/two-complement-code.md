@@ -356,27 +356,27 @@ Hãy thử tính nó bằng T2U và U2T
 > nếu bạn cần tìm hiểu thêm về T2U và U2T thì có thể đọc
 
 <details>
-	<summary>T2U và U2T</summary>
+<summary>T2U và U2T</summary>
 
-	![alt text](image21.png)
+![alt text](image21.png)
 
-	trong CSAPP có đề cập tới hai khái niệm này vậy tôi cần biết nó là gì đã. Ở đây, T2U có nghĩa là chuyển số có dấu signed sang số không dấu unsigned ở đây chúng ta cũng vận dụng luôn cái này vào phần mà tôi đang chứng minh 
+trong CSAPP có đề cập tới hai khái niệm này vậy tôi cần biết nó là gì đã. Ở đây, T2U có nghĩa là chuyển số có dấu signed sang số không dấu unsigned ở đây chúng ta cũng vận dụng luôn cái này vào phần mà tôi đang chứng minh 
 
-	số bit của short như tôi đề cập là 16bit, vậy tôi biết số có dấu Tmin của cái 16bit này là `-2(N - 1) = -32768` bây giờ tôi muốn chuyển chúng sang hệ không dấu unsigned thì tôi dùng biểu thức T2U :
+số bit của short như tôi đề cập là 16bit, vậy tôi biết số có dấu Tmin của cái 16bit này là `-2(N - 1) = -32768` bây giờ tôi muốn chuyển chúng sang hệ không dấu unsigned thì tôi dùng biểu thức T2U :
 
-	(-32768) + 2**16 = 32768
+(-32768) + 2**16 = 32768
 
-	![alt text](image22.png)
+![alt text](image22.png)
 
-	Bạn thấy số đã chuyển sang số không dấu unsigned hoàn toàn, thế biểu thức của T2U là `<số âm> + 2**N` trong đó N là số bit `2**N` là biểu thức tính gía trị toàn diện bit ví dụ 4 bit nó sẽ tính `1111` là bao nhiêu 
+Bạn thấy số đã chuyển sang số không dấu unsigned hoàn toàn, thế biểu thức của T2U là `<số âm> + 2**N` trong đó N là số bit `2**N` là biểu thức tính gía trị toàn diện bit ví dụ 4 bit nó sẽ tính `1111` là bao nhiêu 
 
-	còn U2T thì ngược lại thôi, nó chuyển unsigned sang signed công thức của nó là `<số dương> - 2**N` nó vẫn là như thế chỉ khác là nó đổi ngược âm sang dương và cộng sang trừ thôi ví dụ với cái bit như trên là 16 bit đi :
+còn U2T thì ngược lại thôi, nó chuyển unsigned sang signed công thức của nó là `<số dương> - 2**N` nó vẫn là như thế chỉ khác là nó đổi ngược âm sang dương và cộng sang trừ thôi ví dụ với cái bit như trên là 16 bit đi :
 
-	32768 - 2**16 = -32768
+32768 - 2**16 = -32768
 
-	![alt text](image23.png)
+![alt text](image23.png)
 
-	Bạn thấy nó đã chuyển lại sang âm rồi, vậy tôi cũng đang thắc mắc là chúng ta có thể thêm âm thủ công được mà? cần gì tới mấy công thức này cho rườm rà, vậy mục đích của CSAPP muốn dạy chúng ta là mấy biểu thức này và liệu nó có tác dụng gì?
+Bạn thấy nó đã chuyển lại sang âm rồi, vậy tôi cũng đang thắc mắc là chúng ta có thể thêm âm thủ công được mà? cần gì tới mấy công thức này cho rườm rà, vậy mục đích của CSAPP muốn dạy chúng ta là mấy biểu thức này và liệu nó có tác dụng gì?
 
 </details>
 
