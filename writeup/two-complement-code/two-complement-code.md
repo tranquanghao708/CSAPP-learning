@@ -362,8 +362,13 @@ Hãy thử tính nó bằng T2U và U2T
 
 trong CSAPP có đề cập tới hai khái niệm này vậy tôi cần biết nó là gì đã. Ở đây, T2U có nghĩa là chuyển số có dấu signed sang số không dấu unsigned ở đây chúng ta cũng vận dụng luôn cái này vào phần mà tôi đang chứng minh, trước hết ta có biểu thức của T2U là :
 
-nếu x < 0 thì $$x + 2^{N}$$
-nếu x >= 0 thì vẫn giữ nguyên x
+nếu x < 0 thì
+
+ $$x + 2^{N}$$
+
+nếu x >= 0 thì
+
+ vẫn giữ nguyên x
 
 trong đó x là giá trị số nguyên N là số bit $$2^{N}$$ là biểu thức tính gía trị toàn diện bit ví dụ 4 bit nó sẽ tính `1111` là bao nhiêu. Nói sơ qua thì T2U chủ yếu covert cái số có dấu (signed) sang không dấu (unsigned) điển hình là số âm sang số dương, nếu số âm thì nó sẽ chuyển đổi còn nếu số dương thì nó giữ nguyên gồm cả 0.
 
