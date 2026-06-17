@@ -362,13 +362,13 @@ Hãy thử tính nó bằng T2U và U2T
 
 trong CSAPP có đề cập tới hai khái niệm này vậy tôi cần biết nó là gì đã. Ở đây, T2U có nghĩa là chuyển số có dấu signed sang số không dấu unsigned ở đây chúng ta cũng vận dụng luôn cái này vào phần mà tôi đang chứng minh, trước hết ta có biểu thức của T2U là :
 
-nếu x < 0 thì `x + 2**N` 
+nếu x < 0 thì $$x + 2^{N}$$
 nếu x >= 0 thì vẫn giữ nguyên x
 
-trong đó x là giá trị số nguyên N là số bit `2**N` là biểu thức tính gía trị toàn diện bit ví dụ 4 bit nó sẽ tính `1111` là bao nhiêu. Nói sơ qua thì T2U chủ yếu covert cái số có dấu (signed) sang không dấu (unsigned) điển hình là số âm sang số dương, nếu số âm thì nó sẽ chuyển đổi còn nếu số dương thì nó giữ nguyên gồm cả 0.
+trong đó x là giá trị số nguyên N là số bit $$2^{N}$$ là biểu thức tính gía trị toàn diện bit ví dụ 4 bit nó sẽ tính `1111` là bao nhiêu. Nói sơ qua thì T2U chủ yếu covert cái số có dấu (signed) sang không dấu (unsigned) điển hình là số âm sang số dương, nếu số âm thì nó sẽ chuyển đổi còn nếu số dương thì nó giữ nguyên gồm cả 0.
 
 
-số bit của short như tôi đề cập là 16bit, vậy tôi biết số có dấu Tmin của cái 16bit này là `-2(N - 1) = -32768` do `-32768` hoàn toàn bé hơn `0` nên bây giờ tôi muốn chuyển chúng sang hệ không dấu unsigned thì tôi dùng biểu thức T2U :
+số bit của short như tôi đề cập là 16bit, vậy tôi biết số có dấu Tmin của cái 16bit này là $$-2^{N - 1} = -32768$$ do `-32768` hoàn toàn bé hơn `0` nên bây giờ tôi muốn chuyển chúng sang hệ không dấu unsigned thì tôi dùng biểu thức T2U :
 
 $$(-32768) + 2^{16} = 32768$$
 
@@ -384,15 +384,15 @@ Bạn thấy số đã chuyển sang số không dấu unsigned hoàn toàn
 
 còn U2T thì ngược lại thôi, nó chuyển unsigned sang signed công thức của nó là :
 
-nếu x < $$2^(N-1)$$ thì
+nếu x < $$2^{N-1}$$ thì
     giữ nguyên
 
-nếu x >= $$2^(N-1)$$ thì
+nếu x >= $$2^{N-1}$$ thì
     $$x - 2^N$$
 
 trong đó x là số bit , nếu như x mà nhỏ hơn Tmax của binary thì giữ nguyên còn mà nếu x mà lớn hơn Tmax của binary thì dùng công thức U2T .Ví dụ với cái bit như trên là 16 bit đi :
 
-ở đây cho x = 32768 , 32768 hoàn toàn bằng với `2**(N-1) = 2**(16-1) = 32768` lúc này ta mới dùng biểu thức U2T :
+ở đây cho x = 32768 , 32768 hoàn toàn bằng với $$2^{N-1} = 2^{16-1} = 32768$$ lúc này ta mới dùng biểu thức U2T :
 
 $$32768 - 2^{16} = -32768$$ (Bạn thấy nó đã covert sang âm)
 
