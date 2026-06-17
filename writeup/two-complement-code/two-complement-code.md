@@ -387,13 +387,13 @@ số bit của short là 16bit, vậy ta biết số có dấu Tmin của 16bit 
 
 $$\huge(-32768) + 2^{16} = 32768$$
 
+![alt text](image22.png)
+
 còn nếu mà số nguyên như 100 lớn hơn 0 thì giữ nguyên. Nó sẽ là kết quả bị sai dù covert đúng hay không nhưng về bản chất là sai, không phải vì biểu thức sai mà vì điều kiện không cho phép áp dụng biểu thức với điều đó
 
 Vậy ví dụ ta thử tính xem chuyện gì xảy ra biết rõ ràng 100 lớn hơn 0, điều kiện ko cho phép vậy ta vẫn cứ tính xem có gì?
 
 $$\huge100 + 2^{16} = 65636$$ **(kết quả bị sai dù covert đúng)**
-
-![alt text](image22.png)
 
 Bạn thấy số đã chuyển sang số không dấu unsigned
 
