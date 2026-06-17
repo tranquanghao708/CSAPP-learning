@@ -362,6 +362,8 @@ Hãy thử tính nó bằng T2U và U2T
 
 trong CSAPP có đề cập tới hai khái niệm này vậy tôi cần biết nó là gì đã. Ở đây, T2U có nghĩa là chuyển số có dấu signed sang số không dấu unsigned ở đây chúng ta cũng vận dụng luôn cái này vào phần mà tôi đang chứng minh, trước hết ta có biểu thức của T2U là :
 
+
+
 >[!NOTE]
 >nếu x < 0 thì `x + 2**N` 
 >nếu x >= 0 thì vẫn giữ nguyên x
@@ -372,6 +374,8 @@ trong đó x là giá trị số nguyên N là số bit `2**N` là biểu thức
 số bit của short như tôi đề cập là 16bit, vậy tôi biết số có dấu Tmin của cái 16bit này là `-2(N - 1) = -32768` do `-32768` hoàn toàn bé hơn `0` nên bây giờ tôi muốn chuyển chúng sang hệ không dấu unsigned thì tôi dùng biểu thức T2U :
 
 (-32768) + 2**16 = 32768
+
+
 
 > [!WARNING]
 > còn nếu mà số nguyên như 100 lớn hơn 0 thì giữ nguyên, không tính. Nó sẽ là kết quả bị sai dù covert đúng hay không nhưng về bản chất là sai hoàn toàn, không phải vì biểu thức sai mà vì điều kiện không cho phép áp dụng biểu thức với điều đó
