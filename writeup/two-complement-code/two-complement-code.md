@@ -493,6 +493,21 @@ chúng sẽ biên dịch lại nhưng sẽ tạo các file soi quá trình biên
 
 - file đuôi .o : là file nhị phân liên kết, dùng để liên kết bằng ld 
 
+- file đuôi .original : là file chương trình mà compile log lại trước khi dịch chúng sang mã máy để thực thi
+
+Bây giờ, chúng ta tiến hành `cat` file .original ra trước :
+
+> cat test_type.c.006t.original
+
+![alt text](image29.png)
+
+Bạn thấy `if(0)` hardcode thẳng là 0 luôn cơ mà, nghĩa là compile đã thực hiện trước đó rồi, trước cả khi log các file này lại còn về phía printf, các sequences đều bị enocode thành các mã opcode. Bây giờ chúng ta tiến hành soi cái file .s là file hợp ngữ ra xem sao :
+
+> cat test_type.s
+
+![alt text](image30.png)
+
+Quan sát, assembly att mà compile dịch ra có thể hơi khác so với cái mà ta gặp hằng ngày, nhưng vấn đề là ta thấy logic của assembly nó ko hề có các câu điều kiện như `je` , `jne` v.v. mà chỉ là gắn vào rdi rồi call xong thoát. Đó là bằng chứng mạnh nhất để cho thấy trước khi các file log này được sinh ra thì compile đã tối ưu hóa và loại bỏ các câu điều kiện trước đó nữa rồi. Chúng ta cần debug sâu hơn nữa
 
 </details>
 
