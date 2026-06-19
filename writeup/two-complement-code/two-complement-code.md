@@ -22,6 +22,24 @@
 
 - 2.[Tràn số](#tràn-số)
 
+	- 2.1 signed overflow và unsigned overflow
+
+	- 2.1.1 signed overflow
+
+	- 2.1.1.1 modulo $$2^{N}$$
+
+	- 2.1.1.2 cờ CF (carry flag)
+
+	- 2.1.1.3 bit bị bỏ
+
+	- 2.1.2 unsigned overflow
+
+	- 2.1.2.1 vượt miền Tmin/Tmax
+
+	- 2.1.2.2 cờ OF (overflow flag)
+
+	- 2.1.2.3 vì sao MSB đổi?
+
 # Mã bù hai
 
 **1.1.Mã bù hai là gì?**
@@ -597,4 +615,22 @@ bỏ bit ngoài đi, chúng ta có kết quả là 0. Đó là bù hai
 | cộng 1     | 00010010 |
 | dịch phải 1 | 00100010 |
 
-- Điều đó bình thường và ko sai, nó sẽ xảy ra hiện tượng ví dụ `overflow` , `signed wrap` . Thế hai hiện tượng này là gì?
+- Điều đó bình thường và ko sai, nhưng sẽ có hậu quả nếu nó xảy ra hiện tượng ví dụ `overflow` , `signed wrap` . Thế hai hiện tượng này là gì?, overflow gồm hai phần `signed overflow` và `unsigned overflow` . còn signed wrap
+
+**2.1 signed overflow và unsigned overflow**
+
+**2.1.1 signed overflow**
+
+**2.1.1.1 modulo $$2^{N}$$**
+
+**2.1.1.2 cờ CF (carry flag)**
+
+**2.1.1.3 bit bị bỏ**
+
+**2.1.2 unsigned overflow**
+
+**2.1.2.1 vượt miền Tmin/Tmax**
+
+**2.1.2.2 cờ OF (overflow flag)**
+
+**2.1.2.3 vì sao MSB đổi?**
