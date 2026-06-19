@@ -779,7 +779,27 @@ Khoan, ta bắt gặp hiện tượng là tại sao cái hàm `luy_thua()` vốn
 <details>
 	<summary>vì sao lại có hai thanh ghi rdx và rcx</summary>
 
-- đầu tiên là hàm luy_thua() chỉ nhận 2 tham số, Đúng. Nhưng việc gdb hiển thị 2 thanh ghi rdx và rcx chỉ là nó hiện để tiện theo dõi, vì hai thanh ghi đó vốn bằng 0 và hàm đó compiler hay program đều không lấy tham số nhiều hơn giới hạn của hàm lệnh. Nó vẫn lấy 2 tham số chỉ là nó hiện cho tiện nhìn thôi
+- đầu tiên là hàm luy_thua() chỉ nhận 2 tham số, Đúng. Nhưng việc gdb hiển thị 2 thanh ghi rdx và rcx chỉ là nó hiện để tiện theo dõi, vì hai thanh ghi đó vốn bằng 0 và hàm đó compiler hay program đều không lấy tham số nhiều hơn giới hạn của hàm lệnh. Nó vẫn lấy 2 tham số chỉ là nó hiện cho tiện nhìn thôi. Chúng ta sẽ chứng minh hàm luy_thua để có bằng chứng là nó chỉ lấy đúng hai thanh ghi rdi và rsi. Đầu tiên ta disas thẳng program luôn và đọc nó xem bao nhiêu thanh ghi transmit vào :
+
+> start
+
+và 
+
+> disas main
+
+![alt text](image46.png)
+
+như trên ảnh , nó chỉ transmit đúng 2 thanh ghi thôi hoàn toàn không có thanh ghi nào hết cả 
+
+**Nhưng mà lỡ nó gắn rdx và rcx vào printf nhưng nó đọc thì sao? ai mà biết được?**
+
+Vậy là chưa đủ bằng chứng thuyết phục, chúng ta debug thẳng hàm luy_thua() lấy thêm bằng chứng cứng bằng cách disassembly hàm đó ra :
+
+> disas luy_thua
+
+![alt text](image47.png)
+
+Chúng ta quan sát, bản thân hàm của nó chỉ lấy 2 thanh ghi vào thôi chứ nó đã lấy thêm thanh ghi số 3 hay 4 gì đâu?
 
 </details>
 
