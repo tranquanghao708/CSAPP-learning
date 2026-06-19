@@ -629,6 +629,12 @@ bỏ bit ngoài đi, chúng ta có kết quả là 0. Đó là bù hai
 
 **2.1.1 unsigned overflow**
 
+```mermaid
+flowchart TD
+    A[Số không dấu <br><b>Unsigned</b>] -->|Kết quả = 2**N| B{Giới hạn bit mà hệ thống cho phép}
+    B -->|Kết quả vượt quá số bit mà hệ thống cho phép| C[Số bit dư thừa, vượt quá ngưỡng mà hệ thống cho phép bị <br><b>loại bỏ</b>]
+```
+
 - Là hiện tượng khi số nguyên không dấu tới quá hạn của số bit mà hệ thống cho phép. Nghĩa là, ví dụ khi hệ thống của tôi là archlinux 64bit, nó hỗ trợ 64bit thôi nếu ta vượt quá 64 bit này chẳng hạn như 65 bit đi thì lúc này số sẽ quy về 0 nghĩa là bit bên ngoài đã bị bỏ rồi 
 
 **2.1.1.1 modulo $$\Large2^{N}$$**
