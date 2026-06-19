@@ -702,6 +702,14 @@ int main(void){
 
 ![alt text](image38.png)
 
+Chúng ta thấy output của cả hai đều là 0, vậy chứng tỏ nó đã bị tràn số vượt ngưỡng bit mà hai kiểu dữ liệu hỗ trợ rồi. Vậy, chúng ta vẫn đang thắc mắc là dù biết là short được ép sang int theo chuẩn C như đợt debug ở trên vậy tại sao cả hai đều là 0? short ở phần này ko được ép hay là tràn nữa à, mà nếu tràn nó là 1 chã nhẽ được sign extension lên độ rộng toán hạng cao hơn ?
+
+> Trả lời câu hỏi và debug tại đây, nếu bạn ko quan tâm thì có thể bỏ qua
+
+<details>
+	<summary>Vì sao cả hai kiểu dữ liệu là 0? chả nhẽ nó đã sign extension rồi à?</summary>
+</details>
+
 </details>
 
 **2.1.1.2 cờ CF (carry flag)**
