@@ -871,15 +871,11 @@ Vậy là thanh ghi eax có truyền vào esi, làm cho printf luôn in ra là 0
 
 ![alt text](image57.png)
 
-chúng ta quan sát là instrution của lệnh đó nó chưa được thực thi nhưng khi ta dump rbp - 6 ra thì nó vẫn là `0x7fffffffe52a:	0xe550000000110000` vậy đây chính là mục tiêu của chúng ta cần tìm. Như lệnh `movzx  eax, word ptr [rbp - 6]` nó copy 2byte dữ liệu tương ứng 16 bit trong cái này `0xe550000000110000` tổng cộng theo little endian là `000011000000055e` là nó copy hết dãy bit này `0xe550000000110000` còn movzx là nó zero extension, như compiler log là short luôn biến thành int theo chuẩn C
+chúng ta quan sát là instrution của lệnh đó nó chưa được thực thi nhưng khi ta dump rbp - 6 ra thì nó vẫn là `0x7fffffffe52a:	0xe550000000110000` vậy đây chính là mục tiêu của chúng ta cần tìm. Như lệnh `movzx  eax, word ptr [rbp - 6]` nó copy 2byte dữ liệu tương ứng 16 bit trong cái này `0xe550000000110000` tổng cộng theo little endian là `0000` , còn movzx là nó zero extension, như compiler log là short luôn biến thành int theo chuẩn C
 
 ![alt text](image49.png)
 
-thì bây giờ short là 16bit = 2byte thì int nó sẽ gấp đôi short là 32bit = 4 byte vậy cái zero extension này tôi đã giải thích ở mục câu hỏi `Lý do C lại thêm 0xffff` trong mục `Debug program C` tại `1.3.1.Áp dụng thử vào C`, là nó sẽ kéo dài ra nếu MSB = 0 ở đây int là 32 bit là nó sẽ kéo cái vaddr này là `000011000000055e` đã xắp sếp lại theo little endian trước đó thì nó sẽ thêm 16bit số 0 kéo ra ở MSB như thế này `0000000000000000000011000000055e` , **nhưng nó liên quan gì tới việc gắn 0 ?** nó ko liên quan nhưng việc gắn 0 là hiện tượng tràn bit của kiểu dữ liệu unsigned overflow, nhưng vấn đề vaddr khi cho vào echo được dịch và tính toán sang số nguyên có dấu là 
-
-![alt text](image58.png)
-
-Vấn đề này số nó sai so với kết quả biểu thức $$\Large2^{16}-1$$ của kiểu short. Vậy, chúng ta vẫn đang thắc mắc là **tại sao số này nó bị sai, có phải nó tính sai ko ? lệnh này nó có liên quan tới việc eax bị gán là 0 hay ko?**
+thì bây giờ short là 16bit = 2byte thì int nó sẽ gấp đôi short là 32bit = 4 byte vậy cái zero extension này tôi đã giải thích ở mục câu hỏi `Lý do C lại thêm 0xffff` trong mục `Debug program C` tại `1.3.1.Áp dụng thử vào C`, là nó sẽ kéo dài ra nếu MSB = 0 ở đây int là 32 bit là nó sẽ kéo cái vaddr này là `0000` đã xắp sếp lại theo little endian trước đó thì nó sẽ thêm 16bit số 0 kéo ra ở MSB như thế này `00000000000000000000` 
 
 </details>
 
