@@ -894,6 +894,14 @@ thì bây giờ short là 16bit = 2byte thì int nó sẽ gấp đôi short là 
 
 **2.1.1.2 cờ CF (carry flag)**
 
+- Chúng ta có bao giờ tự hỏi là các bit bên ngoài bị bỏ thì nó sẽ đi về đâu không?. Cho ví dụ chúng ta có 4 bit từ 0000 đến 1111, bây giờ ta lập bảng để tính $$\Large2^{4}$$ cho số bit đó bị tràn unsigned overflow :
+
+| số bit | 0000 |
+|--------|------|
+| $$2^{4}$$ | 10000 |
+
+theo phần cứng thì nó sẽ bỏ số `1` bên ngoài đi vì vượt quá 4 bit, điều này chúng ta vừa đi qua ở mục 2.1.1.1 modulo $$\Large2^{N}$$ và 2.1.1 unsigned overflow, vậy phần này chúng ta sẽ tiếp tục soi xem cái bit `1` bị bỏ đấy nó sẽ đi về đâu? Thật ra là tất cả các bit bị loại bỏ bởi phần cứng được đi vào cờ carry CF, Carry Flag lưu bit carry bị đẩy ra khỏi bit cao nhất trong phép toán unsigned. 
+
 **2.1.1.3 bit bị bỏ**
 
 **2.1.1.4 áp dụng thử vào C**
