@@ -875,7 +875,7 @@ chúng ta quan sát là instrution của lệnh đó nó chưa được thực t
 
 ![alt text](image49.png)
 
-thì bây giờ short là 16bit = 2byte thì int nó sẽ gấp đôi short là 32bit = 4 byte vậy cái zero extension này tôi đã giải thích ở mục câu hỏi `Lý do C lại thêm 0xffff` trong mục `Debug program C` tại `1.3.1.Áp dụng thử vào C`, là nó sẽ kéo dài ra nếu MSB = 0 ở đây int là 32 bit là nó sẽ kéo cái vaddr này là `0000` đã xắp sếp lại theo little endian trước đó thì nó sẽ thêm 16bit số 0 kéo ra ở MSB như thế này `00000000000000000000` 
+thì bây giờ short là 16bit = 2byte thì int nó sẽ gấp đôi short là 32bit = 4 byte vậy cái zero extension này tôi đã giải thích ở mục câu hỏi `Lý do C lại thêm 0xffff` trong mục `Debug program C` tại `1.3.1.Áp dụng thử vào C`, là nó sẽ kéo dài ra nếu MSB = 0 ở đây int là 32 bit là nó sẽ kéo cái vaddr này là `0000` đã xắp sếp lại theo little endian trước đó thì nó sẽ thêm 16bit số 0 kéo ra ở MSB như thế này `00000000000000000000`. Vậy nó đọc vùng gần vaddr gần như là zero nên nó gắn `0` ở thanh ghi eax. **Vậy việc tràn số nguyên ko dấu unsigned overflow ở đâu? hay mọi thứ chỉ là logic của hợp ngữ hay chương trình gắn vô sẵn?**
 
 </details>
 
