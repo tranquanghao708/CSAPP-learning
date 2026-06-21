@@ -30,7 +30,7 @@
 
 	- 2.1.1.2 cờ CF (carry flag)
 
-	- 2.1.1.3 bit bị bỏ
+	- 2.1.1.3 Vì sao phép cộng unsigned lại tương đương modulo $$\Large2^{N}$$?
 
 	- 2.1.1.4 áp dụng thử vào C
 
@@ -697,7 +697,13 @@ kết quả là 0 tương tự nhưng tại sao lại bằng 0?, do là chúng t
 
 ![alt text](image37.png)
 
-kết quả sẽ bằng 1 tại bit bên ngoài thật sự đã bị bỏ rồi là thành `0001`. 
+kết quả sẽ bằng 1 tại bit bên ngoài thật sự đã bị bỏ rồi là thành `0001`. Vậy **tại sao bit lại bị bỏ?**
+
+> Bạn có thể bỏ qua nếu ko quan tâm đến
+
+<details>
+	<summary>Trả lời câu hỏi trên</summary>
+</details>
 
 > [!IMPORTANT]
 > Nếu ta nhân hay cố làm với số lớn hơn ngưỡng bit mà hệ thống cho phép thì nó cũng sẽ giữ những bit, số trong ngưỡng bằng cách cắt những bit ngoài đi
@@ -900,9 +906,18 @@ thì bây giờ short là 16bit = 2byte thì int nó sẽ gấp đôi short là 
 |--------|------|
 | $$2^{4}$$ | 10000 |
 
-theo phần cứng thì nó sẽ bỏ số `1` bên ngoài đi vì vượt quá 4 bit, điều này chúng ta vừa đi qua ở mục 2.1.1.1 modulo $$\Large2^{N}$$ và 2.1.1 unsigned overflow, vậy phần này chúng ta sẽ tiếp tục soi xem cái bit `1` bị bỏ đấy nó sẽ đi về đâu? Thật ra là tất cả các bit bị loại bỏ bởi phần cứng được đi vào cờ carry CF, Carry Flag lưu bit carry bị đẩy ra khỏi bit cao nhất trong phép toán unsigned. 
+theo phần cứng thì nó sẽ bỏ số `1` bên ngoài đi vì vượt quá 4 bit, điều này chúng ta vừa đi qua ở mục 2.1.1.1 modulo $$\Large2^{N}$$ và 2.1.1 unsigned overflow, vậy phần này chúng ta sẽ tiếp tục soi xem cái bit `1` bị bỏ đấy nó sẽ đi về đâu? Thật ra là tất cả các bit bị loại bỏ bởi phần cứng được đi vào cờ carry CF, Carry Flag lưu bit carry bị đẩy ra khỏi bit cao nhất trong phép toán unsigned. Thế phép toán unsigned là gì và bit carry là sao nữa?
 
-**2.1.1.3 bit bị bỏ**
+Đầu tiên phép toán unsigned là gì, là phép toán được thực hiện trên số nguyên hệ không dấu unsigned. Nghĩa là, nó sẽ được thực hiện trên một dãy bit và khi MSB của dãy bit đó là 1 thì nó sẽ ko có dấu âm vì trên hệ không dấu unsigned là tất cả số đều là số dương hết ví dụ : 
+
+| 4 bit | 0000 |
+|-----|------|
+| phép toán unsigned với biểu thức $$2^{4}-1$$ | 1111 = 15 |
+| phép toán signed với biểu thức $$2^{4}-1$$ | 1111 = -1 |
+
+Bạn thấy, unsigned khi MSB = 1 là ko có hiện tượng bù hai là số âm và trừ đi với số dương khác, nó là số ko dấu nên mọi con số là dương hết. Đó gọi là phép toán unsigned
+
+**2.1.1.3 Vì sao phép cộng unsigned lại tương đương modulo $$\Large2^{N}$$?**
 
 **2.1.1.4 áp dụng thử vào C**
 
