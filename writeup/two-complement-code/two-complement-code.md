@@ -1008,6 +1008,32 @@ Chúng ta để ý các thanh ghi được làm việc và xử lý trước khi
 | AX 		|   16 	 |
 | AL và AH  | 	8 	 |
 
+Bây giờ lệnh đầu tiên `movzx  eax,WORD PTR [rbp-0x2]`, lệnh này nó thăng vùng `rbp + 0x2` là biến a kiểu short lên kiểu int vì eax là 32 bit tương ứng với 4 byte đúng với type int, eax đọc 32bit trong rbp+0x2 thấy nó chỉ là `0x7fff` 16 bit vì trước đó ta có gán Tmax là `32767` còn `0x7fff` là diễn giải của lục phân hexdecimal của `32767`, nó đọc 32bit nó thấy và đọc 16bit là Tmax ở rbp + 2 và nó zero extension thêm 16bit thì vaddr nó sẽ như vầy `0x00007fff` tổng cộng 32bit, tiếp đến là chúng ta thấy có một loạt cái perform handle của các thanh ghi ở dưới 
+
+![alt text](image62.png)
+
+> bằng chứng là rbp + 2 là chứa Tmax của short nhưng được thăng lên là int là e600 còn vaddr 7fffffff chính là chữ ký nó đang ở stack
+
+ở mấy thanh ghi bên dưới thấy `lea ecx,[rax+0x1]`, ta thấy ecx là argument 4, chúng ta có bảng argument ABI x86-64 như sau :
+
+| thanh ghi | argument | số bit |
+|-----------|----------|--------|
+| rdi 		| 1 	   |  64	|
+| edi 		| 1		   |  32	|
+| rsi 		| 2		   |  64 	|
+| esi 		| 2		   |  32	|
+| rdx 		| 3		   |  64	|
+| edx 		| 3		   |  32    |
+| rcx	    | 4		   |  64	|
+| ecx 		| 4		   |  32	|
+| r8		| 5		   |  64	|
+| r8d 		| 5		   |  32	|
+| r9 		| 6		   |  64	|
+| r9d 		| 6		   |  32	|
+
+> ngoài ra còn nhiều thanh ghi như trên nhưng chênh lệch bit, tus chỉ đề xuất những thanh ghi chính để debug program
+
+Từ bảng ABI, ta thấy thanh ghi ecx là tham số 4 thuộc 32 bit, vậy nên nó lấy vaddr ở `rax + 1` nó chỉ lấy 32 bit thấp của vaddr thôi
 </details>
 
 </details>
