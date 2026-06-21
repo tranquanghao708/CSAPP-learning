@@ -977,6 +977,15 @@ Chúng ta thấy một điểm quan trọng nữa chính là khi số `(signed s
 
 > echo đã chứng minh nó đã biến thành Tmin khi cộng 1 vào Tmax
 
+Bây giờ debug chương trình mới có thể giải mã được cái quỷ này
+
+> phần debug, bạn có thể bỏ qua nếu ko quan tâm đến
+
+<details>
+	<summary>debug chương trình C</summary>
+- Ở đây, chúng ta tiếp tục lại là gdb trước:
+</details>
+
 </details>
 
 thứ hai là bit carry là gì ,
