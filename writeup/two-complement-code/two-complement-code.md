@@ -971,7 +971,7 @@ int main(void){
 
 ![alt text](image58.png)
 
-Chúng ta thấy một điểm quan trọng nữa chính là khi số `(signed short)a+1` đã được cộng thành `100000...` nhưng MSB = 1 nó vẫn ko thành số âm vẫn là số dương dù nó được ép thành signed có dấu . Phá vỡ nguyên lý bù hai luôn
+Chúng ta thấy một điểm quan trọng nữa chính là khi số `(signed short)a+1` đã được cộng thành `100000...` nhưng MSB = 1 nó vẫn ko thành số âm vẫn là số dương dù nó được ép thành signed có dấu .
 
 ![alt text](image59.png)
 
