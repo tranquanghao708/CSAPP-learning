@@ -637,6 +637,7 @@ bỏ bit ngoài đi, chúng ta có kết quả là 0. Đó là bù hai
 
 <details>
 	<summary>sơ đồ</summary>
+
 ```mermaid
 flowchart TD
     A[Số không dấu <br><b>Unsigned</b>] -->|Kết quả = 2**N| B{Giới hạn bit mà hệ thống cho phép}
