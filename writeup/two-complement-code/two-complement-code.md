@@ -1033,7 +1033,26 @@ Bây giờ lệnh đầu tiên `movzx  eax,WORD PTR [rbp-0x2]`, lệnh này nó 
 
 > ngoài ra còn nhiều thanh ghi như trên nhưng chênh lệch bit, tus chỉ đề xuất những thanh ghi chính để debug program
 
-Từ bảng ABI, ta thấy thanh ghi ecx là tham số 4 thuộc 32 bit, vậy nên nó lấy vaddr ở `rax + 1` nó chỉ lấy 32 bit thấp của vaddr thôi
+Từ bảng ABI, ta thấy thanh ghi ecx là tham số 4 thuộc 32 bit, vậy nên nó lấy vaddr ở `rax + 1` nó chỉ lấy 32 bit thấp của vaddr thôi. Để muốn biết xem register rax nó chứa gì và vùng rax+1 là chứa gì thì chúng ta ni tới vaddr `0x000055555555514c` hoặc until đến 
+
+![alt text](image63.png)
+
+Ở đây ta thấy giá trị là `0x8000`, chính là biến được cộng thêm 1 nghĩa là trong C có khai báo biến short nó cộng 1 theo hệ có dấu signed, nhưng vấn đề nguồn gốc mà dẫn tới cuộc debug này là **vì sao cộng 1 trong hệ signed rõ ràng là Tmin của short nhưng lại ra result là số dương chứ ko xảy ra hiện tượng bù hai?** thì cái này là điểm đáng chú ý, tại đây chúng ta dump thanh ghi `rax+1`, `eax+1` ra xem cấu trúc transmit gía trị vaddr hay có khác gì ko :
+
+> x/gx $rax + 1
+
+và
+
+> x/gx $eax + 1
+
+![alt text](image64.png)
+
+Chúng ta thấy 0x8000 nó là giá trị hardcode trong thanh ghi, ko có kiểu pointer hai cấp hay vaddr nào trỏ đến. Vây chúng ta phân tích tiếp, lúc đầu được zero extension lên và eax ở lệnh `movzx  eax, word ptr [rbp - 2]` thì nó copy nhiêu đây bit `e6007fff` trong dải `0x7fffffffe6007fff` tại vùng rbp - 2 trên stack, thanh ghi ecx lấy vaddr ko giải tham chiếu của rax, rax là 64 bit còn eax thì là 32 bit ở đây rax nó gấp đôi eax thì ta có cái sơ đồ như sau :
+
+![alt text](image65.png)
+
+dựa vào sơ đồ, chúng ta thấy eax nhỏ hơn gâp đôi rax nhưng nó chứa giá trị vaddr trọn dung lượng còn rax lớn hơn gấp đôi eax mà nó chỉ chứa 16 bit giá trị thôi
+
 </details>
 
 </details>
