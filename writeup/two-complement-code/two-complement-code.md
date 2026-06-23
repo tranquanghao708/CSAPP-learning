@@ -1150,8 +1150,6 @@ ta thấy kết quả như kỳ vọng là `0000000012345678` -> `0x000000001234
 
 </details>
 
-</details>
-
 Thế nên, khi lệnh `movzx  eax,WORD PTR [rbp-0x2]` được thực thi copy 32 bit tại vùng `rbp - 2` vào eax thì lúc này rax cũng đã trở thành `0x<32bit0>..<32biteax>` rồi nhưng rbp-2 lúc này chỉ chứa 0x7fff thôi và nó 16bit nên eax copy hết 16bit đó còn 16bit dư kia thì zero và rax cũng zero 32bit như ABI quy định , tại lệnh này `lea    ecx,[rax+0x1]` nó copy vùng `rax + 1` là lúc này vaddr 0x7ffff thành 0x8000, nghĩa là lệnh này nó cộng 1 vào và copy vô ecx thôi ý, ở ecx là argument 4 của printf và 0x8000 như đã nhắc trước đó là Tmax của 16bit tương ứng với kiểu short. Vậy ở đây chúng ta bắt đầu `ni` hoặc `until` để thực thi tới printf xem sao.
 
 > until *0x0000555555555176
@@ -1197,6 +1195,8 @@ int main(void){
 ![alt text](image75.png)
 
 Kết quả đúng như kỳ vọng của chúng ta 
+
+</details>
 
 </details>
 
