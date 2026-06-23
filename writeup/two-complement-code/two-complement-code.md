@@ -982,7 +982,7 @@ Bây giờ debug chương trình mới có thể giải mã được cái quỷ 
 > phần debug, bạn có thể bỏ qua nếu ko quan tâm đến
 
 <details>
-	<summary>debug chương trình C</summary>
+	<summary>debug và sửa chữa chương trình C</summary>
 - Ở đây, chúng ta tiếp tục lại là gdb trước:
 
 > start
@@ -1160,7 +1160,43 @@ Khi đã pause tại instrution call printf rồi thì ta disas main ra
 
 ![alt text](image73.png)
 
-Ở đây, ta mới để ý cách nó truyền vào hàm printf, bởi lẽ khi transmit vào thì nó đều là thanh ghi 32bit là eax, edi, esi, v.v. trong khi chúng ta tính toán ở trước là phần short, điều này chúng ta cũng nhớ tới phần trước khi ta debug binary ở câu hỏi ffff.. ở sau là do compiler chuyển short thành int, chúng ta cũng nhớ tới lần 2 trích xuất compiler chúng ta cũng thấy rõ ràng là nó ép kiểu thành int và ở đây ta thấy nó dùng thanh ghi 32bit khả năng cao nó lại là int
+Ở đây, ta mới để ý cách nó truyền vào hàm printf, bởi lẽ khi transmit vào thì nó đều là thanh ghi 32bit là eax, edi, esi, v.v. trong khi chúng ta tính toán ở trước là phần short, điều này chúng ta cũng nhớ tới phần trước khi ta debug binary ở câu hỏi ffff.. ở sau là do compiler chuyển short thành int, chúng ta cũng nhớ tới lần 2 trích xuất compiler chúng ta cũng thấy rõ ràng là nó ép kiểu thành int và ở đây ta thấy nó dùng thanh ghi 32bit khả năng cao nó lại là int. **Nhưng nó cũng transmit những thanh ghi cao hơn và zero extension được mà?**, thế thì đây là lần trích xuất log compiler lần 3, lần này ko trích xuât all log nữa mà chỉ trích xuất đúng log optimized thôi :
+
+> gcc -o test_type test_type.c  -fdump-tree-optimized
+
+![alt text](image74.png)
+
+chúng ta quan sát, ở đây trong file optimized ta thấy các kiểu short đều được ép thành int hết cả rồi, với cả là khi cộng một là cộng vào int ko cộng vào short
+
+**trả lời cho câu hỏi trên là :** khi biên dịch C ép kiểu short thành int, vì thế tmax của short rất nhỏ để có thể làm tràn int được. Đây được gọi là integer promotion. Khi ta ép `(signed short)a + 1`, nghĩa là khi biên dịch a được ép trước thành int `(signed int)a + 1` thì khi đó cộng một cũng chỉ là con số rất nhỏ để làm tràn cái int 32bit vì khi ép thì sẽ bị zero extension ra thêm 16 bit nữa. Để có thể làm tràn thì chúng ta thay bằng `(signed short)((short)a+1)` thì lúc này nó sẽ cộng 1 a chuẩn short vào trước, lúc này sẽ bị tràn ra MSB là `10000` sẽ có dấu âm khi bị ép thành int thì thấy MSB = 1 sẽ thành sign extension chứ ko phải là zero nữa. Bây giờ chúng ta sửa lại code xem sao.
+
+```c
+#include <stdio.h>
+
+int main(void){
+	//biểu thức unsigned
+	unsigned short a = 32767; //Tmax của short 0111111...
+
+	printf("a ko dấu là : %d, cộng thêm 1 là : %d\na có dấu là : %d, cộng thêm 1 là : %d\n",
+
+			a,
+
+			a+1, //lúc này là 100000... MSB = 1 nhưng mà ko phải số âm, vì là hệ ko dấu nên sẽ là 32768 + 1 = 32769
+
+			(signed short)((short)a), //vẫn còn là số dương vì nó vẫn là Tmax của short, ép kiểu chuẩn short
+
+			(signed short)((short)a+1) //lúc này mới chuyển sang số có dấu là Tmin = -32768, ép kiểu chuẩn short 
+	);
+
+	return 0;
+}
+```
+
+> gcc -o test_type test_type.c ; ./test_type
+
+![alt text](image75.png)
+
+Kết quả đúng như kỳ vọng của chúng ta 
 
 </details>
 
