@@ -1267,8 +1267,32 @@ vì thế cho binary như `1001010111`. thì ta có bảng như sau :
 | bit 		 | 1 | 0 | 0 | 1 | 0 | 1 | 0 | 1 | 1 | 1 |
 | flags 	 | IF | TF | SF | ZF | | AF | | PF | | CF |
 
-Ở đây, các bit là số `1` là bật các cờ lên. Các cờ ở vị trí bit `1` như `IF, ZF, AF, PF, CF` đúng y chang GDB báo ở trên, nhưng nó little endian ngược lại từ thấp đến cao nhé
+Ở đây, các bit là số `1` là bật các cờ lên. Các cờ ở vị trí bit `1` như `IF, ZF, AF, PF, CF` đúng y chang GDB báo ở trên, nhưng nó little endian ngược lại từ thấp đến cao nhé. Bây giờ chúng ta thử chứng minh nếu dùng các thanh ghi cao hơn và cố tình ko làm tràn bit unsigned overflow thì bit carry và cờ carry có = 1 ko :
 
+```asm
+section .text
+	global _start
+_start:
+	mov eax, 1 ;eax 32bit gắn 1 vào
+	add eax, 1 ; cộng thêm 1, điều này chắc chắn sẽ ko xảy ra unsigned overflow
+```
+
+> nasm -f elf64 asm.asm ; ld asm.o -o asm ; ./asm
+
+![alt text](image81.png)
+
+chúng ta thấy SIGSEGV, y chang như mấy cái trước nó vẫn là bình thường do ko exit chương trình. Bây giờ chúng ta tiếp tục dùng GDB để debug nó rồi start trước :
+
+> gdb -q asm
+
+![alt text](image82.png)
+
+chúng ta thấy thanh ghi eflags vẫn là IF, bây giờ thực thi nốt instrution add eax xem sao.
+
+![alt text](image83.png)
+
+chúng ta thấy eflags vẫn là IF, nó ko có CF hay cái flag nào được bật lên hết. vậy nên CF chỉ = 1 khi có bit carry mà bit carry chính là bit tràn unsigned overflow bị loại bỏ khỏi dãy biinary
+ 
 </details>
 
 **2.1.1.3 Vì sao phép cộng unsigned lại tương đương modulo $$\Large2^{N}$$?**
