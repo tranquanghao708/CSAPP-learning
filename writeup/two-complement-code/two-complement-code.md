@@ -1297,22 +1297,58 @@ chúng ta thấy eflags vẫn là IF, nó ko có CF hay cái flag nào được 
 
 **2.1.1.3 Vì sao phép cộng unsigned lại tương đương modulo $$\Large2^{N}$$?**
 
-- giá trị bit là $$\Large2^{N}-1$$ nghĩa là Tmax của 1 dãy bit, khi chúng ta vượt quá Tmax của dãy bit đó sẽ ra hiện tượng unsigned overflow và sẽ có 1 bit carry và cờ carry (CF) sẽ = 1, điều này chúng ta đã đi qua ở các chủ đề phía trên rồi . Bây giờ, chúng ta giải quyết câu hỏi vì sao phép cộng unsigned lại tương đương modulo $$\Large2^{N}$$, trước hết chúng ta cần hiểu **modulo là gì và modulo $$\Large2^{N}$$ là gì?** đã còn phép cộng unsigned chính là phép tính unsigned và phần này ta đã đi qua ở đợt chủ đề vừa rồi. Modulo là phép tính chỉ ra kết quả là số dư khi thực hiện phép chia cả hai số, ví dụ `11 MOD 2 = 1 (vì 11 / 2 dư 1)` hoặc `13 MOD 2 = 2 (vì 13 / 2 dư 1)` hay nó luôn = 0 vì hai số chia ko dư ví dụ `10 MOD 2 = 0 (vì 10 chia hết cho 2 nên dư 0)` hoặc `20 MOD 5 = 0 (vì 20 chia hết cho 5 dư 0)` chúng ta thấy nó chỉ lấy những phần dư, kết quả dư là kết quả cho modulo vậy có phải ký hiệu `%` để lấy số dư ở lập trình ko, chính là nó và nguyên lý ko khác gì.
+- giá trị bit là $$\Large2^{N}-1$$ nghĩa là Tmax của 1 dãy bit, khi chúng ta vượt quá Tmax của dãy bit đó sẽ ra hiện tượng unsigned overflow và sẽ có 1 bit carry và cờ carry (CF) sẽ = 1, điều này chúng ta đã đi qua ở các chủ đề phía trên rồi . Bây giờ, chúng ta giải quyết câu hỏi vì sao phép cộng unsigned lại tương đương modulo $$\Large2^{N}$$, trước hết chúng ta cần hiểu **modulo là gì và modulo $$\Large2^{N}$$ là gì?** đã còn phép cộng unsigned chính là phép tính unsigned và phần này ta đã đi qua ở đợt chủ đề vừa rồi. Modulo là phép tính chỉ ra kết quả là số dư khi thực hiện phép chia cả hai số, ví dụ `11 MOD 2 = 1 (vì 11 / 2 dư 1)` hoặc `13 MOD 2 = 1 (vì 13 / 2 dư 1)` hay nó luôn = 0 vì hai số chia ko dư ví dụ `10 MOD 2 = 0 (vì 10 chia hết cho 2 nên dư 0)` hoặc `20 MOD 5 = 0 (vì 20 chia hết cho 5 dư 0)` chúng ta thấy nó chỉ lấy những phần dư, kết quả dư là kết quả cho modulo vậy có phải ký hiệu `%` để lấy số dư ở lập trình ko, chính là nó và nguyên lý ko khác gì.
 
 ![alt text](image85.png)
 
-Vậy còn modulo $$\Large2^{N}$$ là gì? , nếu modulo là chỉ lấy phần dư thì modulo $$\Large2^{N}$$ lấy những số dư của những đơn vị, chục v.v. các số chia với phép tính biểu thức $$\Large2^{N}$$ . Nghĩa là, khi ta có 4 bit tmax của bit này là 15 ($$\Large2^{4}-1 = 15$$) , chúng ta lấy 15 chia với $$\Large2^{4}$$ để lấy dư chúng ta có biểu thức modulo hoàn chỉnh như sau 15 MOD $$\Large2^{4}$$ = 16 MOD 15 = 1 ( vì 15 / 16 dư 1)
+Vậy còn modulo $$\Large2^{N}$$ là gì? , nếu modulo là chỉ lấy phần dư thì modulo $$\Large2^{N}$$ lấy phần dư chia cho $$\Large2^{N}$$ . Nghĩa là, khi ta có 4 bit từ (0000 -> 1111) và toàn dãy giá trị của bit này là 15 ($$\Large2^{4}-1 = 15$$) , chúng ta lấy 15 chia với $$\Large2^{4}$$ để lấy dư chúng ta có biểu thức modulo hoàn chỉnh như sau 15 MOD $$\Large2^{4}$$ = 15 MOD 16 = 15 ( vì 15 / 16 dư 15 kết quả = 0)
 
 > [!IMPORTANT]
 > MODULO **ko có tính giao hoán**, ví dụ `16 mod 15 = 1` là đúng, nhưng `15 mod 16 = 1` là sai, `15 mod 16 là 15 mới đúng` nên kết quả đúng = <số bị chia> MOD <số chia> 
 
 ![alt text](image84.png)
 
- nên kết quả của modulo là 1, đó là modulo  $$\Large2^{N}$$ . Vậy **điều này nghĩa là gì?**, kết quả vừa rồi của modulo chính là số bit carry bị loại bỏ là 1. Vậy nếu thế thì ta cho ví dụ là ở đây 4bit có Tmax là 15, nhưng bây giờ $$\Large2^{4} = 16$$ là unsigned overflow trong kiến trúc 4bit 1 carry (1 lần) nhưng bây giờ ta thử tăng gấp đôi thì ta có biểu thức là $$\Large2^{4} \times 2 = 32$$ là 2 carry (2 lần) unsigned overflow, vậy chúng ta tiến hành tính modulo thử xem `32 mod 15 = 2` 
+ nên kết quả của modulo là 15, đó là modulo  $$\Large2^{N}$$ . Vậy **điều này nghĩa là gì?**, kết quả vừa rồi của modulo chính là kết quả giá trị của phép toán cộng ko dấu unsigned arithmetic , nghĩa là khi ta có giá trị toàn dãy ở bit này (1111) là 15 kiểu số nguyên ko dấu khi ta mod với 16 thì sẽ dư 15 vì value cả dãy là 15, vượt quá 15 là hiện tượng unsigned overflow. Nếu ta dùng 16 MOD 16 = 0 vì nó chia hết dư 0 nhưng cũng chính là kết quả đúng khi xảy ra hiện tượng unsigned overflow 
 
 ![alt text](image86.png)
 
-Đó, chúng ta quan sát là nó ra kết quả là 2 vậy kết quả số dư của modulo này chính là số bit carry mà hệ thống bỏ sau khi xảy ra hiện tượng unsigned overflow. Vậy phép tính tổng quan là `<value_number> mod <Tmax của dãy bit> = <số bit carry sau khi unsigned overflow>`
+Đó, chúng ta quan sát là nó ra kết quả là 0 vậy kết quả số dư của modulo này chính là giá trị của binary, phép toán ko dấu khi xảy ra hiện tượng unsigned overflow.
+
+> [!IMPORTANT]
+> Phép toán moudulo **$$a mod 2^{N}** đảm nhiệm dự đoán, tính giá trị của dãy bit ko dấu từ hai số thập phân mà ko cần phải nhìn binary trong đó a là số lượng cấp vào dãy bit ví dụ a = 1 thì bit sẽ là 0001, a = 2 thì bit sẽ là 0010 ví dụ: `nếu biến a có giá trị là 30 thì ta muốn biểu diễn dưới 4bit là bao nhiêu, kết quả là = 14 vì 1carry bit đã bị tràn ko dấu`, còn $$2^{N}$$ tượng trưng cho điều kiện sẽ xảy ra unsigned overflow của một dãy bit, ví dụ 4bit có điều kiện xảy ra unsigned overflow là 16, khi các số <16 thì sẽ ra kết quả là giá trị của dãy bit trong phạm vi mà nó hỗ trợ nhưng nếu >=16 thì sẽ đi về 0 và những số dư sau này là giá trị của việc reset lại dãy bit sau khi bị tràn số nguyên ko dấu
+
+chúng ta có vài ví dụ như sau, vẫn là 4bit (0000->1111) nhưng giả sử ta có số 30 bây giờ thay vì nhìn binary là nó bao nhiêu bit carry rồi sau đó là nhiêu thì bây giờ ta sẽ dùng modulo để tính ra value luôn **30 MOD $$2^{4}$$ = 30 MOD 16 = 14** . Khi ta cho số 30 vào 4 bit thì sẽ tràn ko dấu, sau khi tràn ko dấu kết quả đúng của nó là 14 .
+
+![alt text](image87.png)
+
+> Chúng ta lập bảng chứng minh thủ công là modulo nó tính value đúng, bạn có thể bỏ qua nếu ko quan tâm đến
+
+<details>
+	<summary>tính thủ công</summary>
+
+| vị trí bit | 3 | 2 | 1 | 0 |
+|------------|---|---|---|---|
+| số bit 	 | 1 | 1 | 1 | 1 |
+
+-> tổng cái quỷ này là 15, bây giờ số nguyên cấp vào là 30, làm tràn nó là ta lấy 15 + 1 = 0 và bit sẽ reset về 0
+
+| vị trí bit | 3 | 2 | 1 | 0 |
+|------------|---|---|---|---|
+| số bit 	 | 0 | 0 | 0 | 0 |
+
+bây giờ chúng ta đang ở là 16, giờ tính
+
+| vị trí bit | 3 | 2 | 1 | 0 |
+|------------|---|---|---|---|
+| số bit 	 | 1 | 1 | 1 | 0 |
+
+Bạn thấy rõ ràng là từ 16 ta đếm lần lượt vị trí bit số 0 trước theo little endian là 1, bây giờ 17. Đếm vị trí bit 0 là 0, vị trí 1 là 1 dãy bit sau 1 carry này là 2 bây giờ là 18. Cứ thế đếm lần lượt cho đủ 30. Kết quả ra đúng là 14 bit tương đương 30 MOD $$2^{4}$$ = 30 MOD 16 = 14
+
+</details>
+
+**khi nào nên dùng nó?**
+
+Chúng ta dùng nó để 
 
 **2.1.1.4 vì sao unsigned arithmetic chính là modulo $$\Large2^{N}$$?**
 
