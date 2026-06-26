@@ -660,7 +660,7 @@ flowchart TD
 
 ![alt text](image88.png)
 
-Trong CSAPP nói, overflow dạng ko dấu này sẽ xảy ra khi x + y − $$\Large2^{w}$$ và $$2^{w}$$ ≤ x + y < $$2^{w}$$+1 còn x + y và x + y < $$2^{w}$$ thì bình thường
+Trong CSAPP nói, overflow dạng ko dấu này sẽ xảy ra khi x + y − $$\Large2^{w}$$ và $$\Large2^{w}$$ ≤ x + y < $$\Large2^{w}$$+1 còn x + y và x + y < $$\Large2^{w}$$ thì bình thường
 
 **2.1.1.1 modulo $$\Large2^{N}$$**
 
@@ -1354,7 +1354,9 @@ Bạn thấy rõ ràng là từ 16 ta đếm lần lượt vị trí bit số 0 
 
 Chúng ta dùng nó để cho các mục đích sau thứ nhất và lớn nhất đó là dự đoán kết quả unsigned mà không cần viết binary, viết binary, lập bảng, đặc biệt tính số kết quả sau khi đã tràn bit ko dấu v.v. phép toán thì đúng nhưng khổ dâm, thực tế và hiệu suất nên khuyên nhủ dùng modulo hay C để đoán kết quả unsigned sau khi đã bị tràn, modulo linh hoạt hơn vì nó cho chúng ta tùy chỉnh bit nào với bit nào còn C thì tùy thuộc kiểu dữ liệu. Công dụng số 2 là đoán trước có bị unsigned overflow hay ko nếu N < $$\Large2^{N}$$ là ko bị nhưng mà nếu >= $$\Large2^{N}$$ chắc chắn sẽ unsigned overflow. Công dụng cuối là hiểu hành vi thật của CPU khi làm việc với phép tính kiểu này, CPU nó ko biết tmax hay tmin, như đã nói ở các chủ đề trước nó chỉ biết bit 0 và 1 rồi thôi chính cách diễn giải mới làm thay đổi value hay hành vi của bit là gì, nhưng ở đây khi dùng modulo chúng ta sẽ hiểu CPU nó chỉ lấy phần dư làm result cho các phép tính hệ ko dấu kiểu này thôi chứ ko có gì cao siêu chỉ là result = N mod $$\Large2^{N}$$ , khi ta biết cách và dự đoán được trước những gì mà CPU sẽ thực hiện hay compile v.v. thì đồng nghĩa là ta đã hiểu cách hoạt động của mấy quỷ đó rồi mà
 
-**2.1.1.4 vì sao unsigned arithmetic chính là modulo $$\Large2^{N}$$?**
+**2.1.1.4 Vòng tuần hoàn của số nguyên không dấu (Wrap-around)**
+
+- đầu tiên là Wrap-around là gì, 
 
 **2.1.2 signed overflow**
 
