@@ -1319,7 +1319,7 @@ Vậy còn modulo $$\Large2^{N}$$ là gì? , nếu modulo là chỉ lấy phần
 
 chúng ta có vài ví dụ như sau, vẫn là 4bit (0000->1111) nhưng giả sử ta có số 30 bây giờ thay vì nhìn binary là nó bao nhiêu bit carry rồi sau đó là nhiêu thì bây giờ ta sẽ dùng modulo để tính ra value luôn **30 MOD $$2^{4}$$ = 30 MOD 16 = 14** . Khi ta cho số 30 vào 4 bit thì sẽ tràn ko dấu, sau khi tràn ko dấu kết quả đúng của nó là 14 .
 
-![alt text](image87.png)
+![alt text](image88.png)
 
 > Chúng ta lập bảng chứng minh thủ công là modulo nó tính value đúng, bạn có thể bỏ qua nếu ko quan tâm đến
 
