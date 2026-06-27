@@ -32,13 +32,13 @@
 
 	- 2.1.2 signed overflow
 
-	- 2.1.2.1 vượt miền Tmin/Tmax
+	- 2.1.2.1 Điều kiện xảy ra signed overflow
 
 	- 2.1.2.2 cờ OF (overflow flag)
 
-	- 2.1.2.3 vì sao MSB đổi?
+	- 2.1.2.3 Vì sao MSB thay đổi nhưng không phải nguyên nhân của signed overflow?
 
-	- 2.1.2.4 áp dụng thử vào C
+	- 2.1.2.4 Vì sao CPU nó lại ko phân biệt được signed, unsigned, cách diễn giải thậm chí là âm hay dương? Và điều gì khiến nó ra màn hình trước mặt của chúng ta là số âm, và sao nó biết một chương trình đang signed để nó cho MSB = 1 theo bù hai và unsigned để nó bỏ dấu âm đi dù bản thân nó ko phân biệt và biết nổi signed và unsigned là quái gì?
 
 ---
 
@@ -1463,10 +1463,10 @@ int main(void){
 Chúng ta thấy kết quả đúng như kỳ vọng
 </details>
 
-**2.1.2.1 vượt miền Tmin/Tmax**
+**2.1.2.1 Điều kiện xảy ra signed overflow**
 
 **2.1.2.2 cờ OF (overflow flag)**
 
-**2.1.2.3 vì sao MSB đổi?**
+**2.1.2.3 Vì sao MSB thay đổi nhưng không phải nguyên nhân của signed overflow?**
 
-**2.1.2.4 áp dụng thử vào C**
+**2.1.2.4 Vì sao CPU nó lại ko phân biệt được signed, unsigned, cách diễn giải thậm chí là âm hay dương? Và điều gì khiến nó ra màn hình trước mặt của chúng ta là số âm, và sao nó biết một chương trình đang signed để nó cho MSB = 1 theo bù hai và unsigned để nó bỏ dấu âm đi dù bản thân nó ko phân biệt và biết nổi signed và unsigned là quái gì?**
