@@ -1421,7 +1421,8 @@ nhưng khi ta vượt quá hai Tmax và Tmin này nó lại là số khác. Ví 
 | 4bit | 0000 |
 |------|------|
 | Tmax (lúc đầu) | 0111 |
-| vượt tmax ( +1 ) | 1000 (số âm) |
+| vượt tmax ( +1 ) | 0001 |
+| kết quả | 1000 (số âm) |
 
 còn về tmin :
 
