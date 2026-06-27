@@ -1401,14 +1401,14 @@ chúng ta thấy phép tính modulo và tính bit ở C nó khớp nhau
 
 **2.1.1.4 Vòng tuần hoàn của số nguyên không dấu (Wrap-around)**
 
-- đầu tiên là Wrap-around là gì, là biểu thị cho một vòng lặp tuần hoàn của số nguyên ko dấu chẳng hạn như ta có 4bit (0000 -> 1111) ở đây giá trị của 1111 là 15 tương đương với $$\Large2^{4}-1$$ nhưng khi ta cộng 1 vào sẽ thành 16 tương ứng với 1 carry và bit sẽ thành (0000) số nguyên là 0, đó là Wrap-around. Nói dễ hiểu hơn giống đồng hồ, nó có Wrap around là từ 1 -> 12 số, giống 4bit có 0->15 số, nhưng khi kim đồng hồ chỉ tới số 12 khi ta cộng 1 vào 12+1 = 13, là số một nghĩa là 1 giờ và sẽ có 1 carry ở đó. Carry là số lần lặp lại của 1 chu kỳ vòng tuần hoàn, thì 4bit cũng vậy :
+- đầu tiên là **Wrap-around là gì**, là biểu thị cho một vòng lặp tuần hoàn của số nguyên ko dấu chẳng hạn như ta có 4bit (0000 -> 1111) ở đây giá trị của 1111 là 15 tương đương với $$\Large2^{4}-1$$ nhưng khi ta cộng 1 vào sẽ thành 16 tương ứng với 1 carry và bit sẽ thành (0000) số nguyên là 0, đó là Wrap-around. Nói dễ hiểu hơn giống đồng hồ, nó có Wrap around là từ 1 -> 12 số, giống 4bit có 0->15 số, nhưng khi kim đồng hồ chỉ tới số 12 khi ta cộng 1 vào 12+1 = 13, là số một nghĩa là 1 giờ và sẽ có 1 carry ở đó. Carry là số lần lặp lại của 1 chu kỳ vòng tuần hoàn, thì 4bit cũng vậy :
 
 | 4bit | 0000 |
 |------|------|
 | $$\Large2^{4}-1$$ | 1111 |
 | $$\Large2^{4}$$ | 0000 (1 carry) |
 
-đó là Wrap-around, nó có ký hiệu là Umax vậy chúng ta nói và cho rằng 4bit có Umax là (0 -> 15) nếu ta đi từ 0 tới số 15 và giậm chân tại số 15, ta có 0 carry và vẫn ở trong Umax, nhưng khi ta bước ra nghĩa là +1 để bước sang số 16 thì ta lại quay về điểm xuất phát chính là số 0 lúc này ta có 1 carry. Wrap-around chỉ để biểu đạt lại là trong bit này có bao nhiêu số nguyên/thập phân có thể đi được từ đầu đến cuối mà ko bị quay về trong một khung dể nhìn và quan sát như (0->15) hoặc (0->225) với 8 bit 
+đó là Wrap-around, vậy chúng ta nói và cho rằng 4bit có Umax là 15 , là (0 -> 15) nếu ta đi từ 0 tới số 15 và giậm chân tại số 15, ta có 0 carry và vẫn ở trong dải (0->15) và vẫn nhỏ hơn hoặc bằng Umax, nhưng khi ta bước ra nghĩa là +1 để bước sang số 16 thì ta lại quay về điểm xuất phát chính là số 0 lúc này ta có 1 carry. Wrap-around chỉ để mô tả việc giá trị unsigned quay trở lại đầu miền biểu diễn khi vượt quá giá trị lớn nhất của nó. có thể đi được từ đầu đến cuối mà ko bị quay về trong một khung dể nhìn và quan sát như (0->15) hoặc (0->225) với 8 bit 
 
 **2.1.2 signed overflow**
 
