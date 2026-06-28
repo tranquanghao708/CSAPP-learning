@@ -662,6 +662,8 @@ int main(void){
 
 </details>
 
+nếu bit 1 trong miền bị cắt, giá trị số học có thể thay đổi
+
 **1.6. Phép đối của số bù hai**
 
 ![alt text](image93.png)
@@ -674,14 +676,14 @@ int main(void){
 |-----------------------|---|---|---|---|---|
 | số âm (đối của dương) | -1 | -2 | -3 | -4 | -5 |
 
-Điều đặc biệt là lấy hai số đối cộng lại kết quả là `0` dương nhưng nó ko góp gì ở dãy số, ví dụ `1 + (-1) = 0` , `2 + (-2) = 0` v.v. đó là tính chất quan trọng của phép đối. Còn **phép đối của số bù hai là gì**, CPU nó ko biết dấu âm hay dương, nó chỉ biết bit. Điều quan trọng ta thường nhắc lại nhiều lần, nên nó sẽ ko lưu dâu âm như toán học thay vào đó nó lấy số đối bằng cách đảo bit `0->1` ,`1->0` và cộng thêm một. Công thức như sau `-x = ~x + 1` ví dụ khi có 4bit và bây giờ ta muốn chuyển giá trị số nguyên là `5` sang hệ 4bit này kết quả sẽ là `0101` nhưng bây giờ ta muốn bit này là số đối của `5` nghĩa là `-5` thì ta dùng `-x = ~0101 + 1` kết quả là `1011` là `-5`
+Điều đặc biệt : `1 + (-1) = 0` , `2 + (-2) = 0`.. -> bằng 0 ,đó là tính chất quan trọng của phép đối. Còn **phép đối của số bù hai là gì**, CPU nó ko biết dấu âm hay dương, nó chỉ biết bit. Điều quan trọng ta thường nhắc lại nhiều lần, nên nó sẽ ko lưu dâu âm như toán học. Nó dùng Công thức `-x = ~x + 1` ví dụ 4bit, bây giờ ta muốn chuyển số `5` sang binary kết quả sẽ là `0101` nhưng ta muốn bit này là số đối của `5` nghĩa là `-5` thì ta dùng `-x = ~0101 + 1` kết quả là `1011` là `-5`
 
 ![alt text](image92.png)
 
 Ý tưởng cốt lõi của mã bù hai là `a - b = a + (-b) = a + (~b + 1)`
 
 > [!IMPORTANT]
-> CPU nó luôn làm phép cộng nó ko làm phép trừ như `a - b`, nó cũng chẳng có khái niệm nhân, chia hay gì cả, điều nó thực sự làm là các phép toán bit như xor, and dịch trái hay phải v.v.. để ra kết quả tựa như toán học 
+> CPU nó luôn làm phép cộng nó ko làm phép trừ, nhân, chia . Nó chỉ làm các phép toán bit như xor, and dịch trái hay phải v.v.. để ra kết quả tựa như toán học 
 
 ---
 
