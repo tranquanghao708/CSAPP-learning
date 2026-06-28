@@ -632,19 +632,6 @@ bỏ bit ngoài đi, chúng ta có kết quả là 0. Đó là bù hai
 
 **1.5. Cắt bớt số bit**
 
----
-
-# Tràn số
-
-- Tràn số là hiện tượng các số bit được dịch hoặc được cộng lên sang bên trái :
-
-| số bit gốc | 00010001 |
-|------------|----------|
-| cộng 1     | 00010010 |
-| dịch phải 1 | 00100010 |
-
-- Điều đó bình thường và ko sai, nhưng sẽ có hậu quả nếu nó xảy ra hiện tượng ví dụ `overflow` , `signed wrap` . Thế hai hiện tượng này là gì?, overflow gồm hai phần `signed overflow` và `unsigned overflow` . còn signed wrap
-
 **1.6. Phép đối của số bù hai**
 
 ![alt text](image93.png)
@@ -666,6 +653,19 @@ bỏ bit ngoài đi, chúng ta có kết quả là 0. Đó là bù hai
 <details>
 	<summary>ví dụ với C</summary>
 </details>
+
+---
+
+# Tràn số
+
+- Tràn số là hiện tượng các số bit được dịch hoặc được cộng lên sang bên trái :
+
+| số bit gốc | 00010001 |
+|------------|----------|
+| cộng 1     | 00010010 |
+| dịch phải 1 | 00100010 |
+
+- Điều đó bình thường và ko sai, nhưng sẽ có hậu quả nếu nó xảy ra hiện tượng ví dụ `overflow` , `signed wrap` . Thế hai hiện tượng này là gì?, overflow gồm hai phần `signed overflow` và `unsigned overflow` . còn signed wrap là
 
 **2.1 signed overflow và unsigned overflow**
 
