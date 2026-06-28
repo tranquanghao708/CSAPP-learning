@@ -1470,7 +1470,15 @@ Chúng ta thấy kết quả đúng như kỳ vọng.
 
 **2.1.2.1 Phép đối của số bù hai**
 
-- đầu tiên phải hiều phép đối là gì đã, phép đối là 
+- đầu tiên phải hiều **phép đối là gì** đã, phép đối là những số đối kiểu như khác dấu, ví dụ số 1 là dương nhưng -1 vẫn là phát âm `một` nhưng nó là âm đó là số đối của 1, số đối là cái này là dương cái kia là âm ví dụ ta có bảng như thế này :
+
+| số dương (đối của âm) | 1 | 2 | 3 | 4 | 5 |
+|-----------------------|---|---|---|---|---|
+| số âm (đối của dương) | -1 | -2 | -3 | -4 | -5 |
+
+đó ta thấy nó đối nghịch nhau, âm đối dương, dương đối âm đó gọi là phép đối. Điều đặc biệt là lấy hai số đối cộng lại kết quả là `0` dương nhưng nó ko góp gì ở dãy số, ví dụ `1 + (-1) = 0` , `2 + (-2) = 0` v.v. đó là tính chất quan trọng của phép đối. Còn **phép đối của số bù hai là gì**, CPU nó ko biết dấu âm hay dương, nó chỉ biết bit. Điều quan trọng ta thường nhắc lại nhiều lần, nên nó sẽ ko lưu dâu âm như toán học thay vào đó nó lấy số đối bằng cách đảo bit `0->1` ,`1->0` và cộng thêm một. Công thức như sau `-x = ~x + 1` ví dụ khi có 4bit và bây giờ ta muốn chuyển giá trị số nguyên là `5` sang hệ 4bit này kết quả sẽ là `0101` nhưng bây giờ ta muốn bit này là số đối của `5` nghĩa là `-5` thì ta dùng `-x = ~0101 + 1` kết quả là `1011` là `-5`
+
+![alt text](image92.png)
 
 **2.1.2.2 cờ OF (overflow flag)**
 
