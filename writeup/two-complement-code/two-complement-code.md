@@ -1593,9 +1593,18 @@ theo đúng kỳ vọng nên OF bật khi kết quả toán học $$\large\notin
 
 **2.1.2.2 Vì sao thay đổi bit dấu (MSB) không đồng nghĩa với signed overflow?**
 
-- Vì đó là vượt miền, còn signed overflow là kết quả toán học $$\large\notin$$ [Tmin, Tmax] tương đương điều kiện OF thay đổi. Ví dụ `0111 + 1 = 1000` toán học là `7 + 1 = 8` $$\large\notin$$ [-8,7]
+- Vì signed overflow xảy ra khi kết quả toán học $$\large\notin$$ [Tmin, Tmax] . Ví dụ cộng hai bit:
+
+| bit1 | 0101 |
+|-----|------|
+| bit2 | 1000 |
+| kết quả | 1101 |
+
+`1101` = -3, MSB = 1, OF = 0 vì -3 $$\large\in$$ [-8,7]
 
 > [!NOTE]
 > khi cộng hai số trái dấu, signed overflow ko thể xảy ra
 
 **2.1.2.3 Vì sao CPU nó lại ko phân biệt được signed, unsigned, cách diễn giải thậm chí là âm hay dương? Và điều gì khiến nó ra màn hình trước mặt của chúng ta là số âm, và sao nó biết một chương trình đang signed để nó cho MSB = 1 theo bù hai và unsigned để nó bỏ dấu âm đi dù bản thân nó ko phân biệt và biết nổi signed và unsigned là quái gì?**
+
+- Đó là cách chúng ta diễn giải bit, ngoài ra còn có ASCII, Opcode v.v. màn hình chỉ 3 màu đảm nhiệm vụ khác. CPU nhiệm vụ khác, chính cách diễn giải lên màn hình và luật được định nghĩa xưa nay mới quyết định bit dấu đóng vai trò gì, in gì
