@@ -1,4 +1,4 @@
-# Writeup : phép true false boolean dưới dạng mã bit 
+# CSAPP: phép true false boolean dưới dạng mã bit 
 
 > Ngày bắt đầu viết : 7/7/2026
 
