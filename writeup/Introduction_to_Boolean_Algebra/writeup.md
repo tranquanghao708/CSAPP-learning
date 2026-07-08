@@ -1,5 +1,9 @@
 # Writeup : phép true false boolean dưới dạng mã bit 
 
+> Ngày bắt đầu viết : 7/7/2026
+
+> Ngày hoàn thành : 8/7/2026
+
 **mục lục**
 
 - 1.Phép true false là gì và boolean dưới dạng mã bit là gì
@@ -42,7 +46,7 @@
 
 - Hay còn gọi là mảng bit, bitset, là một mảng chứa hai phần tử là bit `1` và `0`, bit `1` tượng trưng cho True và bit `0` tượng trưng cho False. Đặc điểm nó tiết kiệm bộ nhớ và nhanh hơn, nó chỉ chiếm 1 bit cho mỗi ô
 
-- Ta có thể sử dụng valriable hoặc array để thực hiện chúng
+- Bit vector đơn giản là bật cái gì đó lên có thể thôi, nó chỉ được gọi là bit vector khi ta xem bit này là bật cái nào đó thật sự trong hệ thống, chương trình. Ví dụ 001 là execute, 010 là write và 100 là read nó là bit vector
 
 #### 3.2.Biểu diễn tập hợp bằng bit vectors
 
@@ -90,3 +94,53 @@ S = 10110110 và F $$\large\in$$ S
 
 </details>
 
+- Ứng dụng của nó: hiện nay nó dùng kiểm tra thanh ghi nào đang rảnh, page map mà OS cấp, permission v.v. với chương trình C thì việc này sẽ thuận tiện nếu làm việc với flags, kiểm tra, thêm, xóa và so sánh, nhiều cái khác nữa. Với writeup này thì chương này có liên quan tới phàn so sánh
+
+## 4.Mở rộng phép toán Boolean lên Chuỗi Bit (Bit Vectors)
+
+#### 4.1.Khái niệm chuỗi bit là gì?
+
+- chuỗi bit là dãy `01001010` ví dụ `0` là chuỗi bit, `0110` là chuỗi bit hoặc dài hơn cỡ nào vẫn là chuỗi bit. Chuỗi bit ko có ý nghĩa , nó tùy vào cách diễn giải. Điều này ta đã thấy ở writeup bù hai hôm trước rồi
+
+#### 4.2.Mở rộng phép toán boolean lên chuỗi bit
+
+- khi ta có a và b đều được gán chuỗi bit, 4 phép tính bit được gọi là boolean cơ bản này `xor, and, or, not` sẽ thực hiện tính toán lên các chuỗi bit 
+
+<details>
+	<summary>với C</summary>
+
+```c
+#include <stdio.h>
+int main(void){
+unsigned char a = 0b10110100;
+unsigned char b = 0b01101110;
+
+printf("%x\n", a & b);
+printf("%x\n", a | b);
+printf("%x\n", a ^ b);
+printf("%x\n", (unsigned char)~a);
+return 0;}
+```
+
+![alt text](image/image1.png)
+
+thấy có character lạ là do các bit nó là nhị phân nên truy cập vào tình cờ có thể là ASCII.
+</details>
+
+- Tại sao gọi là mở rộng ? : lúc đầu, boolean chỉ biểu thị `0` và `1` chỉ là 1 bit, mở rộng sang chuỗi bit là một dãy `100101` và tính toán trong đó
+
+## 5.Kết luận
+
+- phép true false là biểu thị cho đúng, sai
+
+- chuỗi bit là một dãy bit như `100010`
+
+- boolean mở rộng sang chuỗi bit vì lúc đầu boolean chỉ là `0` và `1`, mở rộng là `0101010` tính toán trong chuỗi bit dài đó
+
+- bit vector biểu thị cho các bit `0` và `1` công tăc bật cái gì đó thật sự cho hệ thống, chương trình
+
+- Biểu diễn tập hợp bằng bit vectors là có thể bật tắt trong tập hợp tại một biến, có thể chỉnh sửa thêm xóa v.v. bằng các phép tính bit
+
+- boolean dưới dạng mã bit là quy định `1` là true, `0` là false
+
+- Tác dụng của phép bit boolean so với mảng các biến boolean là nhanh hơn, tiết kiệm hơn đáng kể
