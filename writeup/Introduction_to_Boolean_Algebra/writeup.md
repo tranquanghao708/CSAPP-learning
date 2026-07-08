@@ -1,4 +1,4 @@
-# CSAPP: phép true false boolean dưới dạng mã bit 
+# CSAPP : phép true false boolean dưới dạng mã bit 
 
 > Ngày bắt đầu viết : 7/7/2026
 
@@ -32,11 +32,11 @@
 
 - Phép true và false chỉ thị cho việc đúng/sai của chương trình, `ví dụ nếu if(1) -> true`, sẽ thực thi lệnh trong if nhưng `if(0) -> false` sẽ thực thi lệnh trong else
 
-- boolean dưới dạng mã bit là biểu thị cho các phép tính bit như  `^ (xor), & (And), ~ (Not), | (Or)` thực hiện tính toán bit theo bảng chân trị của mỗi phép toán và trả về ra kết quả cuối là true hay false, ví dụ `1 & 1 = 1 -> true` , `1 & 0 = 0 -> false`
+- Boolean là hệ giá trị gồm true và false. Trong máy tính, hai giá trị này thường được biểu diễn bằng bit 1 và 0. Các phép toán bit (&, |, ^, ~) là những phép toán hoạt động trên các bit.
 
 ## 2.Tác dụng của phép bit boolean so với mảng các biến boolean
 
-- tác dụng của phép bit boolean là tối ưu hiệu suất, làm cho chương trình nhanh chóng hơn so với mảng các biến boolean như `bool`. Lý do là việc tính các bit với các cổng trực tiếp của CPU nên nó nhanh hơn rất nhiều
+- tác dụng của phép bit boolean là tối ưu hiệu suất, làm cho chương trình nhanh chóng hơn so với mảng các biến boolean như `bool`. Lý do là việc tính các bit với các cổng trực tiếp của CPU nên nó nhanh hơn rất nhiều tuy nhiên điều này ko phải lúc nào cũng có thể xảy ra, compiler có thể tối ưu bool rất tốt và tốc độ gần hoặc bằng
 
 - tiếp theo là tiết kiệm bộ nhớ
 
@@ -44,7 +44,7 @@
 
 #### 3.1.Bit Vectors là gì?
 
-- Hay còn gọi là mảng bit, bitset, là một mảng chứa hai phần tử là bit `1` và `0`, bit `1` tượng trưng cho True và bit `0` tượng trưng cho False. Đặc điểm nó tiết kiệm bộ nhớ và nhanh hơn, nó chỉ chiếm 1 bit cho mỗi ô
+- Một dãy (sequence/vector) các bit, trong đó mỗi bit biểu diễn trạng thái của một phần tử hoặc một cờ (flag). Mỗi phần tử logic chỉ cần biểu diễn bằng 1 bit, vì vậy bit vector có thể tiết kiệm bộ nhớ hơn so với việc dùng một byte hoặc một biến bool cho mỗi phần tử.
 
 - Bit vector đơn giản là bật cái gì đó lên có thể thôi, nó chỉ được gọi là bit vector khi ta xem bit này là bật cái nào đó thật sự trong hệ thống, chương trình. Ví dụ 001 là execute, 010 là write và 100 là read nó là bit vector
 
@@ -60,9 +60,9 @@
 ta có tập hợp với bit vector là : S = {10110010}
 
 > [!IMPORTANT]
-> Điều này nghĩa là : Tất cả array, tập hợp compiled ra chỉ là bit. Khi biểu diễn dưới dạng bit vector, ta có thể dùng các phep toán AND, XOR v.v. để có thể làm việc, xáo trộn các bit trong. Ta có thể kiểm tra hay làm việc với các phần tử
+> Điều này nghĩa là : Trong bộ nhớ máy tính, mọi dữ liệu cuối cùng đều được lưu dưới dạng chuỗi bit. Khi biểu diễn dưới dạng bit vector, ta có thể dùng các phep toán AND, XOR v.v. để có thể làm việc, xáo trộn các bit trong. Ta có thể kiểm tra hay làm việc với các phần tử
 
-- Vì sao nhanh hơn rất nhiều so với array, nhưng lại càng phức tạp hơn. Vì nó là bit, ko qua array hay truy cập gì, chỉ là dịch bit và dùng các phép toán để truy cập thôi.
+- Vì sao nhanh hơn rất nhiều so với array, nhưng lại càng phức tạp hơn. Vì nó là bit, phức tạp ở chỗ vẫn là bit, có thể dịch bit hay dùng các phép toán bit khác như Xor, And, Or, Not để xử lý, chỉnh sửa, thêm, xóa v.v. với bit
 
 <details>
 	<summary>trực quan với C</summary>
@@ -124,7 +124,7 @@ return 0;}
 
 ![alt text](image/image1.png)
 
-thấy có character lạ là do các bit nó là nhị phân nhưng bị ép thành hexa vì %x
+thấy có character lạ là do các bit nó là nhị phân nhưng bị đổi cách diễn giải thành hexa vì %x
 </details>
 
 - Tại sao gọi là mở rộng ? : lúc đầu, boolean chỉ biểu thị `0` và `1` chỉ là 1 bit, mở rộng sang chuỗi bit là một dãy `100101` và tính toán trong đó
