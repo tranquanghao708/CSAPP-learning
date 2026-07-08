@@ -124,7 +124,7 @@ return 0;}
 
 ![alt text](image/image1.png)
 
-thấy có character lạ là do các bit nó là nhị phân nên truy cập vào tình cờ có thể là ASCII.
+thấy có character lạ là do các bit nó là nhị phân nhưng bị ép thành hexa vì %x
 </details>
 
 - Tại sao gọi là mở rộng ? : lúc đầu, boolean chỉ biểu thị `0` và `1` chỉ là 1 bit, mở rộng sang chuỗi bit là một dãy `100101` và tính toán trong đó
