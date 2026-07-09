@@ -2,17 +2,19 @@
 
 **index**
 
-- 1.data size
+- [1.data size](#1data-size)
 
-- 1.1.dung lượng là gì?
+- [1.1.dung lượng là gì?](#11dung-lượng-là-gì)
 
-- 1.2.data size là gì?
+- [1.2.data size là gì?](#12data-size-là-gì)
 
-- 1.3.khác nhau giữa data size và dung lượng là gì?
+- [1.3.khác nhau giữa data size và dung lượng là gì?](#13khác-nhau-giữa-data-size-và-dung-lượng-là-gì)
 
-- 1.4.kích thước trên đĩa (size on disk) 
+- [1.4.kích thước trên đĩa (size on disk)](#14kích-thước-trên-đĩa-size-on-disk) 
 
-- 2.byte và word
+- [1.5.làm thế nào để biết chính xác data size thực tế khi chính os còn đánh lừa chúng ta?](#15làm-thế-nào-để-biết-chính-xác-data-size-thực-tế-khi-chính-os-còn-đánh-lừa-chúng-ta)
+
+- [2.byte và word](#2byte-và-word)
 
 - 2.1.word là gì?
 
@@ -91,6 +93,20 @@ int main(void){
 - nó đã lên 4kb, thực tế program chỉ chiếm 1kb thôi nhưng do hệ điều hành cấp phát 3Kb theo cluster và nó cực kỳ lãng phí
 
 </details>
+
+#### 1.5.làm thế nào để biết chính xác data size thực tế khi chính os còn đánh lừa chúng ta?
+
+- khá đơn giản, ta click chuột trái vào file cần xem, ấn `Properties` nó có chỉ thị size và size on disk, size là data size gốc của file còn size on disk là data file gốc + cluster:
+
+![alt text](image/image2.png)
+
+- nếu muốn terminal linux thì dùng `du -bh` ví dụ :
+
+> du -bh k.txt
+
+![alt text](image/image3.png)
+
+terminal là 1.1kb còn properties là 1.0 kb chênh lệch ko lớn nhưng có thể chấp nhận được
 
 ## 2.byte và word
 
