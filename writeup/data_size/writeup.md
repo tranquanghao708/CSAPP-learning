@@ -20,13 +20,17 @@
 
 - [2.word](#2word)
 
-- 2.1.word là gì?
+- [2.1.word là gì?](#21word-là-gì)
 
-- 3.sự thay đổi data size của kiểu dữ liệu khi tới kiến trúc (architecture) khác
+- [3.sự thay đổi data size của kiểu dữ liệu khi tới kiến trúc (architecture) khác](3sự-thay-đổi-data-size-của-kiểu-dữ-liệu-khi-tới-kiến-trúc-architecture-khác)
 
-- 3.1.kiến trúc (architecture) là gì?
+- [3.1.kiến trúc (architecture) là gì?](31kiến-trúc-architecture-là-gì)
 
-- 3.2.sự thay đổi data size của chương tình, kiểu dữ liệu khi tới kiến trúc khác
+- [3.2.sự thay đổi data size của chương tình, kiểu dữ liệu khi tới kiến trúc khác](32sự-thay-đổi-data-size-của-chương-tình-kiểu-dữ-liệu-khi-tới-kiến-trúc-khác)
+
+- [3.3.tại sao khi tới kiến trúc khác data size lại thay đổi](33tại-sao-khi-tới-kiến-trúc-khác-data-size-lại-thay-đổi)
+
+- [3.4.tại sao ko để mọi kiểu tăng lên?](34tại-sao-ko-để-mọi-kiểu-tăng-lên)
 
 - 5.Alignment và padding
 
@@ -146,4 +150,54 @@ size = 1024, block = 8 và nhiều info khác
 
 #### 3.1.kiến trúc (architecture) là gì?
 
-- là những bản thiết kế vận hành của CPU , máy tính. Nó tác động tới tập lệnh, binary, thanh ghi v.v..
+- là những bản thiết kế vận hành của CPU , máy tính. Nó tác động tới tập lệnh, binary, thanh ghi, ABI v.v.
+
+#### 3.2.sự thay đổi data size của chương tình, kiểu dữ liệu khi tới kiến trúc khác
+
+- khi kiểu dữ liệu từ 32bits architecture tới 64bits sarchitecture, có sự biến đổi chênh lệch data size. Vì vậy, khi ta tin tưởng type đó sẽ vẫn là data size khi tới kiến trúc đó là một sai lầm lớn. Proof :
+
+<details>
+	<summary>proof</summary>
+
+```c
+#include <stdio.h>
+int main(void){
+	printf("int :%d,long :%d,char :%d,long long :%d,double :%d\n",sizeof(int),sizeof(long),sizeof(char),sizeof(long long),sizeof(double));
+	return 0;
+}
+```
+
+cùng một src code, giờ biên dịch nó với 32bit trước :
+
+> gcc -m32 kk.c -o kk
+
+lưu ý : nhớ tải lib32-gcc-libs, ko thì sẽ lỗi linking do thiếu library động .so
+
+32bits :
+
+![alt text](image/image5.png)
+
+64bits :
+
+![alt text](image/image6.png)
+
+ta thấy có sự chênh lệch ở kiểu `long`
+
+</details>
+
+#### 3.3.tại sao khi tới kiến trúc khác data size lại thay đổi
+
+- Data size thay đổi vì architecture và ABI quy định kích thước của một số kiểu dữ liệu để CPU và hệ điều hành hoạt động hiệu quả hơn. Hơn nữa, compler và ABI thay đổi làm sizeof thay đổi data size của type, do ABI quyết định. 
+
+- Còn proof?, đã có ở đợt chứng minh vừa rồi với C, ta dùng gcc -m32 và -m64 biên dịch và chạy cùng một CPU architecture nhưng long vẫn thay đổi sizeof điều đó ko phải do CPU architecture làm, do ABI làm
+
+- Mọi src C khi biên dịch ko còn là type, theo góc nhìn của reverse nó là access thanh ghi với offset, nếu là 32bits mọi thanh ghi có thể được dùng $$\large\in$$ [4,32] bits tương tự với 64bits
+
+#### 3.4.tại sao ko để mọi kiểu tăng lên?
+
+- Vì tiết kiệm bộ nhớ, ví dụ `int` có data size là 4byte nhưng hàng triệu program đều dùng nó nhìn 4byte 1 program thì ít nhưng nhân với cả triệu thì đó là câu chuyện khác. Phần lớn số nguyên thường len lỏi khá ít, check error, condiction, xấp xỉ phạm vi [0,16] bits hiếm ai dùng cả chục tỷ cho project trong một biến
+
+- Tăng lên ở long, long long là khi ai muốn dùng số lớn là dùng type long còn ko thì int. Tăng lên mọi kiểu như int, double v.v. chỉ tốn ram mà int tăng ngang long chả khác gì mấy kiểu kia xây lên để chơi chỉ thay tên cho đẹp à?
+
+- nên nó chỉ tăng long và pointer thôi còn lại là nguyên
+
