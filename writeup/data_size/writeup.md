@@ -129,6 +129,19 @@ size = 1024, block = 8 và nhiều info khác
 
 #### 2.1.word là gì?
 
+- là natural data unit (đơn vị dữ liệu tự nhiên) của kiến trúc CPU. Word ko có data size cố định như 16 bit hay 32 bit, ví dụ IA-32 (32bit) word có 32bit là kích thước 4byte và các thanh ghi tổng quát như EAX EBX đều 32bit , nhưng qua X86-64 (64bit) word có 64bit 8byte có thanh ghi RAX, RBX cũng có 64bit 
+
+> [!WARNING]
+> Word là kích thước dữ liệu tự nhiên, ko có kích thước cố định trong ngữ cảnh chung của kiến trúc máy tính, CPU architecture
+
+#### 2.2.word dùng để làm gì?
+
+- CPU thường thiết kế ALU, thanh ghi và bus dữ liệu xoay quanh kích thước word. Ví dụ `long x = a + b` trong 64bit architecture , CPU nạp 64bit vào thanh ghi , cộng 64bit và ghi lại 64bit. Nếu dữ liệu đúng bằng word, CPU thường xử lý hiệu quả hơn so với việc phải ghép nhiều lần đọc/ghi các phần nhỏ hơn.
+
+> [!NOTE]
+> word ở CPU $$\large\req$$ word ở assembly, một số hợp ngữ thường dùng word với nghĩa cố định theo quy ước riêng nhưng ko phải định nghĩa chung của kiến trúc máy tính
+> ta có thể nhìn word để suy đoán ra số bit mà CPU architecture hỗ trợ hoặc ngược lại, nhìn bit CPU architecture để suy ra bit của word
+
 ## 3.sự thay đổi data size của chương trình, kiểu dữ liệu khi tới ngành kiến trúc khác
 
 #### 3.1.kiến trúc (architecture) là gì?
