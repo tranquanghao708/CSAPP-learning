@@ -143,7 +143,7 @@ size = 1024, block = 8 và nhiều info khác
 - CPU thường thiết kế ALU, thanh ghi và bus dữ liệu xoay quanh kích thước word. Ví dụ `long x = a + b` trong 64bit architecture , CPU nạp 64bit vào thanh ghi , cộng 64bit và ghi lại 64bit. Nếu dữ liệu đúng bằng word, CPU thường xử lý hiệu quả hơn so với việc phải ghép nhiều lần đọc/ghi các phần nhỏ hơn.
 
 > [!NOTE]
-> word ở CPU $$\large\req$$ word ở assembly, một số hợp ngữ thường dùng word với nghĩa cố định theo quy ước riêng nhưng ko phải định nghĩa chung của kiến trúc máy tính
+> word ở CPU $$\large\neq$$ word ở assembly, một số hợp ngữ thường dùng word với nghĩa cố định theo quy ước riêng nhưng ko phải định nghĩa chung của kiến trúc máy tính
 > ta có thể nhìn word để suy đoán ra số bit mà CPU architecture hỗ trợ hoặc ngược lại, nhìn bit CPU architecture để suy ra bit của word
 
 ## 3.sự thay đổi data size của chương trình, kiểu dữ liệu khi tới ngành kiến trúc khác
@@ -199,5 +199,4 @@ ta thấy có sự chênh lệch ở kiểu `long`
 
 - Tăng lên ở long, long long là khi ai muốn dùng số lớn là dùng type long còn ko thì int. Tăng lên mọi kiểu như int, double v.v. chỉ tốn ram mà int tăng ngang long chả khác gì mấy kiểu kia xây lên để chơi chỉ thay tên cho đẹp à?
 
-- nên nó chỉ tăng long và pointer thôi còn lại là nguyên
-
+- nên nó chỉ tăng long và pointer nếu LP64 linux còn LPP64 windows thì long giữ nguyên, tăng pointer
