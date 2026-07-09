@@ -22,15 +22,15 @@
 
 - [2.1.word là gì?](#21word-là-gì)
 
-- [3.sự thay đổi data size của kiểu dữ liệu khi tới kiến trúc (architecture) khác](3sự-thay-đổi-data-size-của-kiểu-dữ-liệu-khi-tới-kiến-trúc-architecture-khác)
+- [3.sự thay đổi data size của kiểu dữ liệu khi tới kiến trúc (architecture) khác](#3sự-thay-đổi-data-size-của-kiểu-dữ-liệu-khi-tới-kiến-trúc-architecture-khác)
 
-- [3.1.kiến trúc (architecture) là gì?](31kiến-trúc-architecture-là-gì)
+- [3.1.kiến trúc (architecture) là gì?](#31kiến-trúc-architecture-là-gì)
 
-- [3.2.sự thay đổi data size của chương tình, kiểu dữ liệu khi tới kiến trúc khác](32sự-thay-đổi-data-size-của-chương-tình-kiểu-dữ-liệu-khi-tới-kiến-trúc-khác)
+- [3.2.sự thay đổi data size của chương tình, kiểu dữ liệu khi tới kiến trúc khác](#32sự-thay-đổi-data-size-của-chương-tình-kiểu-dữ-liệu-khi-tới-kiến-trúc-khác)
 
-- [3.3.tại sao khi tới kiến trúc khác data size lại thay đổi](33tại-sao-khi-tới-kiến-trúc-khác-data-size-lại-thay-đổi)
+- [3.3.tại sao khi tới kiến trúc khác data size lại thay đổi](#33tại-sao-khi-tới-kiến-trúc-khác-data-size-lại-thay-đổi)
 
-- [3.4.tại sao ko để mọi kiểu tăng lên?](34tại-sao-ko-để-mọi-kiểu-tăng-lên)
+- [3.4.tại sao ko để mọi kiểu tăng lên?](#34tại-sao-ko-để-mọi-kiểu-tăng-lên)
 
 - 5.Alignment và padding
 
