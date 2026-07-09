@@ -12,21 +12,19 @@
 
 - [1.4.kích thước trên đĩa (size on disk)](#14kích-thước-trên-đĩa-size-on-disk) 
 
-- [1.5.làm thế nào để biết chính xác data size thực tế khi chính os còn đánh lừa chúng ta?](#15làm-thế-nào-để-biết-chính-xác-data-size-thực-tế-khi-chính-os-còn-đánh-lừa-chúng-ta)
+- [1.5.làm thế nào để biết chính xác file size thực tế?](#15làm-thế-nào-để-biết-chính-xác-file-size-thực-tế)
 
-- [2.byte và word](#2byte-và-word)
+- [1.6.vì sao 1.4 và 1.5 lại liên quan tới chương data size CSAPP dù có thể ko có trong sách?](#16vì-sao-14-và-15-lại-liên-quan-tới-chương-data-size-csapp-dù-có-thể-ko-có-trong-sách)
+
+- [2.word](#2word)
 
 - 2.1.word là gì?
 
-- 3.sự thay đổi dung lượng của chương trình, kiểu dữ liệu khi tới kiến trúc (architecture) khác
+- 3.sự thay đổi data size của kiểu dữ liệu khi tới kiến trúc (architecture) khác
 
 - 3.1.kiến trúc (architecture) là gì?
 
-- 3.2.kích thước của kiểu dữ liệu
-
-- 3.3.sự thay đổi dung lượng của chương tình, kiểu dữ liệu khi tới kiến trúc khác
-
-- 4.Vì sao khi tới chuỗi nhị phân khác lại thay đổi data size?
+- 3.2.sự thay đổi data size của chương tình, kiểu dữ liệu khi tới kiến trúc khác
 
 - 5.Alignment và padding
 
@@ -51,15 +49,15 @@
 
 #### 1.3.khác nhau giữa data size và dung lượng là gì?
 
-- data size là lượng không gian thực tế mà một program, image đang chiếm dụng còn dung lượng là lượng bộ nhớ hoặc số byte cần để lưu trữ cái program đó. Ví dụ, image.png nặng 200kb đó là data size, thiết bị A có ổ hhd là 500GB đó là dung lượng
+- data size là lượng không gian thực tế mà một program, image đang chiếm dụng còn dung lượng là lượng bộ nhớ hoặc số byte cần để lưu trữ cái program đó. Ví dụ, kiểu int nặng 4byte đó là data size, thiết bị A có ổ hhd là 500GB đó là dung lượng
 
-- data size thường xác định tệp đó nặng hay nhẹ còn dung lượng là xác định thiết bị đó có thể chứ được bao nhiêu tệp
+- data size thường xác định kiểu dữ liệu đó nặng hay nhẹ còn dung lượng là xác định thiết bị đó có thể chứa được bao nhiêu tệp
 
 #### 1.4.kích thước trên đĩa (size on disk)
 
-- Kích thước trên đĩa thường lớn hơn kích thước thực tế của tệp tin, do hệ điều hành lưu trữ dữ liệu theo từng khối (cluster) cố định, ví dụ file_a có data size là 1kb nhưng khi lưu vào ổ cứng chạy hệ điều hành linux hay windows thì nó sẽ lớn hơn. 
+- Kích thước trên đĩa thường lớn hơn kích thước thực tế của tệp tin, do hệ điều hành lưu trữ dữ liệu theo từng khối (cluster) cố định, ví dụ file_a có file size là 1kb nhưng khi lưu vào ổ cứng chạy hệ điều hành linux hay windows thì nó sẽ lớn hơn. 
 
-- từng khối (cluster) là gì? là những chỉ thị lưu trữ dữ liệu xuống ổ cứng do hệ điều hành thực hiện, ko phải hệ điều hành nào cũng có chỉ thị giống nhau nhưng ví dụ file có 1 kb nó cấp phát 4kb thì chỉ lưu 1kb là data size, 3kb còn lại là lãng phí vì ko lưu data size nào thật
+- từng khối (cluster) là gì? là đơn vị cấp phát nhỏ nhất của hệ thống tệp (filesystem). Xuống ổ cứng do hệ điều hành thực hiện, ko phải hệ điều hành nào cũng có đơn vị giống nhau nhưng ví dụ file có 1 kb nó cấp phát 4kb thì chỉ lưu 1kb là file size, 3kb còn lại là lãng phí vì ko lưu file size nào thật
 
 <details>
 	<summary>ví dụ thực tế</summary>
@@ -70,7 +68,7 @@
 int main(void){
 
 	int a = 0;
-	while ( a <= 1024 ){
+	while ( a < 1024 ){
 		printf("a");
 		a++;
 	}
@@ -96,7 +94,7 @@ int main(void){
 
 #### 1.5.làm thế nào để biết chính xác data size thực tế khi chính os còn đánh lừa chúng ta?
 
-- khá đơn giản, ta click chuột trái vào file cần xem, ấn `Properties` nó có chỉ thị size và size on disk, size là data size gốc của file còn size on disk là data file gốc + cluster:
+- khá đơn giản, ta click chuột trái vào file cần xem, ấn `Properties` nó có chỉ thị size và size on disk, size là file size gốc của file còn size on disk là data file gốc + cluster:
 
 ![alt text](image/image2.png)
 
@@ -108,11 +106,15 @@ int main(void){
 
 terminal là 1.1kb còn properties là 1.0 kb chênh lệch ko lớn nhưng có thể chấp nhận được
 
+#### 1.6.vì sao 1.4 và 1.5 lại liên quan tới chương data size CSAPP dù có thể ko có trong sách?
+
+- khi reverse một chương trình, nhiều người có thể sẽ nhìn file size của chương trình đó bằng `du -h` thay vì `du -bh` hoặc mở properties ra để soi, nhưng có người soi đúng có người soi sai. Nên suy ra xét sai size kiểu dữ liệu (data size) có thể liên quan tới việc này, dù hiếm nhưng để tránh nhầm lẫn sau này trong các trường hợp có thể xảy ra
+
 ## 2.byte và word
 
 #### 2.1.word là gì?
 
-## 3.sự thay đổi dung lượng của chương trình, kiểu dữ liệu khi tới ngành kiến trúc khác
+## 3.sự thay đổi data size của chương trình, kiểu dữ liệu khi tới ngành kiến trúc khác
 
 #### 3.1.kiến trúc (architecture) là gì?
 
