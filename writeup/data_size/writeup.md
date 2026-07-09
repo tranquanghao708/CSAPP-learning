@@ -1,5 +1,9 @@
 # CSAPP : Data Sizes – Kích thước dữ liệu trong bộ nhớ
 
+> ngày bắt đầu viết : 8/7/2026
+
+> ngày hoàn thành : 
+
 **index**
 
 - [1.data size](#1data-size)
@@ -36,7 +40,7 @@
 
 #### 1.1.dung lượng là gì?
 
-- Dung lượng (storage capacity) là khả năng lưu trữ tối đa của một thiết bị hoặc vùng nhớ.
+- Dung lượng (storage capacity) là khả năng lưu trữ tối đa của một thiết bị hoặc vùng nhớ. Có ký hiệu như Mb, Gb, Tb , Pb v.v.
 
 > [!IMPORTANT]
 > tuy nhiên khác nhau hệ quy đổi ở 2 hệ. Hệ 1 là SI ở đây 1 KB = 1000 B, còn hệ IEC là 1KiB = 1024 B. Phân biệt ký hiệu in hoa và thường, KB = killobyte, kb = killobit -> KB $$\large\neq$$ kb tương tự với các kiểu dữ liệu khác
@@ -99,7 +103,7 @@ int main(void){
 
 </details>
 
-#### 1.5.làm thế nào để biết chính xác data size thực tế?
+#### 1.5.làm thế nào để biết chính xác file size thực tế?
 
 - khá đơn giản, ta click chuột trái vào file cần xem, ấn `Properties` nó có chỉ thị size và size on disk, size là file size gốc của file còn size on disk là data file gốc + cluster:
 
@@ -121,7 +125,7 @@ terminal là 1.0kb còn properties là 1.0 kb là 1024 byte dữ liệu
 
 size = 1024, block = 8 và nhiều info khác
 
-## 2.byte và word
+## 2.word
 
 #### 2.1.word là gì?
 
