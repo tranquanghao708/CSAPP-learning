@@ -32,7 +32,7 @@
 
 - [3.4.tại sao ko để mọi kiểu tăng lên?](#34tại-sao-ko-để-mọi-kiểu-tăng-lên)
 
-- 5.Alignment và padding
+- [5.Alignment và padding](#5Alignment-và-padding)
 
 - 6.Ví dụ thực tế trên IA-32 và x86-64
 
@@ -200,3 +200,13 @@ ta thấy có sự chênh lệch ở kiểu `long`
 - Tăng lên ở long, long long là khi ai muốn dùng số lớn là dùng type long còn ko thì int. Tăng lên mọi kiểu như int, double v.v. chỉ tốn ram mà int tăng ngang long chả khác gì mấy kiểu kia xây lên để chơi chỉ thay tên cho đẹp à?
 
 - nên nó chỉ tăng long và pointer nếu LP64 linux còn LPP64 windows thì long giữ nguyên, tăng pointer
+
+## 5.Alignment và padding
+
+- Alignment là cái dùng để chia hết, vì CPU hoạt động theo lô nó luôn lấy một lượng byte ví dụ 4 - 8 byte trong một lần. Ví dụ, ta khai báo kiểu int nó phải chia hết cho data size của int `sizeof(int)` để tối ưu hiệu suất. Như thế, CPU mới lấy vừa đủ lô vì nó chia hết
+
+- Padding là thêm các ký tự điển hình null byte, nếu ko chia hết cho alignment ,system thực hiện padding thêm cho đủ để chia hết. Ví dụ, khai báo kiểu int mà ko chia hết cho 4, system sẽ thực hiện padding sao cho chia hết cho 4
+
+> [!NOTE]
+> Alignment : a $$\large\mid$$ b , a là dữ liệu, b là data size (sizeof)
+> Padding : (a + null byte (\0) ) $$\large\mid$$ b , điều kiện a $$\large\nmid$$ b và padding < data size
