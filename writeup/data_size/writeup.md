@@ -209,4 +209,5 @@ ta thấy có sự chênh lệch ở kiểu `long`
 
 > [!NOTE]
 > Alignment : a $$\large\mid$$ b , a là dữ liệu, b là data size (sizeof)
+>
 > Padding : (a + null byte (\0) ) $$\large\mid$$ b , điều kiện a $$\large\nmid$$ b và padding < data size
