@@ -154,7 +154,7 @@ size = 1024, block = 8 và nhiều info khác
 
 #### 3.2.sự thay đổi data size của chương tình, kiểu dữ liệu khi tới kiến trúc khác
 
-- khi kiểu dữ liệu từ 32bits architecture tới 64bits sarchitecture, có sự biến đổi chênh lệch data size. Vì vậy, khi ta tin tưởng type đó sẽ vẫn là data size khi tới kiến trúc đó là một sai lầm lớn. Proof :
+- khi kiểu dữ liệu từ 32bits architecture tới 64bits architecture, có sự biến đổi chênh lệch data size. Vì vậy, khi ta tin tưởng type đó sẽ vẫn là data size khi tới kiến trúc đó là một sai lầm lớn. Proof :
 
 <details>
 	<summary>proof</summary>
@@ -187,11 +187,11 @@ ta thấy có sự chênh lệch ở kiểu `long`
 
 #### 3.3.tại sao khi tới kiến trúc khác data size lại thay đổi
 
-- Data size thay đổi vì architecture và ABI quy định kích thước của một số kiểu dữ liệu để CPU và hệ điều hành hoạt động hiệu quả hơn. Hơn nữa, compler và ABI thay đổi làm sizeof thay đổi data size của type, do ABI quyết định. 
+- Data size thay đổi vì ABI quy định kích thước của một số kiểu dữ liệu trong C để CPU và hệ điều hành hoạt động hiệu quả hơn. Hơn nữa, Compiler triển khai quy tắc của ABI, nên cùng một mã nguồn có thể cho `sizeof(long)` khác nhau trên các ABI khác nhau.
 
 - Còn proof?, đã có ở đợt chứng minh vừa rồi với C, ta dùng gcc -m32 và -m64 biên dịch và chạy cùng một CPU architecture nhưng long vẫn thay đổi sizeof điều đó ko phải do CPU architecture làm, do ABI làm
 
-- Mọi src C khi biên dịch ko còn là type, theo góc nhìn của reverse nó là access thanh ghi với offset, nếu là 32bits mọi thanh ghi có thể được dùng $$\large\in$$ [4,32] bits tương tự với 64bits
+- Sau khi biên dịch thành machine code, phần lớn thông tin kiểu dữ liệu không còn tồn tại. CPU chỉ nhìn thấy các lệnh thao tác trên thanh ghi và vùng nhớ có kích thước 1, 2, 4 hoặc 8 byte. Theo góc nhìn của reverse nó là access thanh ghi với offset, nếu là 32bits mọi thanh ghi có thể được dùng $$\large\in$$ [4,32] bits tương tự với 64bits
 
 #### 3.4.tại sao ko để mọi kiểu tăng lên?
 
@@ -199,18 +199,25 @@ ta thấy có sự chênh lệch ở kiểu `long`
 
 - Tăng lên ở long, long long là khi ai muốn dùng số lớn là dùng type long còn ko thì int. Tăng lên mọi kiểu như int, double v.v. chỉ tốn ram mà int tăng ngang long chả khác gì mấy kiểu kia xây lên để chơi chỉ thay tên cho đẹp à?
 
-- nên nó chỉ tăng long và pointer nếu LP64 linux còn LPP64 windows thì long giữ nguyên, tăng pointer
+- nên nó có thể tăng long và pointer nếu LP64 linux, còn LLP64 windows thì long giữ nguyên, tăng pointer. Tóm lại là nó tăng cái gì phụ thuộc vào ABI
 
 ## 5.Alignment và padding
 
-- Alignment là một đối tượng nên được đặt tại địa chỉ là bội số của giá trị alignment của nó. Trong đó vaddr, phải chia hết cho data size của kiểu dữ liệu. Ví dụ, khai báo biến `int`, vaddr của biến đó hoặc gán vaddr nào vào biến đó, nó phải chia hết cho `sizeof(int)`
+- Alignment là một đối tượng nên được đặt tại địa chỉ là bội số của giá trị alignment của nó. Trong đó vaddr, phải chia hết cho Alignment `_Alignof(type)` của kiểu dữ liệu. Ví dụ trên nhiều ABI phổ biến, `int` có `_Alignof(int) == sizeof(int) == 4`, nên địa chỉ của int thường phải chia hết cho 4. Tuy nhiên điều này không đúng với mọi kiểu dữ liệu.
 
-- Padding là thêm các unused byte (byte ko sử dụng) vào, nếu ko chia hết cho alignment ,compiler thực hiện padding thêm cho đủ để chia hết. Ví dụ, khai báo kiểu int mà ko chia hết cho 4, compiler thực hiện padding để chia hết cho 4
+> [!IMPORTANT]
+> Trên nhiều ABI phổ biến, alignment của các kiểu dữ liệu cơ bản thường bằng sizeof của chúng, nhưng đây không phải yêu cầu của chuẩn C.
+>
+> ta có thể dùng `_Alignof(type)` trong C để xác định alignment và `sizeof(type)` trong C để xác định data size
+
+- Padding là các byte được compiler chèn vào bên trong hoặc cuối một cấu trúc dữ liệu nhằm đáp ứng yêu cầu alignment. Ví dụ, lúc đầu khai báo kiểu char trước trong struct, nhưng ta khai báo tiếp kiểu int sau char. alignment char = 1 byte còn int = 4 byte, nên compiler chèn 3 unused byte bên trong hoặc cuối để đáp ứng alignment
 
 > [!NOTE]
-> Alignment : a $$\large\vdots$$ b , a là dữ liệu, b là data size (sizeof)
+> Alignment : b $$\large\mid$$ a , a là vaddr (virtual address) , b là alignment `_Alignof()`
 >
-> Padding : (a + unused byte) $$\large\vdots$$ b , điều kiện a ko chia hết b và padding < data size
+> Padding : compiler chèn số byte tối thiểu cần thiết để đối tượng tiếp theo hoặc toàn bộ struct đáp ứng yêu cầu alignment.
+
+- Condition : Padding chủ yếu xuất hiện bên trong struct và ở cuối struct. Array không cần compiler chèn thêm padding riêng, vì mỗi phần tử đã bao gồm tail padding của chính struct đó.
 
 <details>
 	<summary>ví dụ C</summary>
