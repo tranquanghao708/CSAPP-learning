@@ -254,14 +254,17 @@ int main(void){
 
 sizeof all struct = 8, alignof all struct = 4. Bây giờ giải thích :
 
-- sizeof : là tính tất cả gồm padding trong struct với phép cộng. Ở đây char = 1 byte, int = 4 byte, padding = 3 byte `char + padding + int = 1 + 3 + 4 = 8 byte` nên nó là 8 byte
+- **sizeof** : là tính tất cả gồm padding trong struct với phép cộng. Ở đây char = 1 byte, int = 4 byte, padding = 3 byte `char + padding + int = 1 + 3 + 4 = 8 byte` nên nó là 8 byte
 
-- Alignof (alignment) : ở đây khác với sizeof, compiler tính alignment của struct bằng alignment lớn nhất trong các thành viên. Ở đây thành viên int có 4 byte > char 1 byte, nên nó lấy 4byte
+- **Alignof (alignment)** : ở đây khác với sizeof, compiler tính alignment của struct bằng alignment lớn nhất trong các thành viên. Ở đây thành viên int có 4 byte > char 1 byte, nên nó lấy 4byte
 
 cấu trúc padding của nó như sau :
 
 | char **(1)** | pad **(1)** | pad **(2)** | pad **(3)** | int **(1)** | int **(2)** | int **(3)** | int **(4)** |
 |--------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|
+| 0xffffff0	   | 0xffffff1	 | 0xffffff2 | 0xffffff3 | 0xffffff4 | 0xffffff5 | 0xffffff6 | 0xffffff7 |
+
+0xffffff8 MOD 4 = 0 **( 4 $$\large\mid$$ 0xffffff8 )**
 
 Nhưng khi đổi vị trí thành :
 
@@ -277,7 +280,70 @@ kết quả sau biên dịch vẫn y nguyên, nhưng cấu trúc padding của n
 
 | int **(1)** | int **(2)** | int **(3)** | int **(4)** | char **(1)** | pad **(1)** | pad **(2)** | pad **(3)** |
 |-------------|-------------|-------------|-------------|--------------|-------------|-------------|-------------|
+| 0xffffff0	   | 0xffffff1	 | 0xffffff2 | 0xffffff3 | 0xffffff4 | 0xffffff5 | 0xffffff6 | 0xffffff7 |
 
-ta thấy int sẽ đi trước 4byte theo struct, nhưng tới char nó chỉ đi 1 byte nhưng lại padding thêm 3byte. Alignment với struct compiler luôn lấy member có alignment cao nhất, ở đây là int = 4 byte nên char nếu đi sau là 1 byte sẽ được pad thêm 3 byte cho đủ chia hết 4 byte aligment của int vì
+0xffffff8 vẫn chia hết cho 4
+
+- ta thấy int sẽ đi trước 4byte theo struct, nhưng tới char nó chỉ đi 1 byte nhưng lại padding thêm 3byte. Alignment với struct compiler luôn lấy member có alignment cao nhất, ở đây là int = 4 byte nên char nếu đi sau là 1 byte sẽ được pad thêm 3 byte cho đủ chia hết 4 byte aligment của int vì
+
+- Ví dụ về mảng với struct?
+
+```c
+#include <stdio.h>
+struct A{
+	int a; //4byte
+	char b; //1byte
+	//padding 3byte
+};
+
+int main(void){
+	struct A arr[3]; //lúc này sẽ có 3 struct y như trên vào array này
+
+	int i = 0; while (i < 3){
+
+		printf("different between sizeof and alignment in struct array %d:\n"
+		   "sizeof char = %d, sizeof int = %d\n"
+			"alignof char = %d, alignof int = %d\n"
+			"sizeof all struct = %d, alignof all struct = %d\n",
+		 	i,
+			sizeof(arr[i].b), sizeof(arr[i].a),
+			_Alignof(arr[i].b), _Alignof(arr[i].a),
+			sizeof(arr[i]), _Alignof(arr[i])); 
+
+		i++; printf("\n");}
+}
+```
+
+![alt text](image/image8.png)
+
+cấu trúc array như sau :
+
+| array | 0 | 1 | 2 |
+|-------|---|---|---|
+| alignment | 4 | 4 | 4 |
+
+ví dụ vaddr : 0xfffff000 + 0 + 8 + 8 = 0xfffff016 Mod 4 = 0 **(4 $$\large\mid$$ 0xfffff016)**
+
+- Và vaddr 0xfffff016 chính là vaddr của arr[2], vì arr[0] = 0xfffff000, arr[1] = 0xfffff008, arr[2] = 0xfffff016 . Vì sao?, xét cấu trúc padding
+
+array 1 :
+
+| int **(1)** | int **(2)** | int **(3)** | int **(4)** | char **(1)** | pad **(1)** | pad **(2)** | pad **(3)** |
+|-------------|-------------|-------------|-------------|--------------|-------------|-------------|-------------|
+| 0xffffff000   | 0xffffff001 | 0xffffff002 | 0xffffff003 | 0xffffff004 | 0xffffff005 | 0xffffff006 | 0xffffff07 |
+
+array 2 :
+
+| int **(1)** | int **(2)** | int **(3)** | int **(4)** | char **(1)** | pad **(1)** | pad **(2)** | pad **(3)** |
+|-------------|-------------|-------------|-------------|--------------|-------------|-------------|-------------|
+| 0xffffff008   | 0xffffff009 | 0xffffff010 | 0xffffff011 | 0xffffff012 | 0xffffff013 | 0xffffff014 | 0xffffff15 |
+
+array 3:
+
+| int **(1)** | int **(2)** | int **(3)** | int **(4)** | char **(1)** | pad **(1)** | pad **(2)** | pad **(3)** |
+|-------------|-------------|-------------|-------------|--------------|-------------|-------------|-------------|
+| 0xffffff016   | 0xffffff017 | 0xffffff018 | 0xffffff019 | 0xffffff020 | 0xffffff021 | 0xffffff022 | 0xffffff023 |
+
+- ta thấy int (1) đều có vaddr là 0xffffff000, 0xffffff008, 0xffffff016 và chúng đều chia hết cho alignment của int là 4
 
 </details>
