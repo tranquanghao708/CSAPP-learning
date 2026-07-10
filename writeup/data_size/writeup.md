@@ -260,7 +260,8 @@ sizeof all struct = 8, alignof all struct = 4. Bây giờ giải thích :
 
 cấu trúc padding của nó như sau :
 
-| char**(1)** | pad**(1)** | pad**(2)** | pad**(3)** | int**(1)** | int**(2)** | int**(3)** | int**(4)** |
+| char **(1)** | pad **(1)** | pad **(2)** | pad **(3)** | int **(1)** | int **(2)** | int **(3)** | int **(4)** |
+|--------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|
 
 Nhưng khi đổi vị trí thành :
 
@@ -274,7 +275,8 @@ struct A{
 
 kết quả sau biên dịch vẫn y nguyên, nhưng cấu trúc padding của nó sẽ khác hoàn toàn nó sẽ padding ở tail padding :
 
-| int(1) | int (2) | int(3) | int(4)| char(1) | pad(1) | pad(2) | pad(3) |
+| int **(1)** | int **(2)** | int **(3)** | int **(4)** | char **(1)** | pad **(1)** | pad **(2)** | pad **(3)** |
+|-------------|-------------|-------------|-------------|--------------|-------------|-------------|-------------|
 
 ta thấy int sẽ đi trước 4byte theo struct, nhưng tới char nó chỉ đi 1 byte nhưng lại padding thêm 3byte. Alignment với struct compiler luôn lấy member có alignment cao nhất, ở đây là int = 4 byte nên char nếu đi sau là 1 byte sẽ được pad thêm 3 byte cho đủ chia hết 4 byte aligment của int vì
 
