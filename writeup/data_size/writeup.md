@@ -2,7 +2,7 @@
 
 > ngày bắt đầu viết : 8/7/2026
 
-> ngày hoàn thành : 
+> ngày hoàn thành : 10/7/2026
 
 **index**
 
@@ -34,9 +34,7 @@
 
 - [5.Alignment và padding](#5Alignment-và-padding)
 
-- 6.Ví dụ thực tế trên IA-32 và x86-64
-
-- 7.Kết luận
+- [6.Kết luận](#6kết-luận)
 
 ---
 
@@ -351,6 +349,52 @@ array 3:
 |-------------|-------------|-------------|-------------|--------------|-------------|-------------|-------------|
 | 0x7ffec84455d0   | 0x7ffec84455d1 | 0x7ffec84455d2 | 0x7ffec84455d3 | 0x7ffec84455d4 | 0x7ffec84455d5 | 0x7ffec84455d6 | 0x7ffec84455d7 |
 
-- ta thấy int (1) đều có vaddr là 0x7ffec84455c0, 0x7ffec84455c8, 0x7ffec84455d0 và chúng đều chia hết cho alignment của int là 4
+- Byte đầu tiên của member int luôn bắt đầu tại địa chỉ `0x7ffec84455c0, 0x7ffec84455c8, 0x7ffec84455d0` và chúng đều chia hết cho alignment của int là 4
+
+- Do `sizeof(struct A) = 8` là bội số của `_Alignof(struct A) = 4`, nên mọi phần tử liên tiếp trong struct A arr[] đều tự động bắt đầu tại địa chỉ thỏa mãn alignment. Đây chính là lý do compiler thêm tail padding vào cuối struct. 
+
+Ví dụ cực kỳ hay ở đây, xét đoạn C sau :
+
+```c
+#include <stdio.h>
+struct O{
+	char a;
+	//padding = 3
+	int b;
+};
+
+int main(void){
+	struct O arr[3];
+	int i = 0; while(i < 3){
+		printf("arr[%d] - arr[%d] = %zu\n",i+1,i,(char *)&arr[i+1] - (char *)&arr[i]);
+		i++;
+	}
+	return 0;
+}
+```
+
+![alt text](image/image9.png)
+
+ta thấy tất cả đều result = 8, điều này chứng minh là `(char *)&arr[i + 1] - (char *)&arr[i] == sizeof(struct A)` đó chính là cách đo chính xác khoảng cách giữa các phần tử trong mảng. Ở đây, cách mỗi 8 offset là tới phần tử tiếp theo trong mảng
 
 </details>
+
+## 6.Kết luận
+
+- data size là kích cỡ của kiểu dữ liệu, tính bằng byte và lấy bằng `sizeof()` trong C
+
+- dung lượng là khả năng lưu trữ tối đa của một thiết bị hoặc vùng nhớ
+
+- File size là kích thước của một tệp trên hệ thống tệp
+
+- Kích thước trên đĩa thường lớn hơn kích thước thực tế của tệp tin
+
+- từng khối (cluster) là đơn vị cấp phát của filesystem. Hệ điều hành thông qua filesystem sử dụng cluster để cấp phát không gian lưu trữ
+
+- word là natural data unit (đơn vị dữ liệu tự nhiên) của kiến trúc CPU
+
+- với architecture khác nhau sẽ làm thay đổi sizeof của type do ABI và compiler thực hiện theo ABI đó
+
+- Alignment là một đối tượng nên được đặt tại địa chỉ là bội số của giá trị alignment của nó
+
+- Padding là các byte được compiler chèn vào bên trong hoặc cuối một cấu trúc dữ liệu nhằm đáp ứng yêu cầu alignment
