@@ -208,9 +208,9 @@ ta thấy có sự chênh lệch ở kiểu `long`
 - Padding là thêm các unused byte (byte ko sử dụng) vào, nếu ko chia hết cho alignment ,compiler thực hiện padding thêm cho đủ để chia hết. Ví dụ, khai báo kiểu int mà ko chia hết cho 4, compiler thực hiện padding để chia hết cho 4
 
 > [!NOTE]
-> Alignment : a $$\large\vdots$$ b , a là dữ liệu, b là data size (sizeof)
+> Alignment : $$\large a \vdots b$$ , a là dữ liệu, b là data size (sizeof)
 >
-> Padding : (a + unused byte) $$\large\vdots$$ b , điều kiện a ko chia hết b và padding < data size
+> Padding : $$\large (a + unused byte) \vdots b$$ , điều kiện a ko chia hết b và padding < data size
 
 <details>
 	<summary>ví dụ C</summary>
