@@ -72,7 +72,7 @@ sizeof(x)
 
 - Kích thước trên đĩa thường lớn hơn kích thước thực tế của tệp tin, do hệ điều hành lưu trữ dữ liệu theo từng khối (cluster) cố định, ví dụ file_a có file size là 1kb nhưng khi lưu vào ổ cứng chạy hệ điều hành linux hay windows thì nó sẽ lớn hơn. 
 
-- từng khối (cluster) là gì? là đơn vị cấp phát nhỏ nhất của hệ thống tệp (filesystem). Xuống ổ cứng do hệ điều hành thực hiện, ko phải hệ điều hành nào cũng có đơn vị giống nhau nhưng ví dụ file có 1 kb nó cấp phát 4kb thì chỉ lưu 1kb là file size, 3kb Phần dung lượng còn lại trong cluster không thể được file khác sử dụng, nên bị lãng phí nội bộ
+- từng khối (cluster) là gì? là đơn vị cấp phát của filesystem. Hệ điều hành thông qua filesystem sử dụng cluster để cấp phát không gian lưu trữ, ko phải hệ điều hành nào cũng có đơn vị giống nhau nhưng ví dụ file có 1 kb nó cấp phát 4kb thì chỉ lưu 1kb là file size, 3kb Phần dung lượng còn lại trong cluster không thể được file khác sử dụng, nên bị lãng phí nội bộ
 
 <details>
 	<summary>ví dụ thực tế</summary>
@@ -221,4 +221,61 @@ ta thấy có sự chênh lệch ở kiểu `long`
 
 <details>
 	<summary>ví dụ C</summary>
+
+cho đoạn C:
+
+```c
+#include <stdio.h>
+struct A{
+	char a; //1byte
+	/*Padding 3 unused byte*/
+	int b; //4byte
+};
+
+int main(void){
+	struct A op; //A -> op = access
+
+	printf("different between sizeof and alignment in struct:\n"
+		   "sizeof int = %d, sizeof char = %d\n"
+			"alignof int = %d, alignof char = %d\n"
+			"sizeof all struct = %d, alignof all struct = %d\n",
+			sizeof(op.b), sizeof(op.a),
+			_Alignof(op.b), _Alignof(op.a),
+			sizeof(op), _Alignof(op)
+			);
+
+	return 0;
+}
+```
+
+> gcc -o kk kk.c
+
+![alt text](image/image7.png)
+
+sizeof all struct = 8, alignof all struct = 4. Bây giờ giải thích :
+
+- sizeof : là tính tất cả gồm padding trong struct với phép cộng. Ở đây char = 1 byte, int = 4 byte, padding = 3 byte `char + padding + int = 1 + 3 + 4 = 8 byte` nên nó là 8 byte
+
+- Alignof (alignment) : ở đây khác với sizeof, compiler tính alignment của struct bằng alignment lớn nhất trong các thành viên. Ở đây thành viên int có 4 byte > char 1 byte, nên nó lấy 4byte
+
+cấu trúc padding của nó như sau :
+
+| char**(1)** | pad**(1)** | pad**(2)** | pad**(3)** | int**(1)** | int**(2)** | int**(3)** | int**(4)** |
+
+Nhưng khi đổi vị trí thành :
+
+```c
+struct A{
+	int a; //4byte
+	/*đổi vị trí, lúc này ko còn pad giữa nữa*/
+	char b; //1byte
+};
+```
+
+kết quả sau biên dịch vẫn y nguyên, nhưng cấu trúc padding của nó sẽ khác hoàn toàn nó sẽ padding ở tail padding :
+
+| int(1) | int (2) | int(3) | int(4)| char(1) | pad(1) | pad(2) | pad(3) |
+
+ta thấy int sẽ đi trước 4byte theo struct, nhưng tới char nó chỉ đi 1 byte nhưng lại padding thêm 3byte. Alignment với struct compiler luôn lấy member có alignment cao nhất, ở đây là int = 4 byte nên char nếu đi sau là 1 byte sẽ được pad thêm 3 byte cho đủ chia hết 4 byte aligment của int vì
+
 </details>
