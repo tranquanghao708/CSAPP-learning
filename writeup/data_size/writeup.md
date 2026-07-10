@@ -329,28 +329,28 @@ cấu trúc array như sau :
 |-------|---|---|---|
 | alignment | 4 | 4 | 4 |
 
-ví dụ vaddr : 0xfffff000 + 0 + 8 + 8 = 0xfffff010 Mod 4 = 0 **(4 $$\large\mid$$ 0xfffff010)**
+ví dụ vaddr : 0x7ffec84455c0 + 0 + 8 + 8 = 0x7ffec84455d0 Mod 4 = 0 **(4 $$\large\mid$$ 0x7ffec84455d0)**
 
-- Và vaddr 0xfffff010 chính là vaddr của arr[2], vì arr[0] = 0xfffff000, arr[1] = 0xfffff008, arr[2] = 0xfffff010 . Vì sao?, xét cấu trúc padding
+- Và vaddr 0x7ffec84455d0 chính là vaddr của arr[2], vì arr[0] = 0x7ffec84455c0, arr[1] = 0x7ffec84455c8, arr[2] = 0x7ffec84455d0 . Vì sao?, xét cấu trúc padding
 
 array 1 :
 
 | int **(1)** | int **(2)** | int **(3)** | int **(4)** | char **(1)** | pad **(1)** | pad **(2)** | pad **(3)** |
 |-------------|-------------|-------------|-------------|--------------|-------------|-------------|-------------|
-| 0xfffff000   | 0xfffff001 | 0xfffff002 | 0xfffff003 | 0xfffff004 | 0xfffff005 | 0xfffff006 | 0xfffff07 |
+| 0x7ffec84455c0   | 0x7ffec84455c1 | 0x7ffec84455c2 | 0x7ffec84455c3 | 0x7ffec84455c4 | 0x7ffec84455c5 | 0x7ffec84455c6 | 0x7ffec84455c7 |
 
 array 2 :
 
 | int **(1)** | int **(2)** | int **(3)** | int **(4)** | char **(1)** | pad **(1)** | pad **(2)** | pad **(3)** |
 |-------------|-------------|-------------|-------------|--------------|-------------|-------------|-------------|
-| 0xfffff008   | 0xfffff009 | 0xfffff00a | 0xfffff00b | 0xfffff00c | 0xfffff00d | 0xfffff00e | 0xfffff00f |
+| 0x7ffec84455c8   | 0x7ffec84455c9 | 0x7ffec84455ca | 0x7ffec84455cb | 0x7ffec84455cc | 0x7ffec84455cd | 0x7ffec84455ce | 0x7ffec84455cf |
 
 array 3:
 
 | int **(1)** | int **(2)** | int **(3)** | int **(4)** | char **(1)** | pad **(1)** | pad **(2)** | pad **(3)** |
 |-------------|-------------|-------------|-------------|--------------|-------------|-------------|-------------|
-| 0xfffff010   | 0xfffff011 | 0xfffff012 | 0xfffff013 | 0xfffff014 | 0xfffff015 | 0xfffff016 | 0xfffff017 |
+| 0x7ffec84455d0   | 0x7ffec84455d1 | 0x7ffec84455d2 | 0x7ffec84455d3 | 0x7ffec84455d4 | 0x7ffec84455d5 | 0x7ffec84455d6 | 0x7ffec84455d7 |
 
-- ta thấy int (1) đều có vaddr là 0xfffff000, 0xfffff008, 0xfffff010 và chúng đều chia hết cho alignment của int là 4
+- ta thấy int (1) đều có vaddr là 0x7ffec84455c0, 0x7ffec84455c8, 0x7ffec84455d0 và chúng đều chia hết cho alignment của int là 4
 
 </details>
