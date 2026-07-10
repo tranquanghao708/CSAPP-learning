@@ -135,7 +135,7 @@ size = 1024, block = 8 và nhiều info khác
 
 - là natural data unit (đơn vị dữ liệu tự nhiên) của kiến trúc CPU. Word ko có data size cố định như 16 bit hay 32 bit, ví dụ IA-32 (32bit) word có 32bit là kích thước 4byte và các thanh ghi tổng quát như EAX EBX đều 32bit , nhưng qua X86-64 (64bit) word có 64bit 8byte có thanh ghi RAX, RBX cũng có 64bit 
 
-> [!WARNING]
+> [!IMPORTANT]
 > Word là kích thước dữ liệu tự nhiên, ko có kích thước cố định trong ngữ cảnh chung của kiến trúc máy tính, CPU architecture
 
 #### 2.2.word dùng để làm gì?
@@ -203,11 +203,15 @@ ta thấy có sự chênh lệch ở kiểu `long`
 
 ## 5.Alignment và padding
 
-- Alignment là cái dùng để chia hết, vì CPU hoạt động theo lô nó luôn lấy một lượng byte ví dụ 4 - 8 byte trong một lần. Ví dụ, ta khai báo kiểu int nó phải chia hết cho data size của int `sizeof(int)` để tối ưu hiệu suất. Như thế, CPU mới lấy vừa đủ lô vì nó chia hết
+- Alignment là một đối tượng nên được đặt tại địa chỉ là bội số của giá trị alignment của nó. Trong đó vaddr, phải chia hết cho data size của kiểu dữ liệu. Ví dụ, khai báo biến `int`, vaddr của biến đó hoặc gán vaddr nào vào biến đó, nó phải chia hết cho `sizeof(int)`
 
-- Padding là thêm các ký tự điển hình null byte, nếu ko chia hết cho alignment ,system thực hiện padding thêm cho đủ để chia hết. Ví dụ, khai báo kiểu int mà ko chia hết cho 4, system sẽ thực hiện padding sao cho chia hết cho 4
+- Padding là thêm các unused byte (byte ko sử dụng) vào, nếu ko chia hết cho alignment ,compiler thực hiện padding thêm cho đủ để chia hết. Ví dụ, khai báo kiểu int mà ko chia hết cho 4, compiler thực hiện padding để chia hết cho 4
 
 > [!NOTE]
-> Alignment : a $$\large\mid$$ b , a là dữ liệu, b là data size (sizeof)
+> Alignment : a $$\large\vdots$$ b , a là dữ liệu, b là data size (sizeof)
 >
-> Padding : (a + null byte (\0) ) $$\large\mid$$ b , điều kiện a ko chia hết b và padding < data size
+> Padding : (a + unused byte) $$\large\vdots$$ b , điều kiện a ko chia hết b và padding < data size
+
+<details>
+	<summary>ví dụ C</summary>
+</details>
