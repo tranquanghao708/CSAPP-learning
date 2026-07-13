@@ -16,7 +16,7 @@
 
 ## 1.Tổng quan về IEEE 754.
 
-- `Số thực IEEE 754` là quy tắc biểu diễn số thực cho thiết bị nhị phân (máy tính) thế giới. Formula tổng quan là $$\Large(-1)^{S} * 1,m * 2^{e-b}$$
+- `Số thực IEEE 754` là quy tắc biểu diễn số thực cho thiết bị nhị phân (máy tính) thế giới. Formula tổng quan là $$\Large(-1)^{S} \mul 1,m \mul 2^{e-b}$$
 
 #### 1.1.Trường số dấu (signed)
 
