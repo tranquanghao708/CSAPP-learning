@@ -53,7 +53,16 @@ di chuyển dot 3 lần : 1.10101
 Tổng cộng là 3 lần mới tới MSB
 ```
 
-Vậy nên ta có số mũ là 3, suy ra $$\large1.10101\times2^{3}$$ và khi tính lại là $$\large1.10101\times2^{3} = 1101.01$$ ta thấy nó lại di chuyển về từ đầu. Vậy cho ví dụ khác số cuối là 0 ?, $$\large0.1_{2} = 0.5_{10}$$ 
+Vậy nên ta có số mũ là 3, suy ra $$\large1.10101\times2^{3}$$ và khi tính lại là $$\large1.10101\times2^{3} = 1101.01$$ ta thấy nó lại di chuyển về từ đầu. Vậy cho ví dụ khác số cuối là 0 ?, cho số $$\large0.1_{2} = 0.5_{10}$$ bây giờ muốn đưa về dạng $$\large1.xxxxx\times2^{N}$$, ta cần phải dịch dấu chấm sang phải một lần, ta có $$\large1.0_{2}$$ lúc này số mũ sẽ là `negative 1 (âm 1)` nên result là $$\large1.0_{2}\times2^{-1}$$
+
+Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng phép chia, $$\large1.0_{2}\times2^{-1} = 1.0_{2}\div2 = 0.1_{2}$$ và nó đúng với số ban đầu
+
+> [!IMPORTANT]
+> nếu dịch phép dấu chấm (dot) sang trái, ta dùng phép nhân để tính ngược lại. Nếu dịch dot sang phải, ta dùng phép chia để tính ngược lại
+>
+> số mũ cũng vì thế mà thay đổi, nếu dịch dot sang trái số mũ là **số dương** và dịch dot sang phải thì số mũ sẽ là **số âm**. Số mũ lớn dần khi số lần di chuyển dot nhiều hơn
+>
+> việc chuẩn hóa thì phải dịch dot ở dãy binary buộc phải sau bit 1 ví dụ $$\large0.1_{2}$$ -> $$\large1.0_{2}$$ hoặc $$\large100.010_{2}$$ -> $$\large1.00010_{2}$$
 
 <details>
 	<summary>tại sao phải chuẩn hóa số thực?</summary>
