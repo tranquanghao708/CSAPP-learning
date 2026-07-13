@@ -41,9 +41,23 @@ b : là độ lệch, viết tắt bias
 
 #### 1.1.Chuẩn hóa số thực
 
-- **chuẩn hóa là gì?** : giống toán học, **formula =**$$\large1.xxxxx\times2^{N}$$ ví dụ 12345 = $$\large1.2345\times10^{4}$$ hoặc 0.00123 = $$\large1.23\times10^{-3}$$. Đó gọi là dạng chuẩn hóa
+- **chuẩn hóa là gì?** : giống toán học, **formula =**$$\large1.xxxxx\times2^{N}$$ ví dụ $$\large12345_{10}$$ = $$\large1.2345\times10^{4}$$ hoặc $$\large0.00123_{10}$$ = $$\large1.23\times10^{-3}$$. Đó gọi là dạng chuẩn hóa
 
-IEEE 754 cũng làm thế, cơ mà nó biểu diễn dạng binary và dùng cơ số 2
+IEEE 754 cũng làm thế, cơ mà nó biểu diễn dạng binary và dùng cơ số 2. Ví dụ, $$\large13.25_{10} = 1101.01_{2}$$, di chuyển dấu chấm sang MSB ta có $$\large1.10101_{2}$$ số lần di chuyển là 3 vì :
+
+```
+lúc đầu : 1101.01
+di chuyển dot 1 lần : 110.101
+di chuyển dot 2 lần : 11.0101
+di chuyển dot 3 lần : 1.10101
+Tổng cộng là 3 lần mới tới MSB
+```
+
+Vậy nên ta có số mũ là 3, suy ra $$\large1.10101\times2^{3}$$ và khi tính lại là $$\large1.10101\times2^{3} = 1101.01$$ ta thấy nó lại di chuyển về từ đầu. Vậy cho ví dụ khác số cuối là 0 ?, $$\large0.1_{2} = 0.5_{10}$$ 
+
+<details>
+	<summary>tại sao phải chuẩn hóa số thực?</summary>
+</details>
 
 #### 1.2.Trường dãy số sau dấu chấm (Fraction)
 
