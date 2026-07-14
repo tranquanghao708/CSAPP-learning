@@ -10,7 +10,7 @@
 
 - 1.1.Chuẩn hóa số thực
 
-- 1.2.Trường dãy số sau dấu chấm (Fraction)
+- 1.2.Trường Fraction (phần trị - significand)
 
 - 1.3.Trường số mũ (Exponent)
 
@@ -28,7 +28,7 @@
 
 S : là bit dấu, viết tắt sign
 
-m : hidden bit + fraction là trường dãy số sau dấu chấm, viết tắt Fraction
+m : hidden bit + fraction là phần trị (trường dãy số sau dấu chấm của số thực sau khi đã chuẩn hóa)
 
 e : là giá trị của trường exponent
 
@@ -71,11 +71,15 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 
 </details>
 
-#### 1.2.Trường dãy số sau dấu chấm (Fraction)
+#### 1.2.Trường Fraction (phần trị - significand)
 
-- Là trường số sau dấu chấm ví dụ `1.<m (Fraction)>`, nghĩa là sau khi chuẩn hóa số thực theo dạng IEEE quy định $$\large1.xxxxx\times2^{N}$$ thì sau dấu chấm có một binary strings dài đó gọi là fraction :
+- Là trường lưu các bit phía sau dấu chấm của số nhị phân sau khi đã chuẩn hóa số thực theo dạng chuẩn hóa $$\large1.xxxxx\times2^{N}$$:
 
 ![alt text](image/image0.png)
+
+Trường Fraction quyết định precision (độ chính xác) của số thực. IEEE 754 càng dành nhiều bit cho trường Fraction thì càng biểu diễn được nhiều chữ số có nghĩa hơn. Lúc này, độ chính xác vì thế mà tăng. 
+
+- **Điểm nhiều người nhầm :** Values trong fraction $$\large\neq$$ độ chính xác. Cái quyết định độ chính xác là số lượng bit được cấp cho trường Fraction
 
 #### 1.3.Trường số mũ (Exponent)
 
