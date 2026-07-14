@@ -75,7 +75,7 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 
 - Là trường số sau dấu chấm ví dụ `1.<m (Fraction)>`, nghĩa là sau khi chuẩn hóa số thực theo dạng IEEE quy định $$\large1.xxxxx\times2^{N}$$ thì sau dấu chấm có một binary strings dài đó gọi là fraction :
 
-![alt text](image0.png)
+![alt text](image/image0.png)
 
 #### 1.3.Trường số mũ (Exponent)
 
