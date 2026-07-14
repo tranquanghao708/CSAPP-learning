@@ -73,7 +73,9 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 
 #### 1.2.Trường dãy số sau dấu chấm (Fraction)
 
-- Là trường số sau dấu chấm ví dụ `13.<m (Fraction)>`
+- Là trường số sau dấu chấm ví dụ `1.<m (Fraction)>`, nghĩa là sau khi chuẩn hóa số thực theo dạng IEEE quy định $$\large1.xxxxx\times2^{N}$$ thì sau dấu chấm có một binary strings dài đó gọi là fraction :
+
+![alt text](image0.png)
 
 #### 1.3.Trường số mũ (Exponent)
 
