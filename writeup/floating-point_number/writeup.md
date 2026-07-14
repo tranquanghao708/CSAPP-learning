@@ -8,7 +8,7 @@
 
 - 1.Tổng quan về IEEE 754.
 
-- 1.1.Chuẩn hóa số thực
+- [1.1.Chuẩn hóa số thực](#11Chuẩn-hóa-số-thực
 
 - 1.2.Trường Fraction (phần trị - significand)
 
@@ -19,6 +19,14 @@
 - 1.4.Trường số dấu (signed)
 
 - 1.5.Thiết lập và đếm bit phân cho S,E,m phù hợp với độ rộng toán hạng
+
+- 2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
+
+- 3.Những lỗi về số thực khi lập trình cấp thấp
+
+- 4.Biểu diễn số thực trong bộ nhớ,sơ đồ
+
+- 5.kết luận
 
 ---
 
@@ -83,7 +91,16 @@ Trường Fraction quyết định precision (độ chính xác) của số th�
 
 #### 1.3.Trường số mũ (Exponent)
 
-- là 
+- là phần giá trị số bước dịch chuyển dot trong số thực dạng nhị phân, ví dụ $$\large101.00110_{2} = 1.0100110_{2}$$ dịch chuyển dot sang trái 2 lần số mũ = 2 (dương), $$\large0.00110_{2} = 001.00110_{2} = 1.00110_{2}$$ dịch chuyển dot sang phải 3 lần số mũ = -3 (âm), rõ hơn đã nói trước ở [1.1.Chuẩn hóa số thực](#11Chuẩn-hóa-số-thực)
+
+- Exponent đóng vai trò quyết định giá trị lớn/nhỏ của số thực, ví dụ $$\large1.11111_{10}\times2^{2} = 7.75_{10}$$ nhưng đổi giá trị số mũ  $$\large1.11111_{10}\times2^{10} = 1984_{10}$$ giá trị đổi, mặc dù fraction ko đổi
+
+> [!IMPORTANT]
+> Exponent quyết định giá trị của số thực, tùy thuộc vào số mũ lớn nhỏ bao nhiêu
+>
+> Fraction quyết định chữ số có nghĩa (độ chính xác của số thực), tùy thuộc vào hệ thống cung cấp bao nhiêu bit cho nó
+
+- **Điểm nhiều người nhầm :** Trường exponent ko lưu trực tiếp actual exponent (số mũ thực) ký hiệu `N` trong dạng chuẩn hóa $$\large1.xxxxx\times2^{N}$$ , giá trị của trường exponent được tính theo công thưc `Exponent Field = Actual exponent + Bias`
 
 #### 1.3.1.Độ lệch (Bias)
 
@@ -91,4 +108,4 @@ Trường Fraction quyết định precision (độ chính xác) của số th�
 
 #### 1.4.Trường số dấu (signed)
 
-- Là trường chỉ tính `MSB = 1` hay `MSB = 0`, quyết định số âm hay dương. Ví dụ cho số thực `19.6875` nó sẽ chuyển thành 0 và 1 trong máy tính, bit dấu biểu diễn là âm hay dương với MSB, điều này đã nói rõ ở [two complement code](https://github.com/tranquanghao708/CSAPP-learning/blob/main/writeup/two-complement-code/two-complement-code.md) , ở trường số có dấu này người ta chỉ dùng 1bit để biểu diễn nó với MSB trong đa architecture
+- Là trường chỉ tính `MSB = 1` hay `MSB = 0`, quyết định số âm hay dương. Ví dụ cho số thực $$\large19.6875_{10}$$ nó sẽ chuyển thành 0 và 1 trong máy tính, bit dấu biểu diễn là âm hay dương với MSB, điều này đã nói rõ ở [two complement code](https://github.com/tranquanghao708/CSAPP-learning/blob/main/writeup/two-complement-code/two-complement-code.md) , ở trường số có dấu này người ta chỉ dùng 1bit để biểu diễn nó với MSB trong đa architecture
