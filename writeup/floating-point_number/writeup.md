@@ -106,7 +106,7 @@ Trường Fraction quyết định precision (độ chính xác) của số th�
 
 #### 1.3.1.Độ lệch (Bias)
 
-- Bias là cái để cộng vào exponent khi làm việc với số âm. **Ví dụ** với float 32bit, exponent là 8bit nhưng bias = $$\large2**{8-1}-1 = 127_{10}$$, là Tmax của exponent (8 bit), nếu exponent = $$\large3_{2}$$ thì thực hiện phép cộng $$\large3_{10} + 127_{10} = 130_{10}$$ CPU sẽ lưu $$\large010000010_{2}$$ , còn nếu $$\large exponent = -3_{10}$$ thì thực hiện phép cộng $$\large (-3) + 127 = 124_{10}$$ CPU sẽ lưu $$\large01111100_{2}$$, còn nếu muốn recover lại số `-3` thì tính ngược lại là `124 + 127 = -3` lúc này sẽ là chính xác số âm được biểu diến lúc đầu
+- Bias là cái để cộng vào exponent khi làm việc với số âm. **Ví dụ** với float 32bit, exponent là 8bit nhưng bias = $$\large2^{8-1}-1 = 127_{10}$$, là Tmax của exponent (8 bit), nếu exponent = $$\large3_{2}$$ thì thực hiện phép cộng $$\large3_{10} + 127_{10} = 130_{10}$$ CPU sẽ lưu $$\large010000010_{2}$$ , còn nếu $$\large exponent = -3_{10}$$ thì thực hiện phép cộng $$\large (-3) + 127 = 124_{10}$$ CPU sẽ lưu $$\large01111100_{2}$$, còn nếu muốn recover lại số $$\large-3_{10}$$ thì tính ngược lại là $$\large124 + 127 = -3_{10}$$ lúc này sẽ là chính xác số âm được biểu diến lúc đầu
 
 <details>
 	<summary>vì sao IEEE 745 ko dùng two_complement_code để biểu diễn số âm cho bias?</summary>
