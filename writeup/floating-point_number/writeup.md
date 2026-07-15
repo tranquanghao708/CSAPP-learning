@@ -135,7 +135,17 @@ Trường Fraction quyết định precision (độ chính xác) của số th�
 
 </details>
 
-- dạng có độ chính xác đơn tương ứng 32bit và dạng có độ chính xác kép tương ứng 64bit và kép mở rộng tương đương 80bit
+- dạng có độ chính xác đơn tương ứng 32bit và dạng có độ chính xác kép tương ứng 64bit và kép mở rộng tương đương 128bit :
+
+| name                 | Tổng số bit | Exponent | Fraction |  Bias |
+| ------------------- | ---------- | ------- | ------- | ---- |
+| Single precision    |          32 |        8 |       23 |   127 |
+| Double precision    |          64 |       11 |       52 |  1023 |
+| Quadruple precision |         128 |       15 |      112 | 16383 |
+
+IEEE 754 quy định các parent phổ biến như bảng, chủ yếu là học thuộc cho nhanh nhưng để hiểu bản chất thì cần phải tính toán ở [1.5.Thiết lập và đếm bit phân cho S,E,m phù hợp với độ rộng toán hạng](#15thiết-lập-và-đếm-bit-phân-cho-sem-phù-hợp-với-độ-rộng-toán-hạng) và [2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](2Chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
+
+**Khái niệm chính xác đơn và chính xác kép là gì?:** 
 
 #### 1.4.Trường số dấu (signed)
 
