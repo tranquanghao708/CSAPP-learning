@@ -8,13 +8,19 @@
 
 - [1.Tổng quan về IEEE 754.](#1Tổng-quan-về-ieee-754)
 
-- [1.1.Chuẩn hóa số thực](#11Chuẩn-hóa-số-thực)
+- [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized)
+
+- 1.1.1.Khử chuẩn hóa số thực (Denormalized)
+
+- 1.1.2.Vô hạn (infinity)
+
+- 1.1.3.NaN
 
 - [1.2.Trường Fraction (phần trị - significand)](12Trường-fraction-phần-trị---significand)
 
 - [1.3.Trường số mũ (Exponent)](#13Trường-số-mũ-exponent)
 
-- 1.3.1.Độ lệch (Bias)
+- [1.3.1.Độ lệch (Bias)](#131độ-lệch-bias)
 
 - 1.4.Trường số dấu (signed)
 
@@ -32,6 +38,10 @@
 
 ## 1.Tổng quan về IEEE 754.
 
+![alt text](image/image1.png)
+
+> Ko phải CS:APP, tham khảo từ cuốn kiến trúc máy tính vì tính dễ hiểu về formula
+
 - `Số thực IEEE 754` là quy tắc biểu diễn số thực cho thiết bị nhị phân (máy tính) thế giới. **Formula tổng quan là** $$\Large(-1)^{S} \times 1.m \times 2^{e-b}$$, trong đó :
 
 S : là bit dấu, viết tắt sign
@@ -47,7 +57,11 @@ b : là độ lệch, viết tắt bias
 | S (sign) | E (Exponent) | m (Fraction) |
 |----------|--------------|--------------|
 
-#### 1.1.Chuẩn hóa số thực
+#### 1.1.Chuẩn hóa số thực (normalized)
+
+![alt text](image/image2.png)
+
+> Trích từ CS:APP
 
 - **chuẩn hóa là gì?** : giống toán học, **formula =**$$\large1.xxxxx\times2^{N}$$ **ví dụ** $$\large12345_{10}$$ = $$\large1.2345_{10}\times10^{4}$$ số mũ là 4 vì dịch dot sang trái 4 lần hoặc $$\large0.00123_{10}$$ = $$\large1.23\times10^{-3}$$ số mũ là -3 vì dịch dot sang phải 3 lần. Đó gọi là dạng chuẩn hóa
 
@@ -78,6 +92,12 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 - Vì nếu ko chuẩn hóa mọi số thực sẽ có cùng value nhưng nhiều cách biểu diễn sẽ khác nhau **ví dụ** $$\large1001.1_{2}\times2$$, $$\large100.11_{2}\times2^{1}$$, $$\large10.011_{2}\times2^{2}$$, $$\large1.0011_{2}\times2^{3}$$. Cùng giá trị nhưng dịch dot khác biểu diễn. Nên IEEE quy định sử dụng dạng $$\large1.xxxxx\times2^{N}$$ để mỗi số chỉ có một biểu diễn duy nhất. Ngoài ra, vì bit đầu tiên luôn là 1, CPU không cần lưu bit này (gọi là hidden bit hoặc implicit leading 1), nhờ đó tăng thêm một bit độ chính xác cho trường Fraction.
 
 </details>
+
+#### 1.1.1.Khử chuẩn hóa số thực (Denormalized)
+
+![alt text](image/image3.png)
+
+> trích từ CS:APP
 
 #### 1.2.Trường Fraction (phần trị - significand)
 
@@ -110,6 +130,9 @@ Trường Fraction quyết định precision (độ chính xác) của số th�
 
 <details>
 	<summary>vì sao IEEE 745 ko dùng two_complement_code để biểu diễn số âm cho bias?</summary>
+
+- Nếu dùng two_complement_code cho bias, thì $$\large-1_{10}$$ sẽ là $$\large111111_{2}$$ và nó sẽ khá phức tạp, khó so sánh thứ tự. Nên IEEE 745 quy định mọi biểu diễn số âm trong số thực chuẩn đều được biểu diễn là dương và thực hiện phép cộng cho Tmax của exponent, vì thế thiết kế phần cứng và nhiều thứ sẽ được đơn giản hóa hơn so với việc phức tạp hóa vấn đề ko cần thiết
+
 </details>
 
 - dạng có độ chính xác đơn tương ứng 32bit và dạng có độ chính xác kép tương ứng 64bit và kép mở rộng tương đương 80bit
