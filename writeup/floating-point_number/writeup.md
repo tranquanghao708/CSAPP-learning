@@ -68,7 +68,7 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 > [!IMPORTANT]
 > nếu số mũ âm $$\large2^{-N}$$ ta dùng phép chia cho $$\large2^{N}$$, nếu số mũ dương $$\large2^{N}$$ ta dùng phép nhân cho $$\large2^{N}$$
 >
-> nếu dịch dot sang trái số mũ là **số dương** và dịch dot sang phải thì số mũ sẽ là **số âm**. Số mũ lớn dần khi số lần di chuyển dot nhiều hơn, lớn theo âm-dương **ví dụ** dương lớn dần sẽ là `1,2,3,4,..` còn âm nhỏ dần sẽ là `-1,-2,-3,-4,..`
+> nếu dịch dot sang trái số mũ là **số dương** và dịch dot sang phải thì số mũ sẽ là **số âm**. Độ lớn tuyệt đối của số mũ (|N|) bằng số lần dịch dấu chấm. Dấu của số mũ phụ thuộc vào hướng dịch, nó lớn theo âm-dương **ví dụ** dương lớn dần sẽ là `1,2,3,4,..` còn âm nhỏ dần sẽ là `-1,-2,-3,-4,..`
 >
 > Trong IEEE 754 (đối với các số normalized), sau khi chuẩn hóa, biểu diễn luôn có dạng: $$\large1.xxxxx\times2^{N}$$ .Nghĩa là trước dấu chấm luôn chỉ có đúng một bit 1. Chính vì bit đầu tiên luôn là 1, IEEE 754 không cần lưu bit này vào bộ nhớ (hidden bit), chỉ lưu phần phía sau dấu chấm trong trường Fraction.
 
@@ -105,6 +105,12 @@ Trường Fraction quyết định precision (độ chính xác) của số th�
 - **Điểm thường bị nhầm :** Trường exponent ko lưu trực tiếp actual exponent (số mũ thực) ký hiệu `N` trong dạng chuẩn hóa $$\large1.xxxxx\times2^{N}$$ , giá trị của trường exponent được tính theo công thưc `Exponent Field = Actual exponent + Bias`.
 
 #### 1.3.1.Độ lệch (Bias)
+
+- Bias là cái để cộng vào exponent khi làm việc với số âm. **Ví dụ** với float 32bit, exponent là 8bit nhưng bias = $$\large2**{8-1}-1 = 127_{10}$$, là Tmax của exponent (8 bit), nếu exponent = $$\large3_{2}$$ thì thực hiện phép cộng $$\large3_{10} + 127_{10} = 130_{10}$$ CPU sẽ lưu $$\large010000010_{2}$$ , còn nếu $$\large exponent = -3_{10}$$ thì thực hiện phép cộng $$\large (-3) + 127 = 124_{10}$$ CPU sẽ lưu $$\large01111100_{2}$$, còn nếu muốn recover lại số `-3` thì tính ngược lại là `124 + 127 = -3` lúc này sẽ là chính xác số âm được biểu diến lúc đầu
+
+<details>
+	<summary>vì sao IEEE 745 ko dùng two_complement_code để biểu diễn số âm cho bias?</summary>
+</details>
 
 - dạng có độ chính xác đơn tương ứng 32bit và dạng có độ chính xác kép tương ứng 64bit và kép mở rộng tương đương 80bit
 
