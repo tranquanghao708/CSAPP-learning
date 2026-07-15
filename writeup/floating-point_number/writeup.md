@@ -126,10 +126,15 @@ Trường Fraction quyết định precision (độ chính xác) của số th�
 
 #### 1.3.1.Độ lệch (Bias)
 
-- Bias là cái để cộng vào exponent khi làm việc với số âm. **Ví dụ** với float 32bit, exponent là 8bit nhưng bias = $$\large2^{8-1}-1 = 127_{10}$$, là Tmax của exponent (8 bit), nếu exponent = $$\large3_{2}$$ thì thực hiện phép cộng $$\large3_{10} + 127_{10} = 130_{10}$$ CPU sẽ lưu $$\large010000010_{2}$$ , còn nếu $$\large exponent = -3_{10}$$ thì thực hiện phép cộng $$\large (-3) + 127 = 124_{10}$$ CPU sẽ lưu $$\large01111100_{2}$$, còn nếu muốn recover lại số $$\large-3_{10}$$ thì tính ngược lại là $$\large124 + 127 = -3_{10}$$ lúc này sẽ là chính xác số âm được biểu diến lúc đầu
+- Bias là một giá trị cố định được cộng vào mọi actual exponent, không phân biệt âm hay dương, trước khi lưu vào trường Exponent. **Ví dụ** với float 32bit, exponent là 8bit nhưng bias = $$\large2^{8-1}-1 = 127_{10}$$, là Tmax của exponent (8 bit), nếu exponent = $$\large3_{2}$$ thì thực hiện phép cộng $$\large3_{10} + 127_{10} = 130_{10}$$ CPU sẽ lưu $$\large10000010_{2}$$ hệ ko dấu , còn nếu $$\large exponent = -3_{10}$$ thì thực hiện phép cộng $$\large (-3) + 127 = 124_{10}$$ CPU sẽ lưu $$\large01111100_{2}$$ hệ ko dấu, còn nếu muốn recover lại số $$\large-3_{10}$$ thì tính ngược lại với phép trừ là $$\large124 - 127 = -3_{10}$$ lúc này sẽ là chính xác số âm được biểu diến lúc đầu
+
+> [!NOTE]
+> Công thức tính BIAS nếu biết bit của actual exponent thì dùng formula tính tmax như sau $$\large2^{N-1}-1$$ **ví dụ** actual exponent của double (64bit) là 11bit thì $$\large2^{11-1}-1 = 1023$$
+
+**Điều dễ nhầm khi học Bias này:** là cách CPU nó lưu values, với bias biểu diễn số thực IEEE 754 **ví dụ** khi exponent (11bit) của kiểu double(64bit) khi tính phải lấy giá trị exponent cộng với bias khi biểu diễn số dương và trừ với bias khi chuyển đổi lại sang âm , **ví dụ** giá trị `exponent = 6` vì dịch dấu chấm sang trái 6 lần nhưng tính thì $$\large6_{10} + 2^{11-1}-1 = 6_{10} + 1023_{10} = 1029_{10}$$ và CPU sẽ lưu giá trị `1029` dạng mã nhị phân thay vì lưu trực tiếp giá trị 6. Còn **ví dụ** về số âm, `exponent = -7` vì dịch dấu chấm sang phải 7 lần thì $$\large-7_{10} + 1023_{10} = 1016_{10}$$ CPU sẽ lưu gía trị `1016` với nhị phân, thay vì lưu trực tiếp `-7`. Còn muốn phục hồi về `-7` thì nó sẽ dùng $$\large1016_{10} - 1023_{10} = -7_{10}$$
 
 <details>
-	<summary>vì sao IEEE 745 ko dùng two_complement_code để biểu diễn số âm cho bias?</summary>
+	<summary>vì sao IEEE 754 ko dùng two_complement_code để biểu diễn số âm cho bias?</summary>
 
 - Nếu dùng two_complement_code cho bias, thì $$\large-1_{10}$$ sẽ là $$\large111111_{2}$$ và nó sẽ khá phức tạp, khó so sánh thứ tự. Nên IEEE 745 quy định mọi biểu diễn số âm trong số thực chuẩn đều được biểu diễn là dương và thực hiện phép cộng cho Tmax của exponent, vì thế thiết kế phần cứng và nhiều thứ sẽ được đơn giản hóa hơn so với việc phức tạp hóa vấn đề ko cần thiết
 
@@ -143,9 +148,9 @@ Trường Fraction quyết định precision (độ chính xác) của số th�
 | Double precision    |          64 |       11 |       52 |  1023 |
 | Quadruple precision |         128 |       15 |      112 | 16383 |
 
-IEEE 754 quy định các parent phổ biến như bảng, chủ yếu là học thuộc cho nhanh nhưng để hiểu bản chất thì cần phải tính toán ở [1.5.Thiết lập và đếm bit phân cho S,E,m phù hợp với độ rộng toán hạng](#15thiết-lập-và-đếm-bit-phân-cho-sem-phù-hợp-với-độ-rộng-toán-hạng) và [2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](2Chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
+IEEE 754 quy định các parent phổ biến như bảng, chủ yếu là học thuộc cho nhanh nhưng để hiểu bản chất thì cần phải tính toán ở [1.5.Thiết lập và đếm bit phân cho S,E,m phù hợp với độ rộng toán hạng](#15thiết-lập-và-đếm-bit-phân-cho-sem-phù-hợp-với-độ-rộng-toán-hạng) và [2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](#2Chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
 
-**Khái niệm chính xác đơn và chính xác kép là gì?:** 
+**Khái niệm chính xác đơn (Single precision) và chính xác kép (Double precision) là gì?:** kiểu chính xác đơn là kiểu số thực IEEE dài 32bit ví dụ float, còn chính xác kép là kiểu IEEE dài 64bit ví du double vì trong lịch sử tên gọi đơn biểu thị cho độ chính xác ban đầu và kép biểu thị cho gấp đôi độ chính xác ban đầu
 
 #### 1.4.Trường số dấu (signed)
 
