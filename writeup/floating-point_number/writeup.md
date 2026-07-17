@@ -10,7 +10,9 @@
 
 - [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized)
 
-- 1.1.1.Khử chuẩn hóa số thực (Denormalized)
+- [1.1.1.Khử chuẩn hóa số thực (Denormalized)](#111khử-chuẩn-hóa-số-thực-denormalized)
+
+- 1.1.2.Khi nào IEEE 754 sử dụng Normalized và Denormalized?
 
 - 1.1.2.Vô hạn (infinity)
 
@@ -29,6 +31,8 @@
 - 2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
 - 3.Những lỗi về số thực khi lập trình cấp thấp
+
+- 3.1.Underflow
 
 - 4.Biểu diễn số thực trong bộ nhớ,sơ đồ
 
@@ -106,7 +110,23 @@ Exponent = 00000000
 Fraction = 00000000000000000000001
 ```
 
-thì đây ko phải là parent $$\large1.0000_{2}\times2^{127}$$ mà là $$\large0.0000000000000000000001_{2}\times2^{126}$$ vì hiddenbit đã bằng 0
+thì đây ko phải là parent $$\large1.0000000000_{2}\times2^{127}$$ mà là $$\large0.0000000000000000000001_{2}\times2^{-126}$$ vì hiddenbit đã bằng 0. **Vậy vì sao phải làm như vậy?**, ta biết normalized nó sẽ có bit đầu luôn là 1, exponent của nó là dương hay âm tùy thuộc vào cách dịch dấu chấm là trái hay phải ,nhưng điều gì sẽ xảy ra nếu số thực cực kỳ nhỏ **ví dụ** $$\large2^{-150}$$ hay $$\large0.000000000000000000000001_{2}$$, nếu vẫn cố chuẩn hóa về $$\large1.xxxxx\times2^{N}$$ thì kết quả sẽ bị underflow tức là bị làm tròn thành 0
+
+> [!IMPORTANT]
+> Đối với normalized numbers, IEEE754 dùng $$\large1.xxxxx\times2^{N}$$ nên số đầu tiên luôn là 1
+>
+> Còn với Denormalized numbers, IEEE754 dùng $$\large0.xxxxx\times2^{1 - Bias}$$ nên `exponent field = 0` và hiddenbit được xem là 0. Khử chuẩn hóa được thiết kế để biểu diễn với số gần 0 nhất **tránh bị underflow** quá sớm
+
+#### 1.1.2.Khi nào IEEE 754 sử dụng Normalized và Denormalized?
+
+- `Normalized` được ưu tiên khi biểu diễn số thực vì dạng này tận dụng hiddenbit, giúp tăng thêm một bit chính xác, dùng cho hầu hết các số thực 
+
+- Nếu `normalized` không biểu diễn được nhưng vẫn còn nằm trong phạm vi **subnormal** mới được chọn tới `denormalized` để biểu diễn các số sát `0` nhất có thể. Tuy nhiên độ chính xác sẽ thấp hơn, dùng cho số rất nhỏ gần sát `0`
+
+> [!IMPORTANT]
+> `Normalized` được IEEE ưu tiên vì độ chính xác cao hơn, tận dụng hiddenbit với dạng $$\large1.xxxxx\times2^{N}$$. Nhưng nếu số quá nhỏ cần phải dùng tới `Denormalized` với dạng $$\large0.xxxxx\times2^{1 - bias}$$ , điều này giúp biễu diễn các số sát `0` nhất có thể, tuy nhiên độ chính xác thấp hơn.
+>
+> Nếu `Denormalized` ko thể sử dụng được nữa (nhỏ hơn cả subnormal nhỏ nhất) thì gía trị số thực sẽ bị underflow và kết quả sẽ thành `0`
 
 #### 1.2.Trường Fraction (phần trị - significand)
 
@@ -163,4 +183,4 @@ IEEE 754 quy định các parent phổ biến như bảng, chủ yếu là học
 
 #### 1.4.Trường số dấu (signed)
 
-- Là trường chỉ tính `MSB = 1` hay `MSB = 0`, quyết định số âm hay dương. **Ví dụ** cho số thực $$\large19.6875_{10}$$ nó sẽ chuyển thành 0 và 1 trong máy tính, bit dấu biểu diễn là âm hay dương với MSB, điều này đã nói rõ ở [two complement code](https://github.com/tranquanghao708/CSAPP-learning/blob/main/writeup/two-complement-code/two-complement-code.md) , ở trường số có dấu này người ta chỉ dùng 1bit để biểu diễn nó với MSB trong đa architecture
+- Là trường chỉ tính `MSB = 1` hay `MSB = 0`, quyết định số âm hay dương. **Ví dụ** cho số thực $$\large19.6875_{10}$$ có sign là 0 (MSB = 0) vì nó không phải là số âm còn nếu cho $$\large-19.6875_{10}$$ thì sign là 1 (MSB = 1) vì nó là số âm
