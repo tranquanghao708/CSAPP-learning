@@ -106,7 +106,7 @@ Exponent = 00000000
 Fraction = 00000000000000000000001
 ```
 
-thì đây ko phải là parent $$\large1.0000.._{2}\times2^{127}$$ mà là $$\large0.0000000000000000000001_{2}\times2^{126}$$ vì hiddenbit đã bằng 0
+thì đây ko phải là parent $$\large1.0000_{2}\times2^{127}$$ mà là $$\large0.0000000000000000000001_{2}\times2^{126}$$ vì hiddenbit đã bằng 0
 
 #### 1.2.Trường Fraction (phần trị - significand)
 
