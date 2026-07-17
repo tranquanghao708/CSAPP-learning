@@ -12,11 +12,11 @@
 
 - [1.1.1.Khử chuẩn hóa số thực (Denormalized)](#111khử-chuẩn-hóa-số-thực-denormalized)
 
-- 1.1.2.Khi nào IEEE 754 sử dụng Normalized và Denormalized?
+- [1.1.2.Khi nào IEEE 754 sử dụng Normalized và Denormalized?](#112Khi-nào-ieee-754-sử-dụng-normalized-và-denormalized)
 
-- 1.1.2.Vô hạn (infinity)
+- [1.1.3.Vô hạn (infinity)](#113Vô-hạn-infinity)
 
-- 1.1.3.NaN
+- 1.1.4.ko phải một số (NaN)
 
 - [1.2.Trường Fraction (phần trị - significand)](12Trường-fraction-phần-trị---significand)
 
@@ -127,6 +127,14 @@ thì đây ko phải là parent $$\large1.0000000000_{2}\times2^{127}$$ mà là 
 > `Normalized` được IEEE ưu tiên vì độ chính xác cao hơn, tận dụng hiddenbit với dạng $$\large1.xxxxx\times2^{N}$$. Nhưng nếu số quá nhỏ cần phải dùng tới `Denormalized` với dạng $$\large0.xxxxx\times2^{1 - bias}$$ , điều này giúp biễu diễn các số sát `0` nhất có thể, tuy nhiên độ chính xác thấp hơn.
 >
 > Nếu `Denormalized` ko thể sử dụng được nữa (nhỏ hơn cả subnormal nhỏ nhất) thì gía trị số thực sẽ bị underflow và kết quả sẽ thành `0`
+
+#### 1.1.3.Vô hạn (infinity)
+
+![alt text](image/image4.png)
+
+> Trích từ CS:APP
+
+- Trong IEEE chuẩn còn định nghĩa là dương vô cực ($$\large+\infty$$) và âm vô cực ($$\large-\infty$$), infinity xuất hiện khi kết quả của một phép tính vượt quá phạm vi biểu diễn của kiểu số thực
 
 #### 1.2.Trường Fraction (phần trị - significand)
 
