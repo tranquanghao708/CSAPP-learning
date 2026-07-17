@@ -186,7 +186,11 @@ ta thấy hiện `inf` nghĩa là dương vô cực $$\large+\infty$$
 
 #### 1.1.4.ko phải một số (NaN)
 
--
+- là một giá trị đặc biệt, chỉ thị cho không xác định hoặc số đó ko phải là số thực $$\large\frac{0}{0} = \text{NaN}$$, $$\large\infty-\infty=\text{NaN}$$, $$\large\sqrt{-1}=\text{NaN}$$ (đối với số thực). IEEE 754 quy định NaN có dạng như :
+
+| Sign | Exponent | Fraction |
+|------|----------|----------|
+| 0 hoặc 1 | Toàn bộ bit = 1 | Khác 0 |
 
 #### 1.2.Trường Fraction (phần trị - significand)
 
