@@ -16,9 +16,7 @@
 
 - [1.1.3.Vô hạn (infinity)](#113Vô-hạn-infinity)
 
-- 1.1.3.1.Số thực lớn nhất và tính toán số thực lớn nhất
-
-- 1.1.4.ko phải một số (NaN)
+- [1.1.4.ko phải một số (NaN)](#114ko-phải-một-số-nan)
 
 - 1.1.5.Zero ($$\large\pm0$$)
 
@@ -34,13 +32,15 @@
 
 - 2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
-- 3.Những lỗi về số thực khi lập trình cấp thấp
+- [3.Số thực lớn nhất và tính toán số thực lớn nhất](#3số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất)
 
-- 3.1.Underflow
+- 4.Những lỗi về số thực khi lập trình cấp thấp
 
-- 4.Biểu diễn số thực trong bộ nhớ,sơ đồ
+- 5.1.Underflow
 
-- 5.kết luận
+- 6.Biểu diễn số thực trong bộ nhớ,sơ đồ
+
+- 7.kết luận
 
 ---
 
@@ -138,7 +138,7 @@ thì đây ko phải là parent $$\large1.0000000000_{2}\times2^{127}$$ mà là 
 
 > Trích từ CS:APP
 
-- Trong IEEE chuẩn còn định nghĩa là dương vô cực ($$\large+\infty$$) và âm vô cực ($$\large-\infty$$), infinity xuất hiện khi kết quả của một phép tính vượt quá phạm vi biểu diễn của kiểu số thực. **Ví dụ** biểu thức cho float (32bits) $$\large3.5\times10^{38}\times10 = +\infty$$ với kiểu float 32bit có `umax = 4294967295`, với giá trị của biểu thức vừa rồi lớn hơn giá trị Umax của float (32bits) nên nó sẽ là dương vô cực ($$\large+\infty$$) vì `sign = 0` là số dương
+- Trong IEEE chuẩn còn định nghĩa là dương vô cực ($$\large+\infty$$) và âm vô cực ($$\large-\infty$$), infinity xuất hiện khi kết quả của một phép tính vượt quá phạm vi biểu diễn của kiểu số thực. **Ví dụ** biểu thức cho float (32bits) $$\large3.5\times10^{38}\times10 = +\infty$$ với giá trị của biểu thức vừa rồi lớn hơn giá trị float lớn nhất (số thực lớn nhất) nên nó sẽ là dương vô cực ($$\large+\infty$$) vì `sign = 0` là số dương. Phần số thực lớn nhất ở mục [3.Số thực lớn nhất và tính toán số thực lớn nhất](#3số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất)
 
 - IEEE 754 quy định Infinity có dạng:
 
@@ -158,6 +158,35 @@ nếu `sign = 1` : âm vô cực $$\large-\infty$$
 >
 > - Exponent Field = tất cả bit 1.
 > - Fraction = tất cả bit 0.
+
+<details>
+	<summary>ví dụ với C</summary>
+
+- Cho đoạn C sau :
+
+```c
+#include <stdio.h>
+
+int main(void){
+	float a = 1e39f
+	printf("%f\n",a);
+	return 0;
+}
+```
+
+> gcc -o float_infinity float_infinity.c
+
+khi compiled ra ta thấy compiler nó cảnh baó với info `warning: floating constant exceeds range of ‘float’ [-Woverflow]` đó là chúng ta cần test, bây giờ chạy thử :
+
+![alt text](image/image5.png)
+
+ta thấy hiện `inf` nghĩa là dương vô cực $$\large+\infty$$
+
+</details>
+
+#### 1.1.4.ko phải một số (NaN)
+
+-
 
 #### 1.2.Trường Fraction (phần trị - significand)
 
