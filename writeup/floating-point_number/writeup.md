@@ -134,7 +134,26 @@ thì đây ko phải là parent $$\large1.0000000000_{2}\times2^{127}$$ mà là 
 
 > Trích từ CS:APP
 
-- Trong IEEE chuẩn còn định nghĩa là dương vô cực ($$\large+\infty$$) và âm vô cực ($$\large-\infty$$), infinity xuất hiện khi kết quả của một phép tính vượt quá phạm vi biểu diễn của kiểu số thực
+- Trong IEEE chuẩn còn định nghĩa là dương vô cực ($$\large+\infty$$) và âm vô cực ($$\large-\infty$$), infinity xuất hiện khi kết quả của một phép tính vượt quá phạm vi biểu diễn của kiểu số thực. **Ví dụ** biểu thức cho float (32bits) $$\large3.5\times10^{38}\times10 = +\infty$$ với kiểu float 32bit có `umax = 4294967295`, với giá trị của biểu thức vừa rồi lớn hơn giá trị Umax của float (32bits) nên nó sẽ là dương vô cực ($$\large+\infty$$) vì `sign = 0` là số dương
+
+- IEEE 754 quy định Infinity có dạng:
+
+| Sign | Exponent | Fraction |
+|------|----------|----------|
+| 0 hoặc 1 | Toàn bộ bit = 1 | Toàn bộ bit = 0 |
+
+nếu `sign = 0` : dương vô cực $$\large+\infty$$
+
+nếu `sign = 1` : âm vô cực $$\large-\infty$$
+
+> [!IMPORTANT]
+>
+> Infinity **không phải là số lớn nhất** mà là một giá trị đặc biệt dùng để biểu diễn kết quả vượt quá phạm vi của kiểu số thực.
+>
+> Điều kiện nhận biết Infinity là:
+>
+> - Exponent Field = tất cả bit 1.
+> - Fraction = tất cả bit 0.
 
 #### 1.2.Trường Fraction (phần trị - significand)
 
