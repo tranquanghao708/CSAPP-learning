@@ -18,7 +18,7 @@
 
 - [1.1.4.ko phải một số (NaN)](#114ko-phải-một-số-nan)
 
-- [1.1.5.Zero ($$\large\pm0$$)]()
+- [\href{https://github.com/tranquanghao708/CSAPP-learning/blob/main/writeup/floating-point_number/writeup.md#115zero-largepm0}{1.1.5.Zero (\large\pm0)}]{}
 
 - [1.2.Trường Fraction (phần trị - significand)](12Trường-fraction-phần-trị---significand)
 
