@@ -18,7 +18,7 @@
 
 - [1.1.4.ko phải một số (NaN)](#114ko-phải-một-số-nan)
 
-- [\href{https://github.com/tranquanghao708/CSAPP-learning/blob/main/writeup/floating-point_number/writeup.md#115zero-largepm0}{1.1.5.Zero (\large\pm0)}]{}
+- [1.1.5.zero](#115zero)
 
 - [1.2.Trường Fraction (phần trị - significand)](12Trường-fraction-phần-trị---significand)
 
@@ -242,7 +242,7 @@ int main(void){
 
 Nếu trong condition ta thấy `if(x != x)` thì điều đó chỉ đúng khi `x = NaN` vì NaN là thứ duy nhất giúp `x != x` trả true. Đây là một mẹo thường gặp trong các câu hỏi về C, compiler và IEEE 754. Vì NaN là giá trị duy nhất mà biểu thức x != x luôn đúng, một số mã nguồn hoặc trình biên dịch có thể dùng tính chất này để phát hiện NaN.
 
-#### 1.1.5.Zero ($$\large\pm0$$)
+#### 1.1.5.Zero
 
 - trong toán học giá trị `0` gần như bằng nhau nhưng trong biểu diễn số thực chuẩn IEEE754 dạng bit nhị phân nó lại biểu diễn khác ở phần sign. Ví dụ float (32bit) khi ta gắn gía trị `-0` thì biễu diễn tất cả các bit là 0 trừ sign là 1, nhưng gắn giá trị `+0` thì biễu diễn tất cả các bit là 0 và sign cũng ko ngoại lệ. $$\large\pm0$$ trong biểu diễn số thực ở máy tính là âm hay dương tùy vào sign là 1 hay 0
 
