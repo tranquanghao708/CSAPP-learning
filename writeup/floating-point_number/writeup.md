@@ -18,11 +18,7 @@
 
 - [1.1.4.ko phải một số (NaN)](#114ko-phải-một-số-nan)
 
-- 1.1.4.1.Quiet NaN (qNaN)
-
-- 1.1.4.2.Signaling NaN (sNaN)
-
-- 1.1.5.Zero ($$\large\pm0$$)
+- [1.1.5.Zero ($$\large\pm0$$)]()
 
 - [1.2.Trường Fraction (phần trị - significand)](12Trường-fraction-phần-trị---significand)
 
@@ -38,9 +34,13 @@
 
 - [3.Số thực lớn nhất và tính toán số thực lớn nhất](#3số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất)
 
-- 4.Những lỗi về số thực khi lập trình cấp thấp
+- 4.Rounding
+
+- 5.Những lỗi về số thực khi lập trình cấp thấp
 
 - 5.1.Underflow
+
+- 5.2.Overflow
 
 - 6.Biểu diễn số thực trong bộ nhớ,sơ đồ
 
@@ -200,7 +200,7 @@ ta thấy hiện `inf` nghĩa là dương vô cực $$\large+\infty$$
 |------|----------|----------|
 | 0 hoặc 1 | Toàn bộ bit = 1 | Khác 0 |
 
-Nghĩa là Exponent phải là tòan bộ bit là một ($$Umax_{Exponent}$$) và Fraction phải có ít nhất một bit khác 0 cấu trúc như trong image trên từ CS:APP
+Nghĩa là Exponent phải là tòan bộ bit là một và Fraction phải có ít nhất một bit khác 0 cấu trúc như trong image trên từ CS:APP
 
 > [!IMPORTANT]
 > NaN chỉ xảy ra khi exponent toàn bộ bit phải là 1 và frantion $$\large\neq$$ 0
@@ -234,11 +234,19 @@ int main(void){
 
 ![alt text](image/image7.png)
 
-**Vì sao nó lại ra 0?:** NaN phải khác 0, mới là true. `0` và `1` được xem làm gía trị boolean true false trong việc này. Ở đây so sánh `x == x` vốn dĩ x lại là NaN nên giá trị là False = 0. Điều này cũng như vậy với phép so sánh khác như lớn hơn, bé hơn v.v.
+**Vì sao nó lại ra 0?:** Theo chuẩn IEEE 754, mọi phép so sánh bằng (==) với NaN đều trả về false, kể cả khi so sánh chính nó. `0` và `1` được xem làm gía trị boolean true false trong việc này. Ở đây so sánh `x == x` vốn dĩ x lại là NaN nên giá trị là `False = 0`. Điều này cũng như vậy với phép so sánh khác như lớn hơn, bé hơn, lớn hơn hoặc bằng và bé hơn hoặc bằng trừ các hàm chuyên biệt như `isnan()`
 
 Điều này khiến việc kiểm tra NaN phải dùng hàm `isnan()` trong `<math.h>` thay vì toán tử `==`.
 
 </details>
+
+Nếu trong condition ta thấy `if(x != x)` thì điều đó chỉ đúng khi `x = NaN` vì NaN là thứ duy nhất giúp `x != x` trả true. Đây là một mẹo thường gặp trong các câu hỏi về C, compiler và IEEE 754. Vì NaN là giá trị duy nhất mà biểu thức x != x luôn đúng, một số mã nguồn hoặc trình biên dịch có thể dùng tính chất này để phát hiện NaN.
+
+#### 1.1.5.Zero ($$\large\pm0$$)
+
+- trong toán học giá trị `0` gần như bằng nhau nhưng trong biểu diễn số thực chuẩn IEEE754 dạng bit nhị phân nó lại biểu diễn khác ở phần sign. Ví dụ float (32bit) khi ta gắn gía trị `-0` thì biễu diễn tất cả các bit là 0 trừ sign là 1, nhưng gắn giá trị `+0` thì biễu diễn tất cả các bit là 0 và sign cũng ko ngoại lệ. $$\large\pm0$$ trong biểu diễn số thực ở máy tính là âm hay dương tùy vào sign là 1 hay 0
+
+**Vì sao nó phải làm vậy?:**
 
 #### 1.2.Trường Fraction (phần trị - significand)
 
