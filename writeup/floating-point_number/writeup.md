@@ -18,6 +18,10 @@
 
 - [1.1.4.ko phải một số (NaN)](#114ko-phải-một-số-nan)
 
+- 1.1.4.1.Quiet NaN (qNaN)
+
+- 1.1.4.2.Signaling NaN (sNaN)
+
 - 1.1.5.Zero ($$\large\pm0$$)
 
 - [1.2.Trường Fraction (phần trị - significand)](12Trường-fraction-phần-trị---significand)
@@ -186,11 +190,55 @@ ta thấy hiện `inf` nghĩa là dương vô cực $$\large+\infty$$
 
 #### 1.1.4.ko phải một số (NaN)
 
+![alt text](image/image6.png)
+
+> trích từ CS:APP
+
 - là một giá trị đặc biệt, chỉ thị cho không xác định hoặc số đó ko phải là số thực $$\large\frac{0}{0} = \text{NaN}$$, $$\large\infty-\infty=\text{NaN}$$, $$\large\sqrt{-1}=\text{NaN}$$ (đối với số thực). IEEE 754 quy định NaN có dạng như :
 
 | Sign | Exponent | Fraction |
 |------|----------|----------|
 | 0 hoặc 1 | Toàn bộ bit = 1 | Khác 0 |
+
+Nghĩa là Exponent phải là tòan bộ bit là một ($$Umax_{Exponent}$$) và Fraction phải có ít nhất một bit khác 0 cấu trúc như trong image trên từ CS:APP
+
+> [!IMPORTANT]
+> NaN chỉ xảy ra khi exponent toàn bộ bit phải là 1 và frantion $$\large\neq$$ 0
+>
+> Điểm cần phân biệt :
+> - Fraction = 0 : infinity ($$\large+\infty$$, $$\large-\infty$$)
+> - Fraction $$\large\neq$$ 0 : NaN
+
+NaN có tính chất đặc biệt là **ko bằng bất kỳ giá trị nào kể cả chính nó**
+
+<details>
+	<summary>Ví dụ với C</summary>
+
+- Cho đoạn C sau :
+
+```c
+#include <math.h>
+#include <stdio.h>
+
+int main(void){
+	double x = NAN;
+	printf("dounle NaN x == x is : %d\n",x == x); // kết quả là 0
+	printf("dounle NaN x != x is : %d\n",x != x); // kết quả là 1
+	printf("dounle NaN x < x is : %d\n",x < x); // kết quả là 0
+	printf("dounle NaN x > x is : %d\n",x > x); // kết quả là 0
+	return 0;
+}
+```
+
+> gcc -o Double_NaN Double_NaN.c
+
+![alt text](image/image7.png)
+
+**Vì sao nó lại ra 0?:** NaN phải khác 0, mới là true. `0` và `1` được xem làm gía trị boolean true false trong việc này. Ở đây so sánh `x == x` vốn dĩ x lại là NaN nên giá trị là False = 0. Điều này cũng như vậy với phép so sánh khác như lớn hơn, bé hơn v.v.
+
+Điều này khiến việc kiểm tra NaN phải dùng hàm `isnan()` trong `<math.h>` thay vì toán tử `==`.
+
+</details>
 
 #### 1.2.Trường Fraction (phần trị - significand)
 
