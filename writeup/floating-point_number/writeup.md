@@ -256,6 +256,47 @@ dù vậy nhưng nó vẫn quy định `+0 == -0` vẫn phải True. Tuy nhiên 
 
 **Vì sao nó phải làm vậy?:** Ở đây, $$\large x -> 0^{-}$$ (tiến tới 0 từ phía âm) và $$\large x -> 0^{+}$$ (tiến tới 0 từ phía dương). Và trong giải tích hai giới hạn này khác nhau ở nhiều hàm ví dụ $$\large\frac{1}{x}$$ ở đây khi x tiến tới 0 từ phía âm ($$\large x -> 0^{-}$$) thì giá trị sẽ là âm vô hạn ($$\large-\infty$$) còn nếu khi x tiến tới 0 từ phía dương ($$\large x -> 0^{+}$$) thì giá trị sẽ là dương vô hạn ($$\large+\infty$$) IEEE quy định giữ lại dấu của giá trị `0` để phần cứng có thể phân biệt hai trường hợp này và cho ra kết quả đúng
 
+<details>
+	<summary>ví dụ với C</summary>
+
+- cho đoạn C sau :
+
+```c
+#include <stdio.h>
+
+int main(void){
+	float x = 1 / 0; //chia cho +0
+	float y = 1 / -0; // chi cho -0
+
+	printf("1 / +0: %f\n 1 / -0: %f\n",x,y);
+	return 0;
+}
+```
+
+> gcc -o zero zero.c
+
+![alt text](image/image8.png)
+
+ta thấy khi runtime program, nó trả SIGFPE vậy lỗi này ko phải SIGSEGV (truy cập vaddr ko hợp lệ) **vậy nó là gì?**, tuy nó là có tên gọi là Floating-Pointing (FP) số thực dấu phẩy động nhưng thực chất lỗi này đại diện cho tất cả phép toán ko phù hợp kể cả các lỗi tràn số (overflow) nghiêm trọng hoặc dùng phép tính như chia cho 0, căn bậc hai của một số âm mà ko dùng thư viện số phức hay kết quả tính toán số thực ko xác định. Ta cần sửa lại đoạn C thành:
+
+```c
+#include <stdio.h>
+
+int main(void){
+	float x = 1.0f / 0.0f; //chia cho +0
+	float y = 1.0f / -0.0f; // chi cho -0
+
+	printf("1 / +0: %f\n 1 / -0: %f\n",x,y);
+	return 0;
+}
+```
+
+![alt text](image/image9.png)
+
+Đây là kết quả chính xác của phép $$\large x -> 0^{-} = -\infty$$ (tiến tới 0 từ phía âm) và $$\large x -> 0^{+} = +\infty$$ (tiến tới 0 từ phía dương) và $$\large\frac{1}{-0} = -\infty$$, $$\large\frac{1}{+0} = +\infty$$
+
+</details>
+
 #### 1.2.Trường Fraction (phần trị - significand)
 
 - Là trường lưu các bit phía sau dấu chấm của số nhị phân sau khi đã chuẩn hóa số thực theo dạng chuẩn hóa $$\large1.xxxxx\times2^{N}$$:
