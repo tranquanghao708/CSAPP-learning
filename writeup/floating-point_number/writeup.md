@@ -6,7 +6,7 @@
 
 **mục lục**
 
-- [1.Tổng quan về IEEE 754.](#1Tổng-quan-về-ieee-754)
+- [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754)
 
 - [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized)
 
@@ -26,11 +26,9 @@
 
 - [1.3.1.Độ lệch (Bias)](#131độ-lệch-bias)
 
-- 1.4.Trường số dấu (signed)
+- [1.4.Trường số dấu (signed)](#14trường-số-dấu-signed)
 
-- 1.5.Thiết lập và đếm bit phân cho S,E,m phù hợp với độ rộng toán hạng
-
-- 2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
+- [2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](#2chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
 
 - [3.Số thực lớn nhất và tính toán số thực lớn nhất](#3số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất)
 
@@ -350,10 +348,12 @@ Trường Fraction quyết định precision (độ chính xác) của số th�
 | Double precision    |          64 |       11 |       52 |  1023 |
 | Quadruple precision |         128 |       15 |      112 | 16383 |
 
-IEEE 754 quy định các parent phổ biến như bảng, chủ yếu là học thuộc cho nhanh nhưng để hiểu bản chất thì cần phải tính toán ở [1.5.Thiết lập và đếm bit phân cho S,E,m phù hợp với độ rộng toán hạng](#15thiết-lập-và-đếm-bit-phân-cho-sem-phù-hợp-với-độ-rộng-toán-hạng) và [2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](#2Chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
+IEEE 754 quy định các parent phổ biến như bảng
 
 **Khái niệm chính xác đơn (Single precision) và chính xác kép (Double precision) là gì?:** kiểu chính xác đơn là kiểu số thực IEEE dài 32bit ví dụ float, còn chính xác kép là kiểu IEEE dài 64bit ví du double vì trong lịch sử tên gọi đơn biểu thị cho độ chính xác ban đầu và kép biểu thị cho gấp đôi độ chính xác ban đầu
 
 #### 1.4.Trường số dấu (signed)
 
 - Là trường chỉ tính `MSB = 1` hay `MSB = 0`, quyết định số âm hay dương. **Ví dụ** cho số thực $$\large19.6875_{10}$$ có sign là 0 (MSB = 0) vì nó không phải là số âm còn nếu cho $$\large-19.6875_{10}$$ thì sign là 1 (MSB = 1) vì nó là số âm
+
+#### 2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
