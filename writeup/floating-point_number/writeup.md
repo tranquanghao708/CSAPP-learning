@@ -30,25 +30,25 @@
 
 - [2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](#2chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
 
--    [2.1.Encode](#21encode)
+- [2.1.Encode](#21encode)
 
-       	 - 2.1.1. Chuyển phần nguyên sang nhị phân
+- 2.1.1. Chuyển phần nguyên sang nhị phân
 
--        2.1.2. Chuyển phần thập phân sang nhị phân
+- 2.1.2. Chuyển phần thập phân sang nhị phân
 
--        2.1.3. Chuẩn hóa số thực
+- 2.1.3. Chuẩn hóa số thực
 
--        2.1.4. Tính Actual Exponent
+- 2.1.4. Tính Actual Exponent
 
--        2.1.5. Tính Exponent Field (Exponent + Bias)
+- 2.1.5. Tính Exponent Field (Exponent + Bias)
 
--        2.1.6. Lấy Fraction
+- 2.1.6. Lấy Fraction
 
--        2.1.7. Ghép Sign | Exponent | Fraction
+- 2.1.7. Ghép Sign | Exponent | Fraction
 
--        2.1.8. Ví dụ hoàn chỉnh
+- 2.1.8. Ví dụ hoàn chỉnh
 
--    2.2.Decode
+- 2.2.Decode
 
 - [3.Số thực lớn nhất và tính toán số thực lớn nhất](#3số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất)
 
