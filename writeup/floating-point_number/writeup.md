@@ -32,7 +32,7 @@
 
 - [2.1.Encode](#21encode)
 
-- 2.1.1. Chuyển phần nguyên sang nhị phân
+- [2.1.1. Chuyển phần nguyên sang nhị phân](#211chuyển-phần-nguyên-sang-nhị-phân)
 
 - 2.1.2. Chuyển phần thập phân sang nhị phân
 
@@ -49,6 +49,20 @@
 - 2.1.8. Ví dụ hoàn chỉnh
 
 - 2.2.Decode
+
+- 2.2.1. Tách Sign | Exponent | Fraction
+
+- 2.2.2. Khôi phục Actual Exponent
+
+- 2.2.3. Khôi phục Hidden Bit
+
+- 2.2.4. Tính giá trị Significand
+
+- 2.2.5. Nhân với 2^Exponent
+
+- 2.2.6. Áp dụng Sign
+
+- 2.2.7. Ví dụ hoàn chỉnh
 
 - [3.Số thực lớn nhất và tính toán số thực lớn nhất](#3số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất)
 
@@ -380,4 +394,25 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 #### 2.1.Encode
 
-- Phần này chuyển đổi số thực sang số nhị phân. 
+- Phần này chuyển đổi số thực sang số nhị phân. Các bước như sau: 
+
+#### 2.1.1. Chuyển phần nguyên sang nhị phân
+
+- Ở đây chuyển phần nguyên sang nhị phân, ví dụ `29.81` phần này chỉ chú ý và chuyển 29 sang nhị phân kết quả là $$\large11101_{2}$$
+
+#### 2.1.2. Chuyển phần thập phân sang nhị phân
+
+- Ở đây sẽ chuyển phân thập phân sang nhị phân, ví dụ vừa rồi là `29.81` ta đã chuyển thành $$\large11101_{2}.81_{10}$$ bây giờ còn phần thập phân là `0.81` ta tiến hành chuyển đổi đổi nó, cách chuyển phần thập phân sang nhị phân phức tạp hơn phần nguyên. Thay vì liên tục chia cho 2 như phần nguyên, ta sẽ **liên tục nhân phần thập phân với 2**, sau mỗi lần nhân lấy phần nguyên của kết quả làm bit tiếp theo, rồi tiếp tục lặp với phần thập phân còn lại. Theo sơ đồ :
+
+| Bước | Giá trị | ×2   | Bit lấy |
+| ---: | ------- | ---- | ------- |
+|    1 | 0.81    | 1.62 | 1       |
+|    2 | 0.62    | 1.24 | 1       |
+|    3 | 0.24    | 0.48 | 0       |
+|    4 | 0.48    | 0.96 | 0       |
+|    5 | 0.96    | 1.92 | 1       |
+|  ... | ...     | ...  | ...     |
+
+![alt text](image10.png)
+
+> trích từ : [Tin học đại cương bách khoa hà nội](https://www.youtube.com/watch?v=ITpspAmKpCk&pp=ygUkc-G7kSB04buxYyBk4bqldSBwaOG6qXkgxJHhu5luZyBJRWVl)
