@@ -416,3 +416,5 @@ IEEE 754 quy định các parent phổ biến như bảng
 ![alt text](image/image10.png)
 
 > trích từ : [Tin học đại cương bách khoa hà nội](https://www.youtube.com/watch?v=ITpspAmKpCk&pp=ygUkc-G7kSB04buxYyBk4bqldSBwaOG6qXkgxJHhu5luZyBJRWVl)
+
+như thế các bit theo thứ tự ta sẽ thu được : $$\large0.81\approx0.11001..$$
