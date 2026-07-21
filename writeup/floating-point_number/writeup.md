@@ -82,6 +82,8 @@
 
 - 5.2.Overflow
 
+- 5.3.Precision Loss
+
 - 6.Biểu diễn số thực trong bộ nhớ,sơ đồ
 
 - 7.kết luận
@@ -403,6 +405,31 @@ IEEE 754 quy định các parent phổ biến như bảng
 - không phải mọi số thập phân đều biểu diễn chính xác trong nhị phân, nên IEEE 754 phải làm tròn (rounding). Đây là nguyên nhân của những kết quả như `0.1 + 0.2 != 0.3` trong nhiều ngôn ngữ lập trình. Phần chương này sẽ biểu diễn và tổng quát về việc này
 
 **Vì sao lại phải rounding?:** Trong hệ thống máy tính, bit nhị phân là hữu hạn nhưng biểu diễn số thực một cách chính xác lại phải vô hạn nên khi đến một ngưỡng nào đó đụng tới rào cản hữu hạn sẽ xem như làm tròn của bit nhị phân đó ví dụ 4 bit $$\large0000_{2}$$ thì số thực chỉ được biểu diễn ở phạm vi bit này, bit được cấp cho trường fraction và các trường khác lại rất ít nên độ chính xác vì thế mà giảm rất đáng kể
+
+<details>
+	<summary>Ví dụ C</summary>
+
+Cho đoạn C như sau :
+
+```c
+#include <stdio.h>
+
+int main(void){
+	float x = 0.1 + 0.2;
+	if(x != 0.3){
+		printf("số thực đã bị rounding : %.31f\n",x);
+	}else{printf("số thực ổn\n");}
+	return 0;
+}
+```
+
+> gcc -o float_rounding float_rounding.c
+
+![alt text](image/image11.png)
+
+ta thấy số thực nó đã bị làm tròn ở đây khá hỗn loạn nên cũng là lý do x($$\large0.1_{10} + 0.2_{10}$$) $$\large\neq$$ 0.3
+
+</details>
 
 Các chế độ của Rounding (làm tròn)
 
