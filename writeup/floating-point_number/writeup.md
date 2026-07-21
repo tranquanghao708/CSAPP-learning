@@ -28,45 +28,53 @@
 
 - [1.4.Trường số dấu (signed)](#14trường-số-dấu-signed)
 
-- [2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](#2chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
+- [2.Rounding tổng quan và các chế độ làm tròn](#2rounding-tổng-quan-và-các-chế-độ-làm-tròn)
 
-- [2.1.Encode](#21encode)
+- 2.1.Round to nearest, ties to even
 
-- [2.1.1. Chuyển phần nguyên sang nhị phân](#211chuyển-phần-nguyên-sang-nhị-phân)
+- 2.2.Round toward zero
 
-- 2.1.2. Chuyển phần thập phân sang nhị phân
+- 2.3.Round toward infinity positive floating numbers
 
-- 2.1.3. Chuẩn hóa số thực
+- 2.4.Round toward infinity negative floating numbers
 
-- 2.1.4. Tính Actual Exponent
+- [3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](#2chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
 
-- 2.1.5. Tính Exponent Field (Exponent + Bias)
+- [3.1.Encode](#21encode)
 
-- 2.1.6. Lấy Fraction
+- [3.1.1. Chuyển phần nguyên sang nhị phân](#211chuyển-phần-nguyên-sang-nhị-phân)
 
-- 2.1.7. Ghép Sign | Exponent | Fraction
+- 3.1.2. Chuyển phần thập phân sang nhị phân
 
-- 2.1.8. Ví dụ hoàn chỉnh
+- 3.1.3. Chuẩn hóa số thực
 
-- 2.2.Decode
+- 3.1.4. Tính Actual Exponent
 
-- 2.2.1. Tách Sign | Exponent | Fraction
+- 3.1.5. Tính Exponent Field (Exponent + Bias)
 
-- 2.2.2. Khôi phục Actual Exponent
+- 3.1.6. Lấy Fraction
 
-- 2.2.3. Khôi phục Hidden Bit
+- 3.1.7. Ghép Sign | Exponent | Fraction
 
-- 2.2.4. Tính giá trị Significand
+- 3.1.8. Ví dụ hoàn chỉnh
 
-- 2.2.5. Nhân với 2^Exponent
+- 3.2.Decode
 
-- 2.2.6. Áp dụng Sign
+- 3.2.1. Tách Sign | Exponent | Fraction
 
-- 2.2.7. Ví dụ hoàn chỉnh
+- 3.2.2. Khôi phục Actual Exponent
+
+- 3.2.3. Khôi phục Hidden Bit
+
+- 3.2.4. Tính giá trị Significand
+
+- 3.2.5. Nhân với 2^Exponent
+
+- 3.2.6. Áp dụng Sign
+
+- 3.2.7. Ví dụ hoàn chỉnh
 
 - [3.Số thực lớn nhất và tính toán số thực lớn nhất](#3số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất)
-
-- 4.Rounding
 
 - 5.Những lỗi về số thực khi lập trình cấp thấp
 
@@ -390,17 +398,27 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 - Là trường chỉ tính `MSB = 1` hay `MSB = 0`, quyết định số âm hay dương. **Ví dụ** cho số thực $$\large19.6875_{10}$$ có sign là 0 (MSB = 0) vì nó không phải là số âm còn nếu cho $$\large-19.6875_{10}$$ thì sign là 1 (MSB = 1) vì nó là số âm
 
-#### 2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
+#### 2.Rounding
 
-#### 2.1.Encode
+- không phải mọi số thập phân đều biểu diễn chính xác trong nhị phân, nên IEEE 754 phải làm tròn (rounding). Đây là nguyên nhân của những kết quả như `0.1 + 0.2 != 0.3` trong nhiều ngôn ngữ lập trình. Phần chương này sẽ biểu diễn và tổng quát về việc này
+
+**Vì sao lại phải rounding?:** Trong hệ thống máy tính, bit nhị phân là hữu hạn nhưng biểu diễn số thực một cách chính xác lại phải vô hạn nên khi đến một ngưỡng nào đó đụng tới rào cản hữu hạn sẽ xem như làm tròn của bit nhị phân đó ví dụ 4 bit $$\large0000_{2}$$ thì số thực chỉ được biểu diễn ở phạm vi bit này, bit được cấp cho trường fraction và các trường khác lại rất ít nên độ chính xác vì thế mà giảm rất đáng kể
+
+Các chế độ của Rounding (làm tròn)
+
+#### 2.1.Round to nearest, ties to even
+
+#### 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
+
+#### 3.1.Encode
 
 - Phần này chuyển đổi số thực sang số nhị phân. Các bước như sau: 
 
-#### 2.1.1. Chuyển phần nguyên sang nhị phân
+#### 3.1.1. Chuyển phần nguyên sang nhị phân
 
 - Ở đây chuyển phần nguyên sang nhị phân, ví dụ `29.81` phần này chỉ chú ý và chuyển 29 sang nhị phân kết quả là $$\large11101_{2}$$
 
-#### 2.1.2. Chuyển phần thập phân sang nhị phân
+#### 3.1.2. Chuyển phần thập phân sang nhị phân
 
 - Ở đây sẽ chuyển phân thập phân sang nhị phân, ví dụ vừa rồi là `29.81` ta đã chuyển thành $$\large11101_{2}.81_{10}$$ bây giờ còn phần thập phân là `0.81` ta tiến hành chuyển đổi đổi nó, cách chuyển phần thập phân sang nhị phân phức tạp hơn phần nguyên. Thay vì liên tục chia cho 2 như phần nguyên, ta sẽ **liên tục nhân phần thập phân với 2**, sau mỗi lần nhân lấy phần nguyên của kết quả làm bit tiếp theo, rồi tiếp tục lặp với phần thập phân còn lại. Theo sơ đồ :
 
@@ -417,4 +435,4 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 > trích từ : [Tin học đại cương bách khoa hà nội](https://www.youtube.com/watch?v=ITpspAmKpCk&pp=ygUkc-G7kSB04buxYyBk4bqldSBwaOG6qXkgxJHhu5luZyBJRWVl)
 
-như thế các bit theo thứ tự ta sẽ thu được : $$\large0.81\approx0.11001..$$
+**như thế các bit theo thứ tự ta sẽ thu được :** $$\large0.81\approx0.11001..$$
