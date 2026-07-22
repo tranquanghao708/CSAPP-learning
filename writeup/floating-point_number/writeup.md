@@ -38,6 +38,8 @@
 
 - 2.1.3.sticky bit
 
+- 2.1.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp
+
 - 2.2.Round toward zero
 
 - 2.3.Round toward infinity positive floating numbers
@@ -439,6 +441,23 @@ int main(void)
 ![alt text](image/image11.png)
 
 ta thấy số thực nó đã bị làm tròn ở đây khá hỗn loạn nên cũng là lý do x($$\large0.1_{10} + 0.2_{10}$$) $$\large\neq$$ 0.3, chỉ có thể biểu diễn **xấp xỉ** với trường hợp này chứ ko thể dùng **tuyệt đối** như `==`
+
+</details>
+
+> Phần details về ULP
+
+<details>
+	<summary>ULP(unit in the last place)</summary>
+
+Đây là khái niệm dùng để giải thích vì sao CPU làm tròn bằng cách này, ko phải cấu trúc chính của IEEE. Về nghĩa đen là giá trị của 1 đơn vị ở bit cuối cùng ở fraction, đơn giản hơn nó là khoảng cách giữa hai số IEEE 754 có thể biểu diễn được **ví dụ** sau chuẩn hóa ta có tập hợp $$\large(1.00_{2},1.01_{2},1.10_{2},1.11_{2})$$ và các số này lần lượt tương ứng với tập hợp $$\large(1.00_{10},1.25_{10},1.50_{10},1.75_{10})$$ và bây giờ khoảng cách giữa chúng là :
+
+| phép tính | kết quả |
+|-----------|---------|
+| 1.25 - 1.00 | 0.25 |
+| 1.50 - 1.25 | 0.25 |
+| 1.75 - 1.50 | 0.25 |
+
+Vậy ULP = 0.25, nếu gặp trường hợp như `một nữa của ULP` thì lấy đó chia hai lên thôi, ví dụ $$\large\frac{0.25}{2} = 0.125$$
 
 </details>
 
