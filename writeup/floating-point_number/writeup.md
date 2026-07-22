@@ -456,9 +456,9 @@ Các chế độ của Rounding (làm tròn)
 
 **Lưu ý :** giá trị $$\large1.10_{2} = 1000_{2}$$ và $$\large1.01_{2} = 0100_{2}$$ ở đây ta thấy có phần nguyên là bit 1, nhưng việc quy đổi và so sánh ở trường hợp này là chỉ tính các bit fraction chứ ko phải phần nguyên
 
-bây giờ so sánh dù cả hai thì giá trị bị cắt đều nhỏ hơn $$\large0010_{2} < 1000_{2} && 0100_{2}$$ , số thực phải đúng và xấp xỉ tới giá trị gần sát chính xác nhất có thể nên IEEE quy định nếu trường hợp số nhỏ hơn sẽ giữ nguyên ko làm tròn, vậy nó sẽ giữ nguyên giá trị `1.01` và ko làm tròn bit này
+bây giờ so sánh dù cả hai thì giá trị bị cắt đều nhỏ hơn $$\large(0010_{2} < 1000_{2})\wedge(0010_{2} < 0100_{2})$$ , số thực phải đúng và xấp xỉ tới giá trị gần sát chính xác nhất có thể nên IEEE quy định nếu trường hợp số nhỏ hơn sẽ giữ nguyên ko làm tròn, vậy nó sẽ giữ nguyên giá trị `1.01` và ko làm tròn bit này
 
-- nếu trường hợp số lớn hơn nữa sẽ làm tròn **ví dụ** như nãy, Cpu chỉ giữ 2 fraction ở bit, bây giờ ta cho bit khác như sau $$\large1.011100_{2}$$ , ở đây ta cắt vậy bit sẽ $$\large1.01_{2}$$ hoặc $$\large1.10_{2}$$ bây giờ gía trị bị cắt là $$\large1100_{2}$$ bây giờ ta so sánh $$\large1.01_{2} = 0100_{2}$$ và $$\large1.10_{2} = 1000$$ và giá trị bị cắt là $$\large1100_{2}$$ ta thấy $$\large1100_{2} > 0100_{2} && 1000_{2}$$ vậy nó là số lớn hơn, vậy theo quy định của IEEE số lớn hơn sẽ thực hiện làm tròn vậy nó sẽ làm tròn thành $$\large1.10_{2}$$
+- nếu trường hợp số lớn hơn nữa sẽ làm tròn **ví dụ** như nãy, Cpu chỉ giữ 2 fraction ở bit, bây giờ ta cho bit khác như sau $$\large1.011100_{2}$$ , ở đây ta cắt vậy bit sẽ $$\large1.01_{2}$$ hoặc $$\large1.10_{2}$$ bây giờ gía trị bị cắt là $$\large1100_{2}$$ bây giờ ta so sánh $$\large1.01_{2} = 0100_{2}$$ và $$\large1.10_{2} = 1000$$ và giá trị bị cắt là $$\large1100_{2}$$ ta thấy $$\large{1100_{2} > 0100_{2})\wedge(1100_{2} > 1000_{2})$$ vậy nó là số lớn hơn, vậy theo quy định của IEEE số lớn hơn sẽ thực hiện làm tròn vậy nó sẽ làm tròn thành $$\large1.10_{2}$$
 
 #### 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
