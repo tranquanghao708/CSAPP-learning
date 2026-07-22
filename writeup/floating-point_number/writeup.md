@@ -400,7 +400,7 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 - Là trường chỉ tính `MSB = 1` hay `MSB = 0`, quyết định số âm hay dương. **Ví dụ** cho số thực $$\large19.6875_{10}$$ có sign là 0 (MSB = 0) vì nó không phải là số âm còn nếu cho $$\large-19.6875_{10}$$ thì sign là 1 (MSB = 1) vì nó là số âm
 
-#### 2.Rounding
+#### 2.Rounding tổng quan và các chế độ làm tròn
 
 - không phải mọi số thập phân đều biểu diễn chính xác trong nhị phân, nên IEEE 754 phải làm tròn (rounding). Đây là nguyên nhân của những kết quả như `0.1 + 0.2 != 0.3` trong nhiều ngôn ngữ lập trình. Phần chương này sẽ biểu diễn và tổng quát về việc này
 
@@ -413,13 +413,18 @@ Cho đoạn C như sau :
 
 ```c
 #include <stdio.h>
+#include <stdint.h>
+#include <string.h>
 
-int main(void){
-	float x = 0.1 + 0.2;
-	if(x != 0.3){
-		printf("số thực đã bị rounding : %.31f\n",x);
-	}else{printf("số thực ổn\n");}
-	return 0;
+int main(void)
+{
+    float x = 0.1f + 0.2f;
+
+    uint32_t bits;
+    memcpy(&bits, &x, sizeof(bits));
+
+    printf("value = %.20f\n", x);
+    printf("bits  = 0x%08X\n", bits);
 }
 ```
 
@@ -427,7 +432,7 @@ int main(void){
 
 ![alt text](image/image11.png)
 
-ta thấy số thực nó đã bị làm tròn ở đây khá hỗn loạn nên cũng là lý do x($$\large0.1_{10} + 0.2_{10}$$) $$\large\neq$$ 0.3
+ta thấy số thực nó đã bị làm tròn ở đây khá hỗn loạn nên cũng là lý do x($$\large0.1_{10} + 0.2_{10}$$) $$\large\neq$$ 0.3, chỉ có thể biểu diễn **xấp xỉ** với trường hợp này chứ ko thể dùng **tuyệt đối** như `==`
 
 </details>
 
