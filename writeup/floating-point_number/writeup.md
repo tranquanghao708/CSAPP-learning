@@ -477,11 +477,13 @@ Vậy ULP = 0.25, nếu gặp trường hợp như `một nữa của ULP` thì 
 
 </details>
 
-Ở đây ta tiến hành tính ULP :
+Ở đây ta tiến hành tính ULP trước tiên phải biết $$\large1.01 = \mathbf{1.25_{10}}$$ và $$\large1.10 = \mathbf{1.50_{10}}$$ :
 
 | phép tính | kết quả |
 |-----------|---------|
-|
+| 1.50 - 1.25 | 0.25 |
+
+**ULP = 0.25** vậy bây giờ ta biết $$\large0.25_{10} = \mathbf{0.01_{2}}$$ bây giờ viết đầy đủ nó theo hệ 4bit chú ý chỉ viết fraction ta có $$\large0.01_{2} = \mathbf{0100_{2}}$$ bây giờ ta so sánh 
 
 #### 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
