@@ -496,11 +496,11 @@ nếu trường hợp số lớn hơn nữa sẽ làm tròn, **ví dụ** $$\lar
 
 | phép tính | kết quả |
 |-----------|---------|
-| 1.25 - 1.00 | 0.25 |
 | 1.50 - 1.25 | 0.25 |
-| 1.75 - 1.50 | 0.25 |
 
 vẫn như cũ, $$\large\mathrm{ULP} = \boxed{0.25}$$ và ta biết half ULP của này là $$\large0.125_{10} = 0.001_{2}$$ tròn 4bit là $$\large0.0010_{2}$$ vì đó có sẵn ở ví dụ trước. Bây giờ so sánh phần sai số (round error) và nữa khoảng cách giữa hai số biểu diễn được (half ULP) suy ra $$\large0011_{2} > 0.0010_{2}$$ suy ra nó sẽ làm tròn thành $$\large\boxed{1.10}$$
+
+nếu trường hợp số bằng đúng bằng nữa (tie) thì chọn số bit cuối là 0 (even)
 
 #### 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
@@ -514,7 +514,7 @@ vẫn như cũ, $$\large\mathrm{ULP} = \boxed{0.25}$$ và ta biết half ULP c�
 
 #### 3.1.2. Chuyển phần thập phân sang nhị phân
 
-- Ở đây sẽ chuyển phân thập phân sang nhị phân, ví dụ vừa rồi là `29.81` ta đã chuyển thành $$\large11101_{2}.81_{10}$$ bây giờ còn phần thập phân là `0.81` ta tiến hành chuyển đổi đổi nó, cách chuyển phần thập phân sang nhị phân phức tạp hơn phần nguyên. Thay vì liên tục chia cho 2 như phần nguyên, ta sẽ **liên tục nhân phần thập phân với 2**, sau mỗi lần nhân lấy phần nguyên của kết quả làm bit tiếp theo, rồi tiếp tục lặp với phần thập phân còn lại. Theo sơ đồ :
+- Ở đây sẽ chuyển phân thập phân sang nhị phân, ví dụ vừa rồi là $$\large29.81_{10}$$ ta đã chuyển thành $$\large11101_{2}.81_{10}$$ bây giờ còn phần thập phân là $$\large0.81_{10}$$ ta tiến hành chuyển đổi đổi nó, cách chuyển phần thập phân sang nhị phân phức tạp hơn phần nguyên. Thay vì liên tục chia cho 2 như phần nguyên, ta sẽ **liên tục nhân phần thập phân với 2**, sau mỗi lần nhân lấy phần nguyên của kết quả làm bit tiếp theo, rồi tiếp tục lặp với phần thập phân còn lại. Theo sơ đồ :
 
 | Bước | Giá trị | ×2   | Bit lấy |
 | ---: | ------- | ---- | ------- |
