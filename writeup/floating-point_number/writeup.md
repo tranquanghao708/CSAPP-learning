@@ -454,7 +454,7 @@ Các chế độ của Rounding (làm tròn)
 
 Thứ hai : như trên sẽ phân theo ba trường hợp 
 
-nếu trường hợp số nhỏ hơn nữa sẽ giữ nguyên **ví dụ** Cpu chỉ giữ 2 fraction ở bit, cho bit biểu diễn số thực như sau : $$\large1.010010_{2}$$ thì nó sẽ có thể giữ $$\large1.01_{2}$$ hoặc $$\large1.10_{2}$$ vì là 2 fraction bây giờ trường hợp số nhỏ hơn là Cpu hay các phần cứng để ý cái values bị cắt ở đây giá trị bị cắt là $$\large0010_{2}$$ theo ta thấy $$\large1.10_{2} = 1000_{2}$$ còn $$\large1.01_{2} = 0100_{2}$$ 
+nếu trường hợp số nhỏ hơn nữa sẽ giữ nguyên **ví dụ** Cpu chỉ giữ 2 fraction ở bit, cho bit biểu diễn số thực như sau : $$\large1.010001_{2} = \mathbf{1.265625_{10}}$$ và bây giờ CPU lấy 2 fraction suy ra nó chỉ có thể biểu diễn làm tròn $$\large1.01_{2} = 0100_{2}$$ hoặc $$\large1.10_{2} = 1000_{2}$$ và bit bị cắt là $$\large0001_{2}$$
 
 - **Lưu ý :** giá trị $$\large1.10_{2} = 1000_{2}$$ và $$\large1.01_{2} = 0100_{2}$$ ở đây ta thấy có phần nguyên là bit 1, nhưng việc quy đổi và so sánh ở trường hợp này là chỉ tính các bit fraction chứ ko phải phần nguyên
 
@@ -477,11 +477,11 @@ Vậy ULP = 0.25, nếu gặp trường hợp như `một nữa của ULP` thì 
 
 </details>
 
-số bit bị cắt là $$\large0010_{2}$$, $$\large0010_{2} < 0100_{2}$$ nghĩa là số bit bị cắt nhỏ hơn $$\large1.01_{2} = 0100_{2}$$ nên số thực phải đúng và xấp xỉ tới giá trị gần sát chính xác nhất có thể nên IEEE quy định nếu trường hợp số nhỏ hơn sẽ giữ nguyên ko làm tròn, vậy nó sẽ giữ nguyên giá trị `1.01` và ko làm tròn bit này
+Ở đây ta tiến hành tính ULP :
 
-**Lưu ý:** Khi so sánh bit biểu diễn số thực là làm tròn, ta so sánh bit thấp trước bit cao sau
-
-nếu trường hợp số lớn hơn nữa sẽ làm tròn **ví dụ** như nãy, Cpu chỉ giữ 2 fraction ở bit, bây giờ ta cho bit khác như sau $$\large1.011100_{2}$$ , ở đây ta cắt vậy bit sẽ $$\large1.01_{2}$$ hoặc $$\large1.10_{2}$$ bây giờ gía trị bị cắt là $$\large1100_{2}$$ bây giờ ta so sánh $$\large1.01_{2} = 0100_{2}$$ và $$\large1.10_{2} = 1000$$ và giá trị bị cắt là $$\large1100_{2}$$ ta thấy $$\large1100_{2} > 1000$$ vậy nó là số lớn hơn, vậy theo quy định của IEEE số lớn hơn sẽ thực hiện làm tròn vậy nó sẽ làm tròn thành $$\large1.10_{2}$$
+| phép tính | kết quả |
+|-----------|---------|
+|
 
 #### 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
