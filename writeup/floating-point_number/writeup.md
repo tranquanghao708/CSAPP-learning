@@ -514,6 +514,14 @@ Lúc này, IEEE ko được phép lúc nào cũng làm tròn lên vì nếu vậ
 
 #### 2.1.1.guard bit
 
+Guard bit là bit đầu tiên bị cắt bỏ ngay sau bit fraction cuối cùng mà CPU quyết định giữ lại. **Ví dụ** như các ví dụ trên thì CPU giữ 2fraction, ở đây lấy ví dụ với bit $$\large1.0101101_{2}$$ bây giờ fraction là $$\large1.01_{2}$$ còn bit bị cắt là $$\large01101_{2}$$ bây giờ CPU sẽ chia số bit bị cắt này ra 4 phần trong đó có fraction, guard bit (G) , round bit (R) và sticky bit (S), nó sẽ chia như sau :
+
+| Fraction | G | R | S |
+|----------|---|---|---|
+| 1.01	   | 0 | 1 | 101 |
+
+Ta thấy, `G = 0` suy ra `guard bit = 0`, `R = 1` suy ra `round bit = 1`, `S = 101` suy ra `sticky bit = 1 (vì ít nhất nó cũng có bit 1)`
+
 ## 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
 #### 3.1.Encode
