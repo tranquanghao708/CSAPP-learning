@@ -34,7 +34,7 @@
 
 - [2.1.1.guard bit](#211guard-bit)
 
-- 2.1.2.round bit
+- [2.1.2.round bit](#212round-bit)
 
 - 2.1.3.sticky bit
 
@@ -522,7 +522,11 @@ Guard bit là bit đầu tiên bị cắt bỏ ngay sau bit fraction cuối cùn
 
 Ta thấy, `G = 0` suy ra `guard bit = 0`, `R = 1` suy ra `round bit = 1`, `S = 101` suy ra `sticky bit = 1 (vì ít nhất nó cũng có bit 1)`
 
-**Guard bit dùng để làm gì?:** Nó giúp CPU biết số bit bị cắt đã vượt qua half ULP hay chưa, thay vì tính thủ công là ULP xong chia lấy half ULP xong so sánh round error v..v thì CPU chỉ cần nhìn Guardbit để biết ngay, Guard nó dùng một quy luật nào đó khá thần kỳ mà thay vì tính thủ công nó cho sẳn ra là bit 1 hay bit 0, CPU chỉ cần nhìn Guard là biết ngay nó có vượt half ulp hay ko
+**Guard bit dùng để làm gì?:** Nó giúp CPU biết số bit bị cắt đã vượt qua half ULP hay chưa, thay vì tính thủ công là ULP xong chia lấy half ULP xong so sánh round error v..v thì CPU chỉ cần nhìn Guardbit, roundbit, stickybit (GRS). Nhưng ở đây ta chỉ nói riêng về Guardbit, nếu CPU nhìn `guardbit = 0` chắc chắn `x < half ULP` còn nếu `guardbit = 1` thì cần phải soi thêm round và sticky
+
+#### 2.1.2.round bit
+
+Round bit là bit
 
 ## 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
