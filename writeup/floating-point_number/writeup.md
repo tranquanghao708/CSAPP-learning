@@ -30,7 +30,7 @@
 
 - [2.Rounding tổng quan và các chế độ làm tròn](#2rounding-tổng-quan-và-các-chế-độ-làm-tròn)
 
-- [2.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân có thể làm tròn](#21biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-có-thể-làm-tròn)
+- [2.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#21biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn)
 
 - [2.2.Round to nearest, ties to even](#22round-to-nearest-ties-to-even)
 
@@ -450,7 +450,63 @@ ta thấy số thực nó đã bị làm tròn ở đây khá hỗn loạn nên 
 
 Các chế độ của Rounding (làm tròn)
 
-#### 2.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân có thể làm tròn
+#### 2.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn
+
+Đây là chương sẽ lý giải tại sao cùng một phép cộng số thực nhưng `1.50 + 1.25 = 2.75` và ko có khái niệm rounting nào xảy ra ở phép cộng `1.50`. Tất cả là do biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn
+
+**Biểu diễn nhị phân hữu hạn:** là việc biểu diễn nhị phân có độ rộng toán hạng được giới hạn ở một ngưỡng nào đó **ví dụ** $$\large1.101_{2}$$ chỉ có 3bit fraction rồi xong hết, còn các fraction nếu dư sẽ luôn có bit là 0. **Ví dụ2:** cho số $$\large1.50_{10}$$ nó cũng là hữu hạn. 
+
+**Bằng chứng nào để chứng minh nó hữu hạn?:** Là khi số hữu hạn luôn thực hiện phép nhân và fraction có giá trị là 0, chúng ta dùng số gốc để nhân 2 và nếu có phần dư thì lấy phần dư nhân tiếp cho 2 **ví dụ** với số thực $$\large1.25_{10}$$ ta xét bit fraction là $$\large0.25_{10}$$ :
+
+| Bước | Giá trị x2  | Bit | Phần dư |
+| ---- | ----------- | --- | ------- |
+| 1    | 0.25×2=0.50 | 0   | 0.50    |
+| 2    | 0.50×2=1.00 | 1   | 0       |
+
+Dừng ở bước 2 do phần dư là 0, ta có $$\large0.25_{10} = 0.01_{2}$$ vì bit ở bước 1 và 2 lần lượt là 0 và 1, nên ta có $$\large1.25_{10} = \boxed{1.01_{2}}$$ . Đây là hữu hạn do phần dư là 0 ở bước hai, ta cho thêm **ví dụ** là $$\large0.75_{10}$$ tính fraction trước y nhưu trên :
+
+| Bước | x2          | Bit | Dư   |
+| ---- | ----------- | --- | ---- |
+| 1    | 0.75×2=1.50 | 1   | 0.50 |
+| 2    | 0.50×2=1.00 | 1   | 0    |
+
+ta cũng dừng ở bước 2, ta có $$\large0.75_{10} = \boxed{0.11_{2}}$$, nó là hữu hạn vì số dư là 0 ở bước 2
+
+<details>
+	<summary>Ví dụ với C</summary>
+
+```c
+#include <stdio.h>
+
+int main(void){
+	float x = 1.50; //binary = 1.10
+	printf("dump fration 23bit : %.23f\n",x);
+}
+```
+
+> gcc -o dump_floating_point_fraction dump_floating_point_fraction.c
+
+![alt text](image/image12.png)
+
+Ta thấy khi gán vào x là 1.50, và ta dump ra nó vẫn đúng số 1.5 nhưng fraction phía sau này là giá trị 0 hết. Chúng ta thử thực hiện phép tính cộng vào xem sao
+
+```c
+#include <stdio.h>
+
+int main(void){
+	float x = 1.50; //binary = 1.10
+	float y = 1.25; //binary = 1.01
+	printf("dump fration 23bit : %.23f\n",x + y); //phần này sẽ biểu diễn số hữu hạn
+}
+```
+
+![alt text](image/image13.png)
+
+Ta thấy nó vẫn là kết quả chính xấc, ko có rounting nào ở đây vì nó là số hữu hạn.
+
+</details>
+
+**Biểu diễn nhị phân vô hạn:** là việc biểu diễn nhị phân có độ rộng toán hạng ko được giới hạn tới khi bị cắt bởi phần cứng do giới hạn độ rộng toán hạng bên phía phần cứng **ví dụ** 
 
 #### 2.2.Round to nearest, ties to even
 
@@ -587,38 +643,6 @@ Theo 3 chương về guard bit, round bit, sticky bit (GRS) ta có bảng :
 | 1 | 1 | x | > half ULP       |
 
 các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nếu `R = 1, G = 1` chắc chắn `x > half ULP`. Nên phần cứng ko thể soi riêng biệt một bit trừ khi bit đó có quy luật khi là 0 thì chắc chắn có giá trị này ví dụ như guard bit. Bảng trên thì đó là cách phần cứng dùng GRS để biết khi nào giữ nguyên, khi nào làm tròn và khi nào lấy LSB = 0.
-
-<details>
-	<summary>Ví dụ với C</summary>
-
-- **Ý tưởng :** sẽ dùng một biểu diễn số thực cụ thể là $$\large1.50_{10} = 1.10_{2}$$ (số thực lấy từ ví dụ trên vì nó có sẵn binary, ULP v..v), ở đây là ta dùng float 32bit, nó lấy fraction 23bit bảng fraction có tại [1.3.1.Độ lệch (Bias)](#131độ-lệch-bias) , ví dụ trên nó chỉ lấy 2 bit fraction thôi bây giờ thực tế nó lấy 23bit đối với float vậy để soi xem thực sự khi dùng số thực $$\large1.50_{10}$$ vào và dump ra hết fraction thì nó sẽ có những gì :
-
-```c
-#include <stdio.h>
-
-int main(void){
-	float x = 1.50; //binary = 1.10
-	printf("dump fration 23bit : %.23f\n",x);
-}
-```
-
-> gcc -o dump_floating_point_fraction dump_floating_point_fraction.c
-
-![alt text](image/image12.png)
-
-Ta thấy khi gán vào x là 1.50, và ta dump ra nó vẫn đúng số 1.5 nhưng fraction phía sau này là giá trị 0 hết. Chúng ta thử thực hiện phép tính cộng vào xem sao
-
-```c
-#include <stdio.h>
-
-int main(void){
-	float x = 1.50; //binary = 1.10
-	float y = 1.25; //binary = 1.01
-	printf("dump fration 23bit : %.23f\n",x + y); //I guess : nó sẽ cộng thành 1.75 = 1.11 (với binary) nhưng sẽ có sai số do rounding
-}
-```
-
-</details>
 
 ## 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
