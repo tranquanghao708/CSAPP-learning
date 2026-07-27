@@ -508,7 +508,54 @@ Ta thấy nó vẫn là kết quả chính xấc, ko có rounting nào ở đây
 
 </details>
 
-**Biểu diễn nhị phân vô hạn:** là việc biểu diễn nhị phân có độ rộng toán hạng ko được giới hạn tới khi bị cắt bởi phần cứng do giới hạn độ rộng toán hạng bên phía phần cứng **ví dụ** 
+**Biểu diễn nhị phân vô hạn:** là việc biểu diễn nhị phân có độ rộng toán hạng ko được giới hạn tới khi bị cắt bởi phần cứng do giới hạn độ rộng toán hạng bên phía phần cứng **ví dụ** $$\large0.1_{2}$$ tính fraction nó với 2:
+
+| Bước | x2      | Bit | Dư  |
+| ---- | ------- | --- | --- |
+| 1    | 0.1->0.2 | 0   | 0.2 |
+| 2    | 0.2->0.4 | 0   | 0.4 |
+| 3    | 0.4->0.8 | 0   | 0.8 |
+| 4    | 0.8->1.6 | 1   | 0.6 |
+| 5    | 0.6->1.2 | 1   | 0.2 |
+| 6    | 0.2->0.4 | 0   | 0.4 |
+| 7    | 0.4->0.8 | 0   | 0.8 |
+| 8    | 0.8->1.6 | 1   | 0.6 |
+
+Ta thấy nó cứ lặp lại từ `0.2 -> 0.6` giống kim đồng hồ và số dư ko có điểm dừng. Đây gọi là biểu diễn nhị phân vô hạn, và đây cũng là điều kiện để hệ thống rounting (làm tròn) dãy này
+
+<details>
+	<summary>Ví dụ với C</summary>
+
+```c
+#include <stdio.h>
+
+int main(void){
+	float x = 0.1;
+	printf("dump fration 23bit : %.23f\n",x);
+}
+```
+
+> gcc -o dump_floating_point_fraction3 dump_floating_point_fraction3.c
+
+![alt text](image/image14.png)
+
+Ta thấy khi gán vào x là 0.1, và ta dump ra nó đã bị rounting ở fraction phía sau do đây là biểu diễn nhị phân vô hạn. Chúng ta thử thực hiện phép tính cộng vào xem sao
+
+```c
+#include <stdio.h>
+
+int main(void){
+	float x = 0.1;
+	float y = 0.2;
+	printf("dump fration 23bit : %.23f\n",x + y); //xấp xỉ 0.3 chứ ko phải tuyệt đối do rounting
+}
+```
+
+![alt text](image/image15.png)
+
+Ta thấy nó vẫn bị rounting
+
+</details>
 
 > [!IMPORTANT]
 > **Điều quan trọng:** ko phải phép cộng, trừ hay nhân chia gì ở số thực đều bị làm tròn. Điều kiện làm tròn còn phải tùy thuộc vào phép tính của số thực đó với phép nhân lấy dư và nhân dư lên 2 liên tiếp có vô hạn không để xem nó có biễu diễn nhị phân hữu hạn và vô hạn. Nếu nó biểu diễn hữu hạn là số đó chính là tuyệt đối ta có thể dùng `1.50 + 1.25 = 1.75 -> (TRUE)` nhưng nếu nó biểu diễn vô hạn thì lúc này mới có sự can thiệp của rounting ví dụ `0.1` lúc này `0.1 + 0.2 = 0.3 -> (FALSE)`
@@ -517,9 +564,9 @@ Ta thấy nó vẫn là kết quả chính xấc, ko có rounting nào ở đây
 
 - Đây là chế độ mặc định của việc làm tròn số thực dấu phẩy động của IEEE , nó thực hiện làm tròn về số gần nhất, nếu đúng giữa hai số thì chọn số chẵn. Ý tưởng gồm hai bước, đầu tiên là nó chọn giá trị gần nhất với số cần biểu diễn, thứ hai là phân theo ba trường hợp, trường hợp số nhỏ hơn nữa sẽ giữ nguyên, trường hợp số lớn hơn nữa sẽ làm tròn lên, trường hợp số đúng bằng nữa (tie) thì chọn số bit cuối là 0 (even)
 
-Đầu tiên : làm tròn về số gần nhất, **ví dụ** `0.3244` làm tròn thành `0.324`, `0.3246` làm tròn thành `0.325` đơn giản là làm tròn về số gần nhât
+**Đầu tiên :** làm tròn về số gần nhất, **ví dụ** `0.3244` làm tròn thành `0.324`, `0.3246` làm tròn thành `0.325` đơn giản là làm tròn về số gần nhât
 
-Thứ hai : như trên sẽ phân theo ba trường hợp 
+**Thứ hai :** như trên sẽ phân theo ba trường hợp 
 
 nếu trường hợp số nhỏ hơn nữa sẽ giữ nguyên **ví dụ** Cpu chỉ giữ 2 fraction ở bit, cho bit biểu diễn số thực như sau : $$\large1.010001_{2} = \mathbf{1.265625_{10}}$$ và bây giờ CPU lấy 2 fraction suy ra nó chỉ có thể biểu diễn làm tròn $$\large1.01_{2} = 0100_{2}$$ hoặc $$\large1.10_{2} = 1000_{2}$$ và bit bị cắt là $$\large0001_{2}$$
 
