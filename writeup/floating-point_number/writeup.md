@@ -40,6 +40,8 @@
 
 - 2.1.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp
 
+- 2.1.5.Vị trí của 3bit này nằm ở đâu, vì sao phần cứng lại biết và nhắm tới chính xác vị trí của 3bit này để soi?
+
 - 2.2.Round toward zero
 
 - 2.3.Round toward infinity positive floating numbers
@@ -520,13 +522,30 @@ Guard bit là bit đầu tiên bị cắt bỏ ngay sau bit fraction cuối cùn
 |----------|---|---|---|
 | 1.01	   | 0 | 1 | 101 |
 
-Ta thấy, `G = 0` suy ra `guard bit = 0`, `R = 1` suy ra `round bit = 1`, `S = 101` suy ra `sticky bit = 1 (vì ít nhất nó cũng có bit 1)`
+Ta thấy, `G = 0` suy ra `guard bit = 0`, `R = 1` suy ra `round bit = 1`, `S = 1` suy ra `sticky bit = 1 (vì ít nhất nó cũng có bit 1)`
 
 **Guard bit dùng để làm gì?:** Nó giúp CPU biết số bit bị cắt đã vượt qua half ULP hay chưa, thay vì tính thủ công là ULP xong chia lấy half ULP xong so sánh round error v..v thì CPU chỉ cần nhìn Guardbit, roundbit, stickybit (GRS). Nhưng ở đây ta chỉ nói riêng về Guardbit, nếu CPU nhìn `guardbit = 0` chắc chắn `x < half ULP` còn nếu `guardbit = 1` thì cần phải soi thêm round và sticky
 
 #### 2.1.2.round bit
 
-Round bit là bit
+Round bit là bit thứ hai bị cắt, nó nằm phía sau Guard bit. Nó có ý nghĩa nếu guardbit là 1, nếu guardbit (G) là 0 thì biết chắc chắn là `x < half ULP` rồi ko cần phải soi round và sticky, nhưng nếu guard là 1 thì bây giờ mới soi round. Ở đây, cũng như ví dụ trên ta có :
+
+| Fraction | G | R | S |
+|----------|---|---|---|
+| 1.01	   | 0 | 1 | 101 |
+
+Cái này chắc chắn là `x < half ULP` vì `G = 0` nên round sẽ ko có ý nghĩa, nhưng giả sử ta cho `G = 1` như :
+
+| Fraction | G | R | S |
+|----------|---|---|---|
+| 1.01	   | 1 | 1 | 101 |
+
+thì lúc này `G = 1` nó sẽ soi thêm R vì lúc này round mới thực sự có ý nghĩa, nếu `G = 1 và R = 1` thì nó chắc chắn sẽ lớn hơn half ULP `x > half ULP` lúc này sẽ làm tròn lên
+
+> [!IMPORTANT]
+> Nếu `G = 0` thì R và S sẽ ko cần soi nữa, vì nó chỉ có ý nghĩa nếu `G = 1` là trước tiên xong mới tới R và mới tới S.
+> - Nếu `G = 1 và R = 1` thì chắc chắn lớn hơn half ULP
+> - Nếu `G = 1 và R = 0` thì phải soi thêm Sticky bit
 
 ## 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
