@@ -412,6 +412,8 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 - Là trường chỉ tính `MSB = 1` hay `MSB = 0`, quyết định số âm hay dương. **Ví dụ** cho số thực $$\large19.6875_{10}$$ có sign là 0 (MSB = 0) vì nó không phải là số âm còn nếu cho $$\large-19.6875_{10}$$ thì sign là 1 (MSB = 1) vì nó là số âm
 
+---
+
 ## 2.Rounding tổng quan và các chế độ làm tròn
 
 - không phải mọi số thập phân đều biểu diễn chính xác trong nhị phân, nên IEEE 754 phải làm tròn (rounding). Đây là nguyên nhân của những kết quả như `0.1 + 0.2 != 0.3` trong nhiều ngôn ngữ lập trình. Phần chương này sẽ biểu diễn và tổng quát về việc này
@@ -507,6 +509,9 @@ Ta thấy nó vẫn là kết quả chính xấc, ko có rounting nào ở đây
 </details>
 
 **Biểu diễn nhị phân vô hạn:** là việc biểu diễn nhị phân có độ rộng toán hạng ko được giới hạn tới khi bị cắt bởi phần cứng do giới hạn độ rộng toán hạng bên phía phần cứng **ví dụ** 
+
+> [!IMPORTANT]
+> **Điều quan trọng:** ko phải phép cộng, trừ hay nhân chia gì ở số thực đều bị làm tròn. Điều kiện làm tròn còn phải tùy thuộc vào phép tính của số thực đó với phép nhân lấy dư và nhân dư lên 2 liên tiếp có vô hạn không để xem nó có biễu diễn nhị phân hữu hạn và vô hạn. Nếu nó biểu diễn hữu hạn là số đó chính là tuyệt đối ta có thể dùng `1.50 + 1.25 = 1.75 -> (TRUE)` nhưng nếu nó biểu diễn vô hạn thì lúc này mới có sự can thiệp của rounting ví dụ `0.1` lúc này `0.1 + 0.2 = 0.3 -> (FALSE)`
 
 #### 2.2.Round to nearest, ties to even
 
@@ -643,6 +648,8 @@ Theo 3 chương về guard bit, round bit, sticky bit (GRS) ta có bảng :
 | 1 | 1 | x | > half ULP       |
 
 các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nếu `R = 1, G = 1` chắc chắn `x > half ULP`. Nên phần cứng ko thể soi riêng biệt một bit trừ khi bit đó có quy luật khi là 0 thì chắc chắn có giá trị này ví dụ như guard bit. Bảng trên thì đó là cách phần cứng dùng GRS để biết khi nào giữ nguyên, khi nào làm tròn và khi nào lấy LSB = 0.
+
+---
 
 ## 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
