@@ -30,23 +30,25 @@
 
 - [2.Rounding tổng quan và các chế độ làm tròn](#2rounding-tổng-quan-và-các-chế-độ-làm-tròn)
 
-- [2.1.Round to nearest, ties to even](#21round-to-nearest-ties-to-even)
+- [2.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân có thể làm tròn](#21biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-có-thể-làm-tròn)
 
-- [2.1.1.guard bit](#211guard-bit)
+- [2.2.Round to nearest, ties to even](#21round-to-nearest-ties-to-even)
 
-- [2.1.2.round bit](#212round-bit)
+- [2.2.1.guard bit](#211guard-bit)
 
-- [2.1.3.sticky bit](#213sticky-bit)
+- [2.2.2.round bit](#212round-bit)
 
-- 2.1.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp
+- [2.2.3.sticky bit](#213sticky-bit)
 
-- 2.1.5.Vị trí của 3bit này nằm ở đâu, vì sao phần cứng lại biết và nhắm tới chính xác vị trí của 3bit này để soi?
+- [2.2.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp](#214cách-phần-cứng-dùng-các-guard-bit-round-bit-và-sticky-bit-để-xác-định-ba-trường-hợp)
 
-- 2.2.Round toward zero
+- 2.2.5.Vị trí của 3bit này nằm ở đâu, vì sao phần cứng lại biết và nhắm tới chính xác vị trí của 3bit này để soi?
 
-- 2.3.Round toward infinity positive floating numbers
+- 2.3.Round toward zero
 
-- 2.4.Round toward infinity negative floating numbers
+- 2.4.Round toward infinity positive floating numbers
+
+- 2.5.Round toward infinity negative floating numbers
 
 - [3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](#2chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
 
@@ -448,7 +450,9 @@ ta thấy số thực nó đã bị làm tròn ở đây khá hỗn loạn nên 
 
 Các chế độ của Rounding (làm tròn)
 
-#### 2.1.Round to nearest, ties to even
+#### 2.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân có thể làm tròn
+
+#### 2.2.Round to nearest, ties to even
 
 - Đây là chế độ mặc định của việc làm tròn số thực dấu phẩy động của IEEE , nó thực hiện làm tròn về số gần nhất, nếu đúng giữa hai số thì chọn số chẵn. Ý tưởng gồm hai bước, đầu tiên là nó chọn giá trị gần nhất với số cần biểu diễn, thứ hai là phân theo ba trường hợp, trường hợp số nhỏ hơn nữa sẽ giữ nguyên, trường hợp số lớn hơn nữa sẽ làm tròn lên, trường hợp số đúng bằng nữa (tie) thì chọn số bit cuối là 0 (even)
 
@@ -514,7 +518,7 @@ Lúc này, IEEE ko được phép lúc nào cũng làm tròn lên vì nếu vậ
 >
 > so sánh một nữa khoảng cách giữa hai số biểu diễn được (half ULP) với bit bị cắt, điều dễ nhầm là chúng ta thường lấy bit bị cắt đi so sánh với bit fraction
 
-#### 2.1.1.guard bit
+#### 2.2.1.guard bit
 
 Guard bit là bit đầu tiên bị cắt bỏ ngay sau bit fraction cuối cùng mà CPU quyết định giữ lại. **Ví dụ** như các ví dụ trên thì CPU giữ 2fraction, ở đây lấy ví dụ với bit $$\large1.0101101_{2}$$ bây giờ fraction là $$\large1.01_{2}$$ còn bit bị cắt là $$\large01101_{2}$$ bây giờ CPU sẽ chia số bit bị cắt này ra 4 phần trong đó có fraction, guard bit (G) , round bit (R) và sticky bit (S), nó sẽ chia như sau :
 
@@ -526,7 +530,7 @@ Ta thấy, `G = 0` suy ra `guard bit = 0`, `R = 1` suy ra `round bit = 1`, `S = 
 
 **Guard bit dùng để làm gì?:** Guard bit là phép kiểm tra đầu tiên. Nếu G = 0 thì chắc chắn nhỏ hơn half ULP. Nếu G = 1 thì chưa thể kết luận đã vượt half ULP hay mới đúng bằng half ULP, nên CPU phải kiểm tra thêm Round bit và Sticky bit. Thay vì tính thủ công là ULP xong chia lấy half ULP xong so sánh round error v..v thì CPU chỉ cần nhìn Guardbit, roundbit, stickybit (GRS). Nhưng ở đây ta chỉ nói riêng về Guardbit, nếu CPU nhìn `guardbit = 0` chắc chắn `x < half ULP` còn nếu `guardbit = 1` thì cần phải soi thêm round và sticky
 
-#### 2.1.2.round bit
+#### 2.2.2.round bit
 
 Round bit là bit thứ hai bị cắt, nó nằm phía sau Guard bit. Nó có ý nghĩa nếu guardbit là 1, nếu guardbit (G) là 0 thì biết chắc chắn là `x < half ULP` rồi ko cần phải soi round và sticky, nhưng nếu guard là 1 thì bây giờ mới soi round. Ở đây, cũng như ví dụ trên ta có :
 
@@ -547,7 +551,7 @@ thì lúc này `G = 1` nó sẽ soi thêm R vì lúc này round mới thực s�
 > - Nếu `G = 1 và R = 1` thì chắc chắn lớn hơn half ULP
 > - Nếu `G = 1 và R = 0` thì phải soi thêm Sticky bit
 
-#### 2.1.3.sticky bit
+#### 2.2.3.sticky bit
 
 Sticky bit là bit thứ 3, nó đứng ngay sau round bit cái đặc biệt của sticky bit này ko phải là một bit cụ thể bị cắt, mà là kết quả OR với tất cả các bit còn lại phía sau roundbit, nó luôn soi là sau roundbit còn bit nào nữa ko, nếu ko còn bit nào nữa thì `S = 0` còn nếu có thì `S = 1`. Đó là lý do mà sticky bit (S) là bit 0 hoặc bit 1 dù sau nó là hàng chục hay hàng trăm bit. Ví dụ ở trên là ;
 
@@ -571,7 +575,7 @@ Sticky bit là bit thứ 3, nó đứng ngay sau round bit cái đặc biệt c�
 
 **Sticky bit dùng để làm gì?:** Nó được dùng khi `G = 1, R = 0` lúc này CPU vẫn chưa biết đang đúng half ULP `x == half ULP` hay đã lớn hơn half ULP `x > half ULP` sticky bit sẽ phân biệt hai trường hợp này
 
-#### 2.1.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp
+#### 2.2.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp
 
 Theo 3 chương về guard bit, round bit, sticky bit (GRS) ta có bảng :
 
@@ -580,9 +584,41 @@ Theo 3 chương về guard bit, round bit, sticky bit (GRS) ta có bảng :
 | 0 | x | x | < half ULP       |
 | 1 | 0 | 0 | = half ULP (tie) |
 | 1 | 0 | 1 | > half ULP       |
-| 1 | 1 | 0 | > half ULP       |
+| 1 | 1 | x | > half ULP       |
 
-các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nếu `R = 1, G = 1` chắc chắn `x > half ULP`. Nên phần cứng ko thể soi riêng biệt một bit trừ khi bit đó có quy luật khi là 0 thì chắc chắn có giá trị này ví dụ như guard bit.
+các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nếu `R = 1, G = 1` chắc chắn `x > half ULP`. Nên phần cứng ko thể soi riêng biệt một bit trừ khi bit đó có quy luật khi là 0 thì chắc chắn có giá trị này ví dụ như guard bit. Bảng trên thì đó là cách phần cứng dùng GRS để biết khi nào giữ nguyên, khi nào làm tròn và khi nào lấy LSB = 0.
+
+<details>
+	<summary>Ví dụ với C</summary>
+
+- **Ý tưởng :** sẽ dùng một biểu diễn số thực cụ thể là $$\large1.50_{10} = 1.10_{2}$$ (số thực lấy từ ví dụ trên vì nó có sẵn binary, ULP v..v), ở đây là ta dùng float 32bit, nó lấy fraction 23bit bảng fraction có tại [1.3.1.Độ lệch (Bias)](#131độ-lệch-bias) , ví dụ trên nó chỉ lấy 2 bit fraction thôi bây giờ thực tế nó lấy 23bit đối với float vậy để soi xem thực sự khi dùng số thực $$\large1.50_{10}$$ vào và dump ra hết fraction thì nó sẽ có những gì :
+
+```c
+#include <stdio.h>
+
+int main(void){
+	float x = 1.50; //binary = 1.10
+	printf("dump fration 23bit : %.23f\n",x);
+}
+```
+
+> gcc -o dump_floating_point_fraction dump_floating_point_fraction.c
+
+![alt text](image/image12.png)
+
+Ta thấy khi gán vào x là 1.50, và ta dump ra nó vẫn đúng số 1.5 nhưng fraction phía sau này là giá trị 0 hết. Chúng ta thử thực hiện phép tính cộng vào xem sao
+
+```c
+#include <stdio.h>
+
+int main(void){
+	float x = 1.50; //binary = 1.10
+	float y = 1.25; //binary = 1.01
+	printf("dump fration 23bit : %.23f\n",x + y); //I guess : nó sẽ cộng thành 1.75 = 1.11 (với binary) nhưng sẽ có sai số do rounding
+}
+```
+
+</details>
 
 ## 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
