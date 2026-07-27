@@ -32,15 +32,15 @@
 
 - [2.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân có thể làm tròn](#21biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-có-thể-làm-tròn)
 
-- [2.2.Round to nearest, ties to even](#21round-to-nearest-ties-to-even)
+- [2.2.Round to nearest, ties to even](#22round-to-nearest-ties-to-even)
 
-- [2.2.1.guard bit](#211guard-bit)
+- [2.2.1.guard bit](#221guard-bit)
 
-- [2.2.2.round bit](#212round-bit)
+- [2.2.2.round bit](#222round-bit)
 
-- [2.2.3.sticky bit](#213sticky-bit)
+- [2.2.3.sticky bit](#223sticky-bit)
 
-- [2.2.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp](#214cách-phần-cứng-dùng-các-guard-bit-round-bit-và-sticky-bit-để-xác-định-ba-trường-hợp)
+- [2.2.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp](#224cách-phần-cứng-dùng-các-guard-bit-round-bit-và-sticky-bit-để-xác-định-ba-trường-hợp)
 
 - 2.2.5.Vị trí của 3bit này nằm ở đâu, vì sao phần cứng lại biết và nhắm tới chính xác vị trí của 3bit này để soi?
 
