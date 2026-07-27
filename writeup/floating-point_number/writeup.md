@@ -36,7 +36,7 @@
 
 - [2.1.2.round bit](#212round-bit)
 
-- 2.1.3.sticky bit
+- [2.1.3.sticky bit](#213sticky-bit)
 
 - 2.1.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp
 
@@ -524,7 +524,7 @@ Guard bit là bit đầu tiên bị cắt bỏ ngay sau bit fraction cuối cùn
 
 Ta thấy, `G = 0` suy ra `guard bit = 0`, `R = 1` suy ra `round bit = 1`, `S = 1` suy ra `sticky bit = 1 (vì ít nhất nó cũng có bit 1)`
 
-**Guard bit dùng để làm gì?:** Nó giúp CPU biết số bit bị cắt đã vượt qua half ULP hay chưa, thay vì tính thủ công là ULP xong chia lấy half ULP xong so sánh round error v..v thì CPU chỉ cần nhìn Guardbit, roundbit, stickybit (GRS). Nhưng ở đây ta chỉ nói riêng về Guardbit, nếu CPU nhìn `guardbit = 0` chắc chắn `x < half ULP` còn nếu `guardbit = 1` thì cần phải soi thêm round và sticky
+**Guard bit dùng để làm gì?:** Guard bit là phép kiểm tra đầu tiên. Nếu G = 0 thì chắc chắn nhỏ hơn half ULP. Nếu G = 1 thì chưa thể kết luận đã vượt half ULP hay mới đúng bằng half ULP, nên CPU phải kiểm tra thêm Round bit và Sticky bit. Thay vì tính thủ công là ULP xong chia lấy half ULP xong so sánh round error v..v thì CPU chỉ cần nhìn Guardbit, roundbit, stickybit (GRS). Nhưng ở đây ta chỉ nói riêng về Guardbit, nếu CPU nhìn `guardbit = 0` chắc chắn `x < half ULP` còn nếu `guardbit = 1` thì cần phải soi thêm round và sticky
 
 #### 2.1.2.round bit
 
@@ -546,6 +546,28 @@ thì lúc này `G = 1` nó sẽ soi thêm R vì lúc này round mới thực s�
 > Nếu `G = 0` thì R và S sẽ ko cần soi nữa, vì nó chỉ có ý nghĩa nếu `G = 1` là trước tiên xong mới tới R và mới tới S.
 > - Nếu `G = 1 và R = 1` thì chắc chắn lớn hơn half ULP
 > - Nếu `G = 1 và R = 0` thì phải soi thêm Sticky bit
+
+#### 2.1.3.sticky bit
+
+Sticky bit là bit thứ 3, nó đứng ngay sau round bit cái đặc biệt của sticky bit này ko phải là một bit cụ thể bị cắt, mà là kết quả OR với tất cả các bit còn lại phía sau roundbit, nó luôn soi là sau roundbit còn bit nào nữa ko, nếu ko còn bit nào nữa thì `S = 0` còn nếu có thì `S = 1`. Đó là lý do mà sticky bit (S) là bit 0 hoặc bit 1 dù sau nó là hàng chục hay hàng trăm bit. Ví dụ ở trên là ;
+
+| Fraction | G | R | S |
+|----------|---|---|---|
+| 1.01	   | 1 | 1 | 101 |
+
+Ở đây ta thấy trường sticky bit có chuỗi nhị phân là `101` vậy nên sticky sẽ có bit 1 `S = 1`. Ví dụ khác :
+
+| Fraction | G | R | S |
+|----------|---|---|---|
+| 1.01	   | 1 | 1 | 000 |
+
+Ở đây ta thấy trường sticky bit có chuỗi nhị phân là `000` vậy nên sticky sẽ có bit 1 `S = 0` (do ko có bit nào là 1). Ví dụ khác :
+
+| Fraction | G | R | S |
+|----------|---|---|---|
+| 1.01	   | 1 | 1 | 010 |
+
+Ở đây ta thấy trường sticky bit có chuỗi nhị phân là `010` vậy nên sticky sẽ có bit 1 `S = 1` (do có bit giữa là 1). Từ 3 ví dụ, ta thấy hễ một binary strings sau trường roundbit có một bit 1 thì `S = 1` còn nếu ko có bit 1 nào thì `S = 0`
 
 ## 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
