@@ -569,6 +569,21 @@ Sticky bit là bit thứ 3, nó đứng ngay sau round bit cái đặc biệt c�
 
 Ở đây ta thấy trường sticky bit có chuỗi nhị phân là `010` vậy nên sticky sẽ có bit 1 `S = 1` (do có bit giữa là 1). Từ 3 ví dụ, ta thấy hễ một binary strings sau trường roundbit có một bit 1 thì `S = 1` còn nếu ko có bit 1 nào thì `S = 0`
 
+**Sticky bit dùng để làm gì?:** Nó được dùng khi `G = 1, R = 0` lúc này CPU vẫn chưa biết đang đúng half ULP `x == half ULP` hay đã lớn hơn half ULP `x > half ULP` sticky bit sẽ phân biệt hai trường hợp này
+
+#### 2.1.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp
+
+Theo 3 chương về guard bit, round bit, sticky bit (GRS) ta có bảng :
+
+| G | R | S | Kết luận         |
+| - | - | - | ---------------- |
+| 0 | x | x | < half ULP       |
+| 1 | 0 | 0 | = half ULP (tie) |
+| 1 | 0 | 1 | > half ULP       |
+| 1 | 1 | 0 | > half ULP       |
+
+các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nếu `R = 1, G = 1` chắc chắn `x > half ULP`. Nên phần cứng ko thể soi riêng biệt một bit trừ khi bit đó có quy luật khi là 0 thì chắc chắn có giá trị này ví dụ như guard bit.
+
 ## 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
 #### 3.1.Encode
