@@ -557,6 +557,8 @@ Ta thấy nó vẫn bị rounting
 
 </details>
 
+**Định lý đẹp của biểu diễn vô hạn và hữu hạn:** một phân số tối giản $$\large\frac{a}{b}$$ sẽ có biểu diễn hữu hạn trong cơ số 2 khi và chỉ khi mẫu số b chỉ chứa thừa số nguyên tố 2. **Ví dụ** $$\large0.5_{10} = \frac{1}{2}$$ ta có mẫu là 2 suy ra nó hữu hạn, $$\large0.25_{10} = \frac{1}{4}$$ mẫu là $$\large2^{2}$$ suy ra nó hữu hạn, $$\large0.75_{10} = \frac{3}{4}$$ mẫu là $$\large2^{2}$$ suy ra nó hữu hạn. Nhưng còn, $$\large0.1_{10} = \frac{1}{10} = \frac{1}{2\times5}$$ mẫu có 5 và nó ko thể viết hữu hạn trong cơ số 2, suy ra nó vô hạn
+
 > [!IMPORTANT]
 > **Điều quan trọng:** ko phải phép cộng, trừ hay nhân chia gì ở số thực đều bị làm tròn. Điều kiện làm tròn còn phải tùy thuộc vào phép tính của số thực đó với phép nhân lấy dư và nhân dư lên 2 liên tiếp có vô hạn không để xem nó có biễu diễn nhị phân hữu hạn và vô hạn. Nếu nó biểu diễn hữu hạn là số đó chính là tuyệt đối ta có thể dùng `1.50 + 1.25 = 1.75 -> (TRUE)` nhưng nếu nó biểu diễn vô hạn thì lúc này mới có sự can thiệp của rounting ví dụ `0.1` lúc này `0.1 + 0.2 = 0.3 -> (FALSE)`
 
