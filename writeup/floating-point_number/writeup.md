@@ -703,17 +703,53 @@ các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nế
 <details>
 	<summary>Ví dụ với C</summary>
 
-**Ý tưởng:** dùng số thực vô hạn để tạo ra hiệu ứng rounting của hệ thống, và tính toán lại để so sánh chế độ làm tròn round to nearest, ties to even xem có đúng như ban đầu không đồng thời truy tìm các bit bị cắt có thể là tầm 5 bit vì 2 bit cho G, R và 3 bit cho S. Ở đây, ta nhắm tới fraction và dùng float 32bit và fraction trong architecture này là 23bit bảng toán hạng được phân cho từng trường có tại chương [1.3.1.Độ lệch (Bias)](#131độ-lệch-bias)
+**Ý tưởng:** dùng số thực vô hạn để tạo ra hiệu ứng rounding của hệ thống, và tính toán lại để so sánh chế độ làm tròn round to nearest, ties to even xem có đúng như ban đầu không đồng thời truy tìm các bit bị cắt có thể là tầm 5 bit vì 2 bit cho G, R và 3 bit cho S. Ở đây, ta nhắm tới fraction và dùng float 32bit và fraction trong architecture này là 23bit bảng toán hạng được phân cho từng trường có tại chương [1.3.1.Độ lệch (Bias)](#131độ-lệch-bias)
 
 ```c
 #include <stdio.h>
+#include <limits.h>
+#include <string.h>
+
+void print_raw_binaries(float param){
+	int size = sizeof(param) * CHAR_BIT ; //có thể viết thẳng số 8 vì charbit biểu thị cho số byte của char, thường là 1 byte nhưng nên dùng charbit vì nó có tính tương thích cao
+
+	unsigned int raw;
+	memcpy(&raw, &param, sizeof(param));
+
+	for(int i = size - 1; //việc trừ 1 để tránh bị tràn số, ở đây ví dụ 32 bit thì nên in 31 bit thôi tránh bị tràn sang Tmin
+		i >= 0; //right, in hết nên phải lớn hơn hoặc bằng 0
+		i--){
+			int bit = (raw >> i) & 1; //lấy bit LSB trước 0 thì in 0, 1 thì in 1, lấy xong dịch phải qua theo i lần
+			printf("%d",bit);
+		}
+	printf("\n");
+}
 
 int main(void){
 	float a = 0.1f; //số thực vô hạn
-	printf("infinity floating point numbers : %.23f",a);
+	
+	print_raw_binaries(a);
+
+	printf("infinity floating point numbers : %.23f\nsố bit bị cắt : %.28f\n",a,a);
 	return 0;
 }
 ```
+
+> gcc -o rounding_tester rounding_tester.c
+
+![alt text](image/image16.png)
+
+Ta có `0.10000000149011611938477`, `0.1000000014901161193847656250`, `00111101110011001100110011001101` . Đây là 3 chuỗi nhị phân, 2 chuỗi rounding. Bây giờ ta tiến hành phân tích chuỗi nhị phân trước, đầu tiên sô thực ta cho vào ko phải là âm nên sign = 0, fraction là 23bit :
+
+| Sign | Fraction | số bit bị cắt |
+|------|----------|----------|
+| 0    | 01111011100110011001100 | 11001101 |
+
+Ta chỉ quan tâm tới Fraction (nhằm để soi xét nghệ thuật làm tròn của hệ thống), bây giờ tới phần `0.10000000149011611938477` và `0.1000000014901161193847656250` ta thực hiện cắt bỏ bớt chỉ lấy 5 bit theo góc nhìn giống biểu diễn little endian như sau `0.1000000014901161193847656250` -> `56250`
+
+![alt text](image/image17.png)
+
+Ta thấy khi lấy `56250` các bit còn lại ở fraction đúng bằng 23 bit, vậy tại sao phần in 23 bit fraction là `8477` nhưng phần in 28bit lại là `7656`?, tất cả là do rounding round to nearest ties to even và đây đúng là cái ta cần biết để chứng minh
 
 </details>
 
