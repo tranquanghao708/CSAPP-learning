@@ -749,7 +749,7 @@ Ta chỉ quan tâm tới Fraction (nhằm để soi xét nghệ thuật làm tr�
 
 ![alt text](image/image17.png)
 
-Ta thấy khi lấy `56250` các bit còn lại ở fraction đúng bằng 23 bit, vậy tại sao phần in 23 bit fraction là `8477` nhưng phần in 28bit lại là `7656` như trong ảnh? :
+Ta thấy khi lấy `56250` các bit còn lại ở fraction đúng bằng 23 bit, vậy tại sao phần in 23 bit fraction là `8477` nhưng phần in 28bit lại là `8476` như trong ảnh? :
 
 ![alt text](image/image18.png)
 
