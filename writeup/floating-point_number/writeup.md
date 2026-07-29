@@ -414,17 +414,17 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 ---
 
-## 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
+## 2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
 
-#### 3.1.Encode
+#### 2.1.Encode
 
 - Phần này chuyển đổi số thực sang số nhị phân. Các bước như sau: 
 
-#### 3.1.1. Chuyển phần nguyên sang nhị phân
+#### 2.1.1. Chuyển phần nguyên sang nhị phân
 
 - Ở đây chuyển phần nguyên sang nhị phân, ví dụ `29.81` phần này chỉ chú ý và chuyển 29 sang nhị phân kết quả là $$\large11101_{2}$$
 
-#### 3.1.2. Chuyển phần thập phân sang nhị phân
+#### 2.1.2. Chuyển phần thập phân sang nhị phân
 
 - Ở đây sẽ chuyển phân thập phân sang nhị phân, ví dụ vừa rồi là $$\large29.81_{10}$$ ta đã chuyển thành $$\large11101_{2}.81_{10}$$ bây giờ còn phần thập phân là $$\large0.81_{10}$$ ta tiến hành chuyển đổi đổi nó, cách chuyển phần thập phân sang nhị phân phức tạp hơn phần nguyên. Thay vì liên tục chia cho 2 như phần nguyên, ta sẽ **liên tục nhân phần thập phân với 2**, sau mỗi lần nhân lấy phần nguyên của kết quả làm bit tiếp theo, rồi tiếp tục lặp với phần thập phân còn lại. Theo sơ đồ :
 
