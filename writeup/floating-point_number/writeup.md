@@ -28,77 +28,77 @@
 
 - [1.4.Trường số dấu (signed)](#14trường-số-dấu-signed)
 
-- [2.Rounding tổng quan và các chế độ làm tròn](#2rounding-tổng-quan-và-các-chế-độ-làm-tròn)
+- [2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](#2chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
 
-- [2.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#21biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn)
+- [2.1.Encode](#21encode)
 
-- [2.2.Round to nearest, ties to even](#22round-to-nearest-ties-to-even)
+- [2.1.1. Chuyển phần nguyên sang nhị phân](#211chuyển-phần-nguyên-sang-nhị-phân)
 
-- [2.2.1.guard bit](#221guard-bit)
+- 2.1.2. Chuyển phần thập phân sang nhị phân
 
-- [2.2.2.round bit](#222round-bit)
+- 2.1.3. Chuẩn hóa số thực
 
-- [2.2.3.sticky bit](#223sticky-bit)
+- 2.1.4. Tính Actual Exponent
 
-- [2.2.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp](#224cách-phần-cứng-dùng-các-guard-bit-round-bit-và-sticky-bit-để-xác-định-ba-trường-hợp)
+- 2.1.5. Tính Exponent Field (Exponent + Bias)
 
-- 2.2.5.Vị trí của 3bit này nằm ở đâu, vì sao phần cứng lại biết và nhắm tới chính xác vị trí của 3bit này để soi?
+- 2.1.6. Lấy Fraction
 
-- 2.3.Round toward zero
+- 2.1.7. Ghép Sign | Exponent | Fraction
 
-- 2.4.Round toward infinity positive floating numbers
+- 2.1.8. Ví dụ hoàn chỉnh
 
-- 2.5.Round toward infinity negative floating numbers
+- 2.2.Decode
 
-- [3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](#2chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
+- 2.2.1. Tách Sign | Exponent | Fraction
 
-- [3.1.Encode](#21encode)
+- 2.2.2. Khôi phục Actual Exponent
 
-- [3.1.1. Chuyển phần nguyên sang nhị phân](#211chuyển-phần-nguyên-sang-nhị-phân)
+- 2.2.3. Khôi phục Hidden Bit
 
-- 3.1.2. Chuyển phần thập phân sang nhị phân
+- 2.2.4. Tính giá trị Significand
 
-- 3.1.3. Chuẩn hóa số thực
+- 2.2.5. Nhân với 2^Exponent
 
-- 3.1.4. Tính Actual Exponent
+- 2.2.6. Áp dụng Sign
 
-- 3.1.5. Tính Exponent Field (Exponent + Bias)
-
-- 3.1.6. Lấy Fraction
-
-- 3.1.7. Ghép Sign | Exponent | Fraction
-
-- 3.1.8. Ví dụ hoàn chỉnh
-
-- 3.2.Decode
-
-- 3.2.1. Tách Sign | Exponent | Fraction
-
-- 3.2.2. Khôi phục Actual Exponent
-
-- 3.2.3. Khôi phục Hidden Bit
-
-- 3.2.4. Tính giá trị Significand
-
-- 3.2.5. Nhân với 2^Exponent
-
-- 3.2.6. Áp dụng Sign
-
-- 3.2.7. Ví dụ hoàn chỉnh
+- 2.2.7. Ví dụ hoàn chỉnh
 
 - [3.Số thực lớn nhất và tính toán số thực lớn nhất](#3số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất)
 
-- 4.Những lỗi về số thực khi lập trình cấp thấp
+- [4.Rounding tổng quan và các chế độ làm tròn](#4rounding-tổng-quan-và-các-chế-độ-làm-tròn)
 
-- 4.1.Underflow
+- [4.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#41biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn)
 
-- 4.2.Overflow
+- [4.2.Round to nearest, ties to even](#42round-to-nearest-ties-to-even)
 
-- 4.3.Precision Loss
+- [4.2.1.guard bit](#421guard-bit)
 
-- 5.Biểu diễn số thực trong bộ nhớ,sơ đồ
+- [4.2.2.round bit](#422round-bit)
 
-- 6.kết luận
+- [4.2.3.sticky bit](#423sticky-bit)
+
+- [4.2.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp](#424cách-phần-cứng-dùng-các-guard-bit-round-bit-và-sticky-bit-để-xác-định-ba-trường-hợp)
+
+- 4.2.5.Vị trí của 3bit này nằm ở đâu, vì sao phần cứng lại biết và nhắm tới chính xác vị trí của 3bit này để soi?
+
+- 4.3.Round toward zero
+
+- 4.4.Round toward infinity positive floating numbers
+
+- 4.5.Round toward infinity negative floating numbers
+
+- 5.Những lỗi về số thực khi lập trình cấp thấp
+
+- 5.1.Underflow
+
+- 5.2.Overflow
+
+- 5.3.Precision Loss
+
+- 6.Biểu diễn số thực trong bộ nhớ,sơ đồ
+
+- 7.kết luận
 
 ---
 
@@ -414,7 +414,38 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 ---
 
-## 2.Rounding tổng quan và các chế độ làm tròn
+## 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
+
+#### 3.1.Encode
+
+- Phần này chuyển đổi số thực sang số nhị phân. Các bước như sau: 
+
+#### 3.1.1. Chuyển phần nguyên sang nhị phân
+
+- Ở đây chuyển phần nguyên sang nhị phân, ví dụ `29.81` phần này chỉ chú ý và chuyển 29 sang nhị phân kết quả là $$\large11101_{2}$$
+
+#### 3.1.2. Chuyển phần thập phân sang nhị phân
+
+- Ở đây sẽ chuyển phân thập phân sang nhị phân, ví dụ vừa rồi là $$\large29.81_{10}$$ ta đã chuyển thành $$\large11101_{2}.81_{10}$$ bây giờ còn phần thập phân là $$\large0.81_{10}$$ ta tiến hành chuyển đổi đổi nó, cách chuyển phần thập phân sang nhị phân phức tạp hơn phần nguyên. Thay vì liên tục chia cho 2 như phần nguyên, ta sẽ **liên tục nhân phần thập phân với 2**, sau mỗi lần nhân lấy phần nguyên của kết quả làm bit tiếp theo, rồi tiếp tục lặp với phần thập phân còn lại. Theo sơ đồ :
+
+| Bước | Giá trị | ×2   | Bit lấy |
+| ---: | ------- | ---- | ------- |
+|    1 | 0.81    | 1.62 | 1       |
+|    2 | 0.62    | 1.24 | 1       |
+|    3 | 0.24    | 0.48 | 0       |
+|    4 | 0.48    | 0.96 | 0       |
+|    5 | 0.96    | 1.92 | 1       |
+|  ... | ...     | ...  | ...     |
+
+![alt text](image/image10.png)
+
+> trích từ : [Tin học đại cương bách khoa hà nội](https://www.youtube.com/watch?v=ITpspAmKpCk&pp=ygUkc-G7kSB04buxYyBk4bqldSBwaOG6qXkgxJHhu5luZyBJRWVl)
+
+**như thế các bit theo thứ tự ta sẽ thu được :** $$\large0.81\approx0.11001..$$
+
+---
+
+## 4.Rounding tổng quan và các chế độ làm tròn
 
 - không phải mọi số thập phân đều biểu diễn chính xác trong nhị phân, nên IEEE 754 phải làm tròn (rounding). Đây là nguyên nhân của những kết quả như `0.1 + 0.2 != 0.3` trong nhiều ngôn ngữ lập trình. Phần chương này sẽ biểu diễn và tổng quát về việc này
 
@@ -452,7 +483,7 @@ ta thấy số thực nó đã bị làm tròn ở đây khá hỗn loạn nên 
 
 Các chế độ của Rounding (làm tròn)
 
-#### 2.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn
+#### 4.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn
 
 Đây là chương sẽ lý giải tại sao cùng một phép cộng số thực nhưng `1.50 + 1.25 = 2.75` và ko có khái niệm rounting nào xảy ra ở phép cộng `1.50`. Tất cả là do biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn
 
@@ -564,7 +595,7 @@ Ta thấy nó vẫn bị rounting
 >
 > Ngược lại, nếu một số không thể biểu diễn chính xác trong IEEE 754 (chẳng hạn `0.1`, `0.2` có biểu diễn nhị phân vô hạn) thì ngay từ khi lưu vào bộ nhớ chúng đã phải làm tròn. Sau đó các phép toán tiếp theo sẽ làm việc trên các giá trị đã được làm tròn này, nên kết quả có thể tiếp tục xuất hiện sai số. Ví dụ `0.1 + 0.2` không cho đúng chính xác `0.3`.
 
-#### 2.2.Round to nearest, ties to even
+#### 4.2.Round to nearest, ties to even
 
 - Đây là chế độ mặc định của việc làm tròn số thực dấu phẩy động của IEEE , nó thực hiện làm tròn về số gần nhất, nếu đúng giữa hai số thì chọn số chẵn. Ý tưởng gồm hai bước, đầu tiên là nó chọn giá trị gần nhất với số cần biểu diễn, thứ hai là phân theo ba trường hợp, trường hợp số nhỏ hơn nữa sẽ giữ nguyên, trường hợp số lớn hơn nữa sẽ làm tròn lên, trường hợp số đúng bằng nữa (tie) thì chọn số bit cuối là 0 (even)
 
@@ -618,6 +649,8 @@ nếu trường hợp số lớn hơn nữa sẽ làm tròn, **ví dụ** $$\lar
 
 vẫn như cũ, $$\large\mathrm{ULP} = \boxed{0.25}$$ và ta biết half ULP của này là $$\large0.125_{10} = 0.001_{2}$$ tròn 4bit là $$\large0.0010_{2}$$ vì đó có sẵn ở ví dụ trước. Bây giờ so sánh phần sai số (round error) và nữa khoảng cách giữa hai số biểu diễn được (half ULP) suy ra $$\large0011_{2} > 0.0010_{2}$$ suy ra nó sẽ làm tròn thành $$\large\boxed{1.10}$$
 
+> Câu hỏi về làm tròn
+
 <details>
 	<summary>Nhưng vấn đề mà chúng ta thường hay rối ở đây là nếu có lệnh quyết định làm tròn sau khi so sánh half ULP thì tự hỏi nó làm tròn một đơn vị bit hay làm tròn cả dãy bit theo mô hình toán học?</summary>
 
@@ -653,7 +686,7 @@ Lúc này, IEEE ko được phép lúc nào cũng làm tròn lên vì nếu vậ
 >
 > so sánh một nữa khoảng cách giữa hai số biểu diễn được (half ULP) với bit bị cắt, điều dễ nhầm là chúng ta thường lấy bit bị cắt đi so sánh với bit fraction
 
-#### 2.2.1.guard bit
+#### 4.2.1.guard bit
 
 Guard bit là bit đầu tiên bị cắt bỏ ngay sau bit fraction cuối cùng mà CPU quyết định giữ lại. **Ví dụ** như các ví dụ trên thì CPU giữ 2fraction, ở đây lấy ví dụ với bit $$\large1.0101101_{2}$$ bây giờ fraction là $$\large1.01_{2}$$ còn bit bị cắt là $$\large01101_{2}$$ bây giờ CPU sẽ chia số bit bị cắt này ra 4 phần trong đó có fraction, guard bit (G) , round bit (R) và sticky bit (S), nó sẽ chia như sau :
 
@@ -665,7 +698,7 @@ Ta thấy, `G = 0` suy ra `guard bit = 0`, `R = 1` suy ra `round bit = 1`, `S = 
 
 **Guard bit dùng để làm gì?:** Guard bit là phép kiểm tra đầu tiên. Nếu G = 0 thì chắc chắn nhỏ hơn half ULP. Nếu G = 1 thì chưa thể kết luận đã vượt half ULP hay mới đúng bằng half ULP, nên CPU phải kiểm tra thêm Round bit và Sticky bit. Thay vì tính thủ công là ULP xong chia lấy half ULP xong so sánh round error v..v thì CPU chỉ cần nhìn Guardbit, roundbit, stickybit (GRS). Nhưng ở đây ta chỉ nói riêng về Guardbit, nếu CPU nhìn `guardbit = 0` chắc chắn `x < half ULP` còn nếu `guardbit = 1` thì cần phải soi thêm round và sticky
 
-#### 2.2.2.round bit
+#### 4.2.2.round bit
 
 Round bit là bit thứ hai bị cắt, nó nằm phía sau Guard bit. Nó có ý nghĩa nếu guardbit là 1, nếu guardbit (G) là 0 thì biết chắc chắn là `x < half ULP` rồi ko cần phải soi round và sticky, nhưng nếu guard là 1 thì bây giờ mới soi round. Ở đây, cũng như ví dụ trên ta có :
 
@@ -686,7 +719,7 @@ thì lúc này `G = 1` nó sẽ soi thêm R vì lúc này round mới thực s�
 > - Nếu `G = 1 và R = 1` thì chắc chắn lớn hơn half ULP
 > - Nếu `G = 1 và R = 0` thì phải soi thêm Sticky bit
 
-#### 2.2.3.sticky bit
+#### 4.2.3.sticky bit
 
 Sticky bit là bit thứ 3, nó đứng ngay sau round bit cái đặc biệt của sticky bit này ko phải là một bit cụ thể bị cắt, mà là kết quả OR với tất cả các bit còn lại phía sau roundbit, nó luôn soi là sau roundbit còn bit nào nữa ko, nếu ko còn bit nào nữa thì `S = 0` còn nếu có thì `S = 1`. Đó là lý do mà sticky bit (S) là bit 0 hoặc bit 1 dù sau nó là hàng chục hay hàng trăm bit. Ví dụ ở trên là ;
 
@@ -710,7 +743,7 @@ Sticky bit là bit thứ 3, nó đứng ngay sau round bit cái đặc biệt c�
 
 **Sticky bit dùng để làm gì?:** Nó được dùng khi `G = 1, R = 0` lúc này CPU vẫn chưa biết đang đúng half ULP `x == half ULP` hay đã lớn hơn half ULP `x > half ULP` sticky bit sẽ phân biệt hai trường hợp này
 
-#### 2.2.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp
+#### 4.2.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp
 
 Theo 3 chương về guard bit, round bit, sticky bit (GRS) ta có bảng :
 
@@ -764,9 +797,9 @@ int main(void){
 
 Ta có `0.10000000149011611938477`, `0.1000000014901161193847656250`, `00111101110011001100110011001101` . Đây là 3 chuỗi nhị phân, 2 chuỗi rounding. Bây giờ ta tiến hành phân tích chuỗi nhị phân trước, đầu tiên sô thực ta cho vào ko phải là âm nên sign = 0, fraction là 23bit :
 
-| Sign | Fraction | số bit bị cắt |
+| Sign | exponent | fraction |
 |------|----------|----------|
-| 0    | 01111011100110011001100 | 11001101 |
+| 0    | 01111011 | 10011001100110011001101 |
 
 Ta chỉ quan tâm tới Fraction (nhằm để soi xét nghệ thuật làm tròn của hệ thống), bây giờ tới phần `0.10000000149011611938477` và `0.1000000014901161193847656250` ta thực hiện cắt bỏ bớt chỉ lấy 5 bit cuối như sau `0.1000000014901161193847656250` -> `56250`
 
@@ -780,37 +813,14 @@ Ta thấy khi lấy `56250` các bit còn lại ở fraction đúng bằng 23 bi
 
 tất cả là do rounding round to nearest ties to even và đây đúng là cái ta cần biết để chứng minh. Đầu tiên với half ULP, ta cần biết để tính ULP trước để soi xét half ULP có đúng trong trường hợp này, xong sau đó mới tới xét các GRS để chứng minh sau. Để có thể tính half ULP, ta cần biết phần fraction tiếp theo ở đây khi nhân hai với `0.1` nó sẽ ra `0.2` ta lấy `0.2 - 0.1 = 0.1` và chia hai ra ta được `0.05` đây là half ULP
 
-Bây giờ so sánh nếu half ULP lớn hơn số bit bị cắt ta giữ nguyên, nếu half ULP nhỏ hơn số bit bị cắt ta làm tròn và nếu half ULP bằng số bit bị cắt thi lấy `LSB = 0` bây giờ so sánh ta có half ULP là `0.05` ta so sánh `0.05 < 56250`, ta làm tròn. 
+Bây giờ so sánh nếu half ULP lớn hơn số bit bị cắt ta giữ nguyên, nếu half ULP nhỏ hơn số bit bị cắt ta làm tròn và nếu half ULP bằng số bit bị cắt thi lấy `LSB = 0` bây giờ so sánh ta có half ULP là `0.05` ta so sánh `0.05 < 56250`, ta làm tròn. Bây giờ phải biết rằng CPU nó cộng một đơn vị bit vào phần tử cuối của fraction ở float 32 bit thì fraction có 23bit vậy bây giờ phải lấy số nhị phân trên để thực hiện làm tròn như sau :
+
+```
+ 10011001100110011001101
++
+ 00000000000000000000001 (cộng 1 vào đơn vị cuối của fraction)
+-------------------------
+ 10011001100110011001110 (kết quả làm tròn)
+```
 
 </details>
-
----
-
-## 3.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực
-
-#### 3.1.Encode
-
-- Phần này chuyển đổi số thực sang số nhị phân. Các bước như sau: 
-
-#### 3.1.1. Chuyển phần nguyên sang nhị phân
-
-- Ở đây chuyển phần nguyên sang nhị phân, ví dụ `29.81` phần này chỉ chú ý và chuyển 29 sang nhị phân kết quả là $$\large11101_{2}$$
-
-#### 3.1.2. Chuyển phần thập phân sang nhị phân
-
-- Ở đây sẽ chuyển phân thập phân sang nhị phân, ví dụ vừa rồi là $$\large29.81_{10}$$ ta đã chuyển thành $$\large11101_{2}.81_{10}$$ bây giờ còn phần thập phân là $$\large0.81_{10}$$ ta tiến hành chuyển đổi đổi nó, cách chuyển phần thập phân sang nhị phân phức tạp hơn phần nguyên. Thay vì liên tục chia cho 2 như phần nguyên, ta sẽ **liên tục nhân phần thập phân với 2**, sau mỗi lần nhân lấy phần nguyên của kết quả làm bit tiếp theo, rồi tiếp tục lặp với phần thập phân còn lại. Theo sơ đồ :
-
-| Bước | Giá trị | ×2   | Bit lấy |
-| ---: | ------- | ---- | ------- |
-|    1 | 0.81    | 1.62 | 1       |
-|    2 | 0.62    | 1.24 | 1       |
-|    3 | 0.24    | 0.48 | 0       |
-|    4 | 0.48    | 0.96 | 0       |
-|    5 | 0.96    | 1.92 | 1       |
-|  ... | ...     | ...  | ...     |
-
-![alt text](image/image10.png)
-
-> trích từ : [Tin học đại cương bách khoa hà nội](https://www.youtube.com/watch?v=ITpspAmKpCk&pp=ygUkc-G7kSB04buxYyBk4bqldSBwaOG6qXkgxJHhu5luZyBJRWVl)
-
-**như thế các bit theo thứ tự ta sẽ thu được :** $$\large0.81\approx0.11001..$$
