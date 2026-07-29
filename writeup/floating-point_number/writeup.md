@@ -618,6 +618,29 @@ nếu trường hợp số lớn hơn nữa sẽ làm tròn, **ví dụ** $$\lar
 
 vẫn như cũ, $$\large\mathrm{ULP} = \boxed{0.25}$$ và ta biết half ULP của này là $$\large0.125_{10} = 0.001_{2}$$ tròn 4bit là $$\large0.0010_{2}$$ vì đó có sẵn ở ví dụ trước. Bây giờ so sánh phần sai số (round error) và nữa khoảng cách giữa hai số biểu diễn được (half ULP) suy ra $$\large0011_{2} > 0.0010_{2}$$ suy ra nó sẽ làm tròn thành $$\large\boxed{1.10}$$
 
+<details>
+	<summary>Nhưng vấn đề mà chúng ta thường hay rối ở đây là nếu có lệnh quyết định làm tròn sau khi so sánh half ULP thì tự hỏi nó làm tròn một đơn vị bit hay làm tròn cả dãy bit theo mô hình toán học?</summary>
+
+- IEEE 754 không làm tròn từng bit bị cắt, cũng không làm tròn cả dãy bit theo kiểu toán học. Nó chỉ thay đổi đúng một đơn vị ở bit fraction cuối cùng được giữ lại (1 ULP của kết quả), rồi để phép cộng nhị phân tự lan carry nếu cần. **Ví dụ** giả sử CPU chỉ lưu 4 fraction `1.0111 100...` trong đó `100...` sau cùng này là số bit bị cắt, sau khi xét GRS (G = 1, R = 0, S = 0) nếu G = 1 rồi thì chắc chắn nó lớn hơn half ULP nên điều này quyết định làm tròn, bây giờ mới tới phần làm tròn CPU nó ko biến `100...` thành `000...` hay xử lý từng bit phía sau nó chỉ thực hiện cộng thêm đúng một bit ở fraction cuối cùng được giữ.
+
+**Ví dụ** $$\large1.0111_{2}$$ CPU giữ 4 fration trong đó là $$\large0111_{2}$$, bit cuối cùng của fraction là `1`, còn bit đầu tiên của fraction là `0`
+
+![alt text](image/image19.png)
+
+khi làm tròn, CPU chỉ thực hiện cộng một đơn vị bit vào bit cuối cùng của fraction thôi nghĩa là nó chỉ thực hiện:
+
+```
+ 1.0111 (gốc)
++
+ 0.0001 (cộng một đơn vị vào bit cuối cùng)
+--------
+ 1.1000 (kết quả làm tròn)
+```
+
+đó chính là cách CPU làm tròn bit khi số bit bị cắt lớn hơn half ULP
+
+</details>
+
 nếu trường hợp số bằng đúng bằng nữa (tie) thì chọn số bit cuối là 0 (even) nó sẽ chọn số có LSB là 0, **ví dụ** ta có $$\large0.010010_{2}$$ với CPU chỉ giữ fraction ta có hai dạng như ví dụ trước là $$\large0.01_{2}$$ hay $$\large0.10_{2}$$ ở đây phần bị cắt là $$\large0010_{2}$$ và ta biết `half ULP = 0.125` vì nó vẫn tương tự ở các ví dụ trên thôi. Bây giờ, ta so sánh thấy phần đặc biệt là half ULP bằng với bit bị cắt $$\mathbf{\large0010_{2}\text{(số bit bị cắt)} == 0010_{2}\text{(Half ULP)}}$$ vì $$\large0.125_{10} = 0.001_{2}\text{(half ULP)}$$ tính theo đúng 4bit sẽ là $$\large\mathbf{0010_{2} \text{(half ULP)}}$$ ở đây việc nó bằng nhau thế này ta gọi đó là trường hợp bằng đúng bằng nữa (tie) nghĩa là giá trị phần bị cắt (round error) bằng đúng half ULP, tức sai số khi giữ nguyên và sai số khi làm tròn lên là như nhau. Số cần biểu diễn nằm đúng ở chính giữa hai số IEEE 754 có thể biểu diễn được.
 
 Lúc này, IEEE ko được phép lúc nào cũng làm tròn lên vì nếu vậy thì nó sẽ sinh ra sai số dương tích lũy sau hàng triệu phép tính, thay vào đó nó quy định nếu đúng bằng half ULP thì chọn số có bit cuối cùng (LSB) bằng 0 (even). Ví dụ trường hợp này $$\mathbf{\large0010_{2}\text{(số bit bị cắt)} == 0010_{2}\text{(Half ULP)}}$$ thì đối tượng được làm tròn là $$\large1.10_{2}\text{hay}1.01_{2}$$ ta phân tích hai số này, $$\large1.10_{2}$$ có `LSB = 0` và $$\large1.01_{2}$$ có `LSB = 1` ta thấy IEEE quy định thì nó sẽ chọn số bit cuối cùng (LSB) bằng 0 (even) thì `LSB = 1` sẽ ko được chọn vì nó khác 0, `LSB = 0` sẽ được chọn vì nó bằng 0. Nên, số làm tròn sẽ thành $$\large\boxed{1.10_{2}}$$ vì nó có `LSB = 0` (thỏa mãn quy định của IEEE)
@@ -758,8 +781,6 @@ Ta thấy khi lấy `56250` các bit còn lại ở fraction đúng bằng 23 bi
 tất cả là do rounding round to nearest ties to even và đây đúng là cái ta cần biết để chứng minh. Đầu tiên với half ULP, ta cần biết để tính ULP trước để soi xét half ULP có đúng trong trường hợp này, xong sau đó mới tới xét các GRS để chứng minh sau. Để có thể tính half ULP, ta cần biết phần fraction tiếp theo ở đây khi nhân hai với `0.1` nó sẽ ra `0.2` ta lấy `0.2 - 0.1 = 0.1` và chia hai ra ta được `0.05` đây là half ULP
 
 Bây giờ so sánh nếu half ULP lớn hơn số bit bị cắt ta giữ nguyên, nếu half ULP nhỏ hơn số bit bị cắt ta làm tròn và nếu half ULP bằng số bit bị cắt thi lấy `LSB = 0` bây giờ so sánh ta có half ULP là `0.05` ta so sánh `0.05 < 56250`, ta làm tròn. 
-
-**Nhưng vấn đề mà chúng ta thường hay rối ở đây là nếu có lệnh quyết định làm tròn sau khi so sánh half ULP thì tự hỏi nó làm tròn một đơn vị bit hay làm tròn cả dãy bit theo mô hình toán học?:**
 
 </details>
 
