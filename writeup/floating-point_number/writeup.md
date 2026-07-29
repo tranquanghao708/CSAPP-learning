@@ -44,23 +44,19 @@
 
 - [2.1.6.Ghép Sign | Exponent | Fraction](#216ghép-sign--exponent--fraction)
 
-- 2.1.7.Ví dụ hoàn chỉnh
+- [2.2.Decode](#22decode)
 
-- 2.2.Decode
+- [2.2.1.Tách Sign | Exponent | Fraction](#221tách-sign--exponent--fraction)
 
-- 2.2.1. Tách Sign | Exponent | Fraction
+- [2.2.2.Khôi phục Actual Exponent](#222khôi-phục-actual-exponent)
 
-- 2.2.2. Khôi phục Actual Exponent
+- [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit)
 
-- 2.2.3. Khôi phục Hidden Bit
+- 2.2.4.Tính giá trị Significand
 
-- 2.2.4. Tính giá trị Significand
+- 2.2.5.Nhân với 2^Exponent
 
-- 2.2.5. Nhân với 2^Exponent
-
-- 2.2.6. Áp dụng Sign
-
-- 2.2.7. Ví dụ hoàn chỉnh
+- 2.2.6.Áp dụng Sign
 
 - [3.Số thực lớn nhất và tính toán số thực lớn nhất](#3số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất)
 
@@ -475,7 +471,21 @@ Phần này chỉ ghép lại thôi, bây giờ ta có sign = $$\large0_{2}$$ v�
 |------|----------|----------|
 | 0 | 10000011 | 11011100100000000000000 |
 
-từ trên bảng ta có : `0 10000011 11011100100000000000000`, bỏ dấu cách đi ta có `01000001111011100100000000000000`, suy ra $$\large29.81_{10} = \boxed{01000001111011100100000000000000_{2}}$$
+**từ trên bảng ta có :** `0 10000011 11011100100000000000000`, bỏ dấu cách đi ta có `01000001111011100100000000000000`, suy ra $$\large29.81_{10} = \boxed{01000001111011100100000000000000_{2}}$$
+
+#### 2.2.Decode
+
+Chương này nói về chuyển đổi số thực biểu diễn dưới dạng nhị phân sang số thực biểu diễn dưới dạng bình thường
+
+#### 2.2.1.Tách Sign | Exponent | Fraction
+
+đây là việc tách một đoạn binary biểu diễn số thực theo 3 trường (sign, exponent và fraction). Ta có `01000001111011100100000000000000`, tách chúng thành `0(sign) 10000011(exponent) 11011100100000000000000(fraction)`
+
+#### 2.2.2.Khôi phục Actual Exponent
+
+chúng ta đã tách được Sign | Exponent | Fraction, nhưng phần số mũ vẫn chưa phải số mũ thật bây giờ ta tính số mũ thật bằng cách lấy raw binary ở trường exponent ta có `10000011` bây giờ ta cần phải chuyển nhị phân này sang số nguyên $$\large10000011_{2} = 131_{10}$$ bây giờ ta lấy `131` là số nguyên vừa covert từ binary sang đem đi trừ với bias ta có Actual exponent = $$\large131 - 127 = \boxed{4_{2}}$$ . Đây chính là số mũ sẽ dùng ở bước cuối khi khôi phục giá trị số thực.
+
+#### 2.2.3.Khôi phục Hidden Bit
 
 ---
 
