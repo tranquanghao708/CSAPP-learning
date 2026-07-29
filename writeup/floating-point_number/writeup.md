@@ -38,15 +38,13 @@
 
 - [2.1.3.Chuẩn hóa số thực](#213chuẩn-hóa-số-thực)
 
-- [2.1.4.Tính Actual Exponent](#214tính-actual-exponent)
+- [2.1.4.Tính Exponent Field](#214tính-exponent-field)
 
-- 2.1.5. Tính Exponent Field (Exponent + Bias)
+- 2.1.5.Lấy Fraction
 
-- 2.1.6. Lấy Fraction
+- 2.1.6.Ghép Sign | Exponent | Fraction
 
-- 2.1.7. Ghép Sign | Exponent | Fraction
-
-- 2.1.8. Ví dụ hoàn chỉnh
+- 2.1.7.Ví dụ hoàn chỉnh
 
 - 2.2.Decode
 
@@ -448,9 +446,11 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 #### 2.1.3.Chuẩn hóa số thực
 
-Tiếp theo là phần chuẩn hóa, phần này chúng ta đã biết tại chương [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized) bây giờ chúng ta có $$\large11101.11001_{2}$$ và ta thực hiện di chuyển dấu chấm sang bên trái nó thành $$\large1.110111001_{2}$$ và ta nhớ ta dịch dấu chấm sang trái 4 lần, vì vậy ta có `actual exponent = 4`
+Tiếp theo là phần chuẩn hóa, phần này chúng ta đã biết tại chương [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized) bây giờ chúng ta có $$\large11101.11001_{2}$$ và ta thực hiện di chuyển dấu chấm sang bên trái nó thành $$\large1.110111001_{2}$$ và ta nhớ ta dịch dấu chấm sang trái 4 lần, vì vậy ta có `actual exponent = 4` đây là mũ số thực (chưa cộng bias)
 
-#### 2.1.4.Tính Actual Exponent
+#### 2.1.4.Tính Exponent Field
+
+Ta có `actual exponent = 4` từ phần thực hiện chuẩn hóa số thực, bây giờ chương này ta tính exponent field (trường số mũ), phần này ta dùng `actual expnent - bias`, khái niệm bias có tại chương [1.3.1.Độ lệch (Bias)](#131độ-lệch-bias)
 
 ---
 
