@@ -749,7 +749,13 @@ Ta chỉ quan tâm tới Fraction (nhằm để soi xét nghệ thuật làm tr�
 
 ![alt text](image/image17.png)
 
-Ta thấy khi lấy `56250` các bit còn lại ở fraction đúng bằng 23 bit, vậy tại sao phần in 23 bit fraction là `8477` nhưng phần in 28bit lại là `7656`?, tất cả là do rounding round to nearest ties to even và đây đúng là cái ta cần biết để chứng minh
+Ta thấy khi lấy `56250` các bit còn lại ở fraction đúng bằng 23 bit, vậy tại sao phần in 23 bit fraction là `8477` nhưng phần in 28bit lại là `7656` như trong ảnh? :
+
+![alt text](image/image18.png)
+
+tất cả là do rounding round to nearest ties to even và đây đúng là cái ta cần biết để chứng minh. Đầu tiên với half ULP, ta cần biết để tính ULP trước để soi xét half ULP có đúng trong trường hợp này, xong sau đó mới tới xét các GRS để chứng minh sau. Để có thể tính half ULP, ta cần biết phần fraction tiếp theo ở đây khi nhân hai với `0.1` nó sẽ ra `0.2` ta lấy `0.2 - 0.1 = 0.1` và chia hai ra ta được `0.05` đây là half ULP
+
+Bây giờ so sánh 
 
 </details>
 
