@@ -32,7 +32,7 @@
 
 - [2.1.Encode](#21encode)
 
-- [2.1.1. Chuyển phần nguyên sang nhị phân](#211chuyển-phần-nguyên-sang-nhị-phân)
+- [2.1.1.Chuyển phần nguyên sang nhị phân](#211chuyển-phần-nguyên-sang-nhị-phân)
 
 - 2.1.2. Chuyển phần thập phân sang nhị phân
 
