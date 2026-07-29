@@ -448,10 +448,17 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 Tiếp theo là phần chuẩn hóa, phần này chúng ta đã biết tại chương [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized) bây giờ chúng ta có $$\large11101.11001_{2}$$ và ta thực hiện di chuyển dấu chấm sang bên trái nó thành $$\large1.110111001_{2}$$ và ta nhớ ta dịch dấu chấm sang trái 4 lần, vì vậy ta có `actual exponent = 4` đây là mũ số thực (chưa cộng bias)
 
+> [!IMPOPTANT]
+> Actual Exponent không phải là trường Exponent lưu trong IEEE 754. Đây chỉ là số mũ toán học sau khi chuẩn hóa. Trường Exponent trong IEEE sẽ được tính ở bước tiếp theo bằng công thức `exponent field = actual expnent + bias`
+
 #### 2.1.4.Tính Exponent Field
 
-Ta có `actual exponent = 4` từ phần thực hiện chuẩn hóa số thực, bây giờ chương này ta tính exponent field (trường số mũ), phần này ta dùng `actual expnent - bias`, khái niệm bias có tại chương [1.3.1.Độ lệch (Bias)](#131độ-lệch-bias)
+Ta có `actual exponent = 4` từ phần thực hiện chuẩn hóa số thực, bây giờ chương này ta tính exponent field (trường số mũ), phần này ta dùng `actual expnent + bias`, khái niệm bias có tại chương [1.3.1.Độ lệch (Bias)](#131độ-lệch-bias) cũng ở chương đó ta có một bảng có 3 trường được phân bổ nhị phân do đó mỗi trường đều có toán hạng riêng cho nó, ở đây ta dùng hệ 32bit (float) vậy bias có giá trị là `127`
 
+> [!NOTE]
+> **Lưu ý:** giá trị `127` ở phần bias là kết quả của phép tính Tmax $$\large2^{N-1}-1$$, ở đây thực chất bias chỉ có toán hạng là 8bit thôi 
+
+khi biết giá trị của bias ta tiến hành thực hiện tính trường số mũ (Exponent field) = $$\large4 + 127 = \boxes{131_{10}}$$ vậy suy ra trường số mũ có giá trị là `131`
 ---
 
 ## 4.Rounding tổng quan và các chế độ làm tròn
