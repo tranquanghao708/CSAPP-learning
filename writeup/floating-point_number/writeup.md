@@ -458,7 +458,7 @@ Ta có `actual exponent = 4` từ phần thực hiện chuẩn hóa số thực,
 > [!NOTE]
 > **Lưu ý:** giá trị `127` ở phần bias là kết quả của phép tính Tmax $$\large2^{N-1}-1$$, ở đây thực chất bias chỉ có toán hạng là 8bit thôi 
 
-khi biết giá trị của bias ta tiến hành thực hiện tính trường số mũ (Exponent field) = $$\large4 + 127 = \boxes{131_{10}}$$ vậy suy ra trường số mũ có giá trị là `131`
+khi biết giá trị của bias ta tiến hành thực hiện tính trường số mũ (Exponent field) = $$\large4 + 127 = \boxed{131_{10}}$$ vậy suy ra trường số mũ có giá trị là `131`
 ---
 
 ## 4.Rounding tổng quan và các chế độ làm tròn
