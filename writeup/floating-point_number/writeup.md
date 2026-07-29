@@ -42,7 +42,7 @@
 
 - [2.1.5.Lấy Fraction](#215lấy-fraction)
 
-- [2.1.6.Ghép Sign | Exponent | Fraction]()
+- [2.1.6.Ghép Sign | Exponent | Fraction](#216ghép-sign--exponent--fraction)
 
 - 2.1.7.Ví dụ hoàn chỉnh
 
@@ -468,6 +468,14 @@ IEEE754 quy định là phần này chỉ được lấy những bit sau dấu c
 > Nếu trường hợp gắp số bit fraction nhiều hơn giới hạn toán hạn của fraction thì CPU sẽ thực hiện cắt bit và làm tròn (rounding), ví dụ fraction có toán hạng là 23bit nhưng đầu vào ở fraction là hơn 23bit thì CPU sẽ cắt sao cho đủ 23bit và rounding
 
 #### 2.1.6.Ghép Sign | Exponent | Fraction
+
+Phần này chỉ ghép lại thôi, bây giờ ta có sign = $$\large0_{2}$$ vì `29.81` là số dương, exponent field = $$\large131_{10} = 10000011_{2}\text{Chuẩn 8bit thỏa mãn trường số mũ}$$, Fraction field = $$\large11011100100000000000000_{2}\text{padding 0 cho đủ 23bit thảo mãn trường phần trị}$$ :
+
+| sign | Exponent | fraction |
+|------|----------|----------|
+| 0 | 10000011 | 11011100100000000000000 |
+
+từ trên bảng ta có : `0 10000011 11011100100000000000000`, bỏ dấu cách đi ta có `01000001111011100100000000000000`, suy ra $$\large29.81_{10} = \boxed{01000001111011100100000000000000_{2}}$$
 
 ---
 
