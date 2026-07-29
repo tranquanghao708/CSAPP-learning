@@ -420,7 +420,7 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 - Phần này chuyển đổi số thực sang số nhị phân. Các bước như sau: 
 
-#### 2.1.1. Chuyển phần nguyên sang nhị phân
+#### 2.1.1.Chuyển phần nguyên sang nhị phân
 
 - Ở đây chuyển phần nguyên sang nhị phân, ví dụ `29.81` phần này chỉ chú ý và chuyển 29 sang nhị phân kết quả là $$\large11101_{2}$$
 
