@@ -40,9 +40,9 @@
 
 - [2.1.4.Tính Exponent Field](#214tính-exponent-field)
 
-- 2.1.5.Lấy Fraction
+- [2.1.5.Lấy Fraction](#215lấy-fraction)
 
-- 2.1.6.Ghép Sign | Exponent | Fraction
+- [2.1.6.Ghép Sign | Exponent | Fraction]()
 
 - 2.1.7.Ví dụ hoàn chỉnh
 
@@ -446,7 +446,7 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 #### 2.1.3.Chuẩn hóa số thực
 
-Tiếp theo là phần chuẩn hóa, phần này chúng ta đã biết tại chương [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized) bây giờ chúng ta có $$\large11101.11001_{2}$$ và ta thực hiện di chuyển dấu chấm sang bên trái nó thành $$\large1.110111001_{2}$$ và ta nhớ ta dịch dấu chấm sang trái 4 lần, vì vậy ta có `actual exponent = 4` đây là mũ số thực (chưa cộng bias)
+Tiếp theo là phần chuẩn hóa, phần này chúng ta đã biết tại chương [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized) bây giờ chúng ta có $$\large11101.11001_{2}$$ và ta thực hiện di chuyển dấu chấm sang bên trái nó thành $$\large1.110111001_{2}$$ và ta nhớ ta dịch dấu chấm sang trái 4 lần, vì vậy ta có `actual exponent = 4` đây là mũ số thực (chưa cộng bias). Suy ra, ta có $$\large1.110111001_{2}\times2^{4}$$
 
 > [!IMPOPTANT]
 > Actual Exponent không phải là trường Exponent lưu trong IEEE 754. Đây chỉ là số mũ toán học sau khi chuẩn hóa. Trường Exponent trong IEEE sẽ được tính ở bước tiếp theo bằng công thức `exponent field = actual expnent + bias`
@@ -459,6 +459,15 @@ Ta có `actual exponent = 4` từ phần thực hiện chuẩn hóa số thực,
 > **Lưu ý:** giá trị `127` ở phần bias là kết quả của phép tính Tmax $$\large2^{N-1}-1$$, ở đây thực chất bias chỉ có toán hạng là 8bit thôi 
 
 khi biết giá trị của bias ta tiến hành thực hiện tính trường số mũ (Exponent field) = $$\large4 + 127 = \boxed{131_{10}}$$ vậy suy ra trường số mũ có giá trị là `131`
+
+#### 2.1.5.Lấy Fraction
+
+IEEE754 quy định là phần này chỉ được lấy những bit sau dấu chấm, ko được lấy các bit trước dấu chấm vậy ta có $$\large1.110111001_{2}\times2^{4}$$ thì ta lấy fraction `110111001` nhưng theo kiến trúc 32bit (32bit architecture) và dựa vào bảng ở chương bias ta thấy fraction có toán hạng là 23bit vậy ta thêm đơn vị `0` phía sau sao cho đủ 23bit, suy ra fraction là `11011100100000000000000` (đủ 23bit)
+
+> [!NOTE]
+> Nếu trường hợp gắp số bit fraction nhiều hơn giới hạn toán hạn của fraction thì CPU sẽ thực hiện cắt bit và làm tròn (rounding), ví dụ fraction có toán hạng là 23bit nhưng đầu vào ở fraction là hơn 23bit thì CPU sẽ cắt sao cho đủ 23bit và rounding
+
+#### 2.1.6.Ghép Sign | Exponent | Fraction
 
 ---
 
