@@ -745,7 +745,7 @@ Ta có `0.10000000149011611938477`, `0.1000000014901161193847656250`, `001111011
 |------|----------|----------|
 | 0    | 01111011100110011001100 | 11001101 |
 
-Ta chỉ quan tâm tới Fraction (nhằm để soi xét nghệ thuật làm tròn của hệ thống), bây giờ tới phần `0.10000000149011611938477` và `0.1000000014901161193847656250` ta thực hiện cắt bỏ bớt chỉ lấy 5 bit theo góc nhìn giống biểu diễn little endian như sau `0.1000000014901161193847656250` -> `56250`
+Ta chỉ quan tâm tới Fraction (nhằm để soi xét nghệ thuật làm tròn của hệ thống), bây giờ tới phần `0.10000000149011611938477` và `0.1000000014901161193847656250` ta thực hiện cắt bỏ bớt chỉ lấy 5 bit cuối như sau `0.1000000014901161193847656250` -> `56250`
 
 ![alt text](image/image17.png)
 
