@@ -34,11 +34,11 @@
 
 - [2.1.1.Chuyển phần nguyên sang nhị phân](#211chuyển-phần-nguyên-sang-nhị-phân)
 
-- 2.1.2. Chuyển phần thập phân sang nhị phân
+- [2.1.2.Chuyển phần thập phân sang nhị phân](#212chuyển-phần-thập-phân-sang-nhị-phân)
 
-- 2.1.3. Chuẩn hóa số thực
+- [2.1.3.Chuẩn hóa số thực](#213chuẩn-hóa-số-thực)
 
-- 2.1.4. Tính Actual Exponent
+- [2.1.4.Tính Actual Exponent](#214tính-actual-exponent)
 
 - 2.1.5. Tính Exponent Field (Exponent + Bias)
 
@@ -424,11 +424,11 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 - Ở đây chuyển phần nguyên sang nhị phân, ví dụ `29.81` phần này chỉ chú ý và chuyển 29 sang nhị phân kết quả là $$\large11101_{2}$$
 
-#### 2.1.2. Chuyển phần thập phân sang nhị phân
+#### 2.1.2.Chuyển phần thập phân sang nhị phân
 
 - Ở đây sẽ chuyển phân thập phân sang nhị phân, ví dụ vừa rồi là $$\large29.81_{10}$$ ta đã chuyển thành $$\large11101_{2}.81_{10}$$ bây giờ còn phần thập phân là $$\large0.81_{10}$$ ta tiến hành chuyển đổi đổi nó, cách chuyển phần thập phân sang nhị phân phức tạp hơn phần nguyên. Thay vì liên tục chia cho 2 như phần nguyên, ta sẽ **liên tục nhân phần thập phân với 2**, sau mỗi lần nhân lấy phần nguyên của kết quả làm bit tiếp theo, rồi tiếp tục lặp với phần thập phân còn lại. Theo sơ đồ :
 
-| Bước | Giá trị | ×2   | Bit lấy |
+| Bước | Giá trị | x2   | Bit lấy |
 | ---: | ------- | ---- | ------- |
 |    1 | 0.81    | 1.62 | 1       |
 |    2 | 0.62    | 1.24 | 1       |
@@ -441,7 +441,16 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 > trích từ : [Tin học đại cương bách khoa hà nội](https://www.youtube.com/watch?v=ITpspAmKpCk&pp=ygUkc-G7kSB04buxYyBk4bqldSBwaOG6qXkgxJHhu5luZyBJRWVl)
 
-**như thế các bit theo thứ tự ta sẽ thu được :** $$\large0.81\approx0.11001..$$
+**như thế các bit theo thứ tự ta sẽ thu được :** $$\large0.81\approx0.11001..$$ suy ra nó là biểu diễn phần thập phân dưới dạng nhị phân, vậy ta có $$\large11101.11001_{2}$$.
+
+> [!NOTE]
+> **Lưu ý:** Quá trình nhân với 2 chỉ dừng khi phần dư bằng 0. Nếu phần dư cứ lặp lại và không bao giờ bằng 0 thì số đó có biểu diễn nhị phân vô hạn. Khi lưu vào IEEE 754, phần cứng sẽ cắt bớt các bit vượt quá số bit fraction cho phép và áp dụng quy tắc làm tròn (rounding) có ở chương [4.Rounding tổng quan và các chế độ làm tròn](#4rounding-tổng-quan-và-các-chế-độ-làm-tròn)
+
+#### 2.1.3.Chuẩn hóa số thực
+
+Tiếp theo là phần chuẩn hóa, phần này chúng ta đã biết tại chương [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized) bây giờ chúng ta có $$\large11101.11001_{2}$$ và ta thực hiện di chuyển dấu chấm sang bên trái nó thành $$\large1.110111001_{2}$$ và ta nhớ ta dịch dấu chấm sang trái 4 lần, vì vậy ta có `actual exponent = 4`
+
+#### 2.1.4.Tính Actual Exponent
 
 ---
 
