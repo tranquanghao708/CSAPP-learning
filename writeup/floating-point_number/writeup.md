@@ -52,9 +52,9 @@
 
 - [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit)
 
-- 2.2.4.Tính giá trị Significand
+- [2.2.4.Tính giá trị Significand](#224tính-giá-trị-significand)
 
-- 2.2.5.Nhân với 2^Exponent
+- [2.2.5.Nhân với 2^Exponent](#225nhân-với-2exponent)
 
 - 2.2.6.Áp dụng Sign
 
@@ -499,6 +499,30 @@ Và ta đã tính được `Actual exponent = 4` đồng thời nhận thấy $$
 
 > [!NOTE]
 > Hidden Bit không tồn tại trong bộ nhớ. Nó chỉ được CPU tự động thêm vào trong quá trình Decode nếu số thuộc dạng Normalized. Đối với Denormalized Number (Exponent = 00000000), Hidden Bit không còn bằng 1 nữa mà bằng 0. Điều này đã được trình bày ở chương [1.1.1.Khử chuẩn hóa số thực (Denormalized)](#111khử-chuẩn-hóa-số-thực-denormalized)
+
+#### 2.2.4.Tính giá trị Significand
+
+Sau khi ta đã khôi phục hidden bit và có fraction đầy đủ là `1.11011100100000000000000`, bây giờ ta lấy từng bit (lấy hết tất cả bit lần lượt cả `0` và `1`) đem đi nhân với $$\large2^{N}$$ là trọng số, trong đó N sẽ lần lượt giảm xuống dần phía âm. Bây giờ ta tiến hành tính :
+
+| Bit | Trọng số |     Giá trị |
+| --- | -------: | ----------: |
+| 1   |    $$2^0$$ 		 |           1 |
+| 1   | $$\large2^{-1}$$ |         0.5 |
+| 1   | $$\large2^{-2}$$ |        0.25 |
+| 0   | $$\large2^{-3}$$ |           0 |
+| 1   | $$\large2^{-4}$$ |      0.0625 |
+| 1   | $$\large2^{-5}$$ |     0.03125 |
+| 1   | $$\large2^{-6}$$ |    0.015625 |
+| 0   | $$\large2^{-7}$$ |           0 |
+| 0   | $$\large2^{-8}$$ |           0 |
+| 1   | $$\large2^{-9}$$ | 0.001953125 |
+
+bây giờ ta tính tổng tất cả số trong phần giá trị. ta có $$\large1+0.5+0.25+0+0.0625+0.03135+0.015625+0+0+0.001953125=\boxed{1.861328125}$$ và đó chính là Significand của số thực, đây là phần trị (Significand)
+
+> [!NOTE]
+> Significand chỉ là giá trị của phần trị sau khi khôi phục Hidden Bit. Giá trị cuối cùng của số thực chỉ được tính sau khi nhân Significand với $$\large2^{\text{Actual Exponent}}$$ và áp dụng bit dấu (Sign)
+
+#### 2.2.5.Nhân với 2^Exponent
 
 ---
 
