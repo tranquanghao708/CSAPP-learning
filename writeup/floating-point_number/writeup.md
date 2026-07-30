@@ -52,11 +52,9 @@
 
 - [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit)
 
-- [2.2.4.Tính giá trị Significand](#224tính-giá-trị-significand)
+- [2.2.4.Nhân với 2^Exponent](#224nhân-với-2exponent)
 
-- [2.2.5.Nhân với 2^Exponent](#225nhân-với-2exponent)
-
-- [2.2.6.Áp dụng Sign](#226áp-dụng-sign)
+- [2.2.5.Áp dụng Sign](#225áp-dụng-sign)
 
 - [3.Số thực lớn nhất và tính toán số thực lớn nhất](#3số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất)
 
@@ -500,35 +498,23 @@ Và ta đã tính được `Actual exponent = 4` đồng thời nhận thấy $$
 > [!NOTE]
 > Hidden Bit không tồn tại trong bộ nhớ. Nó chỉ được CPU tự động thêm vào trong quá trình Decode nếu số thuộc dạng Normalized. Đối với Denormalized Number (Exponent = 00000000), Hidden Bit không còn bằng 1 nữa mà bằng 0. Điều này đã được trình bày ở chương [1.1.1.Khử chuẩn hóa số thực (Denormalized)](#111khử-chuẩn-hóa-số-thực-denormalized)
 
-#### 2.2.4.Tính giá trị Significand
-
-Sau khi ta đã khôi phục hidden bit và có fraction đầy đủ là `1.11011100100000000000000`, bây giờ ta lấy từng bit (lấy hết tất cả bit lần lượt cả `0` và `1`) đem đi nhân với $$\large2^{N}$$ là trọng số, trong đó N sẽ lần lượt giảm xuống dần phía âm **ví dụ** $$\large1_{10}\times2^{0} + 1_{10}\times2^{-1} + 0_{10}\times2^{-2} ....$$ . Bây giờ ta tiến hành tính :
-
-| Bit | Trọng số |     Giá trị |
-| --- | -------: | ----------: |
-| 1   |    $$2^0$$ 		 |           1 |
-| 1   | $$\large2^{-1}$$ |         0.5 |
-| 1   | $$\large2^{-2}$$ |        0.25 |
-| 0   | $$\large2^{-3}$$ |           0 |
-| 1   | $$\large2^{-4}$$ |      0.0625 |
-| 1   | $$\large2^{-5}$$ |     0.03125 |
-| 1   | $$\large2^{-6}$$ |    0.015625 |
-| 0   | $$\large2^{-7}$$ |           0 |
-| 0   | $$\large2^{-8}$$ |           0 |
-| 1   | $$\large2^{-9}$$ | 0.001953125 |
-
-bây giờ ta tính tổng tất cả số trong phần giá trị. ta có $$\large1+0.5+0.25+0+0.0625+0.03135+0.015625+0+0+0.001953125=\boxed{1.861328125}$$ và đó chính là Significand của số thực, đây là phần trị (Significand)
-
-> [!NOTE]
-> Significand chỉ là giá trị của phần trị sau khi khôi phục Hidden Bit. Giá trị cuối cùng của số thực chỉ được tính sau khi nhân Significand với $$\large2^{\text{Actual Exponent}}$$ và áp dụng bit dấu (Sign)
->
-> **MẸO:** trong toán học, mỗi số nhân với 0 luôn bằng 0, hãy để ý kỹ bảng tính toán giá trị (chỉ có bit 1 mới có giá trị còn 0 luôn là 0) dù nói nó là bit nhưng khi thực hiện tính toán phần trị nó là số nguyên hệ cơ số 10. Nếu biết nhân 0 luôn là 0, thì chúng ta lướt qua bit 0 chỉ nhân với bit 1, ngĩa là khi qua bit 0 một lần nó sẽ giảm thêm 1 lần vào phần lũy thừa của trọng số vậy thay vì tính toán thêm số 0 vô nghĩa ta chỉ cần nhận biết nó và bỏ qua nó nhưng cũng đừng quên giảm thêm một hay hai lần tùy thuộc vào bao nhiêu lần bỏ qua bit 0 vào phần lũy thừa tương tự với phép tính tổng giá trị lại
-
-#### 2.2.5.Nhân với 2^Exponent
+#### 2.2.4.Nhân với 2^Exponent
 
 Đây ko phải nhân như toán học thông thường mà chỉ là phép dịch dấu chấm ngược chiều lại, **ví dụ** khi encode việc chuẩn hóa dịch dấu chấm sang bên trái là số mũ actual exponent là dương còn sang bên phải nó là âm, thì bây giờ trong decode chúng ta có actual exponent đã giải ở phần [2.2.2.Khôi phục Actual Exponent](#222khôi-phục-actual-exponent), ta có `actual exponent = 4` vậy bây giờ encode mình dịch dấu chấm sang trái 4 lần là actual exponent là 4 thì bây giờ decode mình dịch dấu chấm sang phải như đang trả lại chỗ cũ thôi. Bây giờ ta có `1.11011100100000000000000` là kết quả của phần [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit), ta tiến hành dịch dấu chấm sang phải 4 lần (theo giá trị của actual exponent mà ta đã tính ra ở phần khôi phục exponent) ta có `11101.1100100000000000000` vậy kết quả là $$\large\boxed{11101.1100100000000000000_{2}}$$, đây chính là số nhị phân ban đầu trước khi chuẩn hóa
 
-#### 2.2.6.Áp dụng Sign
+#### 2.2.5.Áp dụng Sign
+
+Đây là bước cuối cùng trong quá trình Decode. Sau khi đã khôi phục lại số nhị phân ban đầu, CPU chỉ cần dựa vào trường Sign để xác định kết quả là số dương hay số âm. Ta có **formula =**$$\large1.xxxxx\times2^{N}$$ **ví dụ** $$\large12345_{10}$$ = $$\large1.2345_{10}\times10^{4}$$, ở các bước trước ta đã khôi phục được `Sign = 0, Actual exponent = 4, Significand = 1.11011100100000000000000` và sau khi thực hiện nhân với $$\large2^{\text{Actual Exponent}}$$ ta có `11101.1100100000000000000`, vì `sign = 0` nên $$\large(-1)^{0} = 1$$ do đó giá trị vẫn giữ nguyên `11101.1100100000000000000`, bây giờ ta chỉ cần chuyển phần nguyên sang thập phân và tính toán fraction (phần dãy bit sau dấu chấm)
+
+Đầu tiên ta có `11101.1100100000000000000` và ta cần chuyển phần nguyên sang thập phân $$\large11101_{2} = 29_{10}$$, bây giờ ta tiến hành tính toán phần fraction sau dấu chấm cách tính là ta lấy số bit nhân với trọng số lũy thừa số nguyên âm **ví dụ** $$\large1\times2^{-1} + 1\times2^{-2} + 0\times2^{-3} +....+ 0\times2^{-N}$$, ở đây ta thấy giá trị bit `0` luôn ra kết quả là `0` vì thế khi tính tổng nó ko thay đổi gì, vậy ta chỉ cần đếm lũy thừa giảm dần và tính toán những bit `1` thôi (trong phần tính toán này phải dùng toán học, ko phải nhị phân nên các bit khi tính toán kiểu này là nó có hệ cơ số 10 vì sẽ ra giá trị là hệ thập phân) :
+
+| bit | trọng số | giá trị |
+|-----|----------|---------|
+| 1 | $$\large2^{-1}$$ | 0.5 |
+| 1 | $$\large2^{-2}$$ | 0.25 |
+| 1 | $$\large2^{-5}$$ | 0.03125 |
+
+ta tiến hành tính tổng giá trị lại $$\large0.5 + 0.25 + 0.03125 = 0.78125_{10}$$ bây giờ ghép lại ta có kết quả $$\large\boxed{29.78125_{10}}$$
 
 ---
 
