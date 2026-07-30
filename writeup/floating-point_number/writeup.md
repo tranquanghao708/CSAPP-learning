@@ -521,6 +521,8 @@ bây giờ ta tính tổng tất cả số trong phần giá trị. ta có $$\la
 
 > [!NOTE]
 > Significand chỉ là giá trị của phần trị sau khi khôi phục Hidden Bit. Giá trị cuối cùng của số thực chỉ được tính sau khi nhân Significand với $$\large2^{\text{Actual Exponent}}$$ và áp dụng bit dấu (Sign)
+>
+> **MẸO:** trong toán học, mỗi số nhân với 0 luôn bằng 0, hãy để ý kỹ bảng tính toán giá trị (chỉ có bit 1 mới có giá trị còn 0 luôn là 0) dù nói nó là bit nhưng khi thực hiện tính toán phần trị nó là số nguyên hệ cơ số 10. Nếu biết nhân 0 luôn là 0, thì chúng ta lướt qua bit 0 chỉ nhân với bit 1, ngĩa là khi qua bit 0 một lần nó sẽ giảm thêm 1 lần vào phần lũy thừa của trọng số vậy thay vì tính toán thêm số 0 vô nghĩa ta chỉ cần nhận biết nó và bỏ qua nó nhưng cũng đừng quên giảm thêm một hay hai lần tùy thuộc vào bao nhiêu lần bỏ qua bit 0 vào phần lũy thừa tương tự với phép tính tổng giá trị lại
 
 #### 2.2.5.Nhân với 2^Exponent
 
