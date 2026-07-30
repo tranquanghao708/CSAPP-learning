@@ -56,7 +56,7 @@
 
 - [2.2.5.Nhân với 2^Exponent](#225nhân-với-2exponent)
 
-- 2.2.6.Áp dụng Sign
+- [2.2.6.Áp dụng Sign](#226áp-dụng-sign)
 
 - [3.Số thực lớn nhất và tính toán số thực lớn nhất](#3số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất)
 
@@ -526,6 +526,10 @@ bây giờ ta tính tổng tất cả số trong phần giá trị. ta có $$\la
 
 #### 2.2.5.Nhân với 2^Exponent
 
+Đây ko phải nhân như toán học thông thường mà chỉ là phép dịch dấu chấm ngược chiều lại, **ví dụ** khi encode việc chuẩn hóa dịch dấu chấm sang bên trái là số mũ actual exponent là dương còn sang bên phải nó là âm, thì bây giờ trong decode chúng ta có actual exponent đã giải ở phần [2.2.2.Khôi phục Actual Exponent](#222khôi-phục-actual-exponent), ta có `actual exponent = 4` vậy bây giờ encode mình dịch dấu chấm sang trái 4 lần là actual exponent là 4 thì bây giờ decode mình dịch dấu chấm sang phải như đang trả lại chỗ cũ thôi. Bây giờ ta có `1.11011100100000000000000` là kết quả của phần [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit), ta tiến hành dịch dấu chấm sang phải 4 lần (theo giá trị của actual exponent mà ta đã tính ra ở phần khôi phục exponent) ta có `11101.1100100000000000000` vậy kết quả là $$\large11101.1100100000000000000_{2}$$, đây chính là số nhị phân ban đầu trước khi chuẩn hóa
+
+#### 2.2.6.Áp dụng Sign
+
 ---
 
 ## 4.Rounding tổng quan và các chế độ làm tròn
@@ -667,7 +671,7 @@ int main(void){
 
 ![alt text](image/image15.png)
 
-Ta thấy nó vẫn bị rounting
+Ta thấy nó vẫn bị rounding
 
 </details>
 
