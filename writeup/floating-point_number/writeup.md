@@ -450,7 +450,7 @@ $$
 
 nó thành $$\large\boxed{1.110111001_{2}}$$ và ta nhớ ta dịch dấu chấm sang trái 4 lần, vì vậy ta có `actual exponent = 4` đây là mũ số thực (chưa cộng bias).
 
-> [!IMPOPTANT]
+> [!IMPORTANT]
 > Actual Exponent không phải là trường Exponent lưu trong IEEE 754. Đây chỉ là số mũ toán học sau khi chuẩn hóa. Trường Exponent trong IEEE sẽ được tính ở bước tiếp theo bằng công thức `exponent field = actual expnent + bias`
 
 #### 2.1.4.Tính Exponent Field
