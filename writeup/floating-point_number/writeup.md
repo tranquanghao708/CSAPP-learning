@@ -442,7 +442,13 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 #### 2.1.3.Chuẩn hóa số thực
 
-Tiếp theo là phần chuẩn hóa, phần này chúng ta đã biết tại chương [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized) bây giờ chúng ta có $$\large11101.11001_{2}$$ và ta thực hiện di chuyển dấu chấm sang bên trái nó thành $$\large1.110111001_{2}$$ và ta nhớ ta dịch dấu chấm sang trái 4 lần, vì vậy ta có `actual exponent = 4` đây là mũ số thực (chưa cộng bias). Suy ra, ta có $$\large1.110111001_{2}\times2^{4}$$
+Tiếp theo là phần chuẩn hóa, phần này chúng ta đã biết tại chương [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized) bây giờ chúng ta có $$\large11101.11001_{2}$$ và ta thực hiện di chuyển dấu chấm sang bên trái :
+
+$$
+\large11101.11001_{2} \xleftarrow{\text{dịch trái 4bit}} 1.110111001_{2}
+$$
+
+nó thành $$\large\boxed{1.110111001_{2}}$$ và ta nhớ ta dịch dấu chấm sang trái 4 lần, vì vậy ta có `actual exponent = 4` đây là mũ số thực (chưa cộng bias).
 
 > [!IMPOPTANT]
 > Actual Exponent không phải là trường Exponent lưu trong IEEE 754. Đây chỉ là số mũ toán học sau khi chuẩn hóa. Trường Exponent trong IEEE sẽ được tính ở bước tiếp theo bằng công thức `exponent field = actual expnent + bias`
