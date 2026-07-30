@@ -92,7 +92,9 @@
 
 - 6.Biểu diễn số thực trong bộ nhớ,sơ đồ
 
-- 7.kết luận
+- 7.Cách nhận diện số thực dạng nhị phân, lục phân trong reverse engineering
+
+- 8.kết luận
 
 ---
 
@@ -483,9 +485,11 @@ Chương này nói về chuyển đổi số thực biểu diễn dưới dạng
 
 #### 2.2.2.Khôi phục Actual Exponent
 
-chúng ta đã tách được Sign | Exponent | Fraction, nhưng phần số mũ vẫn chưa phải số mũ thật bây giờ ta tính số mũ thật bằng cách lấy raw binary ở trường exponent ta có `10000011` bây giờ ta cần phải chuyển nhị phân này sang số nguyên $$\large10000011_{2} = 131_{10}$$ bây giờ ta lấy `131` là số nguyên vừa covert từ binary sang đem đi trừ với bias ta có Actual exponent = $$\large131 - 127 = \boxed{4_{10}}$$ (Đây chính là số mũ toán học thu được ở bước chuẩn hóa. Nó đúng bằng số lần dịch dấu chấm sang bên trái khi chuẩn hóa số thực) cũng chính là số mũ sẽ dùng ở bước cuối khi khôi phục giá trị số thực.
+chúng ta đã tách được Sign | Exponent | Fraction, nhưng phần số mũ vẫn chưa phải số mũ thật bây giờ ta tính số mũ thật bằng cách lấy Exponent Field có giá trị nhị phân `10000011` bây giờ ta cần phải chuyển nhị phân này sang số nguyên $$\large10000011_{2} = 131_{10}$$ bây giờ ta lấy `131` là số nguyên vừa covert từ binary sang đem đi trừ với bias ta có Actual exponent = $$\large131 - 127 = \boxed{4_{10}}$$ (Đây chính là số mũ toán học thu được ở bước chuẩn hóa. Nó đúng bằng số lần dịch dấu chấm sang bên trái khi chuẩn hóa số thực) cũng chính là số mũ sẽ dùng ở bước cuối khi khôi phục giá trị số thực.
 
 #### 2.2.3.Khôi phục Hidden Bit
+
+Sau khi đã tính được Actual Exponent, bước tiếp theo là khôi phục Hidden Bit (hay còn gọi là Implicit Leading Bit). IEEE quy định rằng đối với số chuẩn hóa (normalized) bit `1` đứng trước dấu chấm sẽ ko được lưu trong bộ nhớ bởi vì sau khi chuẩn hóa nó sẽ có dạng $$\large1.xxx..._{2}\times2^{N}$$ do bit đứng trước dấu chấm bằng 1, IEEE ko cần lưu để tiết kiệm một bit fraction. Vì vậy, khi giải mã (Decode), CPU sẽ tự động thêm lại bit này.
 
 ---
 
