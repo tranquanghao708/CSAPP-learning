@@ -489,7 +489,16 @@ chúng ta đã tách được Sign | Exponent | Fraction, nhưng phần số mũ
 
 #### 2.2.3.Khôi phục Hidden Bit
 
-Sau khi đã tính được Actual Exponent, bước tiếp theo là khôi phục Hidden Bit (hay còn gọi là Implicit Leading Bit). IEEE quy định rằng đối với số chuẩn hóa (normalized) bit `1` đứng trước dấu chấm sẽ ko được lưu trong bộ nhớ bởi vì sau khi chuẩn hóa nó sẽ có dạng $$\large1.xxx..._{2}\times2^{N}$$ do bit đứng trước dấu chấm bằng 1, IEEE ko cần lưu để tiết kiệm một bit fraction. Vì vậy, khi giải mã (Decode), CPU sẽ tự động thêm lại bit này.
+Sau khi đã tính được Actual Exponent, bước tiếp theo là khôi phục Hidden Bit (hay còn gọi là Implicit Leading Bit). IEEE quy định rằng đối với số chuẩn hóa (normalized) bit `1` đứng trước dấu chấm sẽ ko được lưu trong bộ nhớ bởi vì sau khi chuẩn hóa nó sẽ có dạng $$\large1.xxx..._{2}\times2^{N}$$ do bit đứng trước dấu chấm bằng 1, IEEE ko cần lưu để tiết kiệm một bit fraction. Vì vậy, khi giải mã (Decode), CPU sẽ tự động thêm lại bit này. ở bước tách sign, exponent, fraction ta đã tách được như sau :
+
+| sign | exponent | fraction |
+|------|----------|----------|
+| 0 | 10000011 | 11011100100000000000000 |
+
+Và ta đã tính được `Actual exponent = 4` đồng thời nhận thấy $$\large\text{Exponent}\neq00000000$$ và $$\large\text{Exponent}\neq11111111$$ , nên đây là normalized number, CPU sẽ tự động thêm `hiddenbit = 1`. Vậy ta có fraction ban đầu là `11011100100000000000000` nhưng sau khi khôi phục hiddenbit ta có `1.11011100100000000000000` vậy suy ra kết quả là $$\large\boxed{1.11011100100000000000000_{2}}$$
+
+> [!NOTE]
+> Hidden Bit không tồn tại trong bộ nhớ. Nó chỉ được CPU tự động thêm vào trong quá trình Decode nếu số thuộc dạng Normalized. Đối với Denormalized Number (Exponent = 00000000), Hidden Bit không còn bằng 1 nữa mà bằng 0. Điều này đã được trình bày ở chương [1.1.1.Khử chuẩn hóa số thực (Denormalized)](#111khử-chuẩn-hóa-số-thực-denormalized)
 
 ---
 
