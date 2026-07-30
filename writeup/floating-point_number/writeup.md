@@ -502,7 +502,7 @@ Và ta đã tính được `Actual exponent = 4` đồng thời nhận thấy $$
 
 #### 2.2.4.Tính giá trị Significand
 
-Sau khi ta đã khôi phục hidden bit và có fraction đầy đủ là `1.11011100100000000000000`, bây giờ ta lấy từng bit (lấy hết tất cả bit lần lượt cả `0` và `1`) đem đi nhân với $$\large2^{N}$$ là trọng số, trong đó N sẽ lần lượt giảm xuống dần phía âm. Bây giờ ta tiến hành tính :
+Sau khi ta đã khôi phục hidden bit và có fraction đầy đủ là `1.11011100100000000000000`, bây giờ ta lấy từng bit (lấy hết tất cả bit lần lượt cả `0` và `1`) đem đi nhân với $$\large2^{N}$$ là trọng số, trong đó N sẽ lần lượt giảm xuống dần phía âm **ví dụ** $$\large1_{10}\times2^{0} + 1_{10}\times2^{-1} + 0_{10}\times2^{-2} ....$$ . Bây giờ ta tiến hành tính :
 
 | Bit | Trọng số |     Giá trị |
 | --- | -------: | ----------: |
