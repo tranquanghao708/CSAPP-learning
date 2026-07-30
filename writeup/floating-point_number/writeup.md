@@ -500,7 +500,7 @@ Và ta đã tính được `Actual exponent = 4` đồng thời nhận thấy $$
 
 #### 2.2.4.Nhân với 2^Exponent
 
-Đây ko phải nhân như toán học thông thường mà chỉ là phép dịch dấu chấm ngược chiều lại, **ví dụ** khi encode việc chuẩn hóa dịch dấu chấm sang bên trái là số mũ actual exponent là dương còn sang bên phải nó là âm, thì bây giờ trong decode chúng ta có actual exponent đã giải ở phần [2.2.2.Khôi phục Actual Exponent](#222khôi-phục-actual-exponent), ta có `actual exponent = 4` vậy bây giờ encode mình dịch dấu chấm sang trái 4 lần là actual exponent là 4 thì bây giờ decode mình dịch dấu chấm sang phải như đang trả lại chỗ cũ thôi. Bây giờ ta có `1.11011100100000000000000` là kết quả của phần [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit), ta tiến hành dịch dấu chấm sang phải 4 lần (theo giá trị của actual exponent mà ta đã tính ra ở phần khôi phục exponent) ta có `11101.1100100000000000000` vậy kết quả là $$\large\boxed{11101.1100100000000000000_{2}}$$, đây chính là số nhị phân ban đầu trước khi chuẩn hóa
+Đây ko phải nhân như toán học thông thường mà chỉ là phép dịch dấu chấm ngược chiều lại, **ví dụ** khi encode việc chuẩn hóa dịch dấu chấm sang bên trái là số mũ actual exponent là dương còn sang bên phải nó là âm, thì bây giờ trong decode chúng ta có actual exponent đã giải ở phần [2.2.2.Khôi phục Actual Exponent](#222khôi-phục-actual-exponent), ta có `actual exponent = 4` vậy bây giờ encode mình dịch dấu chấm sang trái 4 lần là actual exponent là 4 thì bây giờ decode mình dịch dấu chấm sang phải như đang trả lại chỗ cũ thôi. Bây giờ ta có `1.11011100100000000000000` là kết quả của phần [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit), ta tiến hành dịch dấu chấm sang phải 4 lần (theo giá trị của actual exponent mà ta đã tính ra ở phần khôi phục exponent) ta có $$\large1.11011100100000000000000_{2} \;\xrightarrow{\text{dịch phải 4}}\; 11101.1100100000000000000_{2}$$ vậy kết quả là $$\large\boxed{11101.1100100000000000000_{2}}$$, đây chính là số nhị phân ban đầu trước khi chuẩn hóa
 
 #### 2.2.5.Áp dụng Sign
 
@@ -515,6 +515,9 @@ Và ta đã tính được `Actual exponent = 4` đồng thời nhận thấy $$
 | 1 | $$\large2^{-5}$$ | 0.03125 |
 
 ta tiến hành tính tổng giá trị lại $$\large0.5 + 0.25 + 0.03125 = 0.78125_{10}$$ bây giờ ghép lại ta có kết quả $$\large\boxed{29.78125_{10}}$$
+
+> [!IMPORTANT]
+> Ta thấy nó bị chênh lệch số thực, số lúc đầu là `29.81` nhưng sau khi encode và decode ra kết quả lại là `29.78125`. Lý do là vì quá trình chuyển phần thập phân bị cắt sớm và làm tròn theo giới hạn 23 bit fraction hay giới hạn bit fraction theo toán hạng của IEEE 754 single precision
 
 ---
 
