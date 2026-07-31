@@ -863,7 +863,7 @@ int main(void){
 
 	printf(" infinity floating point numbers: %.23f\n raw: %08x\n binary: ",a,raw);
 
-	for(int i = 0; i < 35; i++){ //cố tình để 35 in quá fraction để soi thêm GRS nữa
+	for(int i = 0; i < 35; i++){ //cố tình để 35 in quá fraction
 		o = (int)a; //ép kiểu để lấy phần nguyên, kết quả đầu tiên là 0
 		printf("%d",o);
 		a -= o; //lấy phần thập phân ví dụ 1 + 1.23 = 0.23
@@ -878,6 +878,16 @@ int main(void){
 
 ![alt text](image/image16.png)
 
-ta thấy nó in ra 23bit fraction nhưng do là số thực vô hạn và nó đã bị rounding ở phần sau, 
+ta thấy nó in ra 23bit fraction nhưng do là số thực vô hạn và nó đã bị rounding ở phần sau, và ta có `00001100110011001100110011010000000`
+
+**nhưng ở đây dù có nhị phân đã được in quá fraction là 34bit thì chúng ta vẫn sẽ ko thấy được GRS thật sự vì sao?**
+
+vì nó là số vô hạn? hay vì nó ko ở đầu bit bị cắt như lý thuyết?, tất cả đều sai. Nguyên nhân là do, trước khi đưa số thực như `0.1` vào float thực tế là phần cứng đã làm việc, tính toán, xét GRS và rounding trước đó rồi, nên GRS đã bị bỏ. Ta chỉ có là số kết quả đã được làm tròn ngay từ lúc gán nó vào biến a kiểu float, vậy nên dù ta có xét GRS bit hay làm thế nào với số kết quả này `0.10000000149011611938477` bao nhiêu lần đi chăng nữa thì điều đó càng thêm vô lý cũng như vô ích với kết quả được được tính sẵn thế này.
+
+Nên mới nói, dù ta có xét GRS, tính và so sánh bao nhiêu half ULP nếu ko hiểu điều này rất dễ sinh nhầm lẫn là nhỏ hơn half ULP là giữ nguyên sao nó vẫn làm tròn, mà nó làm tròn bằng cách cộng 1 vào phần tử cuối fraction sao lại ra kết quả này (vì đó là số đã được tính và làm tròn trước khi gán vào float bởi phần cứng, GRS đã bị bại bỏ và chúng ta ko thể tính gì thêm nữa)
+
+**Giải pháp**
+
+Để có thể xét, ta cần phải tính thủ công bằng tay. Encode số `0.1` theo chương [2.1.Encode](#21encode) thành nhị phân sao cho có phần bit bị cắt vượt quá 23 bit fraction. Lúc đó ta mới có thể thực hiện xét bit, rounding hay tính half ULP v.v. cũng hợp lệ vì ta đang dựng lại cách phần cứng thực sự tính toán số thực
 
 </details>
