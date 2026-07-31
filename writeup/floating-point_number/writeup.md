@@ -851,13 +851,25 @@ các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nế
 
 ```c
 #include <stdio.h>
+#include <stdint.h>
+#include <string.h>
 
 int main(void){
 	float a = 0.1f; //số thực vô hạn
-	
-	print_raw_binaries(a);
+	int o,z;
+	uint32_t raw;
 
-	printf("infinity floating point numbers : %.23f\n",a);
+	memcpy(&raw, &a, 4);
+
+	printf(" infinity floating point numbers: %.23f\n raw: %08x\n binary: ",a,raw);
+
+	for(int i = 0; i < 35; i++){ //cố tình để 35 in quá fraction để soi thêm GRS nữa
+		o = (int)a; //ép kiểu để lấy phần nguyên, kết quả đầu tiên là 0
+		printf("%d",o);
+		a -= o; //lấy phần thập phân ví dụ 1 + 1.23 = 0.23
+		a *= 2; //theo quy định encode thì phần thập phân nhân 2
+	}
+	printf("\n");
 	return 0;
 }
 ```
@@ -865,5 +877,7 @@ int main(void){
 > gcc -o rounding_tester rounding_tester.c
 
 ![alt text](image/image16.png)
+
+ta thấy nó in ra 23bit fraction nhưng do là số thực vô hạn và nó đã bị rounding ở phần sau, 
 
 </details>
