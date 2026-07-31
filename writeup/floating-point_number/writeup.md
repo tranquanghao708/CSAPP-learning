@@ -851,30 +851,13 @@ các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nế
 
 ```c
 #include <stdio.h>
-#include <limits.h>
-#include <string.h>
-
-void print_raw_binaries(float param){
-	int size = sizeof(param) * CHAR_BIT ; //có thể viết thẳng số 8 vì charbit biểu thị cho số byte của char, thường là 1 byte nhưng nên dùng charbit vì nó có tính tương thích cao
-
-	unsigned int raw;
-	memcpy(&raw, &param, sizeof(param));
-
-	for(int i = size - 1; //việc trừ 1 để tránh bị tràn số, ở đây ví dụ 32 bit thì nên in 31 bit thôi tránh bị tràn sang Tmin
-		i >= 0; //right, in hết nên phải lớn hơn hoặc bằng 0
-		i--){
-			int bit = (raw >> i) & 1; //lấy bit LSB trước 0 thì in 0, 1 thì in 1, lấy xong dịch phải qua theo i lần
-			printf("%d",bit);
-		}
-	printf("\n");
-}
 
 int main(void){
 	float a = 0.1f; //số thực vô hạn
 	
 	print_raw_binaries(a);
 
-	printf("infinity floating point numbers : %.23f\nsố bit bị cắt : %.28f\n",a,a);
+	printf("infinity floating point numbers : %.23f\n",a);
 	return 0;
 }
 ```
@@ -882,33 +865,5 @@ int main(void){
 > gcc -o rounding_tester rounding_tester.c
 
 ![alt text](image/image16.png)
-
-Ta có `0.10000000149011611938477`, `0.1000000014901161193847656250`, `00111101110011001100110011001101` . Đây là 3 chuỗi nhị phân, 2 chuỗi rounding. Bây giờ ta tiến hành phân tích chuỗi nhị phân trước, đầu tiên sô thực ta cho vào ko phải là âm nên sign = 0, fraction là 23bit :
-
-| Sign | exponent | fraction |
-|------|----------|----------|
-| 0    | 01111011 | 10011001100110011001101 |
-
-Ta chỉ quan tâm tới Fraction (nhằm để soi xét nghệ thuật làm tròn của hệ thống), bây giờ tới phần `0.10000000149011611938477` và `0.1000000014901161193847656250` ta thực hiện cắt bỏ bớt chỉ lấy 5 bit cuối như sau `0.1000000014901161193847656250` -> `56250`
-
-![alt text](image/image17.png)
-
-Ta thấy khi lấy `56250` các bit còn lại ở fraction đúng bằng 23 bit
-
-**vậy tại sao phần in 23 bit fraction là 8477 nhưng phần in 28bit lại là 8476 như trong ảnh? :**
-
-![alt text](image/image18.png)
-
-tất cả là do rounding round to nearest ties to even và đây đúng là cái ta cần biết để chứng minh. Đầu tiên với half ULP, ta cần biết để tính ULP trước để soi xét half ULP có đúng trong trường hợp này, xong sau đó mới tới xét các GRS để chứng minh sau. Để có thể tính half ULP, ta cần biết phần fraction tiếp theo ở đây khi nhân hai với `0.1` nó sẽ ra `0.2` ta lấy `0.2 - 0.1 = 0.1` và chia hai ra ta được `0.05` đây là half ULP
-
-Bây giờ so sánh nếu half ULP lớn hơn số bit bị cắt ta giữ nguyên, nếu half ULP nhỏ hơn số bit bị cắt ta làm tròn và nếu half ULP bằng số bit bị cắt thi lấy `LSB = 0` bây giờ so sánh ta có half ULP là `0.05` ta so sánh `0.05 < 56250`, ta làm tròn. Bây giờ phải biết rằng CPU nó cộng một đơn vị bit vào phần tử cuối của fraction ở float 32 bit thì fraction có 23bit vậy bây giờ phải lấy số nhị phân trên để thực hiện làm tròn như sau :
-
-```
- 10011001100110011001101
-+
- 00000000000000000000001 (cộng 1 vào đơn vị cuối của fraction)
--------------------------
- 10011001100110011001110 (kết quả làm tròn)
-```
 
 </details>
