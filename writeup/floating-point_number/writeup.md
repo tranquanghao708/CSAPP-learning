@@ -845,7 +845,7 @@ Theo 3 chương về guard bit, round bit, sticky bit (GRS) ta có bảng :
 các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nếu `R = 1, G = 1` chắc chắn `x > half ULP`. Nên phần cứng ko thể soi riêng biệt một bit trừ khi bit đó có quy luật khi là 0 thì chắc chắn có giá trị này ví dụ như guard bit. Bảng trên thì đó là cách phần cứng dùng GRS để biết khi nào giữ nguyên, khi nào làm tròn và khi nào lấy LSB = 0.
 
 <details>
-	<summary>Ví dụ với C</summary>
+	<summary>Vì sao không thể quan sát Guard, Round và Sticky bit trên một biến float?</summary>
 
 **Ý tưởng:** dùng số thực vô hạn để tạo ra hiệu ứng rounding của hệ thống, và tính toán lại để so sánh chế độ làm tròn round to nearest, ties to even xem có đúng như ban đầu không đồng thời truy tìm các bit bị cắt có thể là tầm 5 bit vì 2 bit cho G, R và 3 bit cho S. Ở đây, ta nhắm tới fraction và dùng float 32bit và fraction trong architecture này là 23bit bảng toán hạng được phân cho từng trường có tại chương [1.3.1.Độ lệch (Bias)](#131độ-lệch-bias)
 
@@ -878,7 +878,7 @@ int main(void){
 
 ![alt text](image/image16.png)
 
-ta thấy nó in ra 23bit fraction nhưng do là số thực vô hạn và nó đã bị rounding ở phần sau, và ta có `00001100110011001100110011010000000`
+ta thấy đây là fraction sau khi IEEE754 đã hoàn tất quá trình encode và rounding, chứ không phải dãy bit vô hạn ban đầu và ta có `00001100110011001100110011010000000`
 
 **nhưng ở đây dù có nhị phân đã được in quá fraction là 34bit thì chúng ta vẫn sẽ ko thấy được GRS thật sự vì sao?**
 
@@ -888,6 +888,16 @@ Nên mới nói, dù ta có xét GRS, tính và so sánh bao nhiêu half ULP n�
 
 **Giải pháp**
 
-Để có thể xét, ta cần phải tính thủ công bằng tay. Encode số `0.1` theo chương [2.1.Encode](#21encode) thành nhị phân sao cho có phần bit bị cắt vượt quá 23 bit fraction. Lúc đó ta mới có thể thực hiện xét bit, rounding hay tính half ULP v.v. cũng hợp lệ vì ta đang dựng lại cách phần cứng thực sự tính toán số thực
+Để có thể xét, ta cần phải tính thủ công bằng tay. Encode số `0.1` theo chương [2.1.Encode](#21encode) thành nhị phân sao cho có phần bit bị cắt vượt quá 23 bit fraction. Lúc đó ta mới có thể thực hiện xét bit, rounding hay tính half ULP v.v. cũng hợp lệ vì ta đang dựng lại cách phần cứng thực sự tính toán số thực. Nhìn `0.1` ta biết ngay `sign = 0`, phần nguyên là 0 luôn bây giờ tính phần thập phân sang bit
+
+| số | nhân hai | bit lấy |
+|-----|----------|---------|
+| 0.1 | 0.2 | 0 |
+| 0.2 | 0.4 | 0 |
+| 0.4 | 0.8 | 0 |
+| 0.8 | 1.6 | 1 |
+| 0.6 | 1.2 | 1 |
+
+`0.1` là số thực vô hạn, vòng tuần hoàn của nó là `0.1 -> (0.2 -> 0.4 -> 0.8 -> 0.6)` và quay lại `0.2` lần lượt theo trong ngoặc đơn. Vậy nên khi ta biết các bit của vòng tuần hoàn này là $$\large00011_{2}$$ ta tiến hành copy paste lên (vì dù sao cũng tính vẫn ra mà), nhưng bỏ bit ở số `0.1` đi ta có $$\large0011_{2}$$ vậy tiếp tục copy cho tới vượt qua 23bit fraction, ta có $$\large\boxed{00011001100110011001100110011_{2}}$$. Đây là bit 
 
 </details>
