@@ -907,4 +907,6 @@ Nên mới nói, dù ta có xét GRS, tính và so sánh bao nhiêu half ULP n�
 
 Điều kiện kiên quyết khi lựa chọn tính toán và xét GRS là phải thủ công, dù có thể tự động hóa nào đó như dùng casio hay các phép tính nhân chia v.v. nhưng việc encode thì phải thủ công để suy ra xét GRS chính xác nhất. **Ví dụ** đoạn code trên cho binary gần sát như binary đã caculated thủ công nhưng việc xét GRS về cơ bản thì hòan toàn sai vì chúng ta ko thể đảm bảo nó đúng
 
+**Khác biệt giữa bit dùng để quyết định rounding và bit của kết quả sau khi rounding**
+
 </details>
