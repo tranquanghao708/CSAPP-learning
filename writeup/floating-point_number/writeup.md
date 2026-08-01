@@ -880,7 +880,7 @@ int main(void){
 
 ta thấy đây là fraction sau khi IEEE754 đã hoàn tất quá trình encode và rounding, chứ không phải dãy bit vô hạn ban đầu và ta có `00001100110011001100110011010000000`
 
-> Phần tính toán thủ công
+> Phần tính toán thủ công để lấy bit GRS và so sánh
 
 <details>
 	<summary>tính toán (encode) lại sang nhị phân</summary>
@@ -895,14 +895,16 @@ ta thấy đây là fraction sau khi IEEE754 đã hoàn tất quá trình encode
 | 0.8 | 1.6      | 1       |
 | 0.6 | 1.2      | 1       |
 
-`0.1` là số thực vô hạn, vòng tuần hoàn của nó là `0.1 -> (0.2 -> 0.4 -> 0.8 -> 0.6)` và quay lại `0.2` lần lượt theo trong ngoặc đơn. Vậy nên khi ta biết các bit của vòng tuần hoàn này là $$\large00011_{2}$$ ta tiến hành copy paste lên (vì dù sao cũng tính vẫn ra mà), nhưng bỏ bit ở số `0.1` đi ta có $$\large0011_{2}$$ vậy tiếp tục copy cho tới vượt qua 23bit fraction, ta có $$\large\boxed{00011001100110011001100110011_{2}}$$. Đây là nhị phân của phần fraction. Vậy còn sign ta có là `0` thì ta ghép vào đầu chuỗi nó sẽ thành như sau $$\large\boxed{\mathbf{0}00011001100110011001100110011_{2}}$$ đây là kết quả y chang như mã C đã tính cho chúng ta
+`0.1` là số thực vô hạn, vòng tuần hoàn của nó là `0.1 -> (0.2 -> 0.4 -> 0.8 -> 0.6)` và quay lại `0.2` lần lượt theo trong ngoặc đơn. Vậy nên khi ta biết các bit của vòng tuần hoàn này là $$\large00011_{2}$$ ta tiến hành copy paste lên (vì dù sao cũng tính vẫn ra mà), nhưng bỏ bit ở số `0.1` đi ta có $$\large0011_{2}$$ vậy tiếp tục copy cho tới vượt qua 23bit fraction, ta có $$\large\boxed{00011001100110011001100110011_{2}}$$. Đây là nhị phân của phần fraction. Vậy còn sign ta có là `0` thì ta ghép vào đầu chuỗi nó sẽ thành như sau $$\large\boxed{\mathbf{0}00011001100110011001100110011_{2}}$$ đây là kết quả y chang như mã C đã tính cho chúng ta nhưng thực chất nó khác
 
 </details>
 
-**nhưng ở đây dù có nhị phân đã được in quá fraction là 34bit thì chúng ta vẫn sẽ ko thấy được GRS thật sự vì sao?**
+**nhưng ở đây dù có nhị phân đã được in quá fraction là 34bit trong đoạn code C thì chúng ta vẫn sẽ ko đảm bảo thấy được GRS thật sự vì sao?**
 
 vì nó là số vô hạn? hay vì nó ko ở đầu bit bị cắt như lý thuyết?, tất cả đều sai. Nguyên nhân là do, trước khi đưa số thực như `0.1` vào float thực tế là phần cứng đã làm việc, tính toán, xét GRS và rounding trước đó rồi, nên GRS đã bị bỏ. Ta chỉ có là số kết quả đã được làm tròn ngay từ lúc gán nó vào biến a kiểu float, vậy nên dù ta có xét GRS bit hay làm thế nào với số kết quả này `0.10000000149011611938477` bao nhiêu lần đi chăng nữa thì điều đó càng thêm vô lý cũng như vô ích với kết quả được được tính sẵn thế này.
 
 Nên mới nói, dù ta có xét GRS, tính và so sánh bao nhiêu half ULP nếu ko hiểu điều này rất dễ sinh nhầm lẫn là nhỏ hơn half ULP là giữ nguyên sao nó vẫn làm tròn, mà nó làm tròn bằng cách cộng 1 vào phần tử cuối fraction sao lại ra kết quả này (vì đó là số đã được tính và làm tròn trước khi gán vào float bởi phần cứng, GRS đã bị bại bỏ và chúng ta ko thể tính gì thêm nữa)
+
+Điều kiện kiên quyết khi lựa chọn tính toán và xét GRS là phải thủ công, dù có thể tự động hóa nào đó như dùng casio hay các phép tính nhân chia v.v. nhưng việc encode thì phải thủ công để suy ra xét GRS chính xác nhất. **Ví dụ** đoạn code trên cho binary gần sát như binary đã caculated thủ công nhưng việc xét GRS về cơ bản thì hòan toàn sai vì chúng ta ko thể đảm bảo nó đúng
 
 </details>
