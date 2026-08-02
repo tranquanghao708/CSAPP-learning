@@ -72,7 +72,9 @@
 
 - [4.2.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp](#424cách-phần-cứng-dùng-các-guard-bit-round-bit-và-sticky-bit-để-xác-định-ba-trường-hợp)
 
-- 4.2.5.Vị trí của 3bit này nằm ở đâu, vì sao phần cứng lại biết và nhắm tới chính xác vị trí của 3bit này để soi?
+- 4.2.5.Thao tác Bitwise Raw Manipulation trên uint32_t
+
+- 4.2.6.Vị trí của 3bit này nằm ở đâu, vì sao phần cứng lại biết và nhắm tới chính xác vị trí của 3bit này để soi?
 
 - 4.3.Round toward zero
 
