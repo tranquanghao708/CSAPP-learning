@@ -976,11 +976,11 @@ int main() {
 
 > gcc -o bitwise_manipulation bitwise_manipulation.c
 
-![alt text](image17.png)
+![alt text](image/image17.png)
 
 từ đoạn mã ta có sơ đồ biểu diễn logic như sau (để tránh gây hiểu lầm):
 
-![alt text](image18.png)
+![alt text](image/image18.png)
 
 Vậy nên nó chỉ thao tác đọc ghi v.v. , chứ ko ngăn được FPU đã xử lý phần 0.1f
 
