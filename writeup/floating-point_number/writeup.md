@@ -925,7 +925,9 @@ nhưng vấn đề khiến nó gần như trùng khớp với bit quyết địn
 
 | Tiêu chí | FPU | uint32_t |
 |----------|-----|----------|
-| Bản chất | Mạch phần cứng đại số số thực | Thao tác trên dãy 32 ô nhớ nhị phân |
-| Đơn vị xử lý | Giá trị số thực | Mẫu bit thuần túy |
-| Xử lý số vô hạn | Tự động làm tròn (GRS) theo chuẩn IEEE 754 | Không quan tâm giá trị, chỉ đọc/dịch/đảo bit |
-| Ngôn ngữ C | Thực hiện qua các toán tử +, -, *, / trên float | Thực hiện qua memcpy, toán tử &, |, ^, <<, >> |
+| **Bản chất** | Mạch phần cứng đại số số thực | Thao tác trên dãy 32 ô nhớ nhị phân |
+| **Đơn vị xử lý** | Giá trị số thực | Mẫu bit thuần túy |
+| **Xử lý số vô hạn** | Tự động làm tròn (GRS) theo chuẩn IEEE 754 | Không quan tâm giá trị, chỉ đọc/dịch/đảo bit |
+| **Ngôn ngữ C** | Thực hiện qua các toán tử +, -, *, / trên float | Thực hiện qua memcpy, toán tử &, |, ^, <<, >> |
+
+vậy thao tác bitwise raw manipulation trên uint32_t là dùng các toán tử bitwise như &, | , ^, << , >> và thực hiện với memcpy để thao tác với tầng bit thô của số thực, sau khi sao chép bit sang uint32_t, các phép toán tiếp theo (&, |, ^, <<, >>) chỉ thao tác trên mẫu bit, không kích hoạt các phép toán số thực của FPU, điều này tránh đụng chạm tới phần FPU vì các phép toán trên uint32_t không sử dụng pipeline số thực và chúng được thực hiện bởi ALU, không phải FPU do đó chúng ta có thể xử lý và đọc lượng bit đó một cách chính xác
