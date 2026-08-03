@@ -320,6 +320,25 @@ IEEE quy định sNaN phải thỏa điều kiện xảy ra NaN là exponent fie
 
 <details>
 	<summary>ví dụ sNaN với C</summary>
+
+```c
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+
+int main(void){
+    uint32_t raw = 0x7F800001; // sNaN (theo IEEE754)
+    float x;
+    memcpy(&x, &raw, sizeof(x));
+    printf("%f\n", x);
+    return 0;
+}
+```
+
+![alt text](image/image21.png)
+
+Khác với NAN (thường là Quiet NaN), ngôn ngữ C không cung cấp sẵn một hằng Signaling NaN. Muốn tạo sNaN, lập trình viên phải xây dựng trực tiếp mẫu bit IEEE754 (bit pattern) bằng các kỹ thuật như memcpy hoặc union. Tuy nhiên, trên nhiều hệ thống, sNaN sẽ nhanh chóng được phần cứng chuyển thành Quiet NaN khi tham gia phép toán.
+
 </details>
 
 #### 1.1.5.Zero
