@@ -311,9 +311,20 @@ Nếu trong condition ta thấy `if(x != x)` thì điều đó chỉ đúng khi 
 
 #### 1.1.4.2.Signaling NaN (sNaN)
 
+Đây cũng là loại bit đặc biệt NaN chỉ khác với qNaN là nó dùng để báo hiệu rằng chương trình vừa sử dụng một giá trị ko hợp lệ hoặc chưa được khởi tạo. Khác với quiet NaN, sNaN không âm thầm lan truyền, mà sẽ cố gắng tạo ra một floating-point invalid exception ngay khi được sử dụng trong phép toán.
+
+IEEE quy định sNaN phải thỏa điều kiện xảy ra NaN là exponent field phải hết tất cả bit đều là 1, và fraction phải khác 0 tuy nhiên sNaN nên quiet bit là 0 đó là điều kiện để xảy ra sNaN.
+
+> [!IMPORTANT]
+> sNaN được tạo ra để phát hiện lỗi sớm. Khi CPU hoặc FPU sử dụng sNaN trong một phép toán, chuẩn IEEE 754 cho phép phần cứng phát sinh Invalid Operation Exception. Sau đó, trên nhiều kiến trúc, giá trị này sẽ được chuyển thành Quiet NaN (qNaN) để tiếp tục lan truyền qua các phép tính tiếp theo.
+
+<details>
+	<summary>ví dụ sNaN với C</summary>
+</details>
+
 #### 1.1.5.Zero
 
-- trong toán học giá trị `0` gần như bằng nhau nhưng trong biểu diễn số thực chuẩn IEEE754 dạng bit nhị phân nó lại biểu diễn khác ở phần sign. Ví dụ float (32bit) khi ta gắn gía trị `-0` thì biễu diễn tất cả các bit là 0 trừ sign là 1, nhưng gắn giá trị `+0` thì biễu diễn tất cả các bit là 0 và sign cũng ko ngoại lệ. $$\large\pm0$$ trong biểu diễn số thực ở máy tính là âm hay dương tùy vào sign là 1 hay 0
+trong toán học giá trị `0` gần như bằng nhau nhưng trong biểu diễn số thực chuẩn IEEE754 dạng bit nhị phân nó lại biểu diễn khác ở phần sign. Ví dụ float (32bit) khi ta gắn gía trị `-0` thì biễu diễn tất cả các bit là 0 trừ sign là 1, nhưng gắn giá trị `+0` thì biễu diễn tất cả các bit là 0 và sign cũng ko ngoại lệ. $$\large\pm0$$ trong biểu diễn số thực ở máy tính là âm hay dương tùy vào sign là 1 hay 0
 
 > [!IMPORTANT]
 > Trong IEEE biểu diễn dưới dạng bit thì giá trị `0` :
