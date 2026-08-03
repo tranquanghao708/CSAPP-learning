@@ -920,3 +920,12 @@ nhưng vấn đề khiến nó gần như trùng khớp với bit quyết địn
 </details>
 
 #### 4.2.4.1.Thao tác Bitwise Raw Manipulation trên uint32_t
+
+Ở đây, chúng ta sẽ thao tác chính xác bit thô trên uint32_t. Trước hêt, cần phải hiểu rõ thao tác số thực với FPU và uint32_t khác nhau thế nào :
+
+| Tiêu chí | FPU | uint32_t |
+|----------|-----|----------|
+| Bản chất | Mạch phần cứng đại số số thực | Thao tác trên dãy 32 ô nhớ nhị phân |
+| Đơn vị xử lý | Giá trị số thực | Mẫu bit thuần túy |
+| Xử lý số vô hạn | Tự động làm tròn (GRS) theo chuẩn IEEE 754 | Không quan tâm giá trị, chỉ đọc/dịch/đảo bit |
+| Ngôn ngữ C | Thực hiện qua các toán tử +, -, *, / trên float | Thực hiện qua memcpy, toán tử &, |, ^, <<, >> |
