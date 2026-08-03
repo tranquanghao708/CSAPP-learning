@@ -18,11 +18,13 @@
 
 - [1.1.4.ko phải một số (NaN)](#114ko-phải-một-số-nan)
 
-- 1.1.4.1.Quite NaN (qNaN)
+- [1.1.4.1.Quite NaN (qNaN)](#1141quite-nan-qnan)
 
-- 1.1.4.2.Signaling NaN (sNaN)
+- [1.1.4.2.Signaling NaN (sNaN)](#1142signaling-nan-snan)
 
 - [1.1.5.zero](#115zero)
+
+- 1.1.6.scanf và các hàm lệnh đọc khác có thể đọc các chỉ thị nan, infinity
 
 - [1.2.Trường Fraction (phần trị - significand)](12Trường-fraction-phần-trị---significand)
 
@@ -244,6 +246,8 @@ ta thấy hiện `inf` nghĩa là dương vô cực $$\large+\infty$$
 
 #### 1.1.4.ko phải một số (NaN)
 
+#### 1.1.4.1.Quite NaN (qNaN)
+
 ![alt text](image/image6.png)
 
 > trích từ CS:APP
@@ -263,7 +267,16 @@ Nghĩa là Exponent phải là tòan bộ bit là một và Fraction phải có 
 > - Fraction = 0 : infinity ($$\large+\infty$$, $$\large-\infty$$)
 > - Fraction $$\large\neq$$ 0 : NaN
 
-NaN có tính chất đặc biệt là **ko bằng bất kỳ giá trị nào kể cả chính nó**
+NaN có tính chất đặc biệt là **ko bằng bất kỳ giá trị nào kể cả chính nó**, trong dãy fraction phần bit có trọng số cao nhất của dãy bit fraction là `Quite bit` minh họa với 32bit(float) :
+
+![alt text](image/image20.png)
+
+Trong đó QuiteBit là phần có thể là `0` hoặc `1`, khi quite bit là `1` thì đó gọi là Quite NaN là cái mà chúng ta đang nói ở chương này, còn khi QuiteBit là `0` thì đó gọi là Signaling NaN (sNaN), là cái mà chúng ta sẽ nói ở chương [1.1.4.2.Signaling NaN (sNaN)](#1142signaling-nan-snan) tiếp theo
+
+> [!IMPORTANT]
+> Bit có trọng số cao nhất trong dãy fraction luôn là quitebit (khi toàn bộ bit kế tiếp đều là 1) thỏa điều kiện để xem đó là NaN:
+> - nếu quite bit = 1 đó là qNaN (quite NaN)
+> - nếu quite bit = 0 đó là sNaN (Signaling NaN)
 
 <details>
 	<summary>Ví dụ với C</summary>
@@ -295,6 +308,8 @@ int main(void){
 </details>
 
 Nếu trong condition ta thấy `if(x != x)` thì điều đó chỉ đúng khi `x = NaN` vì NaN là thứ duy nhất giúp `x != x` trả true. Đây là một mẹo thường gặp trong các câu hỏi về C, compiler và IEEE 754. Vì NaN là giá trị duy nhất mà biểu thức `x != x` luôn đúng, một số mã nguồn hoặc trình biên dịch có thể dùng tính chất này để phát hiện NaN.
+
+#### 1.1.4.2.Signaling NaN (sNaN)
 
 #### 1.1.5.Zero
 
