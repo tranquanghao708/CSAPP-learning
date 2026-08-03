@@ -18,6 +18,10 @@
 
 - [1.1.4.ko phải một số (NaN)](#114ko-phải-một-số-nan)
 
+- 1.1.4.1.Quite NaN (qNaN)
+
+- 1.1.4.2.Signaling NaN (sNaN)
+
 - [1.1.5.zero](#115zero)
 
 - [1.2.Trường Fraction (phần trị - significand)](12Trường-fraction-phần-trị---significand)
@@ -72,9 +76,9 @@
 
 - [4.2.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp](#424cách-phần-cứng-dùng-các-guard-bit-round-bit-và-sticky-bit-để-xác-định-ba-trường-hợp)
 
-- [4.2.4.1.Thao tác Bitwise Raw Manipulation trên uint32_t](#4241thao-tác-bitwise-raw-manipulation-trên-uint32_t)
+- [4.2.5.Thao tác Bitwise Raw Manipulation trên uint32_t](#425thao-tác-bitwise-raw-manipulation-trên-uint32_t)
 
-- 4.2.5.Vị trí của 3bit này nằm ở đâu, vì sao phần cứng lại biết và nhắm tới chính xác vị trí của 3bit này để soi?
+- 4.2.6.Vị trí của 3bit này nằm ở đâu, vì sao phần cứng lại biết và nhắm tới chính xác vị trí của 3bit này để soi?
 
 - 4.3.Round toward zero
 
@@ -919,7 +923,7 @@ nhưng vấn đề khiến nó gần như trùng khớp với bit quyết địn
 
 </details>
 
-#### 4.2.4.1.Thao tác Bitwise Raw Manipulation trên uint32_t
+#### 4.2.5.Thao tác Bitwise Raw Manipulation trên uint32_t
 
 Ở đây, chúng ta sẽ thao tác chính xác bit thô trên uint32_t. Trước hêt, cần phải hiểu rõ thao tác số thực với FPU và uint32_t khác nhau thế nào :
 
@@ -930,4 +934,54 @@ nhưng vấn đề khiến nó gần như trùng khớp với bit quyết địn
 | **Xử lý số vô hạn** | Tự động làm tròn (GRS) theo chuẩn IEEE 754 | Không quan tâm giá trị, chỉ đọc/dịch/đảo bit |
 | **Ngôn ngữ C** | Thực hiện qua các toán tử +, -, *, / trên float | Thực hiện qua memcpy, toán tử &, |, ^, <<, >> |
 
-vậy thao tác bitwise raw manipulation trên uint32_t là dùng các toán tử bitwise như &, | , ^, << , >> và thực hiện với memcpy để thao tác với tầng bit thô của số thực, sau khi sao chép bit sang uint32_t, các phép toán tiếp theo (&, |, ^, <<, >>) chỉ thao tác trên mẫu bit, không kích hoạt các phép toán số thực của FPU, điều này tránh đụng chạm tới phần FPU vì các phép toán trên uint32_t không sử dụng pipeline số thực và chúng được thực hiện bởi ALU, không phải FPU do đó chúng ta có thể xử lý và đọc lượng bit đó một cách chính xác
+vậy thao tác bitwise raw manipulation trên uint32_t là dùng các toán tử bitwise như &, | , ^, << , >> và thực hiện với memcpy để thao tác với tầng bit thô của số thực, sau khi sao chép bit sang uint32_t, các phép toán tiếp theo (&, |, ^, <<, >>) chỉ thao tác trên mẫu bit, không kích hoạt các phép toán số thực của FPU, điều này tránh đụng chạm tới phần FPU vì các phép toán trên uint32_t không sử dụng pipeline số thực và chúng được thực hiện bởi ALU, không phải FPU do đó chúng ta có thể xử lý và đọc lượng bit đó một cách chính xác trong bộ nhớ
+
+**Lưu ý** FPU vẫn có thể được sử dụng cho việc làm tròn, xử lý số thực sang phần nguyên hay nhi phân trước đó phổ biến khi gán `0.1f` vào một valriable, chương này chỉ thao tác nghĩa là dịch bit, dùng các phép toán nhị phân để thao tác với số thực thay cho cú pháp bình thường sẽ lỗi nếu thao tác trực tiếp với biến số thực
+
+<details>
+	<summary>ví dụ với C</summary>
+
+```c
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+
+int main() {
+    float a = 0.1f; //vẫn qua rounding
+    uint32_t raw;
+    
+    // Bê nguyên 32 bit từ vùng nhớ của a sang raw
+    memcpy(&raw, &a, sizeof(raw));
+
+    // Tách 3 thành phần IEEE 754 bằng Bitwise operators
+    uint32_t sign     = (raw >> 31) & 0x01; // Bit 31 là cái phần sign
+    uint32_t exponent = (raw >> 23) & 0xFF; // Bit 23 -> 30 (8 bits) gán vô exponent
+    uint32_t fraction = raw & 0x7FFFFF; // Bit 0 -> 22  (23 bits) fraction
+
+    printf("Sign: %u\n", sign);
+    printf("Exponent (Biased): %u (Actual: %d)\n", exponent, exponent - 127);
+    printf("fraction (Raw Hex): 0x%06X\nFraction binary: ", fraction);
+
+	//phần lấy mã nhị phân của trường fraction
+	int o;
+	for(int i = 22; i >= 0; i--){ //cố tình dump quá 3bit
+		o = (fraction >> i) & 1;
+		printf("%d",o);
+	}
+	printf("\n");
+
+    return 0;
+}
+```
+
+> gcc -o bitwise_manipulation bitwise_manipulation.c
+
+![alt text](image17.png)
+
+từ đoạn mã ta có sơ đồ biểu diễn logic như sau (để tránh gây hiểu lầm):
+
+![alt text](image18.png)
+
+Vậy nên nó chỉ thao tác đọc ghi v.v. , chứ ko ngăn được FPU đã xử lý phần 0.1f
+
+</details>
