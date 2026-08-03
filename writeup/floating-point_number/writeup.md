@@ -24,7 +24,7 @@
 
 - [1.1.5.zero](#115zero)
 
-- 1.1.6.scanf và các hàm lệnh đọc khác có thể đọc các chỉ thị nan, infinity
+- [1.1.6.scanf và các hàm lệnh đọc khác có thể đọc các chỉ thị nan, infinity](#116scanf-và-các-hàm-lệnh-đọc-khác-có-thể-đọc-các-chỉ-thị-nan-infinity)
 
 - [1.2.Trường Fraction (phần trị - significand)](12Trường-fraction-phần-trị---significand)
 
@@ -400,6 +400,10 @@ Lưu ý: trong C, phép chia số nguyên cho 0 trong C là undefined behavior (
 
 </details>
 
+#### 1.1.6.scanf và các hàm lệnh đọc khác có thể đọc các chỉ thị nan, infinity
+
+Trong C, các hàm như scanf có thể đọc các chỉ thị nan, infinity ko chỉ là số thực. **Ví dụ** đọc dữ liệu đầu vào bằng `scanf()` và gán cho số thực, nó ko chỉ đọc số thực nó còn đọc cả `nan, NaN, NAN, +nan, -nan, inf, infinity, -INF`. phần ví dụ có thể xem [tại đây](https://github.com/tranquanghao708/Solve-CaptureTheFlags/blob/main/thecommenter/chall12/writeup.md)
+
 #### 1.2.Trường Fraction (phần trị - significand)
 
 - Là trường lưu các bit phía sau dấu chấm của số nhị phân sau khi đã chuẩn hóa số thực theo dạng chuẩn hóa $$\large1.xxxxx\times2^{N}$$:
@@ -581,6 +585,10 @@ ta tiến hành tính tổng giá trị lại $$\large0.5 + 0.25 + 0.03125 = 0.7
 
 > [!IMPORTANT]
 > Ta thấy nó bị chênh lệch số thực, số lúc đầu là `29.81` nhưng sau khi encode và decode ra kết quả lại là `29.78125`. Lý do là vì quá trình chuyển phần thập phân bị cắt sớm và làm tròn theo giới hạn 23 bit fraction hay giới hạn bit fraction theo toán hạng của IEEE 754 single precision
+
+---
+
+## 3.Số thực lớn nhất và tính toán số thực lớn nhất
 
 ---
 
