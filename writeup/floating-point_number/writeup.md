@@ -72,9 +72,9 @@
 
 - [4.2.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp](#424cách-phần-cứng-dùng-các-guard-bit-round-bit-và-sticky-bit-để-xác-định-ba-trường-hợp)
 
-- 4.2.5.Thao tác Bitwise Raw Manipulation trên uint32_t
+- [4.2.4.1.Thao tác Bitwise Raw Manipulation trên uint32_t](#4241thao-tác-bitwise-raw-manipulation-trên-uint32-t)
 
-- 4.2.6.Vị trí của 3bit này nằm ở đâu, vì sao phần cứng lại biết và nhắm tới chính xác vị trí của 3bit này để soi?
+- 4.2.5.Vị trí của 3bit này nằm ở đâu, vì sao phần cứng lại biết và nhắm tới chính xác vị trí của 3bit này để soi?
 
 - 4.3.Round toward zero
 
@@ -905,7 +905,7 @@ ta thấy đây là fraction sau khi IEEE754 đã hoàn tất quá trình encode
 
 **nhưng ở đây dù có nhị phân đã được in quá fraction là 34bit trong đoạn code C thì chúng ta vẫn sẽ ko đảm bảo thấy được GRS thật sự vì sao?**
 
-vì nó là số vô hạn? hay vì nó ko ở đầu bit bị cắt như lý thuyết?, tất cả đều sai. Nguyên nhân là do, trước khi đưa số thực như `0.1` vào float thực tế là phần cứng đã làm việc, tính toán, xét GRS và rounding trước đó rồi, nên GRS đã bị bỏ. Ta chỉ có là số kết quả đã được làm tròn ngay từ lúc gán nó vào biến a kiểu float, vậy nên dù ta có xét GRS bit hay làm thế nào với số kết quả này `0.10000000149011611938477` bao nhiêu lần đi chăng nữa thì điều đó càng thêm vô lý cũng như vô ích với kết quả được được tính sẵn thế này.
+vì nó là số vô hạn? hay vì nó ko ở đầu bit bị cắt như lý thuyết?, tất cả đều sai. Nguyên nhân là do, trước khi đưa số thực như `0.1` vào float thực tế là phần cứng đã làm việc, tính toán, xét GRS và rounding trong lúc chuyển đổi literal, nên GRS đã bị bỏ. Ta chỉ có là số kết quả đã được làm tròn ngay từ lúc gán nó vào biến a kiểu float, vậy nên dù ta có xét GRS bit hay làm thế nào với số kết quả này `0.10000000149011611938477` bao nhiêu lần đi chăng nữa thì điều đó càng thêm vô lý cũng như vô ích với kết quả được được tính sẵn thế này.
 
 Nên mới nói, dù ta có xét GRS, tính và so sánh bao nhiêu half ULP nếu ko hiểu điều này rất dễ sinh nhầm lẫn là nhỏ hơn half ULP là giữ nguyên sao nó vẫn làm tròn, mà nó làm tròn bằng cách cộng 1 vào phần tử cuối fraction sao lại ra kết quả này (vì đó là số đã được tính và làm tròn trước khi gán vào float bởi phần cứng, GRS đã bị bại bỏ và chúng ta ko thể tính gì thêm nữa)
 
@@ -918,3 +918,5 @@ Bit dùng để quyết định rounding theo lý thuyết thường là 3bit đ
 nhưng vấn đề khiến nó gần như trùng khớp với bit quyết định hay số thực được tính tay sang bit là sự sai số ở phần số thực diễn ra rất nhỏ xuất hiện tại bit bị cắt, hầu như còn nhỏ hơn 23-25 bit fraction. Để phân biệt hai loại bit này, ta cần phải hiễu rõ bit dùng để quyết định rounding phải chính xác (an toàn nhất là tính toán thủ công để lấy bit GRS), bit của kết quả sau khi rounding thường là bit của các chương trình nhị phân chẳng hạn như C tính toán, phần fraction luôn luôn là chính bit chuẩn xác, mức sai số chỉ xuất hiện với phần bit vượt quá phần fraction gọi là bit bị cắt và GRS cũng nằm ở 3bit đầu của phần bit bị cắt đó (Ta có thể tiếp tục tạo ra các bit phía sau từ giá trị float đã được làm tròn, nhưng các bit đó không còn là Guard, Round và Sticky bit của lần encode ban đầu. Chúng chỉ là các bit sinh ra từ giá trị đã được làm tròn)
 
 </details>
+
+#### 4.2.4.1.Thao tác Bitwise Raw Manipulation trên uint32_t
