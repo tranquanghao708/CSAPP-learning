@@ -585,7 +585,7 @@ vậy kết quả là $$\large\boxed{11101.1100100000000000000_{2}}$$ đây chí
 | 1 | $$\large2^{-2}$$ | 0.25 |
 | 1 | $$\large2^{-5}$$ | 0.03125 |
 
-ta tiến hành tính tổng giá trị lại $$\large0.5 + 0.25 + 0.03125 = 0.78125_{10}$$ bây giờ ghép lại ta có kết quả $$\large\boxed{29.78125_{10}}$$
+ta tiến hành tính tổng giá trị lại $$\large0.5 + 0.25 + 0.03125 = 0.78125_{10}$$ bây giờ ghép lại ta có kết quả $$\large\boxed{29.78125_{10}}$$ . Chúng ta vẫn có thể ráp vào công thức như ở phần [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754) là $$\large(-1)^{S} \times 1.m \times 2^{e-b}$$ ta có $$\large(-1)^{0} \times (1.861328125) \times 2^{4}$$ và vẫn ra kết quả khớp là $$\large29.78125_{10}$$. Giá trị `1.861328125` trong biểu thức là phần trị `Significand = 1.11011100100000000000000` cái phần được tách ở trường fraction lúc đầu, chúng ta quy đổi cả phần này về hệ cơ số 10 bằng cách nhân với trọng số âm như trên bảng vừa rồi
 
 > [!IMPORTANT]
 > Ta thấy nó bị chênh lệch số thực, số lúc đầu là `29.81` nhưng sau khi encode và decode ra kết quả lại là `29.78125`. Lý do là vì quá trình chuyển phần thập phân bị cắt sớm và làm tròn theo giới hạn 23 bit fraction hay giới hạn bit fraction theo toán hạng của IEEE 754 single precision
@@ -610,7 +610,7 @@ hay còn gọi là số thực hữu hạn lớn nhất, đối với float 32 b
 | 1 | $$\large2^{-2}$$ | 0.25 |
 | .. | .. | .. |
 
-như thế tính lần lượt cho hết bit 1 trong trường fraction. Dựa vào công thức có ở [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754) là $$\large(-1)^{S} \times 1.m \times 2^{e-b}$$, ta tiến hành ráp vào bây giờ sign = 0, actual exponent = 127, bias = 127, tổng cấp số nhân gía trị fraction là $$\large2-2^{-23}$$ khi ráp ta được $$\large(-1)^{0} \times 1.(2-2^{-23}) \times 2^{127}$$ bây giờ ta lấy casio tính cái biểu thức này ra ta được $$\large\boxed{340282346638528859811704183484516925440}$$ đây chính là giá trị chính xác của số thực hữu hạn lớn nhất 32bit float
+như thế tính lần lượt cho hết bit 1 trong trường fraction. Dựa vào công thức có ở [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754) là $$\large(-1)^{S} \times 1.m \times 2^{e-b}$$, ta tiến hành ráp vào bây giờ sign = 0, actual exponent = 127, bias = 127, tổng cấp số nhân gía trị fraction là $$\large2-2^{-23}$$ khi ráp ta được $$\large(-1)^{0} \times (2-2^{-23}) \times 2^{127}$$ bây giờ ta lấy casio tính cái biểu thức này ra ta được $$\large\boxed{340282346638528859811704183484516925440}$$ đây chính là giá trị chính xác của số thực hữu hạn lớn nhất 32bit float
 
 ---
 
