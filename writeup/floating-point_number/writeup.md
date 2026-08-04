@@ -559,6 +559,10 @@ Và ta đã tính được `Actual exponent = 4` đồng thời nhận thấy $$
 > [!NOTE]
 > Hidden Bit không tồn tại trong bộ nhớ. Nó chỉ được CPU tự động thêm vào trong quá trình Decode nếu số thuộc dạng Normalized. Đối với Denormalized Number (Exponent = 00000000), Hidden Bit không còn bằng 1 nữa mà bằng 0. Điều này đã được trình bày ở chương [1.1.1.Khử chuẩn hóa số thực (Denormalized)](#111khử-chuẩn-hóa-số-thực-denormalized)
 
+**Trường hợp nếu actual exponent lớn hơn toán hạng trường fraction để dịch dấu chấm thì sao?**
+
+Cho actual exponent = 127, trong khi toán hạng của trường fraction ở ngành kiến trúc 32bit chỉ là 23bit thôi, vậy con số `127 > 23` nên chúng ta dịch dấu chấm như thế nào. Chúng ta sẽ dịch dấu chấm bằng cách thêm các padding 0 cho những phần cần thiếu, nghĩa là chúng ta cứ việc dịch dấu chấm ở fraction trước đến khi dấu chấm vượt quá toán hạng của trường fraction khi đó chúng ta mới thêm dấu chấm sao cho dịch đủ 127 ô theo giá trị của actual exponent là được. **Ví dụ** cho toán hạng fraction là 3 và actual exponent là 9, ta có `1.101` bây giờ ta dịch dấu chấm ở fraction sang bên phải 9 ô dịch trước 2 ô là `110.1` bây giờ ta thấy nó gần sắp vượt quá toán hạng của trường fraction. Bây giờ ta tiến hành thêm padding 0 vào và dịch sao cho đủ 9 ô, ta có `1101000000.0` vậy là đủ 9 ô thỏa mãn actual exponent
+
 #### 2.2.4.Nhân với 2^Exponent
 
 Đây ko phải nhân như toán học thông thường mà chỉ là phép dịch dấu chấm ngược chiều lại, **ví dụ** khi encode việc chuẩn hóa dịch dấu chấm sang bên trái là số mũ actual exponent là dương còn sang bên phải nó là âm, thì bây giờ trong decode chúng ta có actual exponent đã giải ở phần [2.2.2.Khôi phục Actual Exponent](#222khôi-phục-actual-exponent), ta có `actual exponent = 4` vậy bây giờ encode mình dịch dấu chấm sang trái 4 lần là actual exponent là 4 thì bây giờ decode mình dịch dấu chấm sang phải như đang trả lại chỗ cũ thôi. Bây giờ ta có `1.11011100100000000000000` là kết quả của phần [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit), ta tiến hành dịch dấu chấm sang phải 4 lần (theo giá trị của actual exponent mà ta đã tính ra ở phần khôi phục exponent) ta có :
@@ -589,6 +593,24 @@ ta tiến hành tính tổng giá trị lại $$\large0.5 + 0.25 + 0.03125 = 0.7
 ---
 
 ## 3.Số thực lớn nhất và tính toán số thực lớn nhất
+
+hay còn gọi là số thực hữu hạn lớn nhất, đối với float 32 bit chúng thường có dạng :
+
+| sign | exponent | fraction |
+|------|----------|----------|
+| 0 | 11111110 | 11111111111111111111111 |
+
+**Lưu ý:** đối với exponent field để biểu diễn số thực lớn nhất tuyệt đối ko đươc là `11111111` vì tất cả bit số 1 này được dùng riêng trong việc biểu diễn infinity và NaN. Như thế đối với 32bit ta có chuỗi bit của số thực hữu hạn lớn nhất như sau `01111111011111111111111111111111` việc decode ra sang số thực hệ cơ số 10 thì chúng ta làm tương tự như [2.2.Decode](#22decode) bây giờ chúng ta tiến hành tính toán số thực lớn nhất của ngành kiến trúc 32bit (float)
+
+đầu tiên như trong chương decode, ta tách các bit ra ở đây chúng ta đã có và tách bit ở bảng trên rồi. Tiếp theo ta tính actual exponent bằng cách chuyển chuỗi nhị phân ở trường exponent sang hệ cơ số 10 $$\large11111110_{2} = 254_{10}$$ bây giờ ta lấy nó đi trừ với bias $$\large254 - 127 = 127$$ vậy actual exponent = $$\large\boxed{127}$$, tiếp theo chúng ta tiến hành tính toán phần trị, đầu tiên là khôi phục hiddenbit ta dịch dấu chấm theo actual exponent nhưng ta thấy nó lớn hơn toán hạng được có ở phần fraction nên chúng ta sẽ thêm padding là 0 để thỏa mãn actual exponent ta có $$\large11111111111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.0_{2}$$ tuy hơi dài nhưng nó đã thỏa mãn actual exponent do đây là số chuẩn hóa nên bit ẩn sẽ thêm 1 là bit ở phần có trọng số cao nhất. Bây giờ chúng ta tiến hành tính toán phần fraction với phép mũ âm ta có:
+
+| bit | trọng số | gía trị |
+|-----|----------|---------|
+| 1 | $$\large2^{-1}$$ | 0.5 |
+| 1 | $$\large2^{-2}$$ | 0.25 |
+| .. | .. | .. |
+
+như thế tính lần lượt cho hết bit 1 trong trường fraction. Dựa vào công thức có ở [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754) là $$\large(-1)^{S} \times 1.m \times 2^{e-b}$$, ta tiến hành ráp vào bây giờ sign = 0, actual exponent = 127, bias = 127, tổng cấp số nhân gía trị fraction là $$\large2-2^{-23}$$ khi ráp ta được $$\large(-1)^{0} \times 1.(2-2^{-23}) \times 2^{127}$$ bây giờ ta lấy casio tính cái biểu thức này ra ta được $$\large\boxed{340282346638528859811704183484516925440}$$ đây chính là giá trị chính xác của số thực hữu hạn lớn nhất 32bit float
 
 ---
 
