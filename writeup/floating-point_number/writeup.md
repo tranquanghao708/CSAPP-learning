@@ -1090,7 +1090,7 @@ Round toward Zero (làm tròn về 0 hay còn gọi là truncation) là chế đ
 
 đây là hai hàm toán học dùng để làm tròn về phía trên hoặc phía dưới một số thực:
 
-Floor là làm tròn xuống x có ký hiệu ($$\large\lfloor x \rfloor$$) định nghĩa của nó là số nguyên lớn nhất nhỏ hơn hoặc bằng x. **Ví dụ:** 
+Floor hay còn gọi là hàm sàn là làm tròn xuống x có ký hiệu ($$\large\lfloor x \rfloor$$) định nghĩa của nó là số nguyên lớn nhất nhỏ hơn hoặc bằng x. **Ví dụ:** 
 
 |  (x) | $$\large\lfloor x \rfloor$$ |
 | ---: | -------: |
@@ -1101,6 +1101,44 @@ Floor là làm tròn xuống x có ký hiệu ($$\large\lfloor x \rfloor$$) đ�
 | -3.8 |       -4 |
 
 Ở đây, $$\large3 \leq 3.8$$ nên kết quả là 3, và $$\large-4 \leq -3.8$$ kết quả là -4 vì -4 là số nguyên lớn nhất thỏa điều kiện
+
+Ceil (Ceiling) hay còn gọi là hàm trần có ký hiệu $$\large\lceil x \rceil$$ định nghĩa của nó là số nguyên nhỏ nhất lớn hơn hoặc bằng x. **ví dụ:**
+
+|  (x) | Ceil(x) |
+| ---: | ------: |
+|  3.1 |       4 |
+|  3.8 |       4 |
+|  3.0 |       3 |
+| -3.1 |      -3 |
+| -3.8 |      -3 |
+
+Ở đây, $$\large4 \geq 3.1$$ nên kết quả là 4 và $$\large-3 \geq -3.1$$ nên kết quả là -3.1. Có thể mở rộng lý thuyết của hai hàm làm tròn này [tại đây](https://en-wikipedia-org.translate.goog/wiki/Floor_and_ceiling_functions?_x_tr_sl=en&_x_tr_tl=vi&_x_tr_hl=vi&_x_tr_pto=tc)
+
+<details>
+	<summary>dùng hàm floor(),ceil() trong thư viện math.h để tính floor,ceil trong C</summary>
+
+```c
+#include <math.h>
+#include <stdio.h>
+
+int main (void){
+	printf(" floor 3.8 = %f\n ceil 3.8 = %f\n floor -3.8 = %f\n ceil -3.8 = %f\n",
+	floor(3.8), // 3.0
+	ceil(3.8), // 4.0
+
+	floor(-3.8), // -4.0
+	ceil(-3.8) // -3.0
+	);
+}
+```
+
+> gcc -o floor_ceil floor_ceil.c
+
+![alt text](image/image22.png)
+
+**Lưu ý:** `floor()` và `ceil()` trả về kiểu dấu phẩy động (double hoặc phiên bản tương ứng như `floorf()` cho `float`), không phải `int`. **Ví dụ** `floor(3.8)` trả về `3.0`, không phải `3`.
+
+</details>
 
 </details>
 
