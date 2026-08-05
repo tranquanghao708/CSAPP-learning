@@ -84,6 +84,8 @@
 
 - [4.3.Round toward zero](#43round-toward-zero)
 
+- [4.3.1.biểu diễn làm tròn trên hệ nhị phân](#431biểu-diễn-làm-tròn-trên-hệ-nhị-phân)
+
 - 4.4.Round toward infinity positive floating numbers
 
 - 4.5.Round toward infinity negative floating numbers
@@ -100,7 +102,9 @@
 
 - 7.Cách nhận diện số thực dạng nhị phân, lục phân trong reverse engineering
 
-- 8.kết luận
+- 8.Cách viết số thực trong hợp ngữ
+
+- 9.kết luận
 
 ---
 
@@ -1072,7 +1076,7 @@ Thực tế, FPU không đi tìm Guard, Round, Sticky trong dữ liệu đã lư
 
 #### 4.3.Round toward zero
 
-Round toward Zero (làm tròn về 0 hay còn gọi là truncation) là chế độ làm tròn trong đó phần thập phân bị loại bỏ, khiến kết quả luôn tiến gần về giá trị 0. Chế độ này không xét khoảng cách giữa hai số biểu diễn được như Round to Nearest, Ties to Even, mà chỉ đơn giản cắt bỏ phần không thể biểu diễn. **Ví dụ** :
+Round toward Zero (làm tròn về 0 hay còn gọi là truncation) là chế độ làm tròn trong đó phần lẻ bị loại bỏ, khiến kết quả luôn tiến gần về giá trị 0. Chế độ này không xét khoảng cách giữa hai số biểu diễn được như Round to Nearest, Ties to Even, mà chỉ đơn giản cắt bỏ phần không thể biểu diễn. **Ví dụ** :
 
 | Giá trị | Kết quả |
 |---------|---------|
@@ -1090,7 +1094,7 @@ Round toward Zero (làm tròn về 0 hay còn gọi là truncation) là chế đ
 
 đây là hai hàm toán học dùng để làm tròn về phía trên hoặc phía dưới một số thực:
 
-Floor hay còn gọi là hàm sàn là làm tròn xuống x có ký hiệu ($$\large\lfloor x \rfloor$$) định nghĩa của nó là số nguyên lớn nhất nhỏ hơn hoặc bằng x. **Ví dụ:** 
+Floor (hàm sàn) luôn làm tròn về phía âm vô cực ($$\large-\infty$$) và có ký hiệu ($$\large\lfloor x \rfloor$$) định nghĩa của nó là số nguyên lớn nhất nhỏ hơn hoặc bằng x. **Ví dụ:** 
 
 |  (x) | $$\large\lfloor x \rfloor$$ |
 | ---: | -------: |
@@ -1102,7 +1106,7 @@ Floor hay còn gọi là hàm sàn là làm tròn xuống x có ký hiệu ($$\l
 
 Ở đây, $$\large3 \leq 3.8$$ nên kết quả là 3, và $$\large-4 \leq -3.8$$ kết quả là -4 vì -4 là số nguyên lớn nhất thỏa điều kiện
 
-Ceil (Ceiling) hay còn gọi là hàm trần có ký hiệu $$\large\lceil x \rceil$$ định nghĩa của nó là số nguyên nhỏ nhất lớn hơn hoặc bằng x. **ví dụ:**
+Ceil (hàm trần) luôn làm tròn về phía dương vô cực ($$\large+\infty$$) và có ký hiệu $$\large\lceil x \rceil$$ định nghĩa của nó là số nguyên nhỏ nhất lớn hơn hoặc bằng x. **ví dụ:**
 
 |  (x) | Ceil(x) |
 | ---: | ------: |
@@ -1112,7 +1116,7 @@ Ceil (Ceiling) hay còn gọi là hàm trần có ký hiệu $$\large\lceil x \r
 | -3.1 |      -3 |
 | -3.8 |      -3 |
 
-Ở đây, $$\large4 \geq 3.1$$ nên kết quả là 4 và $$\large-3 \geq -3.1$$ nên kết quả là -3.1. Có thể mở rộng lý thuyết của hai hàm làm tròn này [tại đây](https://en-wikipedia-org.translate.goog/wiki/Floor_and_ceiling_functions?_x_tr_sl=en&_x_tr_tl=vi&_x_tr_hl=vi&_x_tr_pto=tc)
+Ở đây, $$\large4 \geq 3.1$$ nên kết quả là 4 và $$\large-3 \geq -3.1$$ nên kết quả là -3. Có thể mở rộng lý thuyết của hai hàm làm tròn này [tại đây](https://en-wikipedia-org.translate.goog/wiki/Floor_and_ceiling_functions?_x_tr_sl=en&_x_tr_tl=vi&_x_tr_hl=vi&_x_tr_pto=tc)
 
 <details>
 	<summary>dùng hàm floor(),ceil() trong thư viện math.h để tính floor,ceil trong C</summary>
@@ -1142,9 +1146,57 @@ int main (void){
 
 </details>
 
+**so sánh floor, ceil và toward zero**
+
+Ta cho bảng so sánh như sau:
+
 | Giá trị | Toward Zero | Floor | Ceil |
 | ------- | ----------: | ----: | ---: |
 | 3.9     |           3 |     3 |    4 |
 | -3.9    |          -3 |    -4 |   -3 |
 
-đối với số âm thì sự khác biệt khá rõ, floor luôn đi về phía âm vô cực ($$\large-\infty$$) còn round toward zero luôn đi về 0
+đối với số âm thì sự khác biệt khá rõ, floor luôn đi về phía âm vô cực ($$\large-\infty$$) còn round toward zero luôn đi về 0. **Ví dụ** ta cho `-3.8` thì :
+
+| Chế độ            | Kết quả |
+| ----------------- | ------: |
+| Floor             |      -4 |
+| Ceil              |      -3 |
+| Round toward Zero |      -3 |
+
+ta thấy floor luôn làm tròn về $$\large-\infty$$ và ceil luôn làm tròn về $$\large+\infty$$ và round toward zero luôn tiến về số 0
+
+> [!NOTE]
+> **Lưu ý:** Đối với số dương, Round toward Zero và Floor cho cùng một kết quả. Đối với số âm, Round toward Zero và Ceil cho cùng một kết quả. Sự khác biệt chỉ xuất hiện khi số có phần lẻ.
+
+Do đó, về cơ bản chương round toward zero này chỉ có vậy. Nếu chế độ làm tròn này được bật thì FPU ko cần phải xét GRS vì đó thuộc round to nearest tie to even
+
+<details>
+	<summary>liệu round toward zero và (int)x.x có phải là một ko?</summary>
+
+Gần giống, nhưng chúng ko cùng một khái niệm. Trong nhiều ví dụ thì chế độ round toward zero cho kết quả khá tương đương với `(int)x.x` nhưng về bản chất thì `(int)x.x` là chỉ ép kiểu sang phần nguyên bỏ phần lẻ, điều này giống với hành vi của round toward zero. Nhưng có hai đặc điểm để chứng minh hai cái này khác: 
+
+**đặc điểm thứ nhất:** là kết quả của `(int)x.x` nó là số nguyên nó bỏ phần số thực đi suy ra `3.3 = 3`, còn round toward zero cũng có kết quả giá trị nhưng nó biểu diễn dạng số thực `3.3 = 3.0` và `3.0` cùng giá trị với `3` nhưng khác cách trình bày
+
+**đặc điểm thứ hai:** `(int)x.x` là chuyển đổi kiểu dữ liệu từ số thực sang số nguyên theo quy tắc của ngôn ngữ C. Round toward Zero là một chế độ làm tròn của IEEE 754 dùng cho các phép toán dấu phẩy động.
+
+Nên nhiều ví dụ thấy chúng gần như tương đồng nhau nhưng chúng ko nằm chung một khái niệm
+
+</details>
+
+#### 4.3.1.biểu diễn làm tròn trên hệ nhị phân
+
+Để hiểu sâu hơn chúng ta cần phải hiểu rõ là round toward zero nó tác động lên bit nhị phân như thế nào đã, ở phần chương vừa rồi ta có lập bảng so sánh ở hệ cơ số 10, nhưng bây giờ ta cần phải xem thêm nó tác động tới hệ cơ số 2 như thế nào ở phần tính toán thủ công và minh họa với C. Bây giờ **ví dụ** chỉ cho phép 4bit fraction để dễ quan sát, kết quả trung gian là `1.101011100...` trong đó nó giữ lại `1.1010` và bit bị cắt là `11100...`
+
+round toward zero nó ko quan tâm bit bị bỏ là gì, ko xét GRS hay đi tính một nữa khoảng cách biểu diễn được (half ULP) như round to nearest tie to even cần, nó chỉ biết `1.1010` là xong, suy ra kết quả :
+
+$$
+\large1.101011100..._{2} \xrightarrow{\text{round toward zero}} \boxed{1.1010_{2}}
+$$
+
+Kết quả của nó là bit được giữ lại và ko ngó gì tới bit bị cắt, tương tự với số âm `-1.101011100...` :
+
+$$
+\large-1.101011100..._{2} \xrightarrow{\text{round toward zero}} \boxed{-1.1010_{2}}
+$$
+
+biểu diễn bit ở chế độ làm tròn này đơn giản chỉ có thế
