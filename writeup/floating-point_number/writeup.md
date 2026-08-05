@@ -80,7 +80,7 @@
 
 - [4.2.5.Thao tác Bitwise Raw Manipulation trên uint32_t](#425thao-tác-bitwise-raw-manipulation-trên-uint32_t)
 
-- 4.2.6.Vị trí của 3bit này nằm ở đâu, vì sao phần cứng lại biết và nhắm tới chính xác vị trí của 3bit này để soi?
+- [4.2.6.Vì sao phần cứng biết vị trí của Guard, Round và Sticky Bit?](#426vì-sao-phần-cứng-biết-vị-trí-của-guard-round-và-sticky-bit)
 
 - 4.3.Round toward zero
 
@@ -612,6 +612,8 @@ hay còn gọi là số thực hữu hạn lớn nhất, đối với float 32 b
 
 như thế tính lần lượt cho hết bit 1 trong trường fraction. Dựa vào công thức có ở [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754) là $$\large(-1)^{S} \times 1.m \times 2^{e-b}$$, ta tiến hành ráp vào bây giờ sign = 0, actual exponent = 127, bias = 127, tổng cấp số nhân gía trị fraction là $$\large2-2^{-23}$$ khi ráp ta được $$\large(-1)^{0} \times (2-2^{-23}) \times 2^{127}$$ bây giờ ta lấy casio tính cái biểu thức này ra ta được $$\large\boxed{340282346638528859811704183484516925440}$$ đây chính là giá trị chính xác của số thực hữu hạn lớn nhất 32bit float
 
+lý do giá trị phần trị lại là $$\large2-2^{-23}$$ vì đó chỉ là phần rút gọn theo cấp số nhân của phần trị số thực thôi, điều này thường sẽ nói rất rõ bên phía toán học
+
 ---
 
 ## 4.Rounding tổng quan và các chế độ làm tròn
@@ -1039,7 +1041,7 @@ int main() {
 
 	//phần lấy mã nhị phân của trường fraction
 	int o;
-	for(int i = 22; i >= 0; i--){ //cố tình dump quá 3bit
+	for(int i = 22; i >= 0; i--){
 		o = (fraction >> i) & 1;
 		printf("%d",o);
 	}
@@ -1060,3 +1062,10 @@ từ đoạn mã ta có sơ đồ biểu diễn logic như sau (để tránh gâ
 Vậy nên nó chỉ thao tác đọc ghi v.v. , chứ ko ngăn được FPU đã xử lý phần 0.1f
 
 </details>
+
+#### 4.2.6.Vì sao phần cứng biết vị trí của Guard, Round và Sticky Bit?
+
+Thực tế, FPU không đi tìm Guard, Round, Sticky trong dữ liệu đã lưu. Ba bit này được phần cứng của FPU tạo ra tạm thời trong quá trình tính toán. Ba loại bit này không hề tồn tại trong bộ nhớ, nó chỉ là các bit tạm được FPU tạo ra để xử lý nhanh để quyết định các quy tắc làm tròn round to nearest tie to even thay vì tính một nữa khoảng cách hai giá trị (half ULP) và so sánh chúng. Sau khi ba bit này được FPU dùng và so sánh hoàn tất, chúng sẽ bị bác bỏ và các dãy nhị phân dù có trùng khớp là 3 bit cuối GRS (tùy trường hợp và ngữ cảnh) thì về bản chất đó chỉ là trùng hợp
+
+> [!IMPORTANT]
+> GRS được tạo ra từ kết quả trung gian trước khi làm tròn, rồi được dùng để quyết định cách làm tròn, sau khi làm tròn 3bit này bị bác bỏ và nếu có thể thấy 3bit cuối khi thực hiện dump nhị phân của số thực đó thực chất chỉ là sự trùng hợp
