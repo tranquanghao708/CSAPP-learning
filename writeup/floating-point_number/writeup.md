@@ -82,7 +82,7 @@
 
 - [4.2.6.Vì sao phần cứng biết vị trí của Guard, Round và Sticky Bit?](#426vì-sao-phần-cứng-biết-vị-trí-của-guard-round-và-sticky-bit)
 
-- 4.3.Round toward zero
+- [4.3.Round toward zero](#43round-toward-zero)
 
 - 4.4.Round toward infinity positive floating numbers
 
@@ -1065,7 +1065,47 @@ Vậy nên nó chỉ thao tác đọc ghi v.v. , chứ ko ngăn được FPU đ�
 
 #### 4.2.6.Vì sao phần cứng biết vị trí của Guard, Round và Sticky Bit?
 
-Thực tế, FPU không đi tìm Guard, Round, Sticky trong dữ liệu đã lưu. Ba bit này được phần cứng của FPU tạo ra tạm thời trong quá trình tính toán. Ba loại bit này không hề tồn tại trong bộ nhớ, nó chỉ là các bit tạm được FPU tạo ra để xử lý nhanh để quyết định các quy tắc làm tròn round to nearest tie to even thay vì tính một nữa khoảng cách hai giá trị (half ULP) và so sánh chúng. Sau khi ba bit này được FPU dùng và so sánh hoàn tất, chúng sẽ bị bác bỏ và các dãy nhị phân dù có trùng khớp là 3 bit cuối GRS (tùy trường hợp và ngữ cảnh) thì về bản chất đó chỉ là trùng hợp
+Thực tế, FPU không đi tìm Guard, Round, Sticky trong dữ liệu đã lưu. Ba bit này được phần cứng của FPU tạo ra tạm thời trong quá trình tính toán. Ba loại bit này không hề tồn tại trong bộ nhớ, nó chỉ là các bit tạm được FPU tạo ra vì chuẩn IEEE 754 định nghĩa việc làm tròn dựa trên các bit vượt quá độ chính xác lưu trữ. GRS là cách phần cứng biểu diễn các bit đó để quyết định các quy tắc làm tròn round to nearest tie to even thay vì tính một nữa khoảng cách hai giá trị (half ULP) và so sánh chúng. Sau khi ba bit này được FPU dùng và so sánh hoàn tất, chúng sẽ bị bác bỏ và các dãy nhị phân dù có trùng khớp là 3 bit cuối GRS (tùy trường hợp và ngữ cảnh) thì về bản chất đó chỉ là trùng hợp
 
 > [!IMPORTANT]
 > GRS được tạo ra từ kết quả trung gian trước khi làm tròn, rồi được dùng để quyết định cách làm tròn, sau khi làm tròn 3bit này bị bác bỏ và nếu có thể thấy 3bit cuối khi thực hiện dump nhị phân của số thực đó thực chất chỉ là sự trùng hợp
+
+#### 4.3.Round toward zero
+
+Round toward Zero (làm tròn về 0 hay còn gọi là truncation) là chế độ làm tròn trong đó phần thập phân bị loại bỏ, khiến kết quả luôn tiến gần về giá trị 0. Chế độ này không xét khoảng cách giữa hai số biểu diễn được như Round to Nearest, Ties to Even, mà chỉ đơn giản cắt bỏ phần không thể biểu diễn. **Ví dụ** :
+
+| Giá trị | Kết quả |
+|---------|---------|
+| 3.9     | 3       |
+| 3.1     | 3       |
+| -3.9    | -3      |
+| -3.1    | -3      |
+
+Điểm hay bị nhầm round toward zero $$\large\neq$$ ceil và floor
+
+> phần cho ceil và floor
+
+<details>
+	<summary>ceil và floor là gì</summary>
+
+đây là hai hàm toán học dùng để làm tròn về phía trên hoặc phía dưới một số thực:
+
+Floor là làm tròn xuống x có ký hiệu ($$\large\lfloor x \rfloor$$) định nghĩa của nó là số nguyên lớn nhất nhỏ hơn hoặc bằng x. **Ví dụ:** 
+
+|  (x) | $$\large\lfloor x \rfloor$$ |
+| ---: | -------: |
+|  3.8 |        3 |
+|  3.0 |        3 |
+|  3.1 |        3 |
+| -3.1 |       -4 |
+| -3.8 |       -4 |
+
+
+</details>
+
+| Giá trị | Toward Zero | Floor | Ceil |
+| ------- | ----------: | ----: | ---: |
+| 3.9     |           3 |     3 |    4 |
+| -3.9    |          -3 |    -4 |   -3 |
+
+đối với số âm thì sự khác biệt khá rõ, floor luôn đi về phía âm vô cực ($$\large-\infty$$) còn round toward zero luôn đi về 0
