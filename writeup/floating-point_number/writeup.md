@@ -1100,6 +1100,7 @@ Floor là làm tròn xuống x có ký hiệu ($$\large\lfloor x \rfloor$$) đ�
 | -3.1 |       -4 |
 | -3.8 |       -4 |
 
+Ở đây, $$\large3 \leq 3.8$$ nên kết quả là 3, và $$\large-4 \leq -3.8$$ kết quả là -4 vì -4 là số nguyên lớn nhất thỏa điều kiện
 
 </details>
 
