@@ -1006,7 +1006,7 @@ nhưng vấn đề khiến nó gần như trùng khớp với bit quyết địn
 
 #### 4.2.5.Thao tác Bitwise Raw Manipulation trên uint32_t
 
-Ở đây, chúng ta sẽ thao tác chính xác bit thô trên uint32_t. Trước hêt, cần phải hiểu rõ thao tác số thực với FPU và uint32_t khác nhau thế nào :
+Ở đây, chúng ta sẽ thao tác chính xác bit thô trên `uint32_t`. Trước hêt, cần phải hiểu rõ thao tác số thực với FPU và `uint32_t` khác nhau thế nào :
 
 | Tiêu chí | FPU | uint32_t |
 |----------|-----|----------|
@@ -1015,7 +1015,7 @@ nhưng vấn đề khiến nó gần như trùng khớp với bit quyết địn
 | **Xử lý số vô hạn** | Tự động làm tròn (GRS) theo chuẩn IEEE 754 | Không quan tâm giá trị, chỉ đọc/dịch/đảo bit |
 | **Ngôn ngữ C** | Thực hiện qua các toán tử +, -, *, / trên float | Thực hiện qua memcpy, toán tử &, |, ^, <<, >> |
 
-vậy thao tác bitwise raw manipulation trên uint32_t là dùng các toán tử bitwise như &, | , ^, << , >> và thực hiện với memcpy để thao tác với tầng bit thô của số thực, sau khi sao chép bit sang uint32_t, các phép toán tiếp theo (&, |, ^, <<, >>) chỉ thao tác trên mẫu bit, không kích hoạt các phép toán số thực của FPU, điều này tránh đụng chạm tới phần FPU vì các phép toán trên uint32_t không sử dụng pipeline số thực và chúng được thực hiện bởi ALU, không phải FPU do đó chúng ta có thể xử lý và đọc lượng bit đó một cách chính xác trong bộ nhớ
+vậy thao tác bitwise raw manipulation trên `uint32_t` là dùng các toán tử bitwise như &, | , ^, << , >> và thực hiện với memcpy để thao tác với tầng bit thô của số thực, sau khi sao chép bit sang `uint32_t`, các phép toán tiếp theo (&, |, ^, <<, >>) chỉ thao tác trên mẫu bit, không kích hoạt các phép toán số thực của FPU, điều này tránh đụng chạm tới phần FPU vì các phép toán trên `uint32_t` không sử dụng pipeline số thực và chúng được thực hiện bởi ALU, không phải FPU do đó chúng ta có thể xử lý và đọc lượng bit đó một cách chính xác trong bộ nhớ
 
 **Lưu ý** FPU vẫn có thể được sử dụng cho việc làm tròn, xử lý số thực sang phần nguyên hay nhi phân trước đó phổ biến khi gán `0.1f` vào một valriable, chương này chỉ thao tác nghĩa là dịch bit, dùng các phép toán nhị phân để thao tác với số thực thay cho cú pháp bình thường sẽ lỗi nếu thao tác trực tiếp với biến số thực
 
@@ -1200,3 +1200,42 @@ $$
 $$
 
 biểu diễn bit ở chế độ làm tròn này đơn giản chỉ có thế
+
+<details>
+	<summary>minh họa với C</summary>
+
+```c
+#include <stdio.h>
+#include <fenv.h>
+
+#pragma STDC FENV_ACCESS ON
+
+int main(void){
+	if (fesetround(FE_TOWARDZERO) != 0){
+		printf("changed mode failed\n");
+		return -1;
+	} //chuyển đỏi sang round toward zero
+
+	{
+	volatile double a = 1.0;
+    volatile double b = 10.0;
+	double x = a / b;
+
+    printf("%.20f\n", x);
+	}
+
+	volatile double a = 2.2;
+	volatile double b = 3.4;
+	double x = a * b;
+
+	printf("%.20f\n", x);
+
+	return 0;
+}
+```
+
+> gcc -o round_toward_zero round_toward_zero.c -lm
+
+![alt text](image/image23.png)
+
+</details>
