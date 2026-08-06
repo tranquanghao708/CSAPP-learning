@@ -1332,4 +1332,8 @@ suy ra `actual exponent = -1` ta tính `exponent field = -1 + 1023 = 1022` ta đ
 
 **Vậy suy ra:** khai triển nhị phân của hai giá trị toán học `0.09999999999999999167` và `7.47999999999999953814` đều là chuỗi vô hạn tuần hoàn, nên không thể lưu chính xác trong định dạng IEEE 754 double. Trong quá trình biên dịch, compiler sẽ chuyển các hằng số dấu phẩy động này sang mẫu bit IEEE 754 gần nhất (thông thường theo quy tắc round to nearest, ties to even) rồi ghi trực tiếp mẫu bit đó vào file thực thi. Vì vậy, khi chương trình chạy, việc gán các hằng số này vào biến không chịu ảnh hưởng của `fesetround()`. Chỉ các phép toán dấu phẩy động được thực hiện trong runtime mới sử dụng rounding mode hiện hành.
 
+Bây giờ theo tính toán để đoán ra dấu hiệu rõ của round toward zero, ta thấy các giá trị toán học khi thực hiện phép tính nó bị giảm đi một số rất nhỏ so với chuẩn toán học ban đầu. Ừm, nó không giống như rounding theo kiểu round to nearest, tie to even mà tăng lên hay giữ nguyên thay vào đó ở trường hợp này nó lại giảm xuống một chút cực kỳ nhỏ
+
+suy ra chế độ làm tròn round toward zero đã hoạt động. Ta có thể dùng casio để biết rằng $$\large\frac{1.0}{10.0} = 0.1_{10}$$ , nếu là round to nearest, tie to even nó sẽ tăng lên như đã minh họa chương trình C trước đó có trong chương [3.2.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp](#324cách-phần-cứng-dùng-các-guard-bit-round-bit-và-sticky-bit-để-xác-định-ba-trường-hợp) nhưng ở đây nó lại giảm xuống suy ra có dấu hiệu chỉ giữ bit và bỏ luôn bit bị cắt đúng như lý thuyết vừa rồi
+
 </details>
