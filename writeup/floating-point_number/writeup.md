@@ -1256,7 +1256,7 @@ int main(void){
 
 ![alt text](image/image23.png)
 
-ta thấy `0.09999999999999999167` và `7.47999999999999953814`, đây chính là kết quả được làm tròn bởi round toward zero. Bây giờ ta có một thắc mắc:
+ta thấy `0.09999999999999999167` và `7.47999999999999953814`, đây chính là kết quả được làm tròn bởi round toward zero.
 
 <details>
 	<summary>Liệu sau khi chuyển chế độ sang round toward zero, thì FPU có thực hiện round to nearest tie to even khi gán số thực vào biến ko?</summary>
@@ -1274,5 +1274,7 @@ Còn về trường hợp dùng định dạng chuỗi chuyển sang số thực
 **Lưu ý:** `fesetround()` chỉ ảnh hưởng đến các phép toán dấu phẩy động được FPU thực hiện trong lúc chương trình chạy (runtime). Các hằng số dấu phẩy động như `2.2`, `3.14` hay `0.1` thường đã được compiler chuyển sang định dạng IEEE 754 trong quá trình biên dịch, nên không chịu ảnh hưởng của `fesetround()` được gọi sau đó.
 
 </details>
+
+Để biết được là `0.09999999999999999167` và `7.47999999999999953814` có phải là kết quả của round toward zero hay không thì trước hết phải biết các số thực được gán vào biến trong mã nguồn thuộc số thực vô hạn tuần hoàn hay hữu hạn. Bây giờ để có số liệu thì chúng ta lấy hai cái này đi encode sang nhị phân trước
 
 </details>
