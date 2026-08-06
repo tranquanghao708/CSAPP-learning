@@ -1275,6 +1275,20 @@ Còn về trường hợp dùng định dạng chuỗi chuyển sang số thực
 
 </details>
 
-Để biết được là `0.09999999999999999167` và `7.47999999999999953814` có phải là kết quả của round toward zero hay không thì trước hết phải biết các số thực được gán vào biến trong mã nguồn thuộc số thực vô hạn tuần hoàn hay hữu hạn. Bây giờ để có số liệu thì chúng ta lấy hai cái này đi encode sang nhị phân trước
+Để biết được là `0.09999999999999999167` và `7.47999999999999953814` có phải là kết quả của round toward zero hay không thì trước hết phải biết các số thực được gán vào biến trong mã nguồn thuộc số thực vô hạn tuần hoàn hay hữu hạn. Bây giờ để có số liệu thì chúng ta lấy hai cái này đi encode sang nhị phân trước, encode bởi vì ta cần muốn biết thêm nhiều điều nữa , với `0.09999999999999999167` ta có :
+
+biết sign và phần nguyên có bit là `0` vậy nên ta chỉ cần nhân đôi thôi 
+
+| phần số thực | nhân 2 | dư | giá trị bit |
+|-----|--------|----|-------------|
+| 0.09..167 | 0.2 | 0.2 | 0 |
+| 0.2 | 0.4 | 0.4 | 0 |
+| 0.4 | 0.8 | 0.8 | 0 |
+| 0.8 | 1.6 | 0.6 | 1 |
+| 0.6 | 1.2 | 0.2 | 1 |
+
+ta có : `0.0001100011...000110 (4 phần kia bị cắt nên chỉ có bit 0)` ta chuẩn hóa số thực này suy ra ta có `1.100011...000110` và `actual exponent = -4` tính trường exponent là `exponent field = -4 + 1023 = 1019` và ta có $$\large1019_{10} = 01111111011_{2}$$ ráp lại ta có `0011111110110001100011...000110` vậy suy ra giá trị `0.09999999999999999167` là số thực vô hạn. 
+
+Còn giá trị `7.47999999999999953814`, đầu tiên ta có `sign = 0` và $$\large7_{10} = 111_{2}$$ và tính fraction
 
 </details>
