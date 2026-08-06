@@ -1289,8 +1289,8 @@ biết sign và phần nguyên có bit là `0` vậy nên ta chỉ cần nhân �
 
 ta có : `0.0001100011...000110 (4 phần kia bị cắt nên chỉ có bit 0)` ta chuẩn hóa số thực này suy ra ta có `1.100011...000110` :
 
-$$
-\large0.0001100011...000110_{2} \xrightarrow{\text{di chuyển dấu chấm sang phải 4 lần}} 1.100011...000110_{2}
+$$\large
+0.0001100011...000110_{2} \xrightarrow{\text{di chuyển dấu chấm sang phải 4 lần}} 1.100011...000110_{2}
 $$
 
 suy ra `actual exponent = -4` tính trường exponent là `exponent field = -4 + 1023 = 1019` và ta có $$\large1019_{10} = 01111111011_{2}$$ ráp lại ta có $$\large\boxed{0011111110110001100011...000110_{2}}$$ vậy ta thấy quá trình chuyển sang nhị phân xuất hiện chuỗi tuần hoàn `000110011...`, điều đó chứng tỏ giá trị toán học `0.09999999999999999167` không thể biểu diễn chính xác bằng khai triển nhị phân vô hạn. Khi encode sang IEEE 754, FPU sẽ cắt chuỗi này theo giới hạn 52 bit fraction (double) rồi làm tròn theo chế độ làm tròn hiện hành để tạo ra một mẫu bit hữu hạn.
@@ -1324,8 +1324,8 @@ Còn giá trị `7.47999999999999953814`, đầu tiên ta có `sign = 0` và $$\
 
 ta có : `fraction = 0.111101001100001010001..010011 (11 bit bị cắt)` ta chuẩn hóa số thực thành `1.11101001100001010001..010011`:
 
-$$
-\large0.111101001100001010001..010011_{2} \xrightarrow{\text{di chuyển dấu chấm sang phải 1 lần} 1.11101001100001010001..010011_{2}}
+$$\large
+0.111101001100001010001..010011_{2} \xrightarrow{\text{di chuyển dấu chấm sang phải 1 lần} 1.11101001100001010001..010011_{2}}
 $$
 
 suy ra `actual exponent = -1` ta tính `exponent field = -1 + 1023 = 1022` ta đổi $$\large1022_{10} = 01111111110_{2}$$ ta ráp lại thành $$\large\boxed{111.01111111110111101001100001010001..010011_{2}}$$
