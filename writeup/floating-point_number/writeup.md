@@ -1275,7 +1275,7 @@ Còn về trường hợp dùng định dạng chuỗi chuyển sang số thực
 
 </details>
 
-Để biết được là `0.09999999999999999167` và `7.47999999999999953814` có phải là kết quả của round toward zero hay không thì trước hết phải biết các số thực được gán vào biến trong mã nguồn thuộc số thực vô hạn tuần hoàn hay hữu hạn. Bây giờ để có số liệu thì chúng ta lấy hai cái này đi encode sang nhị phân trước, encode bởi vì ta cần muốn biết thêm nhiều điều nữa , với `0.09999999999999999167` ta có :
+Để biết được là `0.09999999999999999167` và `7.47999999999999953814` có phải là kết quả của round toward zero hay không thì trước hết phải biết các số thực được gán vào biến trong mã nguồn thuộc số thực vô hạn tuần hoàn hay hữu hạn. Bây giờ để có số liệu thì chúng ta lấy hai cái này đi encode sang nhị phân trước, encode giúp xác định chuỗi bit trước khi lưu vào IEEE 754, từ đó biết liệu giá trị toán học có biểu diễn hữu hạn hay vô hạn trong hệ nhị phân và hiểu vì sao FPU phải thực hiện làm tròn , với `0.09999999999999999167` ta có :
 
 biết sign và phần nguyên có bit là `0` vậy nên ta chỉ cần nhân đôi thôi 
 
@@ -1287,8 +1287,47 @@ biết sign và phần nguyên có bit là `0` vậy nên ta chỉ cần nhân �
 | 0.8 | 1.6 | 0.6 | 1 |
 | 0.6 | 1.2 | 0.2 | 1 |
 
-ta có : `0.0001100011...000110 (4 phần kia bị cắt nên chỉ có bit 0)` ta chuẩn hóa số thực này suy ra ta có `1.100011...000110` và `actual exponent = -4` tính trường exponent là `exponent field = -4 + 1023 = 1019` và ta có $$\large1019_{10} = 01111111011_{2}$$ ráp lại ta có `0011111110110001100011...000110` vậy suy ra giá trị `0.09999999999999999167` là số thực vô hạn. 
+ta có : `0.0001100011...000110 (4 phần kia bị cắt nên chỉ có bit 0)` ta chuẩn hóa số thực này suy ra ta có `1.100011...000110` :
 
-Còn giá trị `7.47999999999999953814`, đầu tiên ta có `sign = 0` và $$\large7_{10} = 111_{2}$$ và tính fraction
+$$
+\large0.0001100011...000110_{2} \xrightarrow{\text{di chuyển dấu chấm sang phải 4 lần}} 1.100011...000110_{2}
+$$
+
+suy ra `actual exponent = -4` tính trường exponent là `exponent field = -4 + 1023 = 1019` và ta có $$\large1019_{10} = 01111111011_{2}$$ ráp lại ta có $$\large\boxed{0011111110110001100011...000110_{2}}$$ vậy ta thấy quá trình chuyển sang nhị phân xuất hiện chuỗi tuần hoàn `000110011...`, điều đó chứng tỏ giá trị toán học `0.09999999999999999167` không thể biểu diễn chính xác bằng khai triển nhị phân vô hạn. Khi encode sang IEEE 754, FPU sẽ cắt chuỗi này theo giới hạn 52 bit fraction (double) rồi làm tròn theo chế độ làm tròn hiện hành để tạo ra một mẫu bit hữu hạn.
+
+Còn giá trị `7.47999999999999953814`, đầu tiên ta có `sign = 0` và $$\large7_{10} = 111_{2}$$ và tính fraction :
+
+| phần số thực | nhân 2 | dư | giá trị bit |
+|-----|--------|----|-------------|
+| 0.4799..953814 | 0.96 | 0.96 | 0 |
+| 0.96 | 1.92 | 0.92 | 1 |
+| 0.92 | 1.84 | 0.84 | 1 |
+| 0.84 | 1.68 | 0.68 | 1 |
+| 0.68 | 1.36 | 0.36 | 1 |
+| 0.36 | 0.72 | 0.72 | 0 |
+| 0.72 | 1.44 | 0.44 | 1 |
+| 0.44 | 0.88 | 0.88 | 0 |
+| 0.88 | 1.76 | 0.76 | 0 |
+| 0.76 | 1.52 | 0.52 | 1 |
+| 0.52 | 1.04 | 0.04 | 1 |
+| 0.04 | 0.08 | 0.08 | 0 |
+| 0.08 | 0.16 | 0.16 | 0 |
+| 0.16 | 0.32 | 0.32 | 0 |
+| 0.32 | 0.64 | 0.64 | 0 |
+| 0.64 | 1.28 | 0.28 | 1 |
+| 0.28 | 0.56 | 0.56 | 0 |
+| 0.56 | 1.12 | 0.12 | 1 |
+| 0.12 | 0.24 | 0.24 | 0 |
+| 0.24 | 0.48 | 0.48 | 0 |
+| 0.48 | 0.96 | 0.96 | 0 |
+| 0.96 | 1.92 | 0.92 | 1 |
+
+ta có : `fraction = 0.111101001100001010001..010011 (11 bit bị cắt)` ta chuẩn hóa số thực thành `1.11101001100001010001..010011`:
+
+$$
+\large0.111101001100001010001..010011_{2} \xrightarrow{\text{di chuyển dấu chấm sang phải 1 lần} 1.11101001100001010001..010011_{2}}
+$$
+
+suy ra `actual exponent = -1` ta tính `exponent field = -1 + 1023 = 1022` ta đổi $$\large1022_{10} = 01111111110_{2}$$ ta ráp lại thành $$\large\boxed{111.01111111110111101001100001010001..010011_{2}}$$
 
 </details>
