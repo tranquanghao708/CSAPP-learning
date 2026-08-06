@@ -38,6 +38,16 @@
 
 - [1.4.Trường số dấu (signed)](#14trường-số-dấu-signed)
 
+- 1.5 Các định dạng IEEE 754
+
+- 1.5.1 binary16
+
+- 1.5.2 binary32
+
+- 1.5.3 binary64
+
+- 1.5.4 binary128
+
 - [2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](#2chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
 
 - [2.1.Encode](#21encode)
@@ -94,9 +104,9 @@
 
 - [3.3.1.biểu diễn làm tròn trên hệ nhị phân](#331biểu-diễn-làm-tròn-trên-hệ-nhị-phân)
 
-- 3.4.Round toward positive infinity ($$\large+\infty$$)
+- 3.4.Round toward positive infinity (+∞)
 
-- 3.5.Round toward negative infinity ($$\large-\infty$$)
+- 3.5.Round toward negative infinity (−∞)
 
 - 4.kết luận
 
