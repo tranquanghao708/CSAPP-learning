@@ -514,16 +514,6 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 > trích từ : [Tin học đại cương bách khoa hà nội](https://www.youtube.com/watch?v=ITpspAmKpCk&pp=ygUkc-G7kSB04buxYyBk4bqldSBwaOG6qXkgxJHhu5luZyBJRWVl)
 
-<iframe
-    width="100%"
-    height="500"
-    src="https://www.youtube.com/watch?v=J0kJr8NNJkk&list=LL&index=1"
-    title="YouTube video"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-</iframe>
-
 **như thế các bit theo thứ tự ta sẽ thu được :** $$\large0.81\approx0.11001..$$ suy ra nó là biểu diễn phần thập phân dưới dạng nhị phân, vậy ta có $$\large11101.11001_{2}$$.
 
 > [!NOTE]
@@ -1268,6 +1258,11 @@ int main(void){
 
 ta thấy `0.09999999999999999167` và `7.47999999999999953814`, đây chính là kết quả được làm tròn bởi round toward zero. Bây giờ ta có một thắc mắc:
 
-**Liệu sau khi chuyển chế độ sang round toward zero, thì FPU có thực hiện round to nearest tie to even khi gán số thực vào biến ko?**
+<details>
+	<summary>Liệu sau khi chuyển chế độ sang round toward zero, thì FPU có thực hiện round to nearest tie to even khi gán số thực vào biến ko?</summary>
+
+có thể có hoặc không, tùy thời điểm phép làm tròn diễn ra.
+
+</details>
 
 </details>
