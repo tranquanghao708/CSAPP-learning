@@ -438,6 +438,8 @@ Trường Fraction quyết định precision (độ chính xác) của số th�
 
 - **Điểm thường bị nhầm :** Values trong fraction $$\large\neq$$ độ chính xác. Cái quyết định độ chính xác là số lượng bit được cấp cho trường Fraction
 
+#### 1.2.1.Hidden Bit
+
 #### 1.3.Trường số mũ (Exponent)
 
 - Là trường biểu diễn số mũ của số thực sau khi chuẩn hóa. Số mũ được xác định bằng số lần dịch dấu chấm để đưa số về dạng $$\large1.xxxxx\times2^{N}$$, **ví dụ** $$\large101.00110_{2} = 1.0100110_{2}$$ dịch chuyển dot sang trái 2 lần số mũ = 2 (dương), $$\large0.00110_{2} = 001.00110_{2} = 1.00110_{2}$$ dịch chuyển dot sang phải 3 lần số mũ = -3 (âm), rõ hơn đã nói trước ở [1.1.Chuẩn hóa số thực](#11Chuẩn-hóa-số-thực)
@@ -1339,4 +1341,15 @@ suy ra chế độ làm tròn round toward zero khả năng cao đã hoạt đ�
 nhưng về kỹ thuật chúng ta ko thể kết luận chính xác tuyệt đối được vì round to nearest, tie to even ko chỉ là tăng lên hay giữ nguyên, nó có thể tăng, giảm, giữ nguyên cả ba trường hợp tùy thuộc vào GRS có trong bit. Nhưng chắc chắn hai bit này nếu là round to nearest, tie to even thì sẽ giữ nguyên vì cả hai có guard bit là 0
 
 **Nếu round to nearest mà nó nhỏ hơn half ULP thì nó giữ nguyên vậy chả khác gì hệ thống đã lấy bit bị cắt bỏ rồi và nó có hành vi giống round toward zero là lấy phần bit theo toán hạng fraction à?**
+
+Trong trường hợp phần bị cắt nhỏ hơn ví dụ 0.5 ULP thì kết quả của Round to Nearest, Ties to Even và Round Toward Zero hoàn toàn có thể giống hệt nhau. Nhưng không đồng nghĩa hai thuật toán của chung tương đồng nhau, điều này khá hiếm có thể xảy ra ta có bảng so sánh :
+
+| discarded part | Round-to-nearest      | Toward zero |
+| -------------- | --------------------- | ----------- |
+| <0.5 ULP       | giữ nguyên            | giữ nguyên  |
+| =0.5 ULP       | even                  | giữ nguyên  |
+| >0.5 ULP       | tăng/giảm tới nearest | giữ nguyên  |
+
+và thấy nếu cùng nhỏ hơn half ULP thì cả hai có kết quả y như nhau
+
 </details>
