@@ -1325,7 +1325,7 @@ Còn giá trị `7.47999999999999953814`, đầu tiên ta có `sign = 0` và $$\
 ta có : `fraction = 0.111101001100001010001..010011 (11 bit bị cắt)` ta chuẩn hóa số thực thành `1.11101001100001010001..010011`:
 
 $$\Large
-0.111101001100001010001..010011_{2} \xrightarrow{\text{di chuyển dấu chấm sang phải 1 lần}} 1.11101001100001010001..010011_{2}}
+0.111101001100001010001..010011_{2} \xrightarrow{\text{di chuyển dấu chấm sang phải 1 lần}} 1.11101001100001010001..010011_{2}
 $$
 
 suy ra `actual exponent = -1` ta tính `exponent field = -1 + 1023 = 1022` ta đổi $$\large1022_{10} = 01111111110_{2}$$ ta ráp lại thành $$\large\boxed{111.01111111110111101001100001010001..010011_{2}}$$
