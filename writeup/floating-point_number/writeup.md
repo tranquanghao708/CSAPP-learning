@@ -10,93 +10,93 @@
 
 - [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754)
 
-  - [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized)
+    - [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized)
 
     - [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized)
 
-	- [1.2.2.Khi nào IEEE 754 sử dụng Normalized và Denormalized?](#122Khi-nào-ieee-754-sử-dụng-normalized-và-denormalized)
+       - [1.2.2.Khi nào IEEE 754 sử dụng Normalized và Denormalized?](#122Khi-nào-ieee-754-sử-dụng-normalized-và-denormalized)
 
-	- [1.3.Vô hạn (infinity)](#13Vô-hạn-infinity)
+    - [1.3.Vô hạn (infinity)](#13Vô-hạn-infinity)
 
-	- [1.4.ko phải một số (NaN)](#14ko-phải-một-số-nan)
+    - [1.4.ko phải một số (NaN)](#14ko-phải-một-số-nan)
 
-	- [1.4.1.Quite NaN (qNaN)](#141quite-nan-qnan)
+       - [1.4.1.Quite NaN (qNaN)](#141quite-nan-qnan)
 
-	- [1.4.2.Signaling NaN (sNaN)](#142signaling-nan-snan)
+       - [1.4.2.Signaling NaN (sNaN)](#142signaling-nan-snan)
 
-- [1.5.zero](#15zero)
+    - [1.5.zero](#15zero)
 
-- [1.6.scanf và các hàm lệnh đọc khác có thể đọc các chỉ thị nan, infinity](#16scanf-và-các-hàm-lệnh-đọc-khác-có-thể-đọc-các-chỉ-thị-nan-infinity)
+    - [1.6.scanf và các hàm lệnh đọc khác có thể đọc các chỉ thị nan, infinity](#16scanf-và-các-hàm-lệnh-đọc-khác-có-thể-đọc-các-chỉ-thị-nan-infinity)
 
-- [1.7.Trường Fraction (phần trị - significand)](17trường-fraction-phần-trị---significand)
+    - [1.7.Trường Fraction (phần trị - significand)](17trường-fraction-phần-trị---significand)
 
-- [1.7.1.Hidden Bit](#171hidden-bit)
+       - [1.7.1.Hidden Bit](#171hidden-bit)
 
-- [1.8.Trường số mũ (Exponent)](#18Trường-số-mũ-exponent)
+    - [1.8.Trường số mũ (Exponent)](#18Trường-số-mũ-exponent)
 
-- [1.8.1.Độ lệch (Bias)](#181độ-lệch-bias)
+       - [1.8.1.Độ lệch (Bias)](#181độ-lệch-bias)
 
-- [1.9.Trường số dấu (signed)](#19trường-số-dấu-signed)
+    - [1.9.Trường số dấu (signed)](#19trường-số-dấu-signed)
 
 - [2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](#2chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
 
-- [2.1.Encode](#21encode)
+    - [2.1.Encode](#21encode)
 
-- [2.1.1.Chuyển phần nguyên sang nhị phân](#211chuyển-phần-nguyên-sang-nhị-phân)
+       - [2.1.1.Chuyển phần nguyên sang nhị phân](#211chuyển-phần-nguyên-sang-nhị-phân)
 
-- [2.1.2.Chuyển phần thập phân sang nhị phân](#212chuyển-phần-thập-phân-sang-nhị-phân)
+       - [2.1.2.Chuyển phần thập phân sang nhị phân](#212chuyển-phần-thập-phân-sang-nhị-phân)
 
-- [2.1.3.Chuẩn hóa số thực](#213chuẩn-hóa-số-thực)
+       - [2.1.3.Chuẩn hóa số thực](#213chuẩn-hóa-số-thực)
 
-- [2.1.4.Tính Exponent Field](#214tính-exponent-field)
+       - [2.1.4.Tính Exponent Field](#214tính-exponent-field)
 
-- [2.1.5.Lấy Fraction](#215lấy-fraction)
+       - [2.1.5.Lấy Fraction](#215lấy-fraction)
 
-- [2.1.6.Ghép Sign | Exponent | Fraction](#216ghép-sign--exponent--fraction)
+       - [2.1.6.Ghép Sign | Exponent | Fraction](#216ghép-sign--exponent--fraction)
 
-- [2.2.Decode](#22decode)
+    - [2.2.Decode](#22decode)
 
-- [2.2.1.Tách Sign | Exponent | Fraction](#221tách-sign--exponent--fraction)
+       - [2.2.1.Tách Sign | Exponent | Fraction](#221tách-sign--exponent--fraction)
 
-- [2.2.2.Khôi phục Actual Exponent](#222khôi-phục-actual-exponent)
+       - [2.2.2.Khôi phục Actual Exponent](#222khôi-phục-actual-exponent)
 
-- [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit)
+       - [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit)
 
-- [2.2.4.Nhân với 2^Exponent](#224nhân-với-2exponent)
+       - [2.2.4.Nhân với 2^Exponent](#224nhân-với-2exponent)
 
-- [2.2.5.Áp dụng Sign](#225áp-dụng-sign)
+       - [2.2.5.Áp dụng Sign](#225áp-dụng-sign)
 
-- [2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)](#23số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất-largest-finite)
+    - [2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)](#23số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất-largest-finite)
 
-- [2.4.Số thực chuẩn hóa nhỏ nhất và tính toán số thực chuẩn hóa nhỏ nhất (Smallest normalized)](#24số-thực-chuẩn-hóa-nhỏ-nhất-và-tính-toán-số-thực-chuẩn-hóa-nhỏ-nhất-smallest-normalized)
+    - [2.4.Số thực chuẩn hóa nhỏ nhất và tính toán số thực chuẩn hóa nhỏ nhất (Smallest normalized)](#24số-thực-chuẩn-hóa-nhỏ-nhất-và-tính-toán-số-thực-chuẩn-hóa-nhỏ-nhất-smallest-normalized)
 
-- [2.5.Số thực khử chuẩn hóa nhỏ nhất và tính toán số thực khử chuẩn hóa nhỏ nhất (Smallest subnormal)](#25số-thực-khử-chuẩn-hóa-nhỏ-nhất-và-tính-toán-số-thực-khử-chuẩn-hóa-nhỏ-nhất-smallest-subnormal)
+    - [2.5.Số thực khử chuẩn hóa nhỏ nhất và tính toán số thực khử chuẩn hóa nhỏ nhất (Smallest subnormal)](#25số-thực-khử-chuẩn-hóa-nhỏ-nhất-và-tính-toán-số-thực-khử-chuẩn-hóa-nhỏ-nhất-smallest-subnormal)
 
 - [3.Rounding tổng quan và các chế độ làm tròn](#3rounding-tổng-quan-và-các-chế-độ-làm-tròn)
 
-- [3.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#31biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn)
+    - [3.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#31biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn)
 
-- [3.2.Round to nearest, ties to even](#32round-to-nearest-ties-to-even)
+    - [3.2.Round to nearest, ties to even](#32round-to-nearest-ties-to-even)
 
-- [3.2.1.guard bit](#321guard-bit)
+       - [3.2.1.guard bit](#321guard-bit)
 
-- [3.2.2.round bit](#322round-bit)
+       - [3.2.2.round bit](#322round-bit)
 
-- [3.2.3.sticky bit](#323sticky-bit)
+       - [3.2.3.sticky bit](#323sticky-bit)
 
-- [3.2.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp](#324cách-phần-cứng-dùng-các-guard-bit-round-bit-và-sticky-bit-để-xác-định-ba-trường-hợp)
+       - [3.2.4.cách phần cứng dùng các guard bit, round bit và sticky bit để xác định ba trường hợp](#324cách-phần-cứng-dùng-các-guard-bit-round-bit-và-sticky-bit-để-xác-định-ba-trường-hợp)
 
-- [3.2.5.Thao tác Bitwise Raw Manipulation trên uint32_t](#325thao-tác-bitwise-raw-manipulation-trên-uint32_t)
+       - [3.2.5.Thao tác Bitwise Raw Manipulation trên uint32_t](#325thao-tác-bitwise-raw-manipulation-trên-uint32_t)
 
-- [3.2.6.Vì sao phần cứng biết vị trí của Guard, Round và Sticky Bit?](#326vì-sao-phần-cứng-biết-vị-trí-của-guard-round-và-sticky-bit)
+       - [3.2.6.Vì sao phần cứng biết vị trí của Guard, Round và Sticky Bit?](#326vì-sao-phần-cứng-biết-vị-trí-của-guard-round-và-sticky-bit)
 
-- [3.3.Round toward zero](#33round-toward-zero)
+    - [3.3.Round toward zero](#33round-toward-zero)
 
-- [3.3.1.biểu diễn làm tròn trên hệ nhị phân](#331biểu-diễn-làm-tròn-trên-hệ-nhị-phân)
+       - [3.3.1.biểu diễn làm tròn trên hệ nhị phân](#331biểu-diễn-làm-tròn-trên-hệ-nhị-phân)
 
-- 3.4.Round toward positive infinity (+∞)
+    - 3.4.Round toward positive infinity (+∞)
 
-- 3.5.Round toward negative infinity (−∞)
+    - 3.5.Round toward negative infinity (−∞)
 
 - 4.kết luận
 
@@ -104,15 +104,15 @@
 
 - 1.Những vấn đề thường gặp khi làm việc với số thực
 
-- 1.1.Underflow
+    - 1.1.Underflow
 
-- 1.2.Overflow
+    - 1.2.Overflow
 
-- 1.3.Precision Loss
+    - 1.3.Precision Loss
 
-- 1.4 Catastrophic Cancellation
+    - 1.4 Catastrophic Cancellation
 
-- 1.5 Floating-point comparison
+    - 1.5 Floating-point comparison
 
 ---
 
