@@ -112,9 +112,11 @@
 
     - 1.3.Precision Loss
 
-    - 1.4 Catastrophic Cancellation
+    - 1.4.Catastrophic Cancellation
 
-    - 1.5 Floating-point comparison
+    - 1.5.Floating-point comparison
+
+    - 1.6.Gradual underflow
 
 ---
 
@@ -717,6 +719,15 @@ Vậy số thực khử chuẩn hóa nhỏ nhất của float là $$\large2^{-14
 
 <details>
 	<summary>vậy phép tính actual exponent = 1 - 127 = -126 là tính 1 - bias à, này là của khử chuẩn hóa mà sao trước đó tại chương chuẩn hóa lại sử dụng và chương này cũng sử dụng chung phép tính này?</summary>
+
+Nhìn cách tính thì cũng giống nhưng lý do của hai cái hoàn khác. Đầu tiên là chuẩn hóa (normalized) nếu Fraction $$\large\neq$$ 00000 và Fraction $$\large\neq$$ 11111 thì `actual exponent = E - bias` điều này cũng khá đúng và đã được nêu ở phần tổng quan với formula rồi, ví dụ trên là `exponent = 1, bias = 127` thì nó tính actual `exponent = 1 - 127 = -126` là hoàn toàn bình thường
+
+nhưng vẫn là một phép tính mà khử chuẩn hóa (denormalized) vẫn sử dụng chính phép tính đó, vì denormalized có hiddenbit là 0 , IEEE ko đi dùng `actual exponent = 0 - bias` thay vào đó nó vẫn là `exponent = 1 - 127 = -126` dù hiddenbit là 0. Nghe có vẻ giống normalized, nhưng lý do hoàn toàn khác.
+
+**Tại sao lại dùng 1 − Bias?**
+
+Mục đích là để miền subnormal nối liên tục với miền normalized.
+
 </details>
 
 #### 2.6.Số thực lớn nhất trong miền khử chuẩn hóa (Largest subnormal)
