@@ -446,7 +446,11 @@ Sự phân biệt giữa hiddenbit và sign bit, khi nhắc tới đứng trư�
 
 mục đích của hidden bit là giúp tăng độ chính xác của số thực, ví dụ nó lưu 23bit fraction float nhưng có độ chính xác tương đương với 24bit, điều này giúp tăng độ chính xác cao hơn. Còn mục đích của sign bit là giúp biểu diễn số thực là âm hay dương (Hai khái niệm này cần phân biệt rõ)
 
-Bây giờ để hiểu rõ hiddenbit hơn ta cho **ví dụ** $$\large1.101001_{2}​\times2^{5}$$ trong bộ nhớ IEEE nó ko lưu hiddenbit (bit trước dấu chấm) nó chỉ lưu phần phía sau dấm chấm (phần fraction)
+Bây giờ để hiểu rõ hiddenbit hơn ta cho **ví dụ** $$\large1.101001_{2}​\times2^{5}$$ trong bộ nhớ IEEE nó ko lưu hiddenbit (bit trước dấu chấm) nó chỉ lưu phần phía sau dấm chấm (phần fraction) Khi FPU đọc giá trị này (giá trị trong bộ nhớ), phần cứng sẽ tự thêm lại bit 1 lúc đso nó lại thành $$\large1.101001_{2}$$ do đó gía trị dung để tính toán là $$\large1.101001_{2}​\times2^{5}$$
+
+**Vì sao IEEE ko lưu hiddenbit?**
+
+mục đích chính là tăng độ chính xác, vì khi đối với số thực đã chuẩn hóa thì hidden bit luôn là 1 và nó không bao giờ bằng 0 nếu lưu bit này sẽ lãng phí 1 bit nên IEEE quy định không lưu bit 1 đầu tiên, khi cần sử dụng thì FPU sẽ tự thêm lại. Thực chất hiddenbit không tự động là giúp số thực chính xác hơn tương đương với hơn một bit, cái làm tăng chính xác là khi đưa vào bộ nhớ hiddenbit bị loại bỏ và dùng vùng đó cho các bit có tác dụng, hidden bit chỉ phục vụ cho việc tính toán
 
 #### 1.3.Trường số mũ (Exponent)
 
