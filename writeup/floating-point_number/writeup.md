@@ -10,19 +10,19 @@
 
 - [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754)
 
-	- [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized)
+  - [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized)
 
-- [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized)
+    - [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized)
 
-- [1.2.2.Khi nào IEEE 754 sử dụng Normalized và Denormalized?](#122Khi-nào-ieee-754-sử-dụng-normalized-và-denormalized)
+	- [1.2.2.Khi nào IEEE 754 sử dụng Normalized và Denormalized?](#122Khi-nào-ieee-754-sử-dụng-normalized-và-denormalized)
 
-- [1.3.Vô hạn (infinity)](#13Vô-hạn-infinity)
+	- [1.3.Vô hạn (infinity)](#13Vô-hạn-infinity)
 
-- [1.4.ko phải một số (NaN)](#14ko-phải-một-số-nan)
+	- [1.4.ko phải một số (NaN)](#14ko-phải-một-số-nan)
 
-- [1.4.1.Quite NaN (qNaN)](#141quite-nan-qnan)
+	- [1.4.1.Quite NaN (qNaN)](#141quite-nan-qnan)
 
-- [1.4.2.Signaling NaN (sNaN)](#142signaling-nan-snan)
+	- [1.4.2.Signaling NaN (sNaN)](#142signaling-nan-snan)
 
 - [1.5.zero](#15zero)
 
