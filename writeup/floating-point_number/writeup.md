@@ -10,7 +10,7 @@
 
 - [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754)
 
--	 [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized)
+	- [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized)
 
 - [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized)
 
