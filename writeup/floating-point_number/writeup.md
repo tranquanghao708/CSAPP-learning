@@ -703,7 +703,7 @@ Bit 1 duy nhất nằm ở vị trí thứ 23 sau dấu chấm, nên giá trị 
 Vậy số thực khử chuẩn hóa nhỏ nhất của float là $$\large2^{-149} = \boxed{1.40129846432\times10^{-45}}$$
 
 > [!NOTE]
-> Một mẹo nhỏ là với float, số thực khử chuẩn hóa nhỏ nhất luôn bằng $$\large2^{-149}$$ hoặc cũng có thể tính bằng $$\large2^{1-\text{bias}-\text{fraction_bit}}$$ thì với float $$\large2^{1-127-23} = 2^{-149}$$ hoặc dùng phép nhân như vừa rồi
+> Một mẹo nhỏ là với float, số thực khử chuẩn hóa nhỏ nhất luôn bằng $$\large2^{-149}$$ hoặc cũng có thể tính bằng $$\large2^{1-\text{bias}-\text{fraction bit}}$$ thì với float $$\large2^{1-127-23} = 2^{-149}$$ hoặc dùng phép nhân như vừa rồi
 
 > [!IMPORTANT]
 > Đối với số thực khử chuẩn hóa nhỏ nhất:
