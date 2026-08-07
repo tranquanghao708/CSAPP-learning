@@ -10,7 +10,7 @@
 
 - [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754)
 
-- [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized)
+-	 [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized)
 
 - [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized)
 
@@ -32,11 +32,11 @@
 
 - [1.7.1.Hidden Bit](#171hidden-bit)
 
-- [1.8.Trường số mũ (Exponent)](#19Trường-số-mũ-exponent)
+- [1.8.Trường số mũ (Exponent)](#18Trường-số-mũ-exponent)
 
-- [1.8.1.Độ lệch (Bias)](#191độ-lệch-bias)
+- [1.8.1.Độ lệch (Bias)](#181độ-lệch-bias)
 
-- [1.9.Trường số dấu (signed)](#110trường-số-dấu-signed)
+- [1.9.Trường số dấu (signed)](#19trường-số-dấu-signed)
 
 - [2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](#2chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
 
