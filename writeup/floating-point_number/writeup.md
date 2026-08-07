@@ -12,31 +12,31 @@
 
 - [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized)
 
-- [1.1.1.Khử chuẩn hóa số thực (Denormalized)](#111khử-chuẩn-hóa-số-thực-denormalized)
+- [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized)
 
-- [1.1.2.Khi nào IEEE 754 sử dụng Normalized và Denormalized?](#112Khi-nào-ieee-754-sử-dụng-normalized-và-denormalized)
+- [1.2.2.Khi nào IEEE 754 sử dụng Normalized và Denormalized?](#122Khi-nào-ieee-754-sử-dụng-normalized-và-denormalized)
 
-- [1.1.3.Vô hạn (infinity)](#113Vô-hạn-infinity)
+- [1.3.Vô hạn (infinity)](#13Vô-hạn-infinity)
 
-- [1.1.4.ko phải một số (NaN)](#114ko-phải-một-số-nan)
+- [1.4.ko phải một số (NaN)](#14ko-phải-một-số-nan)
 
-- [1.1.4.1.Quite NaN (qNaN)](#1141quite-nan-qnan)
+- [1.4.1.Quite NaN (qNaN)](#141quite-nan-qnan)
 
-- [1.1.4.2.Signaling NaN (sNaN)](#1142signaling-nan-snan)
+- [1.4.2.Signaling NaN (sNaN)](#142signaling-nan-snan)
 
-- [1.1.5.zero](#115zero)
+- [1.5.zero](#15zero)
 
-- [1.1.6.scanf và các hàm lệnh đọc khác có thể đọc các chỉ thị nan, infinity](#116scanf-và-các-hàm-lệnh-đọc-khác-có-thể-đọc-các-chỉ-thị-nan-infinity)
+- [1.6.scanf và các hàm lệnh đọc khác có thể đọc các chỉ thị nan, infinity](#16scanf-và-các-hàm-lệnh-đọc-khác-có-thể-đọc-các-chỉ-thị-nan-infinity)
 
-- [1.2.Trường Fraction (phần trị - significand)](12Trường-fraction-phần-trị---significand)
+- [1.7.Trường Fraction (phần trị - significand)](17trường-fraction-phần-trị---significand)
 
-- [1.2.1.Hidden Bit](#121hidden-bit)
+- [1.7.1.Hidden Bit](#171hidden-bit)
 
-- [1.3.Trường số mũ (Exponent)](#13Trường-số-mũ-exponent)
+- [1.8.Trường số mũ (Exponent)](#19Trường-số-mũ-exponent)
 
-- [1.3.1.Độ lệch (Bias)](#131độ-lệch-bias)
+- [1.8.1.Độ lệch (Bias)](#191độ-lệch-bias)
 
-- [1.4.Trường số dấu (signed)](#14trường-số-dấu-signed)
+- [1.9.Trường số dấu (signed)](#110trường-số-dấu-signed)
 
 - [2.Chuyển đổi số thực sang hệ nhị phân và chuyển đổi hệ nhị phân sang số thực](#2chuyển-đổi-số-thực-sang-hệ-nhị-phân-và-chuyển-đổi-hệ-nhị-phân-sang-số-thực)
 
@@ -175,7 +175,7 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 
 </details>
 
-#### 1.1.1.Khử chuẩn hóa số thực (Denormalized)
+#### 1.2.Khử chuẩn hóa số thực (Denormalized)
 
 ![alt text](image/image3.png)
 
@@ -195,7 +195,7 @@ thì đây ko phải là parent $$\large1.0000000000_{2}\times2^{127}$$ mà là 
 >
 > Còn với Denormalized numbers, IEEE754 dùng $$\large0.xxxxx\times2^{1 - Bias}$$ nên `exponent field = 0` và hiddenbit được xem là 0. Khử chuẩn hóa được thiết kế để biểu diễn với số gần 0 nhất **tránh bị underflow** quá sớm
 
-#### 1.1.2.Khi nào IEEE 754 sử dụng Normalized và Denormalized?
+#### 1.2.2.Khi nào IEEE 754 sử dụng Normalized và Denormalized?
 
 - `Normalized` được ưu tiên khi biểu diễn số thực vì dạng này tận dụng hiddenbit, giúp tăng thêm một bit chính xác, dùng cho hầu hết các số thực 
 
@@ -206,7 +206,7 @@ thì đây ko phải là parent $$\large1.0000000000_{2}\times2^{127}$$ mà là 
 >
 > Nếu `Denormalized` ko thể sử dụng được nữa (nhỏ hơn cả subnormal nhỏ nhất) thì gía trị số thực sẽ bị underflow và kết quả sẽ thành `0`
 
-#### 1.1.3.Vô hạn (infinity)
+#### 1.3.Vô hạn (infinity)
 
 ![alt text](image/image4.png)
 
@@ -258,9 +258,9 @@ ta thấy hiện `inf` nghĩa là dương vô cực $$\large+\infty$$
 
 </details>
 
-#### 1.1.4.ko phải một số (NaN)
+#### 1.4.ko phải một số (NaN)
 
-#### 1.1.4.1.Quite NaN (qNaN)
+#### 1.4.1.Quite NaN (qNaN)
 
 ![alt text](image/image6.png)
 
@@ -285,7 +285,7 @@ NaN có tính chất đặc biệt là **ko bằng bất kỳ giá trị nào k�
 
 ![alt text](image/image20.png)
 
-Trong đó QuiteBit là phần có thể là `0` hoặc `1`, khi quite bit là `1` thì đó gọi là Quite NaN là cái mà chúng ta đang nói ở chương này, còn khi QuiteBit là `0` thì đó gọi là Signaling NaN (sNaN), là cái mà chúng ta sẽ nói ở chương [1.1.4.2.Signaling NaN (sNaN)](#1142signaling-nan-snan) tiếp theo
+Trong đó QuiteBit là phần có thể là `0` hoặc `1`, khi quite bit là `1` thì đó gọi là Quite NaN là cái mà chúng ta đang nói ở chương này, còn khi QuiteBit là `0` thì đó gọi là Signaling NaN (sNaN), là cái mà chúng ta sẽ nói ở chương [1.4.2.Signaling NaN (sNaN)](#142signaling-nan-snan) tiếp theo
 
 > [!IMPORTANT]
 > Bit có trọng số cao nhất trong dãy fraction luôn là quitebit (khi toàn bộ bit kế tiếp đều là 1) thỏa điều kiện để xem đó là NaN:
@@ -323,7 +323,7 @@ int main(void){
 
 Nếu trong condition ta thấy `if(x != x)` thì điều đó chỉ đúng khi `x = NaN` vì NaN là thứ duy nhất giúp `x != x` trả true. Đây là một mẹo thường gặp trong các câu hỏi về C, compiler và IEEE 754. Vì NaN là giá trị duy nhất mà biểu thức `x != x` luôn đúng, một số mã nguồn hoặc trình biên dịch có thể dùng tính chất này để phát hiện NaN.
 
-#### 1.1.4.2.Signaling NaN (sNaN)
+#### 1.4.2.Signaling NaN (sNaN)
 
 Đây cũng là loại bit đặc biệt NaN chỉ khác với qNaN là nó dùng để báo hiệu rằng chương trình vừa sử dụng một giá trị ko hợp lệ hoặc chưa được khởi tạo. Khác với quiet NaN, sNaN không âm thầm lan truyền, mà sẽ cố gắng tạo ra một floating-point invalid exception ngay khi được sử dụng trong phép toán.
 
@@ -355,7 +355,7 @@ Khác với NAN (thường là Quiet NaN), ngôn ngữ C không cung cấp sẵn
 
 </details>
 
-#### 1.1.5.Zero
+#### 1.5.Zero
 
 trong toán học giá trị `0` gần như bằng nhau nhưng trong biểu diễn số thực chuẩn IEEE754 dạng bit nhị phân nó lại biểu diễn khác ở phần sign. Ví dụ float (32bit) khi ta gắn gía trị `-0` thì biễu diễn tất cả các bit là 0 trừ sign là 1, nhưng gắn giá trị `+0` thì biễu diễn tất cả các bit là 0 và sign cũng ko ngoại lệ. $$\large\pm0$$ trong biểu diễn số thực ở máy tính là âm hay dương tùy vào sign là 1 hay 0
 
@@ -414,11 +414,11 @@ Lưu ý: trong C, phép chia số nguyên cho 0 trong C là undefined behavior (
 
 </details>
 
-#### 1.1.6.scanf và các hàm lệnh đọc khác có thể đọc các chỉ thị nan, infinity
+#### 1.6.scanf và các hàm lệnh đọc khác có thể đọc các chỉ thị nan, infinity
 
 Trong C, các hàm như scanf có thể đọc các chỉ thị nan, infinity ko chỉ là số thực. **Ví dụ** đọc dữ liệu đầu vào bằng `scanf()` và gán cho số thực, nó ko chỉ đọc số thực nó còn đọc cả `nan, NaN, NAN, +nan, -nan, inf, infinity, -INF`. phần ví dụ có thể xem [tại đây](https://github.com/tranquanghao708/Solve-CaptureTheFlags/blob/main/thecommenter/chall12/writeup.md)
 
-#### 1.2.Trường Fraction (phần trị - significand)
+#### 1.7.Trường Fraction (phần trị - significand)
 
 - Là trường lưu các bit phía sau dấu chấm của số nhị phân sau khi đã chuẩn hóa số thực theo dạng chuẩn hóa $$\large1.xxxxx\times2^{N}$$:
 
@@ -428,7 +428,7 @@ Trường Fraction quyết định precision (độ chính xác) của số th�
 
 - **Điểm thường bị nhầm :** Values trong fraction $$\large\neq$$ độ chính xác. Cái quyết định độ chính xác là số lượng bit được cấp cho trường Fraction
 
-#### 1.2.1.Hidden Bit
+#### 1.7.1.Hidden Bit
 
 Hidden Bit giúp IEEE 754 chỉ lưu 23 bit fraction (float) nhưng lại đạt độ chính xác tương đương 24 bit, hay 52 bit (double) nhưng tương đương 53 bit. Trong số thực IEEE 754 chuẩn hóa (Normalized), bit 1 đứng trước dấu chấm nhị phân không được lưu vào bộ nhớ. Bit này được phần cứng tự động khôi phục khi thực hiện tính toán, nên được gọi là Hidden Bit, Implicit Leading Bit hoặc Implicit 1.
 
@@ -451,7 +451,7 @@ Nhưng hidden bit không phải lúc nào cũng bằng 1, nó chỉ đúng với
 | Infinity                 | Không sử dụng |
 | NaN                      | Không sử dụng |
 
-#### 1.3.Trường số mũ (Exponent)
+#### 1.8.Trường số mũ (Exponent)
 
 - Là trường biểu diễn số mũ của số thực sau khi chuẩn hóa. Số mũ được xác định bằng số lần dịch dấu chấm để đưa số về dạng $$\large1.xxxxx\times2^{N}$$, **ví dụ** $$\large101.00110_{2} = 1.0100110_{2}$$ dịch chuyển dot sang trái 2 lần số mũ = 2 (dương), $$\large0.00110_{2} = 001.00110_{2} = 1.00110_{2}$$ dịch chuyển dot sang phải 3 lần số mũ = -3 (âm), rõ hơn đã nói trước ở [1.1.Chuẩn hóa số thực](#11Chuẩn-hóa-số-thực)
 
@@ -466,7 +466,7 @@ Nhưng hidden bit không phải lúc nào cũng bằng 1, nó chỉ đúng với
 
 - **Điểm thường bị nhầm :** Trường exponent ko lưu trực tiếp actual exponent (số mũ thực) ký hiệu `N` trong dạng chuẩn hóa $$\large1.xxxxx\times2^{N}$$ , giá trị của trường exponent được tính theo công thưc `Exponent Field = Actual exponent + Bias`.
 
-#### 1.3.1.Độ lệch (Bias)
+#### 1.8.1.Độ lệch (Bias)
 
 - Bias là một giá trị cố định được cộng vào mọi actual exponent, không phân biệt âm hay dương, trước khi lưu vào trường Exponent. **Ví dụ** với float 32bit, exponent là 8bit nhưng bias = $$\large2^{8-1}-1 = 127_{10}$$, là Tmax của exponent (8 bit), nếu `exponent = 3` thì thực hiện phép cộng $$\large3_{10} + 127_{10} = 130_{10}$$ CPU sẽ lưu $$\large10000010_{2}$$ hệ ko dấu , còn nếu `exponent = -3` thì thực hiện phép cộng $$\large (-3) + 127 = 124_{10}$$ CPU sẽ lưu $$\large01111100_{2}$$ hệ ko dấu, còn nếu muốn recover lại số `-3` thì tính ngược lại với phép trừ là $$\large124 - 127 = -3_{10}$$ lúc này sẽ là chính xác số âm được biểu diến lúc đầu
 
@@ -494,7 +494,7 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 **Khái niệm chính xác đơn (Single precision) và chính xác kép (Double precision) là gì?:** kiểu chính xác đơn là kiểu số thực IEEE dài 32bit ví dụ float, còn chính xác kép là kiểu IEEE dài 64bit ví du double vì trong lịch sử tên gọi đơn biểu thị cho độ chính xác ban đầu và kép biểu thị cho gấp đôi độ chính xác ban đầu
 
-#### 1.4.Trường số dấu (signed)
+#### 1.9.Trường số dấu (signed)
 
 - Là trường chỉ tính `MSB = 1` hay `MSB = 0`, quyết định số âm hay dương. **Ví dụ** cho số thực $$\large19.6875_{10}$$ có sign là 0 (MSB = 0) vì nó không phải là số âm còn nếu cho $$\large-19.6875_{10}$$ thì sign là 1 (MSB = 1) vì nó là số âm
 
@@ -547,7 +547,7 @@ nó thành $$\large\boxed{1.110111001_{2}}$$ và ta nhớ ta dịch dấu chấm
 
 #### 2.1.4.Tính Exponent Field
 
-Ta có `actual exponent = 4` từ phần thực hiện chuẩn hóa số thực, bây giờ chương này ta tính exponent field (trường số mũ), phần này ta dùng `actual expnent + bias`, khái niệm bias có tại chương [1.3.1.Độ lệch (Bias)](#131độ-lệch-bias) cũng ở chương đó ta có một bảng có 3 trường được phân bổ nhị phân do đó mỗi trường đều có toán hạng riêng cho nó, ở đây ta dùng hệ 32bit (float) vậy bias có giá trị là `127`
+Ta có `actual exponent = 4` từ phần thực hiện chuẩn hóa số thực, bây giờ chương này ta tính exponent field (trường số mũ), phần này ta dùng `actual expnent + bias`, khái niệm bias có tại chương [1.8.1.Độ lệch (Bias)](#181độ-lệch-bias) cũng ở chương đó ta có một bảng có 3 trường được phân bổ nhị phân do đó mỗi trường đều có toán hạng riêng cho nó, ở đây ta dùng hệ 32bit (float) vậy bias có giá trị là `127`
 
 > [!NOTE]
 > **Lưu ý:** giá trị `127` ở phần bias là kết quả của phép tính Tmax $$\large2^{N-1}-1$$, ở đây thực chất bias chỉ có toán hạng là 8bit thôi 
@@ -594,7 +594,7 @@ Sau khi đã tính được Actual Exponent, bước tiếp theo là khôi phụ
 Và ta đã tính được `Actual exponent = 4` đồng thời nhận thấy $$\large\text{Exponent}\neq00000000$$ và $$\large\text{Exponent}\neq11111111$$ , nên đây là normalized number, CPU sẽ tự động thêm `hiddenbit = 1`. Vậy ta có fraction ban đầu là `11011100100000000000000` nhưng sau khi khôi phục hiddenbit ta có `1.11011100100000000000000` vậy suy ra kết quả là $$\large\boxed{1.11011100100000000000000_{2}}$$
 
 > [!NOTE]
-> Hidden Bit không tồn tại trong bộ nhớ. Nó chỉ được CPU tự động thêm vào trong quá trình Decode nếu số thuộc dạng Normalized. Đối với Denormalized Number (Exponent = 00000000), Hidden Bit không còn bằng 1 nữa mà bằng 0. Điều này đã được trình bày ở chương [1.1.1.Khử chuẩn hóa số thực (Denormalized)](#111khử-chuẩn-hóa-số-thực-denormalized)
+> Hidden Bit không tồn tại trong bộ nhớ. Nó chỉ được CPU tự động thêm vào trong quá trình Decode nếu số thuộc dạng Normalized. Đối với Denormalized Number (Exponent = 00000000), Hidden Bit không còn bằng 1 nữa mà bằng 0. Điều này đã được trình bày ở chương [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized)
 
 **Trường hợp nếu actual exponent lớn hơn toán hạng trường fraction để dịch dấu chấm thì sao?**
 
@@ -650,6 +650,8 @@ như thế tính lần lượt cho hết bit 1 trong trường fraction. Dựa v
 lý do giá trị phần trị lại là $$\large2-2^{-23}$$ vì đó chỉ là phần rút gọn theo cấp số nhân của phần trị số thực thôi, điều này thường sẽ nói rất rõ bên phía toán học
 
 #### 2.4.Số thực chuẩn hóa nhỏ nhất và tính toán số thực chuẩn hóa nhỏ nhất (Smallest normalized)
+
+Số thực chuẩn hóa nhỏ nhất (Smallest Normalized) là số thực dương nhỏ nhất vẫn còn thuộc miền Normalized, nghĩa là trường Exponent không bằng toàn bit 0.
 
 #### 2.5.Số thực khử chuẩn hóa nhỏ nhất và tính toán số thực khử chuẩn hóa nhỏ nhất (Smallest subnormal)
 
@@ -969,7 +971,7 @@ các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nế
 <details>
 	<summary>Vì sao không thể quan sát Guard, Round và Sticky bit trên một biến float?</summary>
 
-**Ý tưởng:** dùng số thực vô hạn để tạo ra hiệu ứng rounding của hệ thống, và tính toán lại để so sánh chế độ làm tròn round to nearest, ties to even xem có đúng như ban đầu không đồng thời truy tìm các bit bị cắt có thể là tầm 5 bit vì 2 bit cho G, R và 3 bit cho S. Ở đây, ta nhắm tới fraction và dùng float 32bit và fraction trong architecture này là 23bit bảng toán hạng được phân cho từng trường có tại chương [1.3.1.Độ lệch (Bias)](#131độ-lệch-bias)
+**Ý tưởng:** dùng số thực vô hạn để tạo ra hiệu ứng rounding của hệ thống, và tính toán lại để so sánh chế độ làm tròn round to nearest, ties to even xem có đúng như ban đầu không đồng thời truy tìm các bit bị cắt có thể là tầm 5 bit vì 2 bit cho G, R và 3 bit cho S. Ở đây, ta nhắm tới fraction và dùng float 32bit và fraction trong architecture này là 23bit bảng toán hạng được phân cho từng trường có tại chương [1.8.1.Độ lệch (Bias)](#181độ-lệch-bias)
 
 ```c
 #include <stdio.h>
