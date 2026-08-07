@@ -72,6 +72,8 @@
 
     - [2.5.Số thực khử chuẩn hóa nhỏ nhất và tính toán số thực khử chuẩn hóa nhỏ nhất (Smallest subnormal)](#25số-thực-khử-chuẩn-hóa-nhỏ-nhất-và-tính-toán-số-thực-khử-chuẩn-hóa-nhỏ-nhất-smallest-subnormal)
 
+    - [2.6.Số thực lớn nhất trong miền khử chuẩn hóa (Largest subnormal)](#26số-thực-lớn-nhất-trong-miền-khử-chuẩn-hóa-largest-subnormal)
+
 - [3.Rounding tổng quan và các chế độ làm tròn](#3rounding-tổng-quan-và-các-chế-độ-làm-tròn)
 
     - [3.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#31biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn)
@@ -666,6 +668,58 @@ do `exponent field = 1` nên ta có `actual exponent = 1 - 127 = -126` đồng t
 > đối với số thực chuẩn hóa nhỏ nhất, trường sign và trường fraction luôn là `0`. Chỉ có trường exponent luôn có giá trị là `1` đối với số chuẩn hóa nhỏ nhất như trên bảng, nếu thay đổi một trong ba trường thì sẽ ko phải là số nhỏ nhất nữa
 
 #### 2.5.Số thực khử chuẩn hóa nhỏ nhất và tính toán số thực khử chuẩn hóa nhỏ nhất (Smallest subnormal)
+
+Số thực khử chuẩn hóa nhỏ nhất (Smallest subnormal) là số thực dương nhỏ nhất mà IEEE 754 còn biểu diễn được trước khi giá trị trở thành 0. Đây là giá trị nhỏ nhất trong toàn bộ tập số thực IEEE 754 (không tính số 0).
+
+Đối với số khử chuẩn hóa, trường exponent luôn bằng toàn bit 0 và Hidden Bit không còn bằng 1 mà bằng 0. Để tạo ra giá trị nhỏ nhất khác 0 thì trường fraction chỉ được phép có đúng một bit 1 ở vị trí cuối cùng. **Ví dụ** với kiểu `float` ta có :
+
+| sign | exponent | fraction                |
+| ---- | -------- | ----------------------- |
+| 0    | 00000000 | 00000000000000000000001 |
+
+> để ý là với số thực khử chuẩn hóa nhỏ nhất luôn có LSB trường fraction là bit 1
+
+do `exponent field = 0` nên `hidden bit = 0` (yes sir, vì vốn dĩ khử chuẩn hóa đã hidden bit là 0 rồi nó được đề cập tại chương [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized)) và `actual exponent = 1 - 127 = -126` (vì khử chuẩn hóa là $$\large2^{1 - bias}$$) thì ta có phần trị (significand) là $$\large0.00000000000000000000001_{2}$$ do đó $$\large2^{-23}\times2^{-126} = \boxed{2^{-149}}$$
+
+> giá trị `-23` là bao quát hết fraction của `float` còn nếu muốn lý do vì sao nó lại là số âm thì mở phần details
+
+<details>
+	<summary>vì sao lại là -23 (lại là số âm)?</summary>
+
+Ko có gì cao siêu, chỉ là phép tính decode bit fraction ở chương [2.2.5.Áp dụng Sign](#225áp-dụng-sign) . Ở đây, lý dó `-23` là số âm vì do dịch vị trí của bit. Cho bảng sau :
+
+| Vị trí     | Giá trị   |
+| ---------- | --------- |
+| bit thứ 1  | $$\large2^{-1}$$  |
+| bit thứ 2  | $$\large2^{-2}$$  |
+| bit thứ 3  | $$\large2^{-3}$$  |
+| ...        | ...       |
+| bit thứ 23 | $$\large2^{-23}$$ |
+
+Bit 1 duy nhất nằm ở vị trí thứ 23 sau dấu chấm, nên giá trị của significand là $$\large2^{-23}$$
+
+</details>
+
+Vậy số thực khử chuẩn hóa nhỏ nhất của float là $$\large2^{-149} = \boxed{1.40129846432\times10^{-45}}$$
+
+> [!NOTE]
+> Một mẹo nhỏ là với float, số thực khử chuẩn hóa nhỏ nhất luôn bằng $$\large2^{-149}$$ hoặc cũng có thể tính bằng $$\large2^{1-\text{bias}-\text{fraction_bit}}$$ thì với float $$\large2^{1-127-23} = 2^{-149}$$ hoặc dùng phép nhân như vừa rồi
+
+> [!IMPORTANT]
+> Đối với số thực khử chuẩn hóa nhỏ nhất:
+> - Sign = 0
+> - Exponent = toàn bit 0
+> - Fraction chỉ có đúng bit cuối cùng bằng 1.
+>
+> Nếu Fraction cũng bằng toàn bit 0 thì giá trị không còn là số thực nhỏ nhất nữa mà chính là **+0**.
+
+> trả lời câu hỏi tại phần details
+
+<details>
+	<summary>vậy phép tính actual exponent = 1 - 127 = -126 là tính 1 - bias à, này là của khử chuẩn hóa mà sao trước đó tại chương chuẩn hóa lại sử dụng và chương này cũng sử dụng chung phép tính này?</summary>
+</details>
+
+#### 2.6.Số thực lớn nhất trong miền khử chuẩn hóa (Largest subnormal)
 
 ---
 
