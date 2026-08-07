@@ -651,7 +651,19 @@ lý do giá trị phần trị lại là $$\large2-2^{-23}$$ vì đó chỉ là 
 
 #### 2.4.Số thực chuẩn hóa nhỏ nhất và tính toán số thực chuẩn hóa nhỏ nhất (Smallest normalized)
 
-Số thực chuẩn hóa nhỏ nhất (Smallest Normalized) là số thực dương nhỏ nhất vẫn còn thuộc miền Normalized, nghĩa là trường Exponent không bằng toàn bit 0.
+Số thực chuẩn hóa nhỏ nhất (Smallest Normalized) là số thực dương nhỏ nhất vẫn còn thuộc miền Normalized, nghĩa là trường Exponent không bằng toàn bit 0. **Ví dụ** với `float` có `exponent = 8, fraction = 23, bias = 127` bây giờ số thực chuẩn hóa nhỏ nhất của `float` là :
+
+| sign | exponent | fraction |
+|------|----------|----------|
+| 0 | 00000001 | 000000000000000000000000 |
+
+do `exponent field = 1` nên ta có `actual exponent = 1 - 127 = -126` đồng thời fraction toàn bit 0 nên phần trị (significand) là `1.0` vậy ta có $$\large1.0_{2}\times2^{-126}$$ vậy kết quả là $$\large\boxed{1.17549435082\times10^{-38}}$$
+
+> [!NOTE]
+> một mẹo nhỏ là khi muốn biết nhanh số thực chuẩn hóa nhỏ nhất ta chỉ cần tính $$\large2^{1-bias}$$ và lấy casio bấm sẽ ra kết quả
+
+> [!IMPORTANT]
+> đối với số thực chuẩn hóa nhỏ nhất, trường sign và trường fraction luôn là `0`. Chỉ có trường exponent luôn có giá trị là `1` đối với số chuẩn hóa nhỏ nhất như trên bảng, nếu thay đổi một trong ba trường thì sẽ ko phải là số nhỏ nhất nữa
 
 #### 2.5.Số thực khử chuẩn hóa nhỏ nhất và tính toán số thực khử chuẩn hóa nhỏ nhất (Smallest subnormal)
 
