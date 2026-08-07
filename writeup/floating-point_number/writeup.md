@@ -452,6 +452,15 @@ Bây giờ để hiểu rõ hiddenbit hơn ta cho **ví dụ** $$\large1.101001_
 
 mục đích chính là tăng độ chính xác, vì khi đối với số thực đã chuẩn hóa thì hidden bit luôn là 1 và nó không bao giờ bằng 0 nếu lưu bit này sẽ lãng phí 1 bit nên IEEE quy định không lưu bit 1 đầu tiên, khi cần sử dụng thì FPU sẽ tự thêm lại. Thực chất hiddenbit không tự động là giúp số thực chính xác hơn tương đương với hơn một bit, cái làm tăng chính xác là khi đưa vào bộ nhớ hiddenbit bị loại bỏ và dùng vùng đó cho các bit có tác dụng, hidden bit chỉ phục vụ cho việc tính toán
 
+Nhưng hidden bit không phải lúc nào cũng bằng 1, nó chỉ đúng với số khi chuẩn hóa (normalized) nhưng đối với số khử chuẩn hóa (denormalized) hidden bit là 0 còn với giá trị đặc biệt như nan hay infinity thì chúng ko có hiddenbit đối với `hiddenbit = 0`, cho **ví dụ** số thực có dạng $$\large0.fraction\times2^{1-bias}$$ và `fraction = 100100... , exponent = 00000000` thì lúc này các kết quả số thực sẽ có dạng `0.100100...` chứ ko phải `1.100100...`. Đây gọi là [khử chuẩn hóa số thực (Denormalized)](#111khử-chuẩn-hóa-số-thực-denormalized) là cơ chế giúp IEEE 754 biểu diễn được các số rất nhỏ gần bằng 0 mà không bị nhảy đột ngột từ số chuẩn hóa nhỏ nhất xuống 0.
+
+| Loại số                  | Hidden Bit    |
+| ------------------------ | ------------- |
+| Normalized               | 1 (Implicit)  |
+| Denormalized (Subnormal) | 0             |
+| Infinity                 | Không sử dụng |
+| NaN                      | Không sử dụng |
+
 #### 1.3.Trường số mũ (Exponent)
 
 - Là trường biểu diễn số mũ của số thực sau khi chuẩn hóa. Số mũ được xác định bằng số lần dịch dấu chấm để đưa số về dạng $$\large1.xxxxx\times2^{N}$$, **ví dụ** $$\large101.00110_{2} = 1.0100110_{2}$$ dịch chuyển dot sang trái 2 lần số mũ = 2 (dương), $$\large0.00110_{2} = 001.00110_{2} = 1.00110_{2}$$ dịch chuyển dot sang phải 3 lần số mũ = -3 (âm), rõ hơn đã nói trước ở [1.1.Chuẩn hóa số thực](#11Chuẩn-hóa-số-thực)
