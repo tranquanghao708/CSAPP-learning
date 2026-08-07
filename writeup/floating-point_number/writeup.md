@@ -14,7 +14,7 @@
 
     - [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized)
 
-       - [1.2.2.Khi nào IEEE 754 sử dụng Normalized và Denormalized?](#122Khi-nào-ieee-754-sử-dụng-normalized-và-denormalized)
+       - [1.2.1.Khi nào IEEE 754 sử dụng Normalized và Denormalized?](#122Khi-nào-ieee-754-sử-dụng-normalized-và-denormalized)
 
     - [1.3.Vô hạn (infinity)](#13Vô-hạn-infinity)
 
@@ -28,7 +28,7 @@
 
     - [1.6.scanf và các hàm lệnh đọc khác có thể đọc các chỉ thị nan, infinity](#16scanf-và-các-hàm-lệnh-đọc-khác-có-thể-đọc-các-chỉ-thị-nan-infinity)
 
-    - [1.7.Trường Fraction (phần trị - significand)](17trường-fraction-phần-trị---significand)
+    - [1.7.Trường Fraction (phần trị - significand)](#17trường-fraction-phần-trị---significand)
 
        - [1.7.1.Hidden Bit](#171hidden-bit)
 
@@ -195,7 +195,7 @@ thì đây ko phải là parent $$\large1.0000000000_{2}\times2^{127}$$ mà là 
 >
 > Còn với Denormalized numbers, IEEE754 dùng $$\large0.xxxxx\times2^{1 - Bias}$$ nên `exponent field = 0` và hiddenbit được xem là 0. Khử chuẩn hóa được thiết kế để biểu diễn với số gần 0 nhất **tránh bị underflow** quá sớm
 
-#### 1.2.2.Khi nào IEEE 754 sử dụng Normalized và Denormalized?
+#### 1.2.1.Khi nào IEEE 754 sử dụng Normalized và Denormalized?
 
 - `Normalized` được ưu tiên khi biểu diễn số thực vì dạng này tận dụng hiddenbit, giúp tăng thêm một bit chính xác, dùng cho hầu hết các số thực 
 
@@ -1113,7 +1113,7 @@ Thực tế, FPU không đi tìm Guard, Round, Sticky trong dữ liệu đã lư
 
 #### 3.3.Round toward zero
 
-Round toward Zero (làm tròn về 0 hay còn gọi là truncation) là chế độ làm tròn trong đó phần lẻ bị loại bỏ, khiến kết quả luôn tiến gần về giá trị 0. Chế độ này không xét khoảng cách giữa hai số biểu diễn được như Round to Nearest, Ties to Even, mà chỉ đơn giản cắt bỏ phần không thể biểu diễn. **Ví dụ** :
+`Round toward Zero (làm tròn về 0 hay còn gọi là truncation)` là chế độ làm tròn trong đó phần lẻ bị loại bỏ, khiến kết quả luôn tiến gần về giá trị 0. Chế độ này không xét khoảng cách giữa hai số biểu diễn được như Round to Nearest, Ties to Even, mà chỉ đơn giản cắt bỏ phần không thể biểu diễn. **Ví dụ** :
 
 | Giá trị | Kết quả |
 |---------|---------|
@@ -1122,7 +1122,7 @@ Round toward Zero (làm tròn về 0 hay còn gọi là truncation) là chế đ
 | -3.9    | -3      |
 | -3.1    | -3      |
 
-Điểm hay bị nhầm round toward zero $$\large\neq$$ ceil và floor
+Điểm hay bị nhầm `round toward zero` $$\large\neq$$ ceil và floor
 
 > phần cho ceil và floor
 
@@ -1192,7 +1192,7 @@ Ta cho bảng so sánh như sau:
 | 3.9     |           3 |     3 |    4 |
 | -3.9    |          -3 |    -4 |   -3 |
 
-đối với số âm thì sự khác biệt khá rõ, floor luôn đi về phía âm vô cực ($$\large-\infty$$) còn round toward zero luôn đi về 0. **Ví dụ** ta cho `-3.8` thì :
+đối với số âm thì sự khác biệt khá rõ, floor luôn đi về phía âm vô cực ($$\large-\infty$$) còn `round toward zero` luôn đi về 0. **Ví dụ** ta cho `-3.8` thì :
 
 | Chế độ            | Kết quả |
 | ----------------- | ------: |
@@ -1200,21 +1200,21 @@ Ta cho bảng so sánh như sau:
 | Ceil              |      -3 |
 | Round toward Zero |      -3 |
 
-ta thấy floor luôn làm tròn về $$\large-\infty$$ và ceil luôn làm tròn về $$\large+\infty$$ và round toward zero luôn tiến về số 0
+ta thấy floor luôn làm tròn về $$\large-\infty$$ và ceil luôn làm tròn về $$\large+\infty$$ và `round toward zero` luôn tiến về số 0
 
 > [!NOTE]
-> **Lưu ý:** Đối với số dương, Round toward Zero và Floor cho cùng một kết quả. Đối với số âm, Round toward Zero và Ceil cho cùng một kết quả. Sự khác biệt chỉ xuất hiện khi số có phần lẻ.
+> **Lưu ý:** Đối với số dương, `Round toward Zero` và Floor cho cùng một kết quả. Đối với số âm, `Round toward Zero` và `Ceil` cho cùng một kết quả. Sự khác biệt chỉ xuất hiện khi số có phần lẻ.
 
-Do đó, về cơ bản chương round toward zero này chỉ có vậy. Nếu chế độ làm tròn này được bật thì FPU ko cần phải xét GRS vì đó thuộc round to nearest tie to even
+Do đó, về cơ bản chương `round toward zero` này chỉ có vậy. Nếu chế độ làm tròn này được bật thì FPU ko cần phải xét GRS vì đó thuộc round to nearest tie to even
 
 <details>
 	<summary>liệu round toward zero và (int)x.x có phải là một ko?</summary>
 
-Gần giống, nhưng chúng ko cùng một khái niệm. Trong nhiều ví dụ thì chế độ round toward zero cho kết quả khá tương đương với `(int)x.x` nhưng về bản chất thì `(int)x.x` là chỉ ép kiểu sang phần nguyên bỏ phần lẻ, điều này giống với hành vi của round toward zero. Nhưng có hai đặc điểm để chứng minh hai cái này khác: 
+Gần giống, nhưng chúng ko cùng một khái niệm. Trong nhiều ví dụ thì chế độ `round toward zero` cho kết quả khá tương đương với `(int)x.x` nhưng về bản chất thì `(int)x.x` là chỉ ép kiểu sang phần nguyên bỏ phần lẻ, điều này giống với hành vi của `round toward zero`. Nhưng có hai đặc điểm để chứng minh hai cái này khác: 
 
-**đặc điểm thứ nhất:** là kết quả của `(int)x.x` nó là số nguyên nó bỏ phần số thực đi suy ra `3.3 = 3`, còn round toward zero cũng có kết quả giá trị nhưng nó biểu diễn dạng số thực `3.3 = 3.0` và `3.0` cùng giá trị với `3` nhưng khác cách trình bày
+**đặc điểm thứ nhất:** là kết quả của `(int)x.x` nó là số nguyên nó bỏ phần số thực đi suy ra `3.3 = 3`, còn `round toward zero` cũng có kết quả giá trị nhưng nó biểu diễn dạng số thực `3.3 = 3.0` và `3.0` cùng giá trị với `3` nhưng khác cách trình bày
 
-**đặc điểm thứ hai:** `(int)x.x` là chuyển đổi kiểu dữ liệu từ số thực sang số nguyên theo quy tắc của ngôn ngữ C. Round toward Zero là một chế độ làm tròn của IEEE 754 dùng cho các phép toán dấu phẩy động.
+**đặc điểm thứ hai:** `(int)x.x` là chuyển đổi kiểu dữ liệu từ số thực sang số nguyên theo quy tắc của ngôn ngữ C. `Round toward Zero` là một chế độ làm tròn của IEEE 754 dùng cho các phép toán dấu phẩy động.
 
 Nên nhiều ví dụ thấy chúng gần như tương đồng nhau nhưng chúng ko nằm chung một khái niệm
 
@@ -1222,9 +1222,9 @@ Nên nhiều ví dụ thấy chúng gần như tương đồng nhau nhưng chún
 
 #### 3.3.1.biểu diễn làm tròn trên hệ nhị phân
 
-Để hiểu sâu hơn chúng ta cần phải hiểu rõ là round toward zero nó tác động lên bit nhị phân như thế nào đã, ở phần chương vừa rồi ta có lập bảng so sánh ở hệ cơ số 10, nhưng bây giờ ta cần phải xem thêm nó tác động tới hệ cơ số 2 như thế nào ở phần tính toán thủ công và minh họa với C. Bây giờ **ví dụ** chỉ cho phép 4bit fraction để dễ quan sát, kết quả trung gian là `1.101011100...` trong đó nó giữ lại `1.1010` và bit bị cắt là `11100...`
+Để hiểu sâu hơn chúng ta cần phải hiểu rõ là `round toward zero` nó tác động lên bit nhị phân như thế nào đã, ở phần chương vừa rồi ta có lập bảng so sánh ở hệ cơ số 10, nhưng bây giờ ta cần phải xem thêm nó tác động tới hệ cơ số 2 như thế nào ở phần tính toán thủ công và minh họa với C. Bây giờ **ví dụ** chỉ cho phép 4bit fraction để dễ quan sát, kết quả trung gian là `1.101011100...` trong đó nó giữ lại `1.1010` và bit bị cắt là `11100...`
 
-round toward zero nó ko quan tâm bit bị bỏ là gì, ko xét GRS hay đi tính một nữa khoảng cách biểu diễn được (half ULP) như round to nearest tie to even cần, nó chỉ biết `1.1010` là xong, suy ra kết quả :
+`round toward zero` nó ko quan tâm bit bị bỏ là gì, ko xét GRS hay đi tính một nữa khoảng cách biểu diễn được (half ULP) như round to nearest tie to even cần, nó chỉ biết `1.1010` là xong, suy ra kết quả :
 
 $$
 \large1.101011100..._{2} \xrightarrow{\text{round toward zero}} \boxed{1.1010_{2}}
@@ -1275,7 +1275,7 @@ int main(void){
 
 ![alt text](image/image23.png)
 
-ta thấy `0.09999999999999999167` và `7.47999999999999953814`, đây chính là kết quả được làm tròn bởi round toward zero.
+ta thấy `0.09999999999999999167` và `7.47999999999999953814`, đây chính là kết quả được làm tròn bởi `round toward zero`.
 
 <details>
 	<summary>Liệu sau khi chuyển chế độ sang round toward zero, thì FPU có thực hiện round to nearest tie to even khi gán số thực vào biến ko?</summary>
@@ -1284,7 +1284,7 @@ có thể có hoặc không, tùy thời điểm phép làm tròn diễn ra. Tr�
 
 Để biểu diễn chính xác thì phải cần biết nó có phải số hữu hạn hay vô hạn. Về cơ bản thì nếu việc gán vào cho biến kiểu số thực là số vô hạn thì nó vẫn rounding theo round to nearest tie to even như thường, vì nó xảy ra trước rồi và nó đã hardcode trong file nhị phân (file thực thi sau khi biên dịch) rồi
 
-Còn về trường hợp các phép tính sau này về số thực đó thì đúng, nó dùng round toward zero như đã được thiết lập vì đây là lúc FPU sử dụng các lệnh tính toán số thực và kết quả của các lệnh này mới chịu ảnh hưởng bởi rounding mode hiện tại. Nêu thiết lập chế độ làm tròn nào thì kết quả sẽ tuân theo chế độ đó 
+Còn về trường hợp các phép tính sau này về số thực đó thì đúng, nó dùng `round toward zero` như đã được thiết lập vì đây là lúc FPU sử dụng các lệnh tính toán số thực và kết quả của các lệnh này mới chịu ảnh hưởng bởi rounding mode hiện tại. Nêu thiết lập chế độ làm tròn nào thì kết quả sẽ tuân theo chế độ đó 
 
 Còn về trường hợp dùng định dạng chuỗi chuyển sang số thực nghĩa là từ `"2.2"` thành `2.2` lúc này các thư viện C sẽ chuyển thành số thực, và việc chuyển đổi này có thể chịu ảnh hưởng của rounding mode, tùy cách hiện thực của libc và chuẩn mà thư viện tuân theo.
 
@@ -1294,7 +1294,7 @@ Còn về trường hợp dùng định dạng chuỗi chuyển sang số thực
 
 </details>
 
-Để biết được là `0.09999999999999999167` và `7.47999999999999953814` có phải là kết quả của round toward zero hay không thì trước hết phải biết các số thực được gán vào biến trong mã nguồn thuộc số thực vô hạn tuần hoàn hay hữu hạn. Bây giờ để có số liệu thì chúng ta lấy hai cái này đi encode sang nhị phân trước, encode giúp xác định chuỗi bit trước khi lưu vào IEEE 754, từ đó biết liệu giá trị toán học có biểu diễn hữu hạn hay vô hạn trong hệ nhị phân và hiểu vì sao FPU phải thực hiện làm tròn , với `0.09999999999999999167` ta có :
+Để biết được là `0.09999999999999999167` và `7.47999999999999953814` có phải là kết quả của `round toward zero` hay không thì trước hết phải biết các số thực được gán vào biến trong mã nguồn thuộc số thực vô hạn tuần hoàn hay hữu hạn. Bây giờ để có số liệu thì chúng ta lấy hai cái này đi encode sang nhị phân trước, encode giúp xác định chuỗi bit trước khi lưu vào IEEE 754, từ đó biết liệu giá trị toán học có biểu diễn hữu hạn hay vô hạn trong hệ nhị phân và hiểu vì sao FPU phải thực hiện làm tròn , với `0.09999999999999999167` ta có :
 
 biết sign và phần nguyên có bit là `0` vậy nên ta chỉ cần nhân đôi thôi 
 
@@ -1349,17 +1349,17 @@ $$
 
 suy ra `actual exponent = -1` ta tính `exponent field = -1 + 1023 = 1022` ta đổi $$\large1022_{10} = 01111111110_{2}$$ ta ráp lại thành $$\large\boxed{11101111111110111101001100001010001..010011_{2}}$$ ta thấy khi tính toán thì đoạn nhị phân này biểu diễn số thực vô hạn và có phần bị cắt là `00001010001`
 
-**Vậy suy ra:** khai triển nhị phân của hai giá trị toán học `0.09999999999999999167` và `7.47999999999999953814` đều là chuỗi vô hạn tuần hoàn, nên không thể lưu chính xác trong định dạng IEEE 754 double. Trong quá trình biên dịch, compiler sẽ chuyển các hằng số dấu phẩy động này sang mẫu bit IEEE 754 gần nhất (thông thường theo quy tắc round to nearest, ties to even) rồi ghi trực tiếp mẫu bit đó vào file thực thi. Vì vậy, khi chương trình chạy, việc gán các hằng số này vào biến không chịu ảnh hưởng của `fesetround()`. Chỉ các phép toán dấu phẩy động được thực hiện trong runtime mới sử dụng rounding mode hiện hành.
+**Vậy suy ra:** khai triển nhị phân của hai giá trị toán học `0.09999999999999999167` và `7.47999999999999953814` đều là chuỗi vô hạn tuần hoàn, nên không thể lưu chính xác trong định dạng IEEE 754 double. Trong quá trình biên dịch, compiler sẽ chuyển các hằng số dấu phẩy động này sang mẫu bit IEEE 754 gần nhất (thông thường theo quy tắc `round to nearest, ties to even`) rồi ghi trực tiếp mẫu bit đó vào file thực thi. Vì vậy, khi chương trình chạy, việc gán các hằng số này vào biến không chịu ảnh hưởng của `fesetround()`. Chỉ các phép toán dấu phẩy động được thực hiện trong runtime mới sử dụng rounding mode hiện hành.
 
-Bây giờ theo tính toán để đoán ra dấu hiệu rõ của round toward zero, ta thấy các giá trị toán học khi thực hiện phép tính nó bị giảm đi một số rất nhỏ so với chuẩn toán học ban đầu. Ừm, nó không giống như rounding theo kiểu round to nearest, tie to even mà tăng lên hay giữ nguyên thay vào đó ở trường hợp này nó lại giảm xuống một chút cực kỳ nhỏ
+Bây giờ theo tính toán để đoán ra dấu hiệu rõ của `round toward zero`, ta thấy các giá trị toán học khi thực hiện phép tính nó bị giảm đi một số rất nhỏ so với chuẩn toán học ban đầu. Ừm, nó không giống như rounding theo kiểu `round to nearest, tie to even` mà tăng lên hay giữ nguyên thay vào đó ở trường hợp này nó lại giảm xuống một chút cực kỳ nhỏ
 
-suy ra chế độ làm tròn round toward zero khả năng cao đã hoạt động. Ta có thể dùng casio để biết rằng $$\large\frac{1.0}{10.0} = 0.1_{10}$$ , nếu là round to nearest, tie to even nó được giữ nguyên với giá trị `7.47999999999999953814` và `0.09999999999999999167` do `Guardbit = 0` nhưng ở đây nó lại giảm xuống suy ra có dấu hiệu chỉ giữ bit và bỏ luôn bit bị cắt đúng như lý thuyết vừa rồi. Nếu giữ nguyên thì vẫn là giá trị cao hơn so với giá trị này hay làm tròn 
+suy ra chế độ làm tròn `round toward zero` khả năng cao đã hoạt động. Ta có thể dùng casio để biết rằng $$\large\frac{1.0}{10.0} = 0.1_{10}$$ , nếu là `round to nearest, tie to even` nó được giữ nguyên với giá trị `7.47999999999999953814` và `0.09999999999999999167` do `Guardbit = 0` nhưng ở đây nó lại giảm xuống suy ra có dấu hiệu chỉ giữ bit và bỏ luôn bit bị cắt đúng như lý thuyết vừa rồi. Nếu giữ nguyên thì vẫn là giá trị cao hơn so với giá trị này hay làm tròn 
 
-nhưng về kỹ thuật chúng ta ko thể kết luận chính xác tuyệt đối được vì round to nearest, tie to even ko chỉ là tăng lên hay giữ nguyên, nó có thể tăng, giảm, giữ nguyên cả ba trường hợp tùy thuộc vào GRS có trong bit. Nhưng chắc chắn hai bit này nếu là round to nearest, tie to even thì sẽ giữ nguyên vì cả hai có guard bit là 0
+nhưng về kỹ thuật chúng ta ko thể kết luận chính xác tuyệt đối được vì `round to nearest, tie to even` ko chỉ là tăng lên hay giữ nguyên, nó có thể tăng, giảm, giữ nguyên cả ba trường hợp tùy thuộc vào GRS có trong bit. Nhưng chắc chắn hai bit này nếu là `round to nearest, tie to even` thì sẽ giữ nguyên vì cả hai có guard bit là 0
 
 **Nếu round to nearest mà nó nhỏ hơn half ULP thì nó giữ nguyên vậy chả khác gì hệ thống đã lấy bit bị cắt bỏ rồi và nó có hành vi giống round toward zero là lấy phần bit theo toán hạng fraction à?**
 
-Trong trường hợp phần bị cắt nhỏ hơn ví dụ 0.5 ULP thì kết quả của Round to Nearest, Ties to Even và Round Toward Zero hoàn toàn có thể giống hệt nhau. Nhưng không đồng nghĩa hai thuật toán của chung tương đồng nhau, điều này khá hiếm có thể xảy ra ta có bảng so sánh :
+Trong trường hợp phần bị cắt nhỏ hơn ví dụ 0.5 ULP thì kết quả của `Round to Nearest, Ties to Even` và `Round Toward Zero` hoàn toàn có thể giống hệt nhau. Nhưng không đồng nghĩa hai thuật toán của chung tương đồng nhau, điều này khá hiếm có thể xảy ra ta có bảng so sánh :
 
 | discarded part | Round-to-nearest      | Toward zero |
 | -------------- | --------------------- | ----------- |
