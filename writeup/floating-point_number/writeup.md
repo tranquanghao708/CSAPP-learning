@@ -66,7 +66,7 @@
 
        - [2.2.5.Áp dụng Sign](#225áp-dụng-sign)
 
-       - 2.2.6.Phân biệt giữa exponent để tính trọng số bit fraction và exponent biểu thị cho dịch dấu chấm
+       - [2.2.6.Phân biệt giữa exponent để tính trọng số bit fraction và exponent biểu thị cho dịch dấu chấm](#226phân-biệt-giữa-exponent-để-tính-trọng-số-bit-fraction-và-exponent-biểu-thị-cho-dịch-dấu-chấm)
 
     - [2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)](#23số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất-largest-finite)
 
@@ -633,6 +633,10 @@ ta tiến hành tính tổng giá trị lại $$\large0.5 + 0.25 + 0.03125 = 0.7
 > [!IMPORTANT]
 > Ta thấy nó bị chênh lệch số thực, số lúc đầu là `29.81` nhưng sau khi encode và decode ra kết quả lại là `29.78125`. Lý do là vì quá trình chuyển phần thập phân bị cắt sớm và làm tròn theo giới hạn 23 bit fraction hay giới hạn bit fraction theo toán hạng của IEEE 754 single precision
 
+#### 2.2.6.Phân biệt giữa exponent để tính trọng số bit fraction và exponent biểu thị cho dịch dấu chấm
+
+Đây là phần cực kỳ dễ bị nhầm, ta cần phân biệt và hiểu rõ số mũ dùng để xét trọng số, vị trí bit và số mũ dùng để biểu diễn số lần dịch chuyển của dấu chấm trong decode số thực nhị phân
+
 #### 2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)
 
 hay còn gọi là số thực hữu hạn lớn nhất, đối với float 32 bit chúng thường có dạng :
@@ -744,9 +748,10 @@ Nếu IEEE dùng `actual exponent = 0 - 127 = -127` đối với khử chuẩn h
  - `1 - 127 = -126` cũng xuất hiện ở mọi subnormal vì chuẩn IEEE quy định cố định như vậy.
 
 **Hai phép tính cho ra cùng kết quả -126, nhưng nguồn gốc khác nhau:**
- - Normalized: do áp dụng công thức E - Bias với E = 1.
 
- - Subnormal: do IEEE định nghĩa đặc biệt là 1 - Bias, không lấy E = 0 - Bias
+ - Normalized: do áp dụng công thức `E - Bias` với `E = 1`.
+
+ - Subnormal: do IEEE định nghĩa đặc biệt là `1 - Bias`, không lấy `E = 0 - Bias`
 
 </details>
 
