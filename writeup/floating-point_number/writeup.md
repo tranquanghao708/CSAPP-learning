@@ -730,6 +730,21 @@ nhưng vẫn là một phép tính mà khử chuẩn hóa (denormalized) vẫn s
 
 Mục đích là để miền subnormal nối liên tục với miền normalized. **Ví dụ** với kiểu `float`  giả sử Smallest normalized ta có `exponent = 00000001, fraction = 000...` và giá trị của nó là $$\large1.0_{2}\times2^{-126}$$ và actual exponent là kết quả của phép tính `e - bias` trên. Còn đối với subnormal ta có `exponent = 00000000, fraction = 111...` và giá trị của nó là $$\large0.11111_{2} \times 2^{-126}$$ do với khử chuẩn hóa hiddenbit là 0 và nó chỉ nhỏ hơn một chút so với $$\large1.00000_{2} \times 2^{-126}$$ ta thấy hai miền nối sát nhau
 
+Nếu IEEE dùng `actual exponent = 0 - 127 = -127` đối với khử chuẩn hóa thì số lớn nhất sẽ là $$\large0.11111_{2} \times 2^{-127}$$ nó nhỏ hơn đúng một nữa .Lúc đó sẽ xuất hiện một khoảng trống lớn giữa normalized và subnormal. IEEE 754 được thiết kế để không có khoảng trống này
+
+| Loại số    | Điều kiện           | Actual exponent |
+| ---------- | ------------------- | --------------- |
+| Normalized | `Exponent = 1..254` | `E - Bias`      |
+| Subnormal  | `Exponent = 0`      | `1 - Bias`      |
+
+> [!IMPORTANT]
+> - `1 - 127 = -126` xuất hiện ở normalized nhỏ nhất vì `E = 1`.
+> - `1 - 127 = -126` cũng xuất hiện ở mọi subnormal vì chuẩn IEEE quy định cố định như vậy.
+>
+> **Hai phép tính cho ra cùng kết quả -126, nhưng nguồn gốc khác nhau:**
+> - Normalized: do áp dụng công thức E - Bias với E = 1.
+> - Subnormal: do IEEE định nghĩa đặc biệt là 1 - Bias, không lấy E = 0 - Bias
+
 </details>
 
 #### 2.6.Số thực lớn nhất trong miền khử chuẩn hóa (Largest subnormal)
