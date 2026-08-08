@@ -643,6 +643,18 @@ $$
 
 **Ở đây :** `-126` là actual exponent của toàn bộ số thực và nó quyết định dấu chấm nhị phân được dịch bao nhiêu vị trí. Nó không phải là exponent riêng của từng bit fraction. Sau khi khai triển ta có $$\large1.1011_{2} \times 2^{-126}$$ hay $$\large2^{-126} + 2^{-127} + 2^{-128} + 2^{-129} + 2^{-130}$$ và lúc này các số mũ `-126,-127,-129,-130` là trọng số của từng bit.
 
+Bây giờ đầu tiên đối với Actual exponent — exponent biểu thị cho dịch dấu chấm, đối với số thực chuẩn hóa nó luôn có dạng $$\large1.x \times 2^{E}$$ trong đó E là actual exponent và giá trị này quyết định vị trí dấu chấm nhị phân. **Ví dụ** : 
+
+$$\large
+1.1011_{2} \times 2^{-126}
+$$
+
+nó có `E = -126` vậy vị trí của dấu chám nhị phân sẽ được dịch trái 126 lần bởi vì đây là decode là ngược lại số âm là dịch trái số dương là dịch phải, còn với encode chuẩn hóa thì số âm là dịch phải số dương là dịch trái vậy ta có 
+
+$$\large
+1.1011_{2}​\times2^{126} = 0.000…00011011_{2}
+$$
+
 #### 2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)
 
 hay còn gọi là số thực hữu hạn lớn nhất, đối với float 32 bit chúng thường có dạng :
