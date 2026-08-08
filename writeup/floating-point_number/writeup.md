@@ -643,7 +643,9 @@ $$
 
 **Ở đây :** `-126` là actual exponent của toàn bộ số thực và nó quyết định dấu chấm nhị phân được dịch bao nhiêu vị trí. Nó không phải là exponent riêng của từng bit fraction. Sau khi khai triển ta có $$\large1.1011_{2} \times 2^{-126}$$ hay $$\large2^{-126} + 2^{-127} + 2^{-128} + 2^{-129} + 2^{-130}$$ và lúc này các số mũ `-126,-127,-129,-130` là trọng số của từng bit.
 
-Bây giờ đầu tiên đối với Actual exponent — exponent biểu thị cho dịch dấu chấm, đối với số thực chuẩn hóa nó luôn có dạng $$\large1.x \times 2^{E}$$ trong đó E là actual exponent và giá trị này quyết định vị trí dấu chấm nhị phân. **Ví dụ** : 
+**Bây giờ đầu tiên đối với Actual exponent — exponent biểu thị cho dịch dấu chấm**
+
+đối với số thực chuẩn hóa nó luôn có dạng $$\large1.x \times 2^{E}$$ trong đó E là actual exponent và giá trị này quyết định vị trí dấu chấm nhị phân. **Ví dụ** : 
 
 $$\large
 1.1011_{2} \times 2^{-126}
@@ -652,8 +654,28 @@ $$
 nó có `E = -126` vậy vị trí của dấu chám nhị phân sẽ được dịch trái 126 lần bởi vì đây là decode là ngược lại số âm là dịch trái số dương là dịch phải, còn với encode chuẩn hóa thì số âm là dịch phải số dương là dịch trái vậy ta có 
 
 $$\large
-1.1011_{2}​\times2^{126} = 0.000…00011011_{2}
+1.1011_{2}​\times2^{-126} = 0.000…00011011_{2}
 $$
+
+Còn nếu trường hợp mà E là dương thì chúng ta dịch phải ví dụ :
+
+$$\large
+1.1011_{2}​\times2^{3} = 1101.1_{2}
+$$
+
+**Tiếp theo đối với exponent của trọng số bit**
+
+Sau khi có actual exponent ở trên rồi, thì chúng ta mới tính exponent của trọng số bit và mỗi bit trong significand sẽ có trọng số riêng với $\large1.1011_{2}​\times2^{-126}$$ ta có :
+
+| Bit              | Vị trí |   Trọng số |
+| ---------------- | -----: | ---------: |
+| hidden bit `1`   |      0 | $$2^{-126}$$ |
+| fraction bit `1` |      1 | $$2^{-127}$$ |
+| fraction bit `0` |      2 | $$2^{-128}$$ |
+| fraction bit `1` |      3 | $$2^{-129}$$ |
+| fraction bit `1` |      4 | $$2^{-130}$$ |
+
+Do đó $\large1.1011_{2}​\times2^{-126} = 1\times2^{-126} + 1\times2^{-127} + 1\times2^{-129} + 1\times2^{-130}$$ điểm quan trọng là $$\large-126 \neq -127 \neq -128 \neq -129 \neq -130$$ nhưng tất cả chúng đều được suy ra từ `actual exponent = -126`
 
 #### 2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)
 
