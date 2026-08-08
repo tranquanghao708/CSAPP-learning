@@ -669,13 +669,24 @@ Sau khi có actual exponent ở trên rồi, thì chúng ta mới tính exponent
 
 | Bit              | Vị trí |   Trọng số |
 | ---------------- | -----: | ---------: |
-| hidden bit `1`   |      0 | $$2^{-126}$$ |
-| fraction bit `1` |      1 | $$2^{-127}$$ |
-| fraction bit `0` |      2 | $$2^{-128}$$ |
-| fraction bit `1` |      3 | $$2^{-129}$$ |
-| fraction bit `1` |      4 | $$2^{-130}$$ |
+| hidden bit `1`   |      0 | $$\large2^{-126}$$ |
+| fraction bit `1` |      1 | $$\large2^{-127}$$ |
+| fraction bit `0` |      2 | $$\large2^{-128}$$ |
+| fraction bit `1` |      3 | $$\large2^{-129}$$ |
+| fraction bit `1` |      4 | $$\large2^{-130}$$ |
 
-Do đó $\large1.1011_{2}​\times2^{-126} = 1\times2^{-126} + 1\times2^{-127} + 1\times2^{-129} + 1\times2^{-130}$$ điểm quan trọng là $$\large-126 \neq -127 \neq -128 \neq -129 \neq -130$$ nhưng tất cả chúng đều được suy ra từ `actual exponent = -126`
+Do đó $$\large1.1011_{2}​\times2^{-126} = 1\times2^{-126} + 1\times2^{-127} + 1\times2^{-129} + 1\times2^{-130}$$ điểm quan trọng là $$\large-126 \neq -127 \neq -128 \neq -129 \neq -130$$ nhưng tất cả chúng đều được suy ra từ `actual exponent = -126`
+
+**Tại sao dù biết là exponent dịch dấu chấm là dương, âm để dịch trái,phải dấu chấm, nhưng sao tính exponent trọng số lại phải dùng số âm?**
+
+Điều quan trọng là fraction bản thân nó hoàn toàn không âm. Dấu âm nằm ở trọng số như $$\large0.11111_{2} \times 2^{-126}$$ sẽ trở thành $$\large1 \times 2^{-126} + 1 \times 2^{-127} + 1 \times 2^{-128} + 1 \times 2^{-129} + 1 \times 2^{-130}$$ . Các số mũ âm chỉ có nghĩa là các trọng số nằm sau dấu chấm và rất nhỏ.
+
+> [!IMPORTANT]
+> actual exponent quyết định vị trí dấu chấm nhị phân và actual exponent của trọng số bit ko chung một khái niệm chúng khác nhau nhưng dễ bị nhầm lẫn nhất.
+>
+> Về encode, actual exponent (E) quyết định vị trí dịch dấu chấm sang trái là số mũ dương và dịch dấu chấm sang phải là số mũ âm
+>
+> Nhưng đối với decode, actual exponent (E) quyết định vị trí dịch dấu chấm theo hướng ngược lại và tiếp tục tới phần exponent của trọng số bit. Nghĩa là dịch dấu chấm trước sau đó mới tính trọng số của fraction sau với số mũ âm
 
 #### 2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)
 
