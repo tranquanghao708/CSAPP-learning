@@ -66,6 +66,8 @@
 
        - [2.2.5.Áp dụng Sign](#225áp-dụng-sign)
 
+       - 2.2.6.Phân biệt giữa exponent để tính trọng số bit fraction và exponent biểu thị cho dịch dấu chấm
+
     - [2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)](#23số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất-largest-finite)
 
     - [2.4.Số thực chuẩn hóa nhỏ nhất và tính toán số thực chuẩn hóa nhỏ nhất (Smallest normalized)](#24số-thực-chuẩn-hóa-nhỏ-nhất-và-tính-toán-số-thực-chuẩn-hóa-nhỏ-nhất-smallest-normalized)
@@ -726,7 +728,7 @@ nhưng vẫn là một phép tính mà khử chuẩn hóa (denormalized) vẫn s
 
 **Tại sao lại dùng 1 − Bias?**
 
-Mục đích là để miền subnormal nối liên tục với miền normalized.
+Mục đích là để miền subnormal nối liên tục với miền normalized. **Ví dụ** với kiểu `float`  giả sử Smallest normalized ta có `exponent = 00000001, fraction = 000...` và giá trị của nó là $$\large1.0_{2}\times2^{-126}$$ và actual exponent là kết quả của phép tính `e - bias` trên. Còn đối với subnormal ta có `exponent = 00000000, fraction = 111...` và giá trị của nó là $$\large0.1111..._{2}\times2^{-126}$$ do với khử chuẩn hóa hiddenbit là 0 và nó chỉ nhỏ hơn một chút so với $$\large1.00000..._{2}\times2^{-126}$$ ta thấy hai miền nối sát nhau
 
 </details>
 
