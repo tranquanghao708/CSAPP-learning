@@ -635,7 +635,13 @@ ta tiến hành tính tổng giá trị lại $$\large0.5 + 0.25 + 0.03125 = 0.7
 
 #### 2.2.6.Phân biệt giữa exponent để tính trọng số bit fraction và exponent biểu thị cho dịch dấu chấm
 
-Đây là phần cực kỳ dễ bị nhầm, ta cần phân biệt và hiểu rõ số mũ dùng để xét trọng số, vị trí bit và số mũ dùng để biểu diễn số lần dịch chuyển của dấu chấm trong decode số thực nhị phân
+Đây là phần cực kỳ dễ bị nhầm, ta cần phân biệt và hiểu rõ số mũ dùng để xét trọng số, vị trí bit và số mũ dùng để biểu diễn số lần dịch chuyển của dấu chấm trong decode số thực nhị phân. Hai khái niệm này có liên quan với nhau nhưng không phải là một. Nếu không phân biệt, đặc biệt khi xử lý số khử chuẩn hóa (subnormal), rất dễ hiểu sai tại sao các bit fraction lại có trọng số như $$\large2^{-127}$$ , $$\large2^{-128}$$ , ... mặc dù actual exponent của subnormal vẫn là `-126` đối với `binary32`. **Ví dụ** ta xét:
+
+$$\large
+1.1011_{2} \times 2^{-126}
+$$
+
+**Ở đây :** `-126` là actual exponent của toàn bộ số thực và nó quyết định dấu chấm nhị phân được dịch bao nhiêu vị trí. Nó không phải là exponent riêng của từng bit fraction. Sau khi khai triển ta có $$\large1.1011_{2} \times 2^{-126}$$ hay $$\large2^{-126} + 2^{-127} + 2^{-128} + 2^{-129} + 2^{-130}$$ và lúc này các số mũ `-126,-127,-129,-130` là trọng số của từng bit.
 
 #### 2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)
 
