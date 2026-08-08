@@ -737,17 +737,16 @@ Nếu IEEE dùng `actual exponent = 0 - 127 = -127` đối với khử chuẩn h
 | Normalized | `Exponent = 1..254` | `E - Bias`      |
 | Subnormal  | `Exponent = 0`      | `1 - Bias`      |
 
-<br>
+**Quan trọng :**
 
-> [!IMPORTANT]
-> - `1 - 127 = -126` xuất hiện ở normalized nhỏ nhất vì `E = 1`.
-> - `1 - 127 = -126` cũng xuất hiện ở mọi subnormal vì chuẩn IEEE quy định cố định như vậy.
->
-> **Hai phép tính cho ra cùng kết quả -126, nhưng nguồn gốc khác nhau:**
-> - Normalized: do áp dụng công thức E - Bias với E = 1.
-> - Subnormal: do IEEE định nghĩa đặc biệt là 1 - Bias, không lấy E = 0 - Bias
+ - `1 - 127 = -126` xuất hiện ở normalized nhỏ nhất vì `E = 1`.
 
-<br>
+ - `1 - 127 = -126` cũng xuất hiện ở mọi subnormal vì chuẩn IEEE quy định cố định như vậy.
+
+**Hai phép tính cho ra cùng kết quả -126, nhưng nguồn gốc khác nhau:**
+ - Normalized: do áp dụng công thức E - Bias với E = 1.
+
+ - Subnormal: do IEEE định nghĩa đặc biệt là 1 - Bias, không lấy E = 0 - Bias
 
 </details>
 
