@@ -665,7 +665,7 @@ $$
 
 **Tiếp theo đối với exponent của trọng số bit**
 
-Sau khi có actual exponent ở trên rồi, thì chúng ta mới tính exponent của trọng số bit và mỗi bit trong significand sẽ có trọng số riêng với $\large1.1011_{2}​\times2^{-126}$$ ta có :
+Sau khi có actual exponent ở trên rồi, thì chúng ta mới tính exponent của trọng số bit và mỗi bit trong significand sẽ có trọng số riêng với $$\large1.1011_{2}​\times2^{-126}$$ ta có :
 
 | Bit              | Vị trí |   Trọng số |
 | ---------------- | -----: | ---------: |
@@ -683,15 +683,30 @@ $$\large
 +
 \underbrace{1\times2^{-127}}*{\text{Fraction bit 1}}
 +
-\underbrace{1\times2^{-129}}*{\text{Fraction bit 2}}
+\underbrace{1\times2^{-129}}*{\text{Fraction bit 3}}
 +
-\underbrace{1\times2^{-130}}*{\text{Fraction bit 3}}
+\underbrace{1\times2^{-130}}*{\text{Fraction bit 4}}
 $$
 
 điểm quan trọng là $$\large-126 \neq -127 \neq -128 \neq -129 \neq -130$$ (đây là các bit-weight exponents) nhưng tất cả chúng đều được suy ra từ `actual exponent = -126`
 
+> Phần giải thích bit-weight exponents
+
 <details>
-	<summary>bit-weight exponents</summary>
+	<summary>bit-weight exponents là gì?</summary>
+
+hiểu đơn giản là số mũ nằm trên trọng số của một bit cụ thể. Nó không phải một trường riêng trong IEEE 754, cũng không phải một giá trị được lưu trong Exponent field. Đây chỉ là cách gọi để phân tích toán học. **Ví dụ** cho $$\large1.1011_{2}$$ ta xét :
+
+| Bit | Vị trí | Trọng số | Bit-weight exponent |
+| --- | -----: | -------: | ------------------: |
+| `1` |      0 |    $\large2^0$ |     $\large0$ |
+| `1` |      1 | $\large2^{-1}$ |    $\large-1$ |
+| `0` |      2 | $\large2^{-2}$ |    $\large-2$ |
+| `1` |      3 | $\large2^{-3}$ |    $\large-3$ |
+| `1` |      4 | $\large2^{-4}$ |    $\large-4$ |
+
+Nên ta có : $$\large1.1011_{2} = 1 \times 2^{0} + 1 \times 2^{-1} + 0 \times 2^{-2} + 1 \times 2^{-3} + 1 \times 2^{-4}$$ .Ở đây các số mũ  `0, -1, -2, -3, -4` chính là `bit-weight exponents`. Và công thức tổng quan của nó là $$\large W_{i} = 2^{E-i}$$
+
 </details>
 
 **Tại sao dù biết là exponent dịch dấu chấm là dương, âm để dịch trái,phải dấu chấm, nhưng sao tính exponent trọng số lại phải dùng số âm?**
