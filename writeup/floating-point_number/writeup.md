@@ -688,7 +688,11 @@ $$\large
 \underbrace{1\times2^{-130}}*{\text{Fraction bit 3}}
 $$
 
-điểm quan trọng là $$\large-126 \neq -127 \neq -128 \neq -129 \neq -130$$ nhưng tất cả chúng đều được suy ra từ `actual exponent = -126`
+điểm quan trọng là $$\large-126 \neq -127 \neq -128 \neq -129 \neq -130$$ (đây là các bit-weight exponents) nhưng tất cả chúng đều được suy ra từ `actual exponent = -126`
+
+<details>
+	<summary>bit-weight exponents</summary>
+</details>
 
 **Tại sao dù biết là exponent dịch dấu chấm là dương, âm để dịch trái,phải dấu chấm, nhưng sao tính exponent trọng số lại phải dùng số âm?**
 
@@ -700,6 +704,8 @@ $$
 > Về encode, actual exponent (E) quyết định vị trí dịch dấu chấm sang trái là số mũ dương và dịch dấu chấm sang phải là số mũ âm
 >
 > Nhưng đối với decode, actual exponent (E) quyết định vị trí dịch dấu chấm theo hướng ngược lại và tiếp tục tới phần exponent của trọng số bit. Nghĩa là dịch dấu chấm trước sau đó mới tính trọng số của fraction sau với số mũ âm
+
+**Đối với khử chuẩn hóa số thực (denormalized)**
 
 #### 2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)
 
