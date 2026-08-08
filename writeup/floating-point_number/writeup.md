@@ -675,7 +675,20 @@ Sau khi có actual exponent ở trên rồi, thì chúng ta mới tính exponent
 | fraction bit `1` |      3 | $$\large2^{-129}$$ |
 | fraction bit `1` |      4 | $$\large2^{-130}$$ |
 
-Do đó $$\large1.1011_{2}​\times2^{-126} = 1\times2^{-126} + 1\times2^{-127} + 1\times2^{-129} + 1\times2^{-130}$$ điểm quan trọng là $$\large-126 \neq -127 \neq -128 \neq -129 \neq -130$$ nhưng tất cả chúng đều được suy ra từ `actual exponent = -126`
+Do đó dựa trên bảng ta được với biểu thức sau :
+
+$$\large
+1.1011_{2}​\times2^{-126} = 
+\underbrace{1\times2^{-126}}*{\text{Hidden Bit}}
++
+\underbrace{1\times2^{-127}}*{\text{Fraction bit 1}}
++
+\underbrace{1\times2^{-129}}*{\text{Fraction bit 2}}
++
+\underbrace{1\times2^{-130}}*{\text{Fraction bit 3}}
+$$
+
+điểm quan trọng là $$\large-126 \neq -127 \neq -128 \neq -129 \neq -130$$ nhưng tất cả chúng đều được suy ra từ `actual exponent = -126`
 
 **Tại sao dù biết là exponent dịch dấu chấm là dương, âm để dịch trái,phải dấu chấm, nhưng sao tính exponent trọng số lại phải dùng số âm?**
 
