@@ -543,7 +543,7 @@ IEEE 754 quy định các parent phổ biến như bảng
 > - Sign là gì
 > - số âm, dương actual exponent của vị trí dấu chấm nhị phân
 >
-> Nếu ba điểm trên đã rõ thì có thể tiếp tục.
+> Nếu đã rõ thì có thể tiếp tục.
 
 #### 2.1.Encode
 
@@ -732,6 +732,8 @@ $$
 <details>
 	<summary>bit-weight exponents là gì?</summary>
 
+---
+
 <br>
 
 hiểu đơn giản là số mũ nằm trên trọng số của một bit cụ thể. Nó không phải một trường riêng trong IEEE 754, cũng không phải một giá trị được lưu trong Exponent field. Đây chỉ là cách gọi để phân tích toán học. **Ví dụ** cho $$\large1.1011_{2}$$ ta xét :
@@ -749,6 +751,8 @@ Nên ta có : $$\large1.1011_{2} = 1 \times 2^{0} + 1 \times 2^{-1} + 0 \times 2
 <br>
 
 <sub>— Hết phần giải thích —</sub>
+
+---
 
 </details>
 
