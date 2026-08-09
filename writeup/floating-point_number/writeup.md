@@ -18,7 +18,7 @@
 
     - [1.3.Vô hạn (infinity)](#13Vô-hạn-infinity)
 
-    - [1.4.ko phải một số (NaN)](#14ko-phải-một-số-nan)
+    - [1.4.không phải một số (NaN)](#14không-phải-một-số-nan)
 
        - [1.4.1.Quite NaN (qNaN)](#141quite-nan-qnan)
 
@@ -128,7 +128,7 @@
 
 ![alt text](image/image1.png)
 
-> Ko phải CS:APP, tham khảo từ cuốn kiến trúc máy tính vì tính dễ hiểu về formula
+> không phải CS:APP, tham khảo từ cuốn kiến trúc máy tính vì tính dễ hiểu về formula
 
 - `Số thực IEEE 754` là quy tắc biểu diễn số thực cho thiết bị nhị phân (máy tính) thế giới. **Formula tổng quan là** $$\Large(-1)^{S} \times 1.m \times 2^{e-b}$$, trong đó :
 
@@ -181,7 +181,7 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 
 <br>
 
-- Vì nếu ko chuẩn hóa mọi số thực sẽ có cùng value nhưng nhiều cách biểu diễn sẽ khác nhau **ví dụ** $$\large1001.1_{2}\times2$$, $$\large100.11_{2}\times2^{1}$$, $$\large10.011_{2}\times2^{2}$$, $$\large1.0011_{2}\times2^{3}$$. Cùng giá trị nhưng dịch dot khác biểu diễn. Nên IEEE quy định sử dụng dạng $$\large1.xxxxx\times2^{N}$$ để mỗi số chỉ có một biểu diễn duy nhất. Ngoài ra, vì bit đầu tiên luôn là 1, CPU không cần lưu bit này (gọi là hidden bit hoặc implicit leading 1), nhờ đó tăng thêm một bit độ chính xác cho trường Fraction.
+- Vì nếu không chuẩn hóa mọi số thực sẽ có cùng value nhưng nhiều cách biểu diễn sẽ khác nhau **ví dụ** $$\large1001.1_{2}\times2$$, $$\large100.11_{2}\times2^{1}$$, $$\large10.011_{2}\times2^{2}$$, $$\large1.0011_{2}\times2^{3}$$. Cùng giá trị nhưng dịch dot khác biểu diễn. Nên IEEE quy định sử dụng dạng $$\large1.xxxxx\times2^{N}$$ để mỗi số chỉ có một biểu diễn duy nhất. Ngoài ra, vì bit đầu tiên luôn là 1, CPU không cần lưu bit này (gọi là hidden bit hoặc implicit leading 1), nhờ đó tăng thêm một bit độ chính xác cho trường Fraction.
 
 <br>
 
@@ -197,14 +197,14 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 
 > trích từ CS:APP
 
-- Là việc bit đầu tiên là 0 nhưng nó thực hiện phép toán $$\large0.xxxxx\times2^{1-bias}$$. **Lúc này** hiddenbit ko còn là 1 nữa, nó là 0 và exponent field luôn là 0. Giả sử float (32bits) ta có :
+- Là việc bit đầu tiên là 0 nhưng nó thực hiện phép toán $$\large0.xxxxx\times2^{1-bias}$$. **Lúc này** hiddenbit không còn là 1 nữa, nó là 0 và exponent field luôn là 0. Giả sử float (32bits) ta có :
 
 ```
 Exponent = 00000000
 Fraction = 00000000000000000000001
 ```
 
-thì đây ko phải là parent $$\large1.0000000000_{2}\times2^{127}$$ mà là $$\large0.0000000000000000000001_{2}\times2^{-126}$$ vì hiddenbit đã bằng 0. **Vậy vì sao phải làm như vậy?**, ta biết normalized nó sẽ có bit đầu luôn là 1, exponent của nó là dương hay âm tùy thuộc vào cách dịch dấu chấm là trái hay phải ,nhưng điều gì sẽ xảy ra nếu số thực cực kỳ nhỏ **ví dụ** $$\large2^{-150}$$ hay $$\large0.000000000000000000000001_{2}$$, nếu vẫn cố chuẩn hóa về $$\large1.xxxxx\times2^{N}$$ thì kết quả sẽ bị underflow tức là bị làm tròn thành 0
+thì đây không phải là parent $$\large1.0000000000_{2}\times2^{127}$$ mà là $$\large0.0000000000000000000001_{2}\times2^{-126}$$ vì hiddenbit đã bằng 0. **Vậy vì sao phải làm như vậy?**, ta biết normalized nó sẽ có bit đầu luôn là 1, exponent của nó là dương hay âm tùy thuộc vào cách dịch dấu chấm là trái hay phải ,nhưng điều gì sẽ xảy ra nếu số thực cực kỳ nhỏ **ví dụ** $$\large2^{-150}$$ hay $$\large0.000000000000000000000001_{2}$$, nếu vẫn cố chuẩn hóa về $$\large1.xxxxx\times2^{N}$$ thì kết quả sẽ bị underflow tức là bị làm tròn thành 0
 
 > [!IMPORTANT]
 > Đối với normalized numbers, IEEE754 dùng $$\large1.xxxxx\times2^{N}$$ nên số đầu tiên luôn là 1
@@ -220,7 +220,7 @@ thì đây ko phải là parent $$\large1.0000000000_{2}\times2^{127}$$ mà là 
 > [!IMPORTANT]
 > `Normalized` được IEEE ưu tiên vì độ chính xác cao hơn, tận dụng hiddenbit với dạng $$\large1.xxxxx\times2^{N}$$. Nhưng nếu số quá nhỏ cần phải dùng tới `Denormalized` với dạng $$\large0.xxxxx\times2^{1 - bias}$$ , điều này giúp biễu diễn các số sát `0` nhất có thể, tuy nhiên độ chính xác thấp hơn.
 >
-> Nếu `Denormalized` ko thể sử dụng được nữa (nhỏ hơn cả subnormal nhỏ nhất) thì gía trị số thực sẽ bị underflow và kết quả sẽ thành `0`
+> Nếu `Denormalized` không thể sử dụng được nữa (nhỏ hơn cả subnormal nhỏ nhất) thì gía trị số thực sẽ bị underflow và kết quả sẽ thành `0`
 
 #### 1.3.Vô hạn (infinity)
 
@@ -284,7 +284,7 @@ ta thấy hiện `inf` nghĩa là dương vô cực $$\large+\infty$$
 
 </details>
 
-#### 1.4.ko phải một số (NaN)
+#### 1.4.không phải một số (NaN)
 
 #### 1.4.1.Quite NaN (qNaN)
 
@@ -292,7 +292,7 @@ ta thấy hiện `inf` nghĩa là dương vô cực $$\large+\infty$$
 
 > trích từ CS:APP
 
-- là một giá trị đặc biệt, chỉ thị cho không xác định hoặc số đó ko phải là số thực $$\large\frac{0}{0} = \text{NaN}$$, $$\large\infty-\infty=\text{NaN}$$, $$\large\sqrt{-1}=\text{NaN}$$ (đối với số thực). IEEE 754 quy định NaN có dạng như :
+- là một giá trị đặc biệt, chỉ thị cho không xác định hoặc số đó không phải là số thực $$\large\frac{0}{0} = \text{NaN}$$, $$\large\infty-\infty=\text{NaN}$$, $$\large\sqrt{-1}=\text{NaN}$$ (đối với số thực). IEEE 754 quy định NaN có dạng như :
 
 | Sign | Exponent | Fraction |
 |------|----------|----------|
@@ -301,13 +301,13 @@ ta thấy hiện `inf` nghĩa là dương vô cực $$\large+\infty$$
 Nghĩa là Exponent phải là tòan bộ bit là một và Fraction phải có ít nhất một bit khác 0 cấu trúc như trong image trên từ CS:APP
 
 > [!IMPORTANT]
-> NaN chỉ xảy ra khi exponent toàn bộ bit phải là 1 và frantion $$\large\neq$$ 0
+> NaN chỉ xảy ra khi exponent toàn bộ bit phải là 1 và fraction $$\large\neq$$ 0
 >
 > Điểm cần phân biệt :
 > - Fraction = 0 : infinity ($$\large+\infty$$, $$\large-\infty$$)
 > - Fraction $$\large\neq$$ 0 : NaN
 
-NaN có tính chất đặc biệt là **ko bằng bất kỳ giá trị nào kể cả chính nó**, trong dãy fraction phần bit có trọng số cao nhất của dãy bit fraction là `Quite bit` minh họa với 32bit(float) :
+NaN có tính chất đặc biệt là **không bằng bất kỳ giá trị nào kể cả chính nó**, trong dãy fraction phần bit có trọng số cao nhất của dãy bit fraction là `Quite bit` minh họa với 32bit(float) :
 
 ![alt text](image/image20.png)
 
@@ -333,10 +333,10 @@ Trong đó QuiteBit là phần có thể là `0` hoặc `1`, khi quite bit là `
 
 int main(void){
 	double x = NAN;
-	printf("dounle NaN x == x is : %d\n",x == x); // kết quả là 0
-	printf("dounle NaN x != x is : %d\n",x != x); // kết quả là 1
-	printf("dounle NaN x < x is : %d\n",x < x); // kết quả là 0
-	printf("dounle NaN x > x is : %d\n",x > x); // kết quả là 0
+	printf("double NaN x == x is : %d\n",x == x); // kết quả là 0
+	printf("double NaN x != x is : %d\n",x != x); // kết quả là 1
+	printf("double NaN x < x is : %d\n",x < x); // kết quả là 0
+	printf("double NaN x > x is : %d\n",x > x); // kết quả là 0
 	return 0;
 }
 ```
@@ -361,7 +361,7 @@ Nếu trong condition ta thấy `if(x != x)` thì điều đó chỉ đúng khi 
 
 #### 1.4.2.Signaling NaN (sNaN)
 
-Đây cũng là loại bit đặc biệt NaN chỉ khác với qNaN là nó dùng để báo hiệu rằng chương trình vừa sử dụng một giá trị ko hợp lệ hoặc chưa được khởi tạo. Khác với quiet NaN, sNaN không âm thầm lan truyền, mà sẽ cố gắng tạo ra một floating-point invalid exception ngay khi được sử dụng trong phép toán.
+Đây cũng là loại bit đặc biệt NaN chỉ khác với qNaN là nó dùng để báo hiệu rằng chương trình vừa sử dụng một giá trị không hợp lệ hoặc chưa được khởi tạo. Khác với quiet NaN, sNaN không âm thầm lan truyền, mà sẽ cố gắng tạo ra một floating-point invalid exception ngay khi được sử dụng trong phép toán.
 
 IEEE quy định sNaN phải thỏa điều kiện xảy ra NaN là exponent field phải hết tất cả bit đều là 1, và fraction phải khác 0 tuy nhiên sNaN nên quiet bit là 0 đó là điều kiện để xảy ra sNaN.
 
@@ -403,7 +403,7 @@ Khác với NAN (thường là Quiet NaN), ngôn ngữ C không cung cấp sẵn
 
 #### 1.5.Zero
 
-trong toán học giá trị `0` gần như bằng nhau nhưng trong biểu diễn số thực chuẩn IEEE754 dạng bit nhị phân nó lại biểu diễn khác ở phần sign. Ví dụ float (32bit) khi ta gắn gía trị `-0` thì biễu diễn tất cả các bit là 0 trừ sign là 1, nhưng gắn giá trị `+0` thì biễu diễn tất cả các bit là 0 và sign cũng ko ngoại lệ. $$\large\pm0$$ trong biểu diễn số thực ở máy tính là âm hay dương tùy vào sign là 1 hay 0
+trong toán học giá trị `0` gần như bằng nhau nhưng trong biểu diễn số thực chuẩn IEEE754 dạng bit nhị phân nó lại biểu diễn khác ở phần sign. Ví dụ float (32bit) khi ta gắn gía trị `-0` thì biễu diễn tất cả các bit là 0 trừ sign là 1, nhưng gắn giá trị `+0` thì biễu diễn tất cả các bit là 0 và sign cũng không ngoại lệ. $$\large\pm0$$ trong biểu diễn số thực ở máy tính là âm hay dương tùy vào sign là 1 hay 0
 
 > [!IMPORTANT]
 > Trong IEEE biểu diễn dưới dạng bit thì giá trị `0` :
@@ -440,7 +440,7 @@ int main(void){
 
 ![alt text](image/image8.png)
 
-ta thấy khi runtime program, nó trả SIGFPE vậy lỗi này ko phải SIGSEGV (truy cập vaddr ko hợp lệ) **vậy nó là gì?**, tuy nó là có tên gọi là Floating-Pointing (FP) số thực dấu phẩy động nhưng thực chất lỗi này đại diện cho tất cả phép toán ko phù hợp kể cả các lỗi tràn số (overflow) nghiêm trọng hoặc dùng phép tính như chia cho 0, căn bậc hai của một số âm mà ko dùng thư viện số phức hay kết quả tính toán số thực ko xác định. Ta cần sửa lại đoạn C thành:
+ta thấy khi runtime program, nó trả SIGFPE vậy lỗi này không phải SIGSEGV (truy cập vaddr không hợp lệ) **vậy nó là gì?**, tuy nó là có tên gọi là Floating-Pointing (FP) số thực dấu phẩy động nhưng thực chất lỗi này đại diện cho tất cả phép toán không phù hợp kể cả các lỗi tràn số (overflow) nghiêm trọng hoặc dùng phép tính như chia cho 0, căn bậc hai của một số âm mà không dùng thư viện số phức hay kết quả tính toán số thực không xác định. Ta cần sửa lại đoạn C thành:
 
 ```c
 #include <stdio.h>
@@ -458,7 +458,7 @@ int main(void){
 
 Đây là kết quả chính xác của phép $$\large x -> 0^{-} = -\infty$$ (tiến tới 0 từ phía âm) và $$\large x -> 0^{+} = +\infty$$ (tiến tới 0 từ phía dương) và $$\large\frac{1}{-0} = -\infty$$, $$\large\frac{1}{+0} = +\infty$$
 
-**Vì sao khi chia cho 0 ở số thực này nó lại ko bắn SIGFPE?:** Vì đây là phép chia dấu phẩy động CPU sẽ dùng FPU/SSE (divss, divsd,.. ) để thực hiện điều đó là tập lệnh phù hợp cho phép chia trong trường hợp này nên nó sẽ ko gây ra lỗi gì
+**Vì sao khi chia cho 0 ở số thực này nó lại không bắn SIGFPE?:** Vì đây là phép chia dấu phẩy động CPU sẽ dùng FPU/SSE (divss, divsd,.. ) để thực hiện điều đó là tập lệnh phù hợp cho phép chia trong trường hợp này nên nó sẽ không gây ra lỗi gì
 
 Lưu ý: trong C, phép chia số nguyên cho 0 trong C là undefined behavior (UB), trên linux CPU thực hiện lệnh idiv hoặc div và phần cứng sinh lỗi divide error exception nếu (#DE) nếu thấy chia cho 0 và kernel nhận exception này rôi gửi SIGFPE
 
@@ -472,7 +472,7 @@ Lưu ý: trong C, phép chia số nguyên cho 0 trong C là undefined behavior (
 
 #### 1.6.scanf và các hàm lệnh đọc khác có thể đọc các chỉ thị nan, infinity
 
-Trong C, các hàm như scanf có thể đọc các chỉ thị nan, infinity ko chỉ là số thực. **Ví dụ** đọc dữ liệu đầu vào bằng `scanf()` và gán cho số thực, nó ko chỉ đọc số thực nó còn đọc cả `nan, NaN, NAN, +nan, -nan, inf, infinity, -INF`. phần ví dụ có thể xem [tại đây](https://github.com/tranquanghao708/Solve-CaptureTheFlags/blob/main/thecommenter/chall12/writeup.md)
+Trong C, các hàm như scanf có thể đọc các chỉ thị nan, infinity không chỉ là số thực. **Ví dụ** đọc dữ liệu đầu vào bằng `scanf()` và gán cho số thực, nó không chỉ đọc số thực nó còn đọc cả `nan, NaN, NAN, +nan, -nan, inf, infinity, -INF`. phần ví dụ có thể xem [tại đây](https://github.com/tranquanghao708/Solve-CaptureTheFlags/blob/main/thecommenter/chall12/writeup.md)
 
 #### 1.7.Trường Fraction (phần trị - significand)
 
@@ -492,13 +492,13 @@ Sự phân biệt giữa hiddenbit và sign bit, khi nhắc tới đứng trư�
 
 mục đích của hidden bit là giúp tăng độ chính xác của số thực, ví dụ nó lưu 23bit fraction float nhưng có độ chính xác tương đương với 24bit, điều này giúp tăng độ chính xác cao hơn. Còn mục đích của sign bit là giúp biểu diễn số thực là âm hay dương (Hai khái niệm này cần phân biệt rõ)
 
-Bây giờ để hiểu rõ hiddenbit hơn ta cho **ví dụ** $$\large1.101001_{2}​\times2^{5}$$ trong bộ nhớ IEEE nó ko lưu hiddenbit (bit trước dấu chấm) nó chỉ lưu phần phía sau dấm chấm (phần fraction) Khi FPU đọc giá trị này (giá trị trong bộ nhớ), phần cứng sẽ tự thêm lại bit 1 lúc đso nó lại thành $$\large1.101001_{2}$$ do đó gía trị dung để tính toán là $$\large1.101001_{2}​\times2^{5}$$
+Bây giờ để hiểu rõ hiddenbit hơn ta cho **ví dụ** $$\large1.101001_{2}​\times2^{5}$$ trong bộ nhớ IEEE nó không lưu hiddenbit (bit trước dấu chấm) nó chỉ lưu phần phía sau dấm chấm (phần fraction) Khi FPU đọc giá trị này (giá trị trong bộ nhớ), phần cứng sẽ tự thêm lại bit 1 lúc đso nó lại thành $$\large1.101001_{2}$$ do đó gía trị dung để tính toán là $$\large1.101001_{2}​\times2^{5}$$
 
-**Vì sao IEEE ko lưu hiddenbit?**
+**Vì sao IEEE không lưu hiddenbit?**
 
 mục đích chính là không lãng phí một bit luôn luôn bằng 1, vì khi đối với số thực đã chuẩn hóa thì hidden bit luôn là 1 và nó không bao giờ bằng 0 nếu lưu bit này sẽ lãng phí 1 bit nên IEEE quy định không lưu bit 1 đầu tiên, khi cần sử dụng thì FPU sẽ tự thêm lại. Thực chất hiddenbit không tự động là giúp số thực chính xác hơn tương đương với hơn một bit, cái làm tăng chính xác là khi đưa vào bộ nhớ hiddenbit bị loại bỏ và dùng vùng đó cho các bit có tác dụng, hidden bit chỉ phục vụ cho việc tính toán
 
-Nhưng hidden bit không phải lúc nào cũng bằng 1, nó chỉ đúng với số khi chuẩn hóa (normalized) nhưng đối với số khử chuẩn hóa (denormalized) hidden bit là 0 còn với giá trị đặc biệt như nan hay infinity thì chúng ko có hiddenbit đối với `hiddenbit = 0`, cho **ví dụ** số thực có dạng $$\large0.fraction\times2^{1-bias}$$ và `fraction = 100100... , exponent = 00000000` thì lúc này các kết quả số thực sẽ có dạng `0.100100...` chứ ko phải `1.100100...`. Đây gọi là [khử chuẩn hóa số thực (Denormalized)](#111khử-chuẩn-hóa-số-thực-denormalized) là cơ chế giúp IEEE 754 biểu diễn được các số rất nhỏ gần bằng 0 mà không bị nhảy đột ngột từ số chuẩn hóa nhỏ nhất xuống 0.
+Nhưng hidden bit không phải lúc nào cũng bằng 1, nó chỉ đúng với số khi chuẩn hóa (normalized) nhưng đối với số khử chuẩn hóa (denormalized) hidden bit là 0 còn với giá trị đặc biệt như nan hay infinity thì chúng không có hiddenbit đối với `hiddenbit = 0`, cho **ví dụ** số thực có dạng $$\large0.fraction\times2^{1-bias}$$ và `fraction = 100100... , exponent = 00000000` thì lúc này các kết quả số thực sẽ có dạng `0.100100...` chứ không phải `1.100100...`. Đây gọi là [khử chuẩn hóa số thực (Denormalized)](#111khử-chuẩn-hóa-số-thực-denormalized) là cơ chế giúp IEEE 754 biểu diễn được các số rất nhỏ gần bằng 0 mà không bị nhảy đột ngột từ số chuẩn hóa nhỏ nhất xuống 0.
 
 | Loại số                  | Hidden Bit    |
 | ------------------------ | ------------- |
@@ -511,7 +511,7 @@ Nhưng hidden bit không phải lúc nào cũng bằng 1, nó chỉ đúng với
 
 - Là trường biểu diễn số mũ của số thực sau khi chuẩn hóa. Số mũ được xác định bằng số lần dịch dấu chấm để đưa số về dạng $$\large1.xxxxx\times2^{N}$$, **ví dụ** $$\large101.00110_{2} = 1.0100110_{2}$$ dịch chuyển dot sang trái 2 lần số mũ = 2 (dương), $$\large0.00110_{2} = 001.00110_{2} = 1.00110_{2}$$ dịch chuyển dot sang phải 3 lần số mũ = -3 (âm), rõ hơn đã nói trước ở [1.1.Chuẩn hóa số thực](#11Chuẩn-hóa-số-thực)
 
-- Exponent đóng vai trò quyết định độ lớn của số thực, **ví dụ** $$\large1.11111_{2}\times2^{2} = 7.875_{10}$$ nhưng đổi giá trị số mũ  $$\large1.11111_{2}\times2^{10} = 2016{10}$$ giá trị đổi, mặc dù fraction ko đổi
+- Exponent đóng vai trò quyết định độ lớn của số thực, **ví dụ** $$\large1.11111_{2}\times2^{2} = 7.875_{10}$$ nhưng đổi giá trị số mũ  $$\large1.11111_{2}\times2^{10} = 2016{10}$$ giá trị đổi, mặc dù fraction không đổi
 
 > [!IMPORTANT]
 > Exponent quyết định độ lớn của số thực, tùy thuộc vào số mũ lớn nhỏ bao nhiêu
@@ -520,11 +520,11 @@ Nhưng hidden bit không phải lúc nào cũng bằng 1, nó chỉ đúng với
 >
 > **điều quan trọng** : Exponent quyết định scale (độ lớn) của số thực thông qua lũy thừa $$\large2^{N}$$ . Chỉ cần thay đổi Exponent một lượng nhỏ, giá trị của số thực có thể thay đổi rất lớn. Fraction thiên hướng về quyết định chữ số có nghĩa (độ chính xác của số thực) nhưng khi thay đổi các bit trong trường Fraction sẽ làm thay đổi giá trị của số thực, nhưng mức thay đổi thường nhỏ hơn nhiều so với việc thay đổi Exponent. **Precision (độ chính xác)** không phụ thuộc vào giá trị của Fraction mà phụ thuộc vào số lượng bit được **IEEE 754** cấp cho trường Fraction. **Ví dụ**, double có 52 bit Fraction nên biểu diễn số thực chính xác hơn float với 23 bit Fraction.
 
-- **Điểm thường bị nhầm :** Trường exponent ko lưu trực tiếp actual exponent (số mũ thực) ký hiệu `N` trong dạng chuẩn hóa $$\large1.xxxxx\times2^{N}$$ , giá trị của trường exponent được tính theo công thưc `Exponent Field = Actual exponent + Bias`.
+- **Điểm thường bị nhầm :** Trường exponent không lưu trực tiếp actual exponent (số mũ thực) ký hiệu `N` trong dạng chuẩn hóa $$\large1.xxxxx\times2^{N}$$ , giá trị của trường exponent được tính theo công thưc `Exponent Field = Actual exponent + Bias`.
 
 #### 1.8.1.Độ lệch (Bias)
 
-- Bias là một giá trị cố định được cộng vào mọi actual exponent, không phân biệt âm hay dương, trước khi lưu vào trường Exponent. **Ví dụ** với float 32bit, exponent là 8bit nhưng bias = $$\large2^{8-1}-1 = 127_{10}$$, là Tmax của exponent (8 bit), nếu `exponent = 3` thì thực hiện phép cộng $$\large3_{10} + 127_{10} = 130_{10}$$ CPU sẽ lưu $$\large10000010_{2}$$ hệ ko dấu , còn nếu `exponent = -3` thì thực hiện phép cộng $$\large (-3) + 127 = 124_{10}$$ CPU sẽ lưu $$\large01111100_{2}$$ hệ ko dấu, còn nếu muốn recover lại số `-3` thì tính ngược lại với phép trừ là $$\large124 - 127 = -3_{10}$$ lúc này sẽ là chính xác số âm được biểu diến lúc đầu
+- Bias là một giá trị cố định được cộng vào mọi actual exponent, không phân biệt âm hay dương, trước khi lưu vào trường Exponent. **Ví dụ** với float 32bit, exponent là 8bit nhưng bias = $$\large2^{8-1}-1 = 127_{10}$$, là Tmax của exponent (8 bit), nếu `exponent = 3` thì thực hiện phép cộng $$\large3_{10} + 127_{10} = 130_{10}$$ CPU sẽ lưu $$\large10000010_{2}$$ hệ không dấu , còn nếu `exponent = -3` thì thực hiện phép cộng $$\large (-3) + 127 = 124_{10}$$ CPU sẽ lưu $$\large01111100_{2}$$ hệ không dấu, còn nếu muốn recover lại số `-3` thì tính ngược lại với phép trừ là $$\large124 - 127 = -3_{10}$$ lúc này sẽ là chính xác số âm được biểu diến lúc đầu
 
 > [!NOTE]
 > Công thức tính BIAS nếu biết bit của actual exponent thì dùng formula tính tmax như sau $$\large2^{N-1}-1$$ **ví dụ** exponent field của double (64bit) là 11bit thì $$\large2^{11-1}-1 = 1023$$
@@ -532,13 +532,13 @@ Nhưng hidden bit không phải lúc nào cũng bằng 1, nó chỉ đúng với
 **Điều dễ nhầm khi học Bias này:** là cách CPU nó lưu values, với bias biểu diễn số thực IEEE 754 **ví dụ** khi exponent field (11bit) của kiểu double(64bit) khi tính phải lấy giá trị exponent cộng với bias khi biểu diễn số dương (quy tắc encode) và trừ với bias khi chuyển đổi lại sang âm (quy tắc decode) , **ví dụ** giá trị `exponent = 6` vì dịch dấu chấm sang trái 6 lần nhưng tính thì $$\large6_{10} + 2^{11-1}-1 = 6_{10} + 1023_{10} = 1029_{10}$$ và CPU sẽ lưu giá trị `1029` dạng mã nhị phân thay vì lưu trực tiếp giá trị 6. Còn **ví dụ** về số âm, `exponent = -7` vì dịch dấu chấm sang phải 7 lần thì $$\large-7_{10} + 1023_{10} = 1016_{10}$$ CPU sẽ lưu gía trị `1016` với nhị phân, thay vì lưu trực tiếp `-7`. Còn muốn phục hồi về `-7` thì nó sẽ dùng $$\large1016_{10} - 1023_{10} = -7_{10}$$
 
 <details>
-	<summary>vì sao IEEE 754 ko dùng two_complement_code để biểu diễn số âm cho bias?</summary>
+	<summary>vì sao IEEE 754 không dùng two_complement_code để biểu diễn số âm cho bias?</summary>
 
 ---
 
 <br>
 
-- Nếu dùng two_complement_code cho bias, thì $$\large-1_{10}$$ sẽ là $$\large111111_{2}$$ và nó sẽ khá phức tạp, khó so sánh thứ tự. Nên IEEE 754 quy định mọi biểu diễn số âm trong số thực chuẩn đều được biểu diễn là dương và thực hiện phép cộng cho Tmax của exponent, vì thế thiết kế phần cứng và nhiều thứ sẽ được đơn giản hóa hơn so với việc phức tạp hóa vấn đề ko cần thiết
+- Nếu dùng two_complement_code cho bias, thì $$\large-1_{10}$$ sẽ là $$\large111111_{2}$$ và nó sẽ khá phức tạp, khó so sánh thứ tự. Nên IEEE 754 quy định mọi biểu diễn số âm trong số thực chuẩn đều được biểu diễn là dương và thực hiện phép cộng cho Tmax của exponent, vì thế thiết kế phần cứng và nhiều thứ sẽ được đơn giản hóa hơn so với việc phức tạp hóa vấn đề không cần thiết
 
 <br>
 
@@ -635,7 +635,7 @@ khi biết giá trị của bias ta tiến hành thực hiện tính trường s
 
 #### 2.1.5.Lấy Fraction
 
-IEEE754 quy định là phần này chỉ được lấy những bit sau dấu chấm, ko được lấy các bit trước dấu chấm vậy ta có $$\large1.110111001_{2}\times2^{4}$$ thì ta lấy fraction `110111001` nhưng theo kiến trúc 32bit (32bit architecture) và dựa vào bảng ở chương bias ta thấy fraction có toán hạng là 23bit vậy ta thêm đơn vị `0` phía sau sao cho đủ 23bit, suy ra fraction là `11011100100000000000000` (đủ 23bit)
+IEEE754 quy định là phần này chỉ được lấy những bit sau dấu chấm, không được lấy các bit trước dấu chấm vậy ta có $$\large1.110111001_{2}\times2^{4}$$ thì ta lấy fraction `110111001` nhưng theo kiến trúc 32bit (32bit architecture) và dựa vào bảng ở chương bias ta thấy fraction có toán hạng là 23bit vậy ta thêm đơn vị `0` phía sau sao cho đủ 23bit, suy ra fraction là `11011100100000000000000` (đủ 23bit)
 
 > [!NOTE]
 > Nếu trường hợp gắp số bit fraction nhiều hơn giới hạn toán hạn của fraction thì CPU sẽ thực hiện cắt bit và làm tròn (rounding), ví dụ fraction có toán hạng là 23bit nhưng đầu vào ở fraction là hơn 23bit thì CPU sẽ cắt sao cho đủ 23bit và rounding
@@ -664,7 +664,7 @@ chúng ta đã tách được Sign | Exponent | Fraction, nhưng phần số mũ
 
 #### 2.2.3.Khôi phục Hidden Bit
 
-Sau khi đã tính được Actual Exponent, bước tiếp theo là khôi phục Hidden Bit (hay còn gọi là Implicit Leading Bit). IEEE quy định rằng đối với số chuẩn hóa (normalized) bit `1` đứng trước dấu chấm sẽ ko được lưu trong bộ nhớ bởi vì sau khi chuẩn hóa nó sẽ có dạng $$\large1.xxx..._{2}\times2^{N}$$ do bit đứng trước dấu chấm bằng 1, IEEE ko cần lưu để tiết kiệm một bit fraction. Vì vậy, khi giải mã (Decode), CPU sẽ tự động thêm lại bit này. ở bước tách sign, exponent, fraction ta đã tách được như sau :
+Sau khi đã tính được Actual Exponent, bước tiếp theo là khôi phục Hidden Bit (hay còn gọi là Implicit Leading Bit). IEEE quy định rằng đối với số chuẩn hóa (normalized) bit `1` đứng trước dấu chấm sẽ không được lưu trong bộ nhớ bởi vì sau khi chuẩn hóa nó sẽ có dạng $$\large1.xxx..._{2}\times2^{N}$$ do bit đứng trước dấu chấm bằng 1, IEEE không cần lưu để tiết kiệm một bit fraction. Vì vậy, khi giải mã (Decode), CPU sẽ tự động thêm lại bit này. ở bước tách sign, exponent, fraction ta đã tách được như sau :
 
 | sign | exponent | fraction |
 |------|----------|----------|
@@ -681,7 +681,7 @@ Cho actual exponent = 127, trong khi toán hạng của trường fraction ở n
 
 #### 2.2.4.Nhân với 2^Exponent
 
-Đây ko phải nhân như toán học thông thường mà chỉ là phép dịch dấu chấm ngược chiều lại, **ví dụ** khi encode việc chuẩn hóa dịch dấu chấm sang bên trái là số mũ actual exponent là dương còn sang bên phải nó là âm, thì bây giờ trong decode chúng ta có actual exponent đã giải ở phần [2.2.2.Khôi phục Actual Exponent](#222khôi-phục-actual-exponent), ta có `actual exponent = 4` vậy bây giờ encode mình dịch dấu chấm sang trái 4 lần là actual exponent là 4 thì bây giờ decode mình dịch dấu chấm sang phải như đang trả lại chỗ cũ thôi. Bây giờ ta có `1.11011100100000000000000` là kết quả của phần [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit), ta tiến hành dịch dấu chấm sang phải 4 lần (theo giá trị của actual exponent mà ta đã tính ra ở phần khôi phục exponent) ta có :
+Đây không phải nhân như toán học thông thường mà chỉ là phép dịch dấu chấm ngược chiều lại, **ví dụ** khi encode việc chuẩn hóa dịch dấu chấm sang bên trái là số mũ actual exponent là dương còn sang bên phải nó là âm, thì bây giờ trong decode chúng ta có actual exponent đã giải ở phần [2.2.2.Khôi phục Actual Exponent](#222khôi-phục-actual-exponent), ta có `actual exponent = 4` vậy bây giờ encode mình dịch dấu chấm sang trái 4 lần là actual exponent là 4 thì bây giờ decode mình dịch dấu chấm sang phải như đang trả lại chỗ cũ thôi. Bây giờ ta có `1.11011100100000000000000` là kết quả của phần [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit), ta tiến hành dịch dấu chấm sang phải 4 lần (theo giá trị của actual exponent mà ta đã tính ra ở phần khôi phục exponent) ta có :
 
 $$
 \large1.11011100100000000000000_{2} \xrightarrow{\text{dịch phải 4}} 11101.1100100000000000000_{2}
@@ -693,7 +693,7 @@ vậy kết quả là $$\large\boxed{11101.1100100000000000000_{2}}$$ đây chí
 
 Đây là bước cuối cùng trong quá trình Decode. Sau khi đã khôi phục lại số nhị phân ban đầu, CPU chỉ cần dựa vào trường Sign để xác định kết quả là số dương hay số âm. Ta có **formula =**$$\large1.xxxxx\times2^{N}$$ **ví dụ** $$\large12345_{10}$$ = $$\large1.2345_{10}\times10^{4}$$, ở các bước trước ta đã khôi phục được `Sign = 0, Actual exponent = 4, Significand = 1.11011100100000000000000` và sau khi thực hiện nhân với $$\large2^{\text{Actual Exponent}}$$ ta có `11101.1100100000000000000`, vì `sign = 0` nên $$\large(-1)^{0} = 1$$ do đó giá trị vẫn giữ nguyên `11101.1100100000000000000`, bây giờ ta chỉ cần chuyển phần nguyên sang thập phân và tính toán fraction (phần dãy bit sau dấu chấm)
 
-Đầu tiên ta có `11101.1100100000000000000` và ta cần chuyển phần nguyên sang thập phân $$\large11101_{2} = 29_{10}$$, bây giờ ta tiến hành tính toán phần fraction sau dấu chấm cách tính là ta lấy số bit nhân với trọng số lũy thừa số nguyên âm **ví dụ** $$\large1\times2^{-1} + 1\times2^{-2} + 0\times2^{-3} +....+ 0\times2^{-N}$$, ở đây ta thấy giá trị bit `0` luôn ra kết quả là `0` vì thế khi tính tổng nó ko thay đổi gì, vậy ta chỉ cần đếm lũy thừa giảm dần và tính toán những bit `1` thôi (trong phần tính toán này phải dùng toán học, ko phải nhị phân nên các bit khi tính toán kiểu này là nó có hệ cơ số 10 vì sẽ ra giá trị là hệ thập phân) :
+Đầu tiên ta có `11101.1100100000000000000` và ta cần chuyển phần nguyên sang thập phân $$\large11101_{2} = 29_{10}$$, bây giờ ta tiến hành tính toán phần fraction sau dấu chấm cách tính là ta lấy số bit nhân với trọng số lũy thừa số nguyên âm **ví dụ** $$\large1\times2^{-1} + 1\times2^{-2} + 0\times2^{-3} +....+ 0\times2^{-N}$$, ở đây ta thấy giá trị bit `0` luôn ra kết quả là `0` vì thế khi tính tổng nó không thay đổi gì, vậy ta chỉ cần đếm lũy thừa giảm dần và tính toán những bit `1` thôi (trong phần tính toán này phải dùng toán học, không phải nhị phân nên các bit khi tính toán kiểu này là nó có hệ cơ số 10 vì sẽ ra giá trị là hệ thập phân) :
 
 | bit | trọng số | giá trị |
 |-----|----------|---------|
@@ -714,7 +714,7 @@ $$\large
 1.1011_{2} \times 2^{-126}
 $$
 
-**Ở đây :** `-126` là actual exponent của toàn bộ số thực và nó quyết định dấu chấm nhị phân được dịch bao nhiêu vị trí. Nó không phải là exponent riêng của từng bit fraction. Sau khi khai triển ta có $$\large1.1011_{2} \times 2^{-126}$$ hay $$\large2^{-126} + 2^{-127} + 2^{-128} + 2^{-129} + 2^{-130}$$ và lúc này các số mũ `-126,-127,-129,-130` là trọng số của từng bit.
+**Ở đây :** `-126` là actual exponent của toàn bộ số thực và nó quyết định dấu chấm nhị phân được dịch bao nhiêu vị trí. Nó không phải là exponent riêng của từng bit fraction. Sau khi khai triển ta có $$\large1.1011_{2} \times 2^{-126}$$ hay $$\large2^{-126} + 2^{-127} + 2^{-128} + 2^{-129} + 2^{-130}$$ và lúc này các số mũ `-126,-127,-128,-129,-130` là trọng số của từng bit.
 
 **Bây giờ đầu tiên đối với Actual exponent — exponent biểu thị cho dịch dấu chấm**
 
@@ -797,7 +797,7 @@ Nên ta có : $$\large1.1011_{2} = 1 \times 2^{0} + 1 \times 2^{-1} + 0 \times 2
 Điều quan trọng là fraction bản thân nó hoàn toàn không âm. Dấu âm nằm ở trọng số như $$\large0.11111_{2} \times 2^{-126}$$ sẽ trở thành $$\large1 \times 2^{-126} + 1 \times 2^{-127} + 1 \times 2^{-128} + 1 \times 2^{-129} + 1 \times 2^{-130}$$ . Các số mũ âm chỉ có nghĩa là các trọng số nằm sau dấu chấm và rất nhỏ.
 
 > [!IMPORTANT]
-> actual exponent quyết định vị trí dấu chấm nhị phân và actual exponent của trọng số bit ko chung một khái niệm chúng khác nhau nhưng dễ bị nhầm lẫn nhất.
+> actual exponent quyết định vị trí dấu chấm nhị phân và actual exponent của trọng số bit không chung một khái niệm chúng khác nhau nhưng dễ bị nhầm lẫn nhất.
 >
 > Về encode, actual exponent (E) quyết định vị trí dịch dấu chấm sang trái là số mũ dương và dịch dấu chấm sang phải là số mũ âm
 >
@@ -805,9 +805,9 @@ Nên ta có : $$\large1.1011_{2} = 1 \times 2^{0} + 1 \times 2^{-1} + 0 \times 2
 
 **Đối với khử chuẩn hóa số thực (denormalized)**
 
-Subnormal không có hidden bit 1. Vì vậy bit đầu tiên của fraction có trọng số $$\large2^{-127}$$ đối với binary32, chứ không phải $$\large2^{-126}$$. Và subnormal (khử chuẩn hóa) có fraction = 000000, exponent field $$\large\neq$$ 000000, công thức của nó là $$\large(-1)^{S}\times(0.f)\times2^{1-\text{bias}}$$ (các khái niệm này đã được đề cập ở chương [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized))
+Subnormal không có hidden bit 1. Vì vậy bit đầu tiên của fraction có trọng số $$\large2^{-127}$$ đối với binary32, chứ không phải $$\large2^{-126}$$. Và subnormal (khử chuẩn hóa) có fraction $$\large\neq$$ 000000, exponent field = 000000, công thức của nó là $$\large(-1)^{S}\times(0.f)\times2^{1-\text{bias}}$$ (các khái niệm này đã được đề cập ở chương [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized))
 
-Với binary32 thì `1 - bias = 1 - 127 = -126` (nó y chang kết quả với cái số thực chuẩn hóa phía trên), do khử chuẩn hóa (denormalized/subnormal) ko có hiddenbit và nó là 0 nên ta được $$\large0.1011_{2}\times2^{-126}$$, khai triển ra ta có $$\large(2^{-1} + 2^{-3} + 2^{-4}) \times 2^{-126}$$ và các `bit-weight exponents` của nó là $$\large\boxed{2^{-127} , 2^{-129} , 2^{-130}}$$ . Có thể nhìn trực tiếp với bảng sau:
+Với binary32 thì `1 - bias = 1 - 127 = -126` (nó y chang kết quả với cái số thực chuẩn hóa phía trên), do khử chuẩn hóa (denormalized/subnormal) không có hiddenbit và nó là 0 nên ta được $$\large0.1011_{2}\times2^{-126}$$, khai triển ra ta có $$\large(2^{-1} + 2^{-3} + 2^{-4}) \times 2^{-126}$$ và các `bit-weight exponents` của nó là $$\large\boxed{2^{-127} , 2^{-129} , 2^{-130}}$$ . Có thể nhìn trực tiếp với bảng sau:
 
 | Bit | Vị trí trong `0.f` | Trọng số trước nhân $$\large2^{-126}$$ | Bit-weight exponent sau nhân |
 | --- | -----------------: | -----------------------------: | ---------------------------: |
@@ -816,7 +816,7 @@ Với binary32 thì `1 - bias = 1 - 127 = -126` (nó y chang kết quả với c
 | `0` |                  3 |                       $$\large(2^{-3})$$ |                   $$\large(2^{-129})$$ |
 | `1` |                  4 |                       $$\large(2^{-4})$$ |                   $$\large(2^{-130})$$ |
 
-**Điều quan trọng nhất là tại sao actual exponent ở khử chuẩn hóa lại có kết quả giống với số chuẩn hóa?** : vì đơn giản `-126` chính là vị trí của hiddenbit và điều đó chỉ có ở phần số chuẩn hóa còn khử chuẩn hóa luôn là `hidden bit = 0` nên trường hợp này `-126` chính là exponent chung của toàn significand $$\large0.f\times2^{-126}$$ còn bản thân $$\large0.f$$ đã có các bit-weight $$\large2^{-1} , 2^{-2} , 2^{-3} ,...$$ và khi nhân toàn bộ với $$\large2^{-126}$$ ta cộng các số mũ `-1 + -126 = -127	, -2 + -126 = -128, -3 + -126 = -129 ,...`.
+**Điều quan trọng nhất là tại sao actual exponent ở khử chuẩn hóa lại có kết quả giống với số chuẩn hóa?** : vì đơn giản nó là actual exponent của significand đối với normalized nhỏ nhất, và cũng là exponent cố định `1−bias` dùng trong công thức subnormal. và điều đó chỉ có ở phần số chuẩn hóa còn khử chuẩn hóa luôn là `hidden bit = 0` nên trường hợp này `-126` chính là exponent chung của toàn significand $$\large0.f\times2^{-126}$$ còn bản thân $$\large0.f$$ đã có các bit-weight $$\large2^{-1} , 2^{-2} , 2^{-3} ,...$$ và khi nhân toàn bộ với $$\large2^{-126}$$ ta cộng các số mũ `-1 + -126 = -127	, -2 + -126 = -128, -3 + -126 = -129 ,...`.
 
 Cho nên `bit-weight exponent = -126 - i` (giá trị `-126` là kết quả của `1 - bias` ở trên), với `i = 1,2,3,...` đối với subnormal. Trong khi normalized có hidden bit ở vị trí `i = 0`, nên lần lượt là `i = 0,1,2,...` . Đó là lý do normalized bắt đầu ở $$\large2^{−126}$$, còn subnormal bắt đầu ở $$\large2^{−127}$$.
 
@@ -828,7 +828,7 @@ hay còn gọi là số thực hữu hạn lớn nhất, đối với float 32 b
 |------|----------|----------|
 | 0 | 11111110 | 11111111111111111111111 |
 
-**Lưu ý:** đối với exponent field để biểu diễn số thực lớn nhất tuyệt đối ko đươc là `11111111` vì tất cả bit số 1 này được dùng riêng trong việc biểu diễn infinity và NaN. Như thế đối với 32bit ta có chuỗi bit của số thực hữu hạn lớn nhất như sau `01111111011111111111111111111111` việc decode ra sang số thực hệ cơ số 10 thì chúng ta làm tương tự như [2.2.Decode](#22decode) bây giờ chúng ta tiến hành tính toán số thực lớn nhất của ngành kiến trúc 32bit (float)
+**Lưu ý:** đối với exponent field để biểu diễn số thực lớn nhất tuyệt đối không đươc là `11111111` vì tất cả bit số 1 này được dùng riêng trong việc biểu diễn infinity và NaN. Như thế đối với 32bit ta có chuỗi bit của số thực hữu hạn lớn nhất như sau `01111111011111111111111111111111` việc decode ra sang số thực hệ cơ số 10 thì chúng ta làm tương tự như [2.2.Decode](#22decode) bây giờ chúng ta tiến hành tính toán số thực lớn nhất của ngành kiến trúc 32bit (float)
 
 đầu tiên như trong chương decode, ta tách các bit ra ở đây chúng ta đã có và tách bit ở bảng trên rồi. Tiếp theo ta tính actual exponent bằng cách chuyển chuỗi nhị phân ở trường exponent sang hệ cơ số 10 $$\large11111110_{2} = 254_{10}$$ bây giờ ta lấy nó đi trừ với bias $$\large254 - 127 = 127$$ vậy actual exponent = $$\large\boxed{127}$$, tiếp theo chúng ta tiến hành tính toán phần trị, đầu tiên là khôi phục hiddenbit ta dịch dấu chấm theo actual exponent nhưng ta thấy nó lớn hơn toán hạng được có ở phần fraction nên chúng ta sẽ thêm padding là 0 để thỏa mãn actual exponent ta có $$\large11111111111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.0_{2}$$ tuy hơi dài nhưng nó đã thỏa mãn actual exponent do đây là số chuẩn hóa nên bit ẩn sẽ thêm 1 là bit ở phần có trọng số cao nhất. Bây giờ chúng ta tiến hành tính toán phần fraction với phép mũ âm ta có:
 
@@ -864,7 +864,7 @@ do `exponent field = 1` nên ta có `actual exponent = 1 - 127 = -126` đồng t
 > một mẹo nhỏ là khi muốn biết nhanh số thực chuẩn hóa nhỏ nhất ta chỉ cần tính $$\large2^{1-bias}$$ và lấy casio bấm sẽ ra kết quả
 
 > [!IMPORTANT]
-> đối với số thực chuẩn hóa nhỏ nhất, trường sign và trường fraction luôn là `0`. Chỉ có trường exponent luôn có giá trị là `1` đối với số chuẩn hóa nhỏ nhất như trên bảng, nếu thay đổi một trong ba trường thì sẽ ko phải là số nhỏ nhất nữa
+> đối với số thực chuẩn hóa nhỏ nhất, trường sign và trường fraction luôn là `0`. Chỉ có trường exponent luôn có giá trị là `1` đối với số chuẩn hóa nhỏ nhất như trên bảng, nếu thay đổi một trong ba trường thì sẽ không phải là số nhỏ nhất nữa
 
 #### 2.5.Số thực khử chuẩn hóa nhỏ nhất và tính toán số thực khử chuẩn hóa nhỏ nhất (Smallest subnormal)
 
@@ -889,7 +889,7 @@ do `exponent field = 0` nên `hidden bit = 0` (yes sir, vì vốn dĩ khử chu�
 
 <br>
 
-Ko có gì cao siêu, chỉ là phép tính decode bit fraction ở chương [2.2.5.Áp dụng Sign](#225áp-dụng-sign) . Ở đây, lý dó `-23` là số âm vì do dịch vị trí của bit. Cho bảng sau :
+không có gì cao siêu, chỉ là phép tính decode bit fraction ở chương [2.2.5.Áp dụng Sign](#225áp-dụng-sign) . Ở đây, lý dó `-23` là số âm vì do dịch vị trí của bit. Cho bảng sau :
 
 | Vị trí     | Giá trị   |
 | ---------- | --------- |
@@ -933,7 +933,7 @@ Vậy số thực khử chuẩn hóa nhỏ nhất của float là $$\large2^{-14
 
 Nhìn cách tính thì cũng giống nhưng lý do của hai cái hoàn khác. Đầu tiên là chuẩn hóa (normalized) nếu Fraction $$\large\neq$$ 00000 và Fraction $$\large\neq$$ 11111 thì `actual exponent = E - bias` điều này cũng khá đúng và đã được nêu ở phần tổng quan với formula rồi, ví dụ trên là `exponent = 1, bias = 127` thì nó tính actual `exponent = 1 - 127 = -126` là hoàn toàn bình thường
 
-nhưng vẫn là một phép tính mà khử chuẩn hóa (denormalized) vẫn sử dụng chính phép tính đó, vì denormalized có hiddenbit là 0 , IEEE ko đi dùng `actual exponent = 0 - bias` thay vào đó nó vẫn là `exponent = 1 - 127 = -126` dù hiddenbit là 0. Nghe có vẻ giống normalized, nhưng lý do hoàn toàn khác.
+nhưng vẫn là một phép tính mà khử chuẩn hóa (denormalized) vẫn sử dụng chính phép tính đó, vì denormalized có hiddenbit là 0 , IEEE không đi dùng `actual exponent = 0 - bias` thay vào đó nó vẫn là `exponent = 1 - 127 = -126` dù hiddenbit là 0. Nghe có vẻ giống normalized, nhưng lý do hoàn toàn khác.
 
 **Tại sao lại dùng 1 − Bias?**
 
@@ -1006,7 +1006,7 @@ int main(void)
 
 ![alt text](image/image11.png)
 
-ta thấy số thực nó đã bị làm tròn ở đây khá hỗn loạn nên cũng là lý do x($$\large0.1_{10} + 0.2_{10}$$) $$\large\neq$$ 0.3, chỉ có thể biểu diễn **xấp xỉ** với trường hợp này chứ ko thể dùng **tuyệt đối** như `==`
+ta thấy số thực nó đã bị làm tròn ở đây khá hỗn loạn nên cũng là lý do x($$\large0.1_{10} + 0.2_{10}$$) $$\large\neq$$ 0.3, chỉ có thể biểu diễn **xấp xỉ** với trường hợp này chứ không thể dùng **tuyệt đối** như `==`
 
 <br>
 
@@ -1020,7 +1020,7 @@ Các chế độ của Rounding (làm tròn)
 
 #### 3.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn
 
-Đây là chương sẽ lý giải tại sao cùng một phép cộng số thực nhưng `1.50 + 1.25 = 2.75` và ko có khái niệm rounting nào xảy ra ở phép cộng `1.50`. Tất cả là do biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn
+Đây là chương sẽ lý giải tại sao cùng một phép cộng số thực nhưng `1.50 + 1.25 = 2.75` và không có khái niệm rounding nào xảy ra ở phép cộng `1.50`. Tất cả là do biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn
 
 **Biểu diễn nhị phân hữu hạn:** là việc biểu diễn nhị phân có độ rộng toán hạng được giới hạn ở một ngưỡng nào đó **ví dụ** $$\large1.101_{2}$$ chỉ có 3bit fraction rồi xong hết, còn các fraction nếu dư sẽ luôn có bit là 0. **Ví dụ2:** cho số $$\large1.50_{10}$$ nó cũng là hữu hạn. 
 
@@ -1074,7 +1074,7 @@ int main(void){
 
 ![alt text](image/image13.png)
 
-Ta thấy nó vẫn là kết quả chính xấc, ko có rounting nào ở đây vì nó là số hữu hạn.
+Ta thấy nó vẫn là kết quả chính xấc, không có rounding nào ở đây vì nó là số hữu hạn.
 
 <br>
 
@@ -1084,7 +1084,7 @@ Ta thấy nó vẫn là kết quả chính xấc, ko có rounting nào ở đây
 
 </details>
 
-**Biểu diễn nhị phân vô hạn:** là việc biểu diễn nhị phân có độ rộng toán hạng ko được giới hạn tới khi bị cắt bởi phần cứng do giới hạn độ rộng toán hạng bên phía phần cứng **ví dụ** $$\large0.1_{2}$$ tính fraction nó với 2:
+**Biểu diễn nhị phân vô hạn:** là việc biểu diễn nhị phân có độ rộng toán hạng không được giới hạn tới khi bị cắt bởi phần cứng do giới hạn độ rộng toán hạng bên phía phần cứng **ví dụ** $$\large0.1_{2}$$ tính fraction nó với 2:
 
 | Bước | x2      | Bit | Dư  |
 | ---- | ------- | --- | --- |
@@ -1097,7 +1097,7 @@ Ta thấy nó vẫn là kết quả chính xấc, ko có rounting nào ở đây
 | 7    | 0.4->0.8 | 0   | 0.8 |
 | 8    | 0.8->1.6 | 1   | 0.6 |
 
-Ta thấy nó cứ lặp lại từ `0.2 -> 0.6` giống kim đồng hồ và số dư ko có điểm dừng. Đây gọi là biểu diễn nhị phân vô hạn, và đây cũng là điều kiện để hệ thống rounting (làm tròn) dãy này
+Ta thấy nó cứ lặp lại từ `0.2 -> 0.6` giống kim đồng hồ và số dư không có điểm dừng. Đây gọi là biểu diễn nhị phân vô hạn, và đây cũng là điều kiện để hệ thống rounding (làm tròn) dãy này
 
 <details>
 	<summary>Ví dụ với C</summary>
@@ -1119,7 +1119,7 @@ int main(void){
 
 ![alt text](image/image14.png)
 
-Ta thấy khi gán vào x là 0.1, và ta dump ra nó đã bị rounting ở fraction phía sau do đây là biểu diễn nhị phân vô hạn. Chúng ta thử thực hiện phép tính cộng vào xem sao
+Ta thấy khi gán vào x là 0.1, và ta dump ra nó đã bị rounding ở fraction phía sau do đây là biểu diễn nhị phân vô hạn. Chúng ta thử thực hiện phép tính cộng vào xem sao
 
 ```c
 #include <stdio.h>
@@ -1127,7 +1127,7 @@ Ta thấy khi gán vào x là 0.1, và ta dump ra nó đã bị rounting ở fra
 int main(void){
 	float x = 0.1;
 	float y = 0.2;
-	printf("dump fration 23bit : %.23f\n",x + y); //xấp xỉ 0.3 chứ ko phải tuyệt đối do rounting
+	printf("dump fration 23bit : %.23f\n",x + y); //xấp xỉ 0.3 chứ không phải tuyệt đối do rounding
 }
 ```
 
@@ -1143,7 +1143,7 @@ Ta thấy nó vẫn bị rounding
 
 </details>
 
-**Định lý đẹp của biểu diễn vô hạn và hữu hạn:** một phân số tối giản $$\large\frac{a}{b}$$ sẽ có biểu diễn hữu hạn trong cơ số 2 khi và chỉ khi mẫu số b chỉ chứa thừa số nguyên tố 2. **Ví dụ** $$\large0.5_{10} = \frac{1}{2}$$ ta có mẫu là 2 suy ra nó hữu hạn, $$\large0.25_{10} = \frac{1}{4}$$ mẫu là $$\large2^{2}$$ suy ra nó hữu hạn, $$\large0.75_{10} = \frac{3}{4}$$ mẫu là $$\large2^{2}$$ suy ra nó hữu hạn. Nhưng còn, $$\large0.1_{10} = \frac{1}{10} = \frac{1}{2\times5}$$ mẫu có 5 và nó ko thể viết hữu hạn trong cơ số 2, suy ra nó vô hạn
+**Định lý đẹp của biểu diễn vô hạn và hữu hạn:** một phân số tối giản $$\large\frac{a}{b}$$ sẽ có biểu diễn hữu hạn trong cơ số 2 khi và chỉ khi mẫu số b chỉ chứa thừa số nguyên tố 2. **Ví dụ** $$\large0.5_{10} = \frac{1}{2}$$ ta có mẫu là 2 suy ra nó hữu hạn, $$\large0.25_{10} = \frac{1}{4}$$ mẫu là $$\large2^{2}$$ suy ra nó hữu hạn, $$\large0.75_{10} = \frac{3}{4}$$ mẫu là $$\large2^{2}$$ suy ra nó hữu hạn. Nhưng còn, $$\large0.1_{10} = \frac{1}{10} = \frac{1}{2\times5}$$ mẫu có 5 và nó không thể viết hữu hạn trong cơ số 2, suy ra nó vô hạn
 
 > [!IMPORTANT]
 > **Điều quan trọng:** Không phải mọi phép cộng, trừ, nhân hay chia số thực đều sinh ra sai số làm tròn. Nếu các toán hạng và kết quả đều biểu diễn chính xác được trong IEEE 754 thì sẽ không phát sinh sai số tại bước biểu diễn hay bước làm tròn. **Ví dụ** `1.50 + 1.25 = 2.75` được biểu diễn chính xác nên kết quả vẫn đúng tuyệt đối.
@@ -1160,7 +1160,7 @@ Ta thấy nó vẫn bị rounding
 
 nếu trường hợp số nhỏ hơn nữa sẽ giữ nguyên **ví dụ** Cpu chỉ giữ 2 fraction ở bit, cho bit biểu diễn số thực như sau : $$\large1.010001_{2} = \mathbf{1.265625_{10}}$$ và bây giờ CPU lấy 2 fraction suy ra nó chỉ có thể biểu diễn làm tròn $$\large1.01_{2} = 0100_{2}$$ hoặc $$\large1.10_{2} = 1000_{2}$$ và bit bị cắt là $$\large0001_{2}$$
 
-- **Lưu ý :** giá trị $$\large1.10_{2} = 1000_{2}$$ và $$\large1.01_{2} = 0100_{2}$$ ở đây ta thấy có phần nguyên là bit 1, nhưng việc quy đổi và so sánh ở trường hợp này là chỉ tính các bit fraction chứ ko phải phần nguyên
+- **Lưu ý :** giá trị $$\large1.10_{2} = 1000_{2}$$ và $$\large1.01_{2} = 0100_{2}$$ ở đây ta thấy có phần nguyên là bit 1, nhưng việc quy đổi và so sánh ở trường hợp này là chỉ tính các bit fraction chứ không phải phần nguyên
 
 bây giờ so sánh **phần bị cắt với đúng một ngưỡng là một nữa của ULP**:
 
@@ -1173,7 +1173,7 @@ bây giờ so sánh **phần bị cắt với đúng một ngưỡng là một n
 
 <br>
 
-Đây là khái niệm dùng để giải thích vì sao CPU làm tròn bằng cách này, ko phải cấu trúc chính của IEEE. Về nghĩa đen là giá trị của 1 đơn vị ở bit cuối cùng ở fraction, đơn giản hơn nó là khoảng cách giữa hai số IEEE 754 có thể biểu diễn được **ví dụ** sau chuẩn hóa ta có tập hợp $$\large(1.00_{2},1.01_{2},1.10_{2},1.11_{2})$$ và các số này lần lượt tương ứng với tập hợp $$\large(1.00_{10},1.25_{10},1.50_{10},1.75_{10})$$ và bây giờ khoảng cách giữa chúng là :
+Đây là khái niệm dùng để giải thích vì sao CPU làm tròn bằng cách này, không phải cấu trúc chính của IEEE. Về nghĩa đen là giá trị của 1 đơn vị ở bit cuối cùng ở fraction, đơn giản hơn nó là khoảng cách giữa hai số IEEE 754 có thể biểu diễn được **ví dụ** sau chuẩn hóa ta có tập hợp $$\large(1.00_{2},1.01_{2},1.10_{2},1.11_{2})$$ và các số này lần lượt tương ứng với tập hợp $$\large(1.00_{10},1.25_{10},1.50_{10},1.75_{10})$$ và bây giờ khoảng cách giữa chúng là :
 
 | phép tính | kết quả |
 |-----------|---------|
@@ -1206,7 +1206,7 @@ $\large\mathrm{ULP} = \boxed{0.25}$ vậy bây giờ ta biết $$\large0.25_{10}
 
 <br>
 
-- **Vì sao lại đem phần bit bị cắt đi so với half ULP:** Vì phần bị cắt chính là phần sai số (error) nếu giữ nguyên số hiện tại, IEEE cần biết lượng sai số này xem nó lớn hay nhỏ hơn với nữa khoảng cách giữa hai số biểu diễn được (half ULP) để quyết định giữ nguyên hay làm tròn lên, Bây giờ **giả sử** CPU chỉ giữ lại một số lượng bit fraction nhất định. Khi cắt bớt bit, phần bị cắt là phần sai số (lượng giá trị bị mất), sau khi đã xác định hai giá trị IEEE có thể biểu diễn gần nhất, IEEE chỉ cần xét phần giá trị bị mất (phần bị cắt) để quyết định làm tròn., nó chỉ biết lượng giá trị bị mất này lớn đến đâu, IEEE lấy lượng gía trị bị mất so sánh với một nữa ngưỡng khoảng cách biểu diễn giữa hai số (half ULP), phần bị cắt chính là sai số khi giữ nguyên, còn half ULP là ngưỡng quyết định. IEEE chỉ cần so sánh hai đại lượng này để biết nên giữ nguyên hay làm tròn lên. Đây cũng là bản chất thuật toán, CPU nó ko so sánh hai số, nó chỉ so sánh số bit bị cắt với half ULP
+- **Vì sao lại đem phần bit bị cắt đi so với half ULP:** Vì phần bị cắt chính là phần sai số (error) nếu giữ nguyên số hiện tại, IEEE cần biết lượng sai số này xem nó lớn hay nhỏ hơn với nữa khoảng cách giữa hai số biểu diễn được (half ULP) để quyết định giữ nguyên hay làm tròn lên, Bây giờ **giả sử** CPU chỉ giữ lại một số lượng bit fraction nhất định. Khi cắt bớt bit, phần bị cắt là phần sai số (lượng giá trị bị mất), sau khi đã xác định hai giá trị IEEE có thể biểu diễn gần nhất, IEEE chỉ cần xét phần giá trị bị mất (phần bị cắt) để quyết định làm tròn., nó chỉ biết lượng giá trị bị mất này lớn đến đâu, IEEE lấy lượng gía trị bị mất so sánh với một nữa ngưỡng khoảng cách biểu diễn giữa hai số (half ULP), phần bị cắt chính là sai số khi giữ nguyên, còn half ULP là ngưỡng quyết định. IEEE chỉ cần so sánh hai đại lượng này để biết nên giữ nguyên hay làm tròn lên. Đây cũng là bản chất thuật toán, CPU nó không so sánh hai số, nó chỉ so sánh số bit bị cắt với half ULP
 
 <br>
 
@@ -1233,7 +1233,7 @@ vẫn như cũ, $$\large\mathrm{ULP} = \boxed{0.25}$$ và ta biết half ULP c�
 
 <br>
 
-- IEEE 754 không làm tròn từng bit bị cắt, cũng không làm tròn cả dãy bit theo kiểu toán học. Nó chỉ thay đổi đúng một đơn vị ở bit fraction cuối cùng được giữ lại (1 ULP của kết quả), rồi để phép cộng nhị phân tự lan carry nếu cần. **Ví dụ** giả sử CPU chỉ lưu 4 fraction `1.0111 100...` trong đó `100...` sau cùng này là số bit bị cắt, sau khi xét GRS (G = 1, R = 0, S = 0) nếu G = 1 rồi thì chắc chắn nó lớn hơn half ULP nên điều này quyết định làm tròn, bây giờ mới tới phần làm tròn CPU nó ko biến `100...` thành `000...` hay xử lý từng bit phía sau nó chỉ thực hiện cộng thêm đúng một bit ở fraction cuối cùng được giữ.
+- IEEE 754 không làm tròn từng bit bị cắt, cũng không làm tròn cả dãy bit theo kiểu toán học. Nó chỉ thay đổi đúng một đơn vị ở bit fraction cuối cùng được giữ lại (1 ULP của kết quả), rồi để phép cộng nhị phân tự lan carry nếu cần. **Ví dụ** giả sử CPU chỉ lưu 4 fraction `1.0111 100...` trong đó `100...` sau cùng này là số bit bị cắt, sau khi xét GRS (G = 1, R = 0, S = 0) nếu G = 1 rồi thì chắc chắn nó lớn hơn half ULP nên điều này quyết định làm tròn, bây giờ mới tới phần làm tròn CPU nó không biến `100...` thành `000...` hay xử lý từng bit phía sau nó chỉ thực hiện cộng thêm đúng một bit ở fraction cuối cùng được giữ.
 
 **Ví dụ** $$\large1.0111_{2}$$ CPU giữ 4 fration trong đó là $$\large0111_{2}$$, bit cuối cùng của fraction là `1`, còn bit đầu tiên của fraction là `0`
 
@@ -1261,7 +1261,7 @@ khi làm tròn, CPU chỉ thực hiện cộng một đơn vị bit vào bit cu�
 
 nếu trường hợp số bằng đúng bằng nữa (tie) thì chọn số bit cuối là 0 (even) nó sẽ chọn số có LSB là 0, **ví dụ** ta có $$\large0.010010_{2}$$ với CPU chỉ giữ fraction ta có hai dạng như ví dụ trước là $$\large0.01_{2}$$ hay $$\large0.10_{2}$$ ở đây phần bị cắt là $$\large0010_{2}$$ và ta biết `half ULP = 0.125` vì nó vẫn tương tự ở các ví dụ trên thôi. Bây giờ, ta so sánh thấy phần đặc biệt là half ULP bằng với bit bị cắt $$\mathbf{\large0010_{2}\text{(số bit bị cắt)} == 0010_{2}\text{(Half ULP)}}$$ vì $$\large0.125_{10} = 0.001_{2}\text{(half ULP)}$$ tính theo đúng 4bit sẽ là $$\large\mathbf{0010_{2} \text{(half ULP)}}$$ ở đây việc nó bằng nhau thế này ta gọi đó là trường hợp bằng đúng bằng nữa (tie) nghĩa là giá trị phần bị cắt (round error) bằng đúng half ULP, tức sai số khi giữ nguyên và sai số khi làm tròn lên là như nhau. Số cần biểu diễn nằm đúng ở chính giữa hai số IEEE 754 có thể biểu diễn được.
 
-Lúc này, IEEE ko được phép lúc nào cũng làm tròn lên vì nếu vậy thì nó sẽ sinh ra sai số dương tích lũy sau hàng triệu phép tính, thay vào đó nó quy định nếu đúng bằng half ULP thì chọn số có bit cuối cùng (LSB) bằng 0 (even). Ví dụ trường hợp này $$\mathbf{\large0010_{2}\text{(số bit bị cắt)} == 0010_{2}\text{(Half ULP)}}$$ thì đối tượng được làm tròn là $$\large1.10_{2}\text{hay}1.01_{2}$$ ta phân tích hai số này, $$\large1.10_{2}$$ có `LSB = 0` và $$\large1.01_{2}$$ có `LSB = 1` ta thấy IEEE quy định thì nó sẽ chọn số bit cuối cùng (LSB) bằng 0 (even) thì `LSB = 1` sẽ ko được chọn vì nó khác 0, `LSB = 0` sẽ được chọn vì nó bằng 0. Nên, số làm tròn sẽ thành $$\large\boxed{1.10_{2}}$$ vì nó có `LSB = 0` (thỏa mãn quy định của IEEE)
+Lúc này, IEEE không được phép lúc nào cũng làm tròn lên vì nếu vậy thì nó sẽ sinh ra sai số dương tích lũy sau hàng triệu phép tính, thay vào đó nó quy định nếu đúng bằng half ULP thì chọn số có bit cuối cùng (LSB) bằng 0 (even). Ví dụ trường hợp này $$\mathbf{\large0010_{2}\text{(số bit bị cắt)} == 0010_{2}\text{(Half ULP)}}$$ thì đối tượng được làm tròn là $$\large1.10_{2}\text{hay}1.01_{2}$$ ta phân tích hai số này, $$\large1.10_{2}$$ có `LSB = 0` và $$\large1.01_{2}$$ có `LSB = 1` ta thấy IEEE quy định thì nó sẽ chọn số bit cuối cùng (LSB) bằng 0 (even) thì `LSB = 1` sẽ không được chọn vì nó khác 0, `LSB = 0` sẽ được chọn vì nó bằng 0. Nên, số làm tròn sẽ thành $$\large\boxed{1.10_{2}}$$ vì nó có `LSB = 0` (thỏa mãn quy định của IEEE)
 
 > [!IMPORTANT]
 > Round to nearest, ties to even là nghệ thuật làm tròn mặc định mà chuẩn IEEE quy định:
@@ -1285,13 +1285,13 @@ Ta thấy, `G = 0` suy ra `guard bit = 0`, `R = 1` suy ra `round bit = 1`, `S = 
 
 #### 3.2.2.round bit
 
-Round bit là bit thứ hai bị cắt, nó nằm phía sau Guard bit. Nó có ý nghĩa nếu guardbit là 1, nếu guardbit (G) là 0 thì biết chắc chắn là `x < half ULP` rồi ko cần phải soi round và sticky, nhưng nếu guard là 1 thì bây giờ mới soi round. Ở đây, cũng như ví dụ trên ta có :
+Round bit là bit thứ hai bị cắt, nó nằm phía sau Guard bit. Nó có ý nghĩa nếu guardbit là 1, nếu guardbit (G) là 0 thì biết chắc chắn là `x < half ULP` rồi không cần phải soi round và sticky, nhưng nếu guard là 1 thì bây giờ mới soi round. Ở đây, cũng như ví dụ trên ta có :
 
 | Fraction | G | R | S |
 |----------|---|---|---|
 | 1.01	   | 0 | 1 | 101 |
 
-Cái này chắc chắn là `x < half ULP` vì `G = 0` nên round sẽ ko có ý nghĩa, nhưng giả sử ta cho `G = 1` như :
+Cái này chắc chắn là `x < half ULP` vì `G = 0` nên round sẽ không có ý nghĩa, nhưng giả sử ta cho `G = 1` như :
 
 | Fraction | G | R | S |
 |----------|---|---|---|
@@ -1300,13 +1300,13 @@ Cái này chắc chắn là `x < half ULP` vì `G = 0` nên round sẽ ko có ý
 thì lúc này `G = 1` nó sẽ soi thêm R vì lúc này round mới thực sự có ý nghĩa, nếu `G = 1 và R = 1` thì nó chắc chắn sẽ lớn hơn half ULP `x > half ULP` lúc này sẽ làm tròn lên
 
 > [!IMPORTANT]
-> Nếu `G = 0` thì R và S sẽ ko cần soi nữa, vì nó chỉ có ý nghĩa nếu `G = 1` là trước tiên xong mới tới R và mới tới S.
+> Nếu `G = 0` thì R và S sẽ không cần soi nữa, vì nó chỉ có ý nghĩa nếu `G = 1` là trước tiên xong mới tới R và mới tới S.
 > - Nếu `G = 1 và R = 1` thì chắc chắn lớn hơn half ULP
 > - Nếu `G = 1 và R = 0` thì phải soi thêm Sticky bit
 
 #### 3.2.3.sticky bit
 
-Sticky bit là bit thứ 3, nó đứng ngay sau round bit cái đặc biệt của sticky bit này ko phải là một bit cụ thể bị cắt, mà là kết quả OR với tất cả các bit còn lại phía sau roundbit, nó luôn soi là sau roundbit còn bit nào nữa ko, nếu ko còn bit nào nữa thì `S = 0` còn nếu có thì `S = 1`. Đó là lý do mà sticky bit (S) là bit 0 hoặc bit 1 dù sau nó là hàng chục hay hàng trăm bit. Ví dụ ở trên là ;
+Sticky bit là bit thứ 3, nó đứng ngay sau round bit cái đặc biệt của sticky bit này không phải là một bit cụ thể bị cắt, mà là kết quả OR với tất cả các bit còn lại phía sau roundbit, nó luôn soi là sau roundbit còn bit nào nữa không, nếu không còn bit nào nữa thì `S = 0` còn nếu có thì `S = 1`. Đó là lý do mà sticky bit (S) là bit 0 hoặc bit 1 dù sau nó là hàng chục hay hàng trăm bit. Ví dụ ở trên là ;
 
 | Fraction | G | R | S |
 |----------|---|---|---|
@@ -1318,13 +1318,13 @@ Sticky bit là bit thứ 3, nó đứng ngay sau round bit cái đặc biệt c�
 |----------|---|---|---|
 | 1.01	   | 1 | 1 | 000 |
 
-Ở đây ta thấy trường sticky bit có chuỗi nhị phân là `000` vậy nên sticky sẽ có bit 1 `S = 0` (do ko có bit nào là 1). Ví dụ khác :
+Ở đây ta thấy trường sticky bit có chuỗi nhị phân là `000` vậy nên sticky sẽ có bit 1 `S = 0` (do không có bit nào là 1). Ví dụ khác :
 
 | Fraction | G | R | S |
 |----------|---|---|---|
 | 1.01	   | 1 | 1 | 010 |
 
-Ở đây ta thấy trường sticky bit có chuỗi nhị phân là `010` vậy nên sticky sẽ có bit 1 `S = 1` (do có bit giữa là 1). Từ 3 ví dụ, ta thấy hễ một binary strings sau trường roundbit có một bit 1 thì `S = 1` còn nếu ko có bit 1 nào thì `S = 0`
+Ở đây ta thấy trường sticky bit có chuỗi nhị phân là `010` vậy nên sticky sẽ có bit 1 `S = 1` (do có bit giữa là 1). Từ 3 ví dụ, ta thấy hễ một binary strings sau trường roundbit có một bit 1 thì `S = 1` còn nếu không có bit 1 nào thì `S = 0`
 
 **Sticky bit dùng để làm gì?:** Nó được dùng khi `G = 1, R = 0` lúc này CPU vẫn chưa biết đang đúng half ULP `x == half ULP` hay đã lớn hơn half ULP `x > half ULP` sticky bit sẽ phân biệt hai trường hợp này
 
@@ -1339,7 +1339,7 @@ Theo 3 chương về guard bit, round bit, sticky bit (GRS) ta có bảng :
 | 1 | 0 | 1 | > half ULP       |
 | 1 | 1 | x | > half ULP       |
 
-các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nếu `R = 1, G = 1` chắc chắn `x > half ULP`. Nên phần cứng ko thể soi riêng biệt một bit trừ khi bit đó có quy luật khi là 0 thì chắc chắn có giá trị này ví dụ như guard bit. Bảng trên thì đó là cách phần cứng dùng GRS để biết khi nào giữ nguyên, khi nào làm tròn và khi nào lấy LSB = 0.
+các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nếu `R = 1, G = 1` chắc chắn `x > half ULP`. Nên phần cứng không thể soi riêng biệt một bit trừ khi bit đó có quy luật khi là 0 thì chắc chắn có giá trị này ví dụ như guard bit. Bảng trên thì đó là cách phần cứng dùng GRS để biết khi nào giữ nguyên, khi nào làm tròn và khi nào lấy LSB = 0.
 
 <details>
 	<summary>Vì sao không thể quan sát Guard, Round và Sticky bit trên một biến float?</summary>
@@ -1412,17 +1412,17 @@ ta thấy đây là fraction sau khi IEEE754 đã hoàn tất quá trình encode
 
 </details>
 
-**nhưng ở đây dù có nhị phân đã được in quá fraction là 34bit trong đoạn code C thì chúng ta vẫn sẽ ko đảm bảo thấy được GRS thật sự vì sao?**
+**nhưng ở đây dù có nhị phân đã được in quá fraction là 34bit trong đoạn code C thì chúng ta vẫn sẽ không đảm bảo thấy được GRS thật sự vì sao?**
 
-vì nó là số vô hạn? hay vì nó ko ở đầu bit bị cắt như lý thuyết?, tất cả đều sai. Nguyên nhân là do, trước khi đưa số thực như `0.1` vào float thực tế là phần cứng đã làm việc, tính toán, xét GRS và rounding trong lúc chuyển đổi literal, nên GRS đã bị bỏ. Ta chỉ có là số kết quả đã được làm tròn ngay từ lúc gán nó vào biến a kiểu float, vậy nên dù ta có xét GRS bit hay làm thế nào với số kết quả này `0.10000000149011611938477` bao nhiêu lần đi chăng nữa thì điều đó càng thêm vô lý cũng như vô ích với kết quả được được tính sẵn thế này.
+vì nó là số vô hạn? hay vì nó không ở đầu bit bị cắt như lý thuyết?, tất cả đều sai. Nguyên nhân là do, trước khi đưa số thực như `0.1` vào float thực tế là phần cứng đã làm việc, tính toán, xét GRS và rounding trong lúc chuyển đổi literal, nên GRS đã bị bỏ. Ta chỉ có là số kết quả đã được làm tròn ngay từ lúc gán nó vào biến a kiểu float, vậy nên dù ta có xét GRS bit hay làm thế nào với số kết quả này `0.10000000149011611938477` bao nhiêu lần đi chăng nữa thì điều đó càng thêm vô lý cũng như vô ích với kết quả được được tính sẵn thế này.
 
-Nên mới nói, dù ta có xét GRS, tính và so sánh bao nhiêu half ULP nếu ko hiểu điều này rất dễ sinh nhầm lẫn là nhỏ hơn half ULP là giữ nguyên sao nó vẫn làm tròn, mà nó làm tròn bằng cách cộng 1 vào phần tử cuối fraction sao lại ra kết quả này (vì đó là số đã được tính và làm tròn trước khi gán vào float bởi phần cứng, GRS đã bị bại bỏ và chúng ta ko thể tính gì thêm nữa)
+Nên mới nói, dù ta có xét GRS, tính và so sánh bao nhiêu half ULP nếu không hiểu điều này rất dễ sinh nhầm lẫn là nhỏ hơn half ULP là giữ nguyên sao nó vẫn làm tròn, mà nó làm tròn bằng cách cộng 1 vào phần tử cuối fraction sao lại ra kết quả này (vì đó là số đã được tính và làm tròn trước khi gán vào float bởi phần cứng, GRS đã bị bại bỏ và chúng ta không thể tính gì thêm nữa)
 
-Muốn biết GRS của quá trình encode ban đầu thì phải quan sát chuỗi bit trước khi làm tròn, dù có thể tự động hóa nào đó như dùng casio hay các phép tính nhân chia v.v. nhưng việc encode thì phải thủ công để suy ra xét GRS chính xác nhất. **Ví dụ** đoạn code trên cho binary gần sát như binary đã caculated thủ công nhưng việc xét GRS về cơ bản thì hòan toàn sai vì chúng ta ko thể đảm bảo nó đúng
+Muốn biết GRS của quá trình encode ban đầu thì phải quan sát chuỗi bit trước khi làm tròn, dù có thể tự động hóa nào đó như dùng casio hay các phép tính nhân chia v.v. nhưng việc encode thì phải thủ công để suy ra xét GRS chính xác nhất. **Ví dụ** đoạn code trên cho binary gần sát như binary đã caculated thủ công nhưng việc xét GRS về cơ bản thì hòan toàn sai vì chúng ta không thể đảm bảo nó đúng
 
 **Khác biệt giữa bit dùng để quyết định rounding và bit của kết quả sau khi rounding**
 
-Bit dùng để quyết định rounding theo lý thuyết thường là 3bit đầu của bit bị cắt (đi quá fraction), bit của kết quả sau khi rounding thoáng qua giống với sự tính toán thủ công khi ta dùng các ngôn ngữ lập trình để tự động hóa nhưng về cơ bản chúng đã thực hiện rounding ở mức phần cứng và các bit thường sẽ ko đảm bảo chắc chắn là nó chính xác như tính tay hay tính tay chính xác hay ko. Loại bit của kết quả sau khi rounding là loại bit đã trải qua xử lý của phần cứng FPU để đưa ra kết quả **ví dụ như** output bit `00001100110011001100110011010000000` của đoạn C tính toán như trên là loại bit đã trải qua rounding
+Bit dùng để quyết định rounding theo lý thuyết thường là 3bit đầu của bit bị cắt (đi quá fraction), bit của kết quả sau khi rounding thoáng qua giống với sự tính toán thủ công khi ta dùng các ngôn ngữ lập trình để tự động hóa nhưng về cơ bản chúng đã thực hiện rounding ở mức phần cứng và các bit thường sẽ không đảm bảo chắc chắn là nó chính xác như tính tay hay tính tay chính xác hay không. Loại bit của kết quả sau khi rounding là loại bit đã trải qua xử lý của phần cứng FPU để đưa ra kết quả **ví dụ như** output bit `00001100110011001100110011010000000` của đoạn C tính toán như trên là loại bit đã trải qua rounding
 
 nhưng vấn đề khiến nó gần như trùng khớp với bit quyết định hay số thực được tính tay sang bit là sự sai số ở phần số thực diễn ra rất nhỏ xuất hiện tại bit bị cắt, hầu như còn nhỏ hơn 23-25 bit fraction. Để phân biệt hai loại bit này, ta cần phải hiễu rõ bit dùng để quyết định rounding phải chính xác (an toàn nhất là tính toán thủ công để lấy bit GRS), bit của kết quả sau khi rounding thường là bit của các chương trình nhị phân chẳng hạn như C tính toán, phần fraction luôn luôn là chính bit chuẩn xác, mức sai số chỉ xuất hiện với phần bit vượt quá phần fraction gọi là bit bị cắt và GRS cũng nằm ở 3bit đầu của phần bit bị cắt đó (Ta có thể tiếp tục tạo ra các bit phía sau từ giá trị float đã được làm tròn, nhưng các bit đó không còn là Guard, Round và Sticky bit của lần encode ban đầu. Chúng chỉ là các bit sinh ra từ giá trị đã được làm tròn)
 
@@ -1497,7 +1497,7 @@ từ đoạn mã ta có sơ đồ biểu diễn logic như sau (để tránh gâ
 
 ![alt text](image/image18.png)
 
-Vậy nên nó chỉ thao tác đọc ghi v.v. , chứ ko ngăn được FPU đã xử lý phần 0.1f
+Vậy nên nó chỉ thao tác đọc ghi v.v. , chứ không ngăn được FPU đã xử lý phần 0.1f
 
 <br>
 
@@ -1628,22 +1628,22 @@ ta thấy floor luôn làm tròn về $$\large-\infty$$ và ceil luôn làm trò
 > [!NOTE]
 > **Lưu ý:** Đối với số dương, `Round toward Zero` và Floor cho cùng một kết quả. Đối với số âm, `Round toward Zero` và `Ceil` cho cùng một kết quả. Sự khác biệt chỉ xuất hiện khi số có phần lẻ.
 
-Do đó, về cơ bản chương `round toward zero` này chỉ có vậy. Nếu chế độ làm tròn này được bật thì FPU ko cần phải xét GRS vì đó thuộc round to nearest tie to even
+Do đó, về cơ bản chương `round toward zero` này chỉ có vậy. Nếu chế độ làm tròn này được bật thì FPU không cần phải xét GRS vì đó thuộc round to nearest tie to even
 
 <details>
-	<summary>liệu round toward zero và (int)x.x có phải là một ko?</summary>
+	<summary>liệu round toward zero và (int)x.x có phải là một không?</summary>
 
 ---
 
 <br>
 
-Gần giống, nhưng chúng ko cùng một khái niệm. Trong nhiều ví dụ thì chế độ `round toward zero` cho kết quả khá tương đương với `(int)x.x` nhưng về bản chất thì `(int)x.x` là chỉ ép kiểu sang phần nguyên bỏ phần lẻ, điều này giống với hành vi của `round toward zero`. Nhưng có hai đặc điểm để chứng minh hai cái này khác: 
+Gần giống, nhưng chúng không cùng một khái niệm. Trong nhiều ví dụ thì chế độ `round toward zero` cho kết quả khá tương đương với `(int)x.x` nhưng về bản chất thì `(int)x.x` là chỉ ép kiểu sang phần nguyên bỏ phần lẻ, điều này giống với hành vi của `round toward zero`. Nhưng có hai đặc điểm để chứng minh hai cái này khác: 
 
 **đặc điểm thứ nhất:** là kết quả của `(int)x.x` nó là số nguyên nó bỏ phần số thực đi suy ra `3.3 = 3`, còn `round toward zero` cũng có kết quả giá trị nhưng nó biểu diễn dạng số thực `3.3 = 3.0` và `3.0` cùng giá trị với `3` nhưng khác cách trình bày
 
 **đặc điểm thứ hai:** `(int)x.x` là chuyển đổi kiểu dữ liệu từ số thực sang số nguyên theo quy tắc của ngôn ngữ C. `Round toward Zero` là một chế độ làm tròn của IEEE 754 dùng cho các phép toán dấu phẩy động.
 
-Nên nhiều ví dụ thấy chúng gần như tương đồng nhau nhưng chúng ko nằm chung một khái niệm
+Nên nhiều ví dụ thấy chúng gần như tương đồng nhau nhưng chúng không nằm chung một khái niệm
 
 <br>
 
@@ -1657,13 +1657,13 @@ Nên nhiều ví dụ thấy chúng gần như tương đồng nhau nhưng chún
 
 Để hiểu sâu hơn chúng ta cần phải hiểu rõ là `round toward zero` nó tác động lên bit nhị phân như thế nào đã, ở phần chương vừa rồi ta có lập bảng so sánh ở hệ cơ số 10, nhưng bây giờ ta cần phải xem thêm nó tác động tới hệ cơ số 2 như thế nào ở phần tính toán thủ công và minh họa với C. Bây giờ **ví dụ** chỉ cho phép 4bit fraction để dễ quan sát, kết quả trung gian là `1.101011100...` trong đó nó giữ lại `1.1010` và bit bị cắt là `11100...`
 
-`round toward zero` nó ko quan tâm bit bị bỏ là gì, ko xét GRS hay đi tính một nữa khoảng cách biểu diễn được (half ULP) như round to nearest tie to even cần, nó chỉ biết `1.1010` là xong, suy ra kết quả :
+`round toward zero` nó không quan tâm bit bị bỏ là gì, không xét GRS hay đi tính một nữa khoảng cách biểu diễn được (half ULP) như round to nearest tie to even cần, nó chỉ biết `1.1010` là xong, suy ra kết quả :
 
 $$
 \large1.101011100..._{2} \xrightarrow{\text{round toward zero}} \boxed{1.1010_{2}}
 $$
 
-Kết quả của nó là bit được giữ lại và ko ngó gì tới bit bị cắt, tương tự với số âm `-1.101011100...` :
+Kết quả của nó là bit được giữ lại và không ngó gì tới bit bị cắt, tương tự với số âm `-1.101011100...` :
 
 $$
 \large-1.101011100..._{2} \xrightarrow{\text{round toward zero}} \boxed{-1.1010_{2}}
@@ -1715,13 +1715,13 @@ int main(void){
 ta thấy `0.09999999999999999167` và `7.47999999999999953814`, đây chính là kết quả được làm tròn bởi `round toward zero`.
 
 <details>
-	<summary>Liệu sau khi chuyển chế độ sang round toward zero, thì FPU có thực hiện round to nearest tie to even khi gán số thực vào biến ko?</summary>
+	<summary>Liệu sau khi chuyển chế độ sang round toward zero, thì FPU có thực hiện round to nearest tie to even khi gán số thực vào biến không?</summary>
 
 ---
 
 <br>
 
-có thể có hoặc không, tùy thời điểm phép làm tròn diễn ra. Trường hợp đầu tiên là hằng số dấu phẩy động trong mã nguồn **ví dụ** `double a = 0.1;` số `0.1` trong mã nguồn ko thể biểu diễn chính xác theo IEEE, vì nó là số vô hạn (có thể biểu diễn số này vô hạn tuần hoàn nhưng toán hạng fraction là hữu hạn).
+có thể có hoặc không, tùy thời điểm phép làm tròn diễn ra. Trường hợp đầu tiên là hằng số dấu phẩy động trong mã nguồn **ví dụ** `double a = 0.1;` số `0.1` trong mã nguồn không thể biểu diễn chính xác theo IEEE, vì nó là số vô hạn (có thể biểu diễn số này vô hạn tuần hoàn nhưng toán hạng fraction là hữu hạn).
 
 Để biểu diễn chính xác thì phải cần biết nó có phải số hữu hạn hay vô hạn. Về cơ bản thì nếu việc gán vào cho biến kiểu số thực là số vô hạn thì nó vẫn rounding theo round to nearest tie to even như thường, vì nó xảy ra trước rồi và nó đã hardcode trong file nhị phân (file thực thi sau khi biên dịch) rồi
 
@@ -1802,7 +1802,7 @@ Bây giờ theo tính toán để đoán ra dấu hiệu rõ của `round toward
 
 suy ra chế độ làm tròn `round toward zero` khả năng cao đã hoạt động. Ta có thể dùng casio để biết rằng $$\large\frac{1.0}{10.0} = 0.1_{10}$$ , nếu là `round to nearest, tie to even` nó được giữ nguyên với giá trị `7.47999999999999953814` và `0.09999999999999999167` do `Guardbit = 0` nhưng ở đây nó lại giảm xuống suy ra có dấu hiệu chỉ giữ bit và bỏ luôn bit bị cắt đúng như lý thuyết vừa rồi. Nếu giữ nguyên thì vẫn là giá trị cao hơn so với giá trị này hay làm tròn 
 
-nhưng về kỹ thuật chúng ta ko thể kết luận chính xác tuyệt đối được vì `round to nearest, tie to even` ko chỉ là tăng lên hay giữ nguyên, nó có thể tăng, giảm, giữ nguyên cả ba trường hợp tùy thuộc vào GRS có trong bit. Nhưng chắc chắn hai bit này nếu là `round to nearest, tie to even` thì sẽ giữ nguyên vì cả hai có guard bit là 0
+nhưng về kỹ thuật chúng ta không thể kết luận chính xác tuyệt đối được vì `round to nearest, tie to even` không chỉ là tăng lên hay giữ nguyên, nó có thể tăng, giảm, giữ nguyên cả ba trường hợp tùy thuộc vào GRS có trong bit. Nhưng chắc chắn hai bit này nếu là `round to nearest, tie to even` thì sẽ giữ nguyên vì cả hai có guard bit là 0
 
 **Nếu round to nearest mà nó nhỏ hơn half ULP thì nó giữ nguyên vậy chả khác gì hệ thống đã lấy bit bị cắt bỏ rồi và nó có hành vi giống round toward zero là lấy phần bit theo toán hạng fraction à?**
 
