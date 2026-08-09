@@ -809,7 +809,7 @@ Subnormal không có hidden bit 1. Vì vậy bit đầu tiên của fraction có
 
 Với binary32 thì `1 - bias = 1 - 127 = -126` (nó y chang kết quả với cái số thực chuẩn hóa phía trên), do khử chuẩn hóa (denormalized/subnormal) ko có hiddenbit và nó là 0 nên ta được $$\large0.1011_{2}\times2^{-126}$$, khai triển ra ta có $$\large(2^{-1} + 2^{-3} + 2^{-4}) \times 2^{126}$$ và các `bit-weight exponents` của nó là $$\large\boxed{2^{-127} , 2^{-129} , 2^{-130}}$$ . Có thể nhìn trực tiếp với bảng sau:
 
-| Bit | Vị trí trong `0.f` | Trọng số trước nhân (2^{-126}) | Bit-weight exponent sau nhân |
+| Bit | Vị trí trong `0.f` | Trọng số trước nhân $$\large2^{-126}$$ | Bit-weight exponent sau nhân |
 | --- | -----------------: | -----------------------------: | ---------------------------: |
 | `0` |                  1 |                       $$\large(2^{-1})$$ |                   $$\large2^{-127})$$ |
 | `1` |                  2 |                       $$\large(2^{-2})$$ |                   $$\large(2^{-128})$$ |
