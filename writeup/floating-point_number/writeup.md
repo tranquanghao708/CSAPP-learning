@@ -262,7 +262,7 @@ nếu `sign = 1` : âm vô cực $$\large-\infty$$
 #include <stdio.h>
 
 int main(void){
-	float a = 1e39f
+	float a = 1e39f;
 	printf("%f\n",a);
 	return 0;
 }
@@ -804,6 +804,8 @@ Nên ta có : $$\large1.1011_{2} = 1 \times 2^{0} + 1 \times 2^{-1} + 0 \times 2
 > Nhưng đối với decode, actual exponent (E) quyết định vị trí dịch dấu chấm theo hướng ngược lại và tiếp tục tới phần exponent của trọng số bit. Nghĩa là dịch dấu chấm trước sau đó mới tính trọng số của fraction sau với số mũ âm
 
 **Đối với khử chuẩn hóa số thực (denormalized)**
+
+Subnormal không có hidden bit 1. Vì vậy bit đầu tiên của fraction có trọng số $$\large2^{-127}$$ đối với binary32, chứ không phải $$\large2^{-126}$$. Và subnormal (khử chuẩn hóa) có `fraction = 000000, exponent field = 000000`, công thức của nó là $$\large(-1)^{S}\times(0.f)\times2^{1-\text{bias}}$$ (các khái niệm này đã được đề cập ở chương [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized))
 
 #### 2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)
 
