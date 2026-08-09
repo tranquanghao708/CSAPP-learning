@@ -811,11 +811,14 @@ Với binary32 thì `1 - bias = 1 - 127 = -126` (nó y chang kết quả với c
 
 | Bit | Vị trí trong `0.f` | Trọng số trước nhân $$\large2^{-126}$$ | Bit-weight exponent sau nhân |
 | --- | -----------------: | -----------------------------: | ---------------------------: |
-| `0` |                  1 |                       $$\large(2^{-1})$$ |                   $$\large2^{-127})$$ |
+| `0` |                  1 |                       $$\large(2^{-1})$$ |                   $$\large(2^{-127})$$ |
 | `1` |                  2 |                       $$\large(2^{-2})$$ |                   $$\large(2^{-128})$$ |
 | `0` |                  3 |                       $$\large(2^{-3})$$ |                   $$\large(2^{-129})$$ |
 | `1` |                  4 |                       $$\large(2^{-4})$$ |                   $$\large(2^{-130})$$ |
 
+**Điều quan trọng nhất là tại sao actual exponent ở khử chuẩn hóa lại có kết quả giống với số chuẩn hóa?** : vì đơn giản `-126` chính là vị trí của hiddenbit và điều đó chỉ có ở phần số chuẩn hóa còn khử chuẩn hóa luôn là `hidden bit = 0` nên trường hợp này `-126` chính là exponent chung của toàn significand $$\large0.f\times2^{-126}$$ còn bản thân $$\large0.f$$ đã có các bit-weight $$\large2^{-1} , 2^{-2} , 2^{-3} ,...$$ và khi nhân toàn bộ với $$\large2^{-126}$$ ta cộng các số mũ `-1 + -126 = -127	, -2 + -126 = -128, -3 + -126 = -129 ,...`.
+
+Cho nên `bit-weight exponent = -126 - i` (giá trị `-126` là kết quả của `1 - bias` ở trên), với `i = 1,2,3,...` đối với subnormal. Trong khi normalized có hidden bit ở vị trí `i = 0`, nên lần lượt là `i = 0,1,2,...` . Đó là lý do normalized bắt đầu ở $$\large2^{−126}$$, còn subnormal bắt đầu ở $$\large2^{−127}$$.
 
 #### 2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)
 
