@@ -805,9 +805,9 @@ Nên ta có : $$\large1.1011_{2} = 1 \times 2^{0} + 1 \times 2^{-1} + 0 \times 2
 
 **Đối với khử chuẩn hóa số thực (denormalized)**
 
-Subnormal không có hidden bit 1. Vì vậy bit đầu tiên của fraction có trọng số $$\large2^{-127}$$ đối với binary32, chứ không phải $$\large2^{-126}$$. Và subnormal (khử chuẩn hóa) có `fraction = 000000, exponent field = 000000`, công thức của nó là $$\large(-1)^{S}\times(0.f)\times2^{1-\text{bias}}$$ (các khái niệm này đã được đề cập ở chương [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized))
+Subnormal không có hidden bit 1. Vì vậy bit đầu tiên của fraction có trọng số $$\large2^{-127}$$ đối với binary32, chứ không phải $$\large2^{-126}$$. Và subnormal (khử chuẩn hóa) có fraction = 000000, exponent field $$\large\neq$$ 000000, công thức của nó là $$\large(-1)^{S}\times(0.f)\times2^{1-\text{bias}}$$ (các khái niệm này đã được đề cập ở chương [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized))
 
-Với binary32 thì `1 - bias = 1 - 127 = -126` (nó y chang kết quả với cái số thực chuẩn hóa phía trên), do khử chuẩn hóa (denormalized/subnormal) ko có hiddenbit và nó là 0 nên ta được $$\large0.1011_{2}\times2^{-126}$$, khai triển ra ta có $$\large(2^{-1} + 2^{-3} + 2^{-4}) \times 2^{126}$$ và các `bit-weight exponents` của nó là $$\large\boxed{2^{-127} , 2^{-129} , 2^{-130}}$$ . Có thể nhìn trực tiếp với bảng sau:
+Với binary32 thì `1 - bias = 1 - 127 = -126` (nó y chang kết quả với cái số thực chuẩn hóa phía trên), do khử chuẩn hóa (denormalized/subnormal) ko có hiddenbit và nó là 0 nên ta được $$\large0.1011_{2}\times2^{-126}$$, khai triển ra ta có $$\large(2^{-1} + 2^{-3} + 2^{-4}) \times 2^{-126}$$ và các `bit-weight exponents` của nó là $$\large\boxed{2^{-127} , 2^{-129} , 2^{-130}}$$ . Có thể nhìn trực tiếp với bảng sau:
 
 | Bit | Vị trí trong `0.f` | Trọng số trước nhân $$\large2^{-126}$$ | Bit-weight exponent sau nhân |
 | --- | -----------------: | -----------------------------: | ---------------------------: |
