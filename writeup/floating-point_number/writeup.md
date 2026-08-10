@@ -32,6 +32,8 @@
 
        - [1.7.1.Hidden Bit](#171hidden-bit)
 
+       - [1.7.2.Trường hợp nếu actual exponent lớn hơn toán hạng trường fraction để dịch dấu chấm](#172trường-hợp-nếu-actual-exponent-lớn-hơn-toán-hạng-trường-fraction-để-dịch-dấu-chấm)
+
     - [1.8.Trường số mũ (Exponent)](#18Trường-số-mũ-exponent)
 
        - [1.8.1.Độ lệch (Bias)](#181độ-lệch-bias)
@@ -507,6 +509,10 @@ Nhưng hidden bit không phải lúc nào cũng bằng 1, nó chỉ đúng với
 | Infinity                 | Không sử dụng |
 | NaN                      | Không sử dụng |
 
+#### 1.7.2.Trường hợp nếu actual exponent lớn hơn toán hạng trường fraction để dịch dấu chấm
+
+Cho `actual exponent = 127`, trong khi toán hạng của trường fraction ở ngành kiến trúc 32bit chỉ là 23bit thôi, vậy con số `127 > 23` nên chúng ta dịch dấu chấm như thế nào. Chúng ta sẽ dịch dấu chấm bằng cách thêm các padding 0 cho những phần cần thiếu, nghĩa là chúng ta cứ việc dịch dấu chấm ở fraction trước đến khi dấu chấm vượt quá toán hạng của trường fraction khi đó chúng ta mới thêm dấu chấm sao cho dịch đủ 127 ô theo giá trị của actual exponent là được. **Ví dụ** cho toán hạng fraction là 3 và actual exponent là 9, ta có `1.101` bây giờ ta dịch dấu chấm ở fraction sang bên phải 9 ô dịch trước 2 ô là `110.1` bây giờ ta thấy nó gần sắp vượt quá toán hạng của trường fraction. Bây giờ ta tiến hành thêm padding 0 vào và dịch sao cho đủ 9 ô, ta có `1101000000.0` vậy là đủ 9 ô thỏa mãn actual exponent
+
 #### 1.8.Trường số mũ (Exponent)
 
 - Là trường biểu diễn số mũ của số thực sau khi chuẩn hóa. Số mũ được xác định bằng số lần dịch dấu chấm để đưa số về dạng $$\large1.xxxxx\times2^{N}$$, **ví dụ** $$\large101.00110_{2} = 1.0100110_{2}$$ dịch chuyển dot sang trái 2 lần số mũ = 2 (dương), $$\large0.00110_{2} = 001.00110_{2} = 1.00110_{2}$$ dịch chuyển dot sang phải 3 lần số mũ = -3 (âm), rõ hơn đã nói trước ở [1.1.Chuẩn hóa số thực](#11Chuẩn-hóa-số-thực)
@@ -653,7 +659,7 @@ khi biết giá trị của bias ta tiến hành thực hiện tính trường s
 
 #### 2.1.5.Lấy Fraction
 
-IEEE754 quy định là phần này chỉ được lấy những bit sau dấu chấm, không được lấy các bit trước dấu chấm vậy ta có $$\large1.11011100111101011100001010_{2}\times2^{4}$$ thì ta lấy fraction `11011100111101011100001010` nhưng theo kiến trúc 32bit (32bit architecture) và dựa vào bảng ở chương bias ta thấy fraction có toán hạng là 23bit vậy ta thêm đơn vị `0` phía sau sao cho đủ 23bit, suy ra fraction là `11011100111101011100001010` (dư 3 bit) ta thực hiện cắt và làm tròn thành `11011100111101011100001` (do xét Guardbit = 0 nên giữ nguyên, theo quy tắc làm tròn có tại phần [3.2.Round to nearest, ties to even](#32round-to-nearest-ties-to-even))
+IEEE754 quy định là phần này chỉ được lấy những bit sau dấu chấm, không được lấy các bit trước dấu chấm vậy ta có $$\large1.11011100111101011100001010_{2}\times2^{4}$$ thì ta lấy fraction `11011100111101011100001010` nhưng theo định dạng IEEE 754 binary32 (32-bit floating-point format) và dựa vào bảng ở chương bias ta thấy fraction có 23bit nhưng fraction là `11011100111101011100001010` (dư 3 bit) ta thực hiện cắt và làm tròn thành `11011100111101011100001` (do xét Guardbit = 0 nên giữ nguyên, theo quy tắc làm tròn có tại phần [3.2.Round to nearest, ties to even](#32round-to-nearest-ties-to-even))
 
 > [!NOTE]
 > Nếu trường hợp gắp số bit fraction nhiều hơn giới hạn toán hạn của fraction thì CPU sẽ thực hiện cắt bit và làm tròn (rounding), ví dụ fraction có toán hạng là 23bit nhưng đầu vào ở fraction là hơn 23bit thì CPU sẽ cắt sao cho đủ 23bit và rounding
@@ -692,10 +698,6 @@ Và ta đã tính được `Actual exponent = 4` đồng thời nhận thấy $$
 
 > [!NOTE]
 > Hidden Bit không tồn tại trong bộ nhớ. Nó chỉ được CPU tự động thêm vào trong quá trình Decode nếu số thuộc dạng Normalized. Đối với Denormalized Number (Exponent = 00000000), Hidden Bit không còn bằng 1 nữa mà bằng 0. Điều này đã được trình bày ở chương [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized)
-
-**Trường hợp nếu actual exponent lớn hơn toán hạng trường fraction để dịch dấu chấm thì sao?**
-
-Cho `actual exponent = 127`, trong khi toán hạng của trường fraction ở ngành kiến trúc 32bit chỉ là 23bit thôi, vậy con số `127 > 23` nên chúng ta dịch dấu chấm như thế nào. Chúng ta sẽ dịch dấu chấm bằng cách thêm các padding 0 cho những phần cần thiếu, nghĩa là chúng ta cứ việc dịch dấu chấm ở fraction trước đến khi dấu chấm vượt quá toán hạng của trường fraction khi đó chúng ta mới thêm dấu chấm sao cho dịch đủ 127 ô theo giá trị của actual exponent là được. **Ví dụ** cho toán hạng fraction là 3 và actual exponent là 9, ta có `1.101` bây giờ ta dịch dấu chấm ở fraction sang bên phải 9 ô dịch trước 2 ô là `110.1` bây giờ ta thấy nó gần sắp vượt quá toán hạng của trường fraction. Bây giờ ta tiến hành thêm padding 0 vào và dịch sao cho đủ 9 ô, ta có `1101000000.0` vậy là đủ 9 ô thỏa mãn actual exponent
 
 #### 2.2.4.Nhân với 2^Exponent
 
