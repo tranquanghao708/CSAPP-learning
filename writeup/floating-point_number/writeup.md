@@ -533,6 +533,16 @@ $$\large
 \underbrace{10110100101110000101000​}_{\text{32bit}}
 $$
 
+Phần `1.` phía trước không được lưu, vì với số normalized nó là hidden bit.
+
+**padding theo actual exponent**
+
+đây là yếu tố góp một phần ở chương này, cũng là yếu tố khá dễ nhầm . Ở đây, ta cần phân tách riêng cho nó hai trường hợp, với chuỗi nhị phân có toán hạng nhỏ hơn toán hạng fraction field, và với chuỗi nhị phân có toán hạng lớn hơn toán hạng fraction field. Đối với chuỗi nhị phân có toán hạng nhỏ hơn toán hạng fraction field ví dụ $$\large1.11010_{2}$$ (có 5bit fraction) để có thể lắp đầy toán hạng của trường fraction ta cần thêm zero vào (đây cũng là kỹ thuật đã nói ở phần đầu tiên) sao cho lắp đầy đủ 23bit
+
+nếu trường hợp toán hạng của chuỗi nhị phân lớn hơn toán hạng của trường fraction, ta thực hiện cắt và làm tròn. **Ví dụ** $$\large1.1101011010110101101011010_{2}$$ (có 25bit fraction) ta thực hiện cắt 2 bit dư đi ta được $$\large1.11010110101101011010110_{2}$$ và rounding
+
+**Tóm lại:** Padding để đủ 23 bit thì được. Nhưng padding không được phép làm thay đổi số bit mà field fraction chứa. Vì thế nó ko làm trường fraction vượt quá 23bit
+
 #### 1.8.Trường số mũ (Exponent)
 
 - Là trường biểu diễn số mũ của số thực sau khi chuẩn hóa. Số mũ được xác định bằng số lần dịch dấu chấm để đưa số về dạng $$\large1.xxxxx\times2^{N}$$, **ví dụ** $$\large101.00110_{2} = 1.0100110_{2}$$ dịch chuyển dot sang trái 2 lần số mũ = 2 (dương), $$\large0.00110_{2} = 001.00110_{2} = 1.00110_{2}$$ dịch chuyển dot sang phải 3 lần số mũ = -3 (âm), rõ hơn đã nói trước ở [1.1.Chuẩn hóa số thực](#11Chuẩn-hóa-số-thực)
