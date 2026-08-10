@@ -513,6 +513,26 @@ Nhưng hidden bit không phải lúc nào cũng bằng 1, nó chỉ đúng với
 
 Cho `actual exponent = 127`, trong khi toán hạng của trường fraction ở ngành kiến trúc 32bit chỉ là 23bit thôi, vậy con số `127 > 23` nên chúng ta dịch dấu chấm như thế nào. Chúng ta sẽ dịch dấu chấm bằng cách thêm các padding 0 cho những phần cần thiếu, nghĩa là chúng ta cứ việc dịch dấu chấm ở fraction trước đến khi dấu chấm vượt quá toán hạng của trường fraction khi đó chúng ta mới thêm dấu chấm sao cho dịch đủ 127 ô theo giá trị của actual exponent là được. **Ví dụ** cho toán hạng fraction là 3 và actual exponent là 9, ta có `1.101` bây giờ ta dịch dấu chấm ở fraction sang bên phải 9 ô dịch trước 2 ô là `110.1` bây giờ ta thấy nó gần sắp vượt quá toán hạng của trường fraction. Bây giờ ta tiến hành thêm padding 0 vào và dịch sao cho đủ 9 ô, ta có `1101000000.0` vậy là đủ 9 ô thỏa mãn actual exponent
 
+**vậy việc thêm padding thỏa mãn actual exponent có làm vi phạm toán hạng của trường fraction?**
+
+Ví dụ trường fraction của float là 23bit, nhưng việc thêm padding vô tình làm chuỗi nhị phân lớn hơn 23bit với các bit zero. Tuy nhiên về cơ bản padding chúng không làm trường fraction vượt quá 23 bit, nếu phân biệt đúng giữa chuỗi biểu diễn trung gian và field fraction thực sự được lưu trong IEEE 754. Chúng ta cần phân biệt :
+
+**Số nhị phân thực tế**
+
+Nó có thể dài vô hạn, ko bị giới hạn bởi 23bit **ví dụ** như $$\large1.101101001011100001010001101_{2}$$
+
+**Significand dùng khi chuẩn hóa/rounding**
+
+ví dụ $$\large1.101101001011100001010001101..._{2}$$ và có thể giữ thêm các bit sau để quyết định rounding
+
+**Fraction field**
+
+ví dụ :
+
+$$\large
+\underbrace{10110100101110000101000​}*{\text{32bit}}
+$$
+
 #### 1.8.Trường số mũ (Exponent)
 
 - Là trường biểu diễn số mũ của số thực sau khi chuẩn hóa. Số mũ được xác định bằng số lần dịch dấu chấm để đưa số về dạng $$\large1.xxxxx\times2^{N}$$, **ví dụ** $$\large101.00110_{2} = 1.0100110_{2}$$ dịch chuyển dot sang trái 2 lần số mũ = 2 (dương), $$\large0.00110_{2} = 001.00110_{2} = 1.00110_{2}$$ dịch chuyển dot sang phải 3 lần số mũ = -3 (âm), rõ hơn đã nói trước ở [1.1.Chuẩn hóa số thực](#11Chuẩn-hóa-số-thực)
@@ -701,7 +721,7 @@ Và ta đã tính được `Actual exponent = 4` đồng thời nhận thấy $$
 
 #### 2.2.4.Nhân với 2^Exponent
 
-Đây không phải nhân như toán học thông thường mà chỉ là phép dịch dấu chấm ngược chiều lại, **ví dụ** khi encode việc chuẩn hóa dịch dấu chấm sang bên trái là số mũ actual exponent là dương còn sang bên phải nó là âm, thì bây giờ trong decode chúng ta có actual exponent đã giải ở phần [2.2.2.Khôi phục Actual Exponent](#222khôi-phục-actual-exponent), ta có `actual exponent = 4` vậy bây giờ encode mình dịch dấu chấm sang trái 4 lần là actual exponent là 4 thì bây giờ decode mình dịch dấu chấm sang phải như đang trả lại chỗ cũ thôi. Bây giờ ta có `1.11011100111101011100001` là kết quả của phần [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit), ta tiến hành dịch dấu chấm sang phải 4 lần (theo giá trị của actual exponent mà ta đã tính ra ở phần khôi phục exponent) ta có :
+Về mặt toán học đây vẫn là phép nhân với $$\large2^{\text{Exponent}}$$ nhưng trong hệ nhị phân, phép nhân với lũy thừa của 2 tương đương với dịch dấu chấm nhị phân, **ví dụ** khi encode việc chuẩn hóa dịch dấu chấm sang bên trái là số mũ actual exponent là dương còn sang bên phải nó là âm, thì bây giờ trong decode chúng ta có actual exponent đã giải ở phần [2.2.2.Khôi phục Actual Exponent](#222khôi-phục-actual-exponent), ta có `actual exponent = 4` vậy bây giờ encode mình dịch dấu chấm sang trái 4 lần là actual exponent là 4 thì bây giờ decode mình dịch dấu chấm sang phải như đang trả lại chỗ cũ thôi. Bây giờ ta có `1.11011100111101011100001` là kết quả của phần [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit), ta tiến hành dịch dấu chấm sang phải 4 lần (theo giá trị của actual exponent mà ta đã tính ra ở phần khôi phục exponent) ta có :
 
 $$
 \large1.11011100111101011100001_{2} \xrightarrow{\text{dịch phải 4}} 11101.1100111101011100001_{2}
