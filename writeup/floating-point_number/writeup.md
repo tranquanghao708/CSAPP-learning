@@ -519,18 +519,18 @@ Ví dụ trường fraction của float là 23bit, nhưng việc thêm padding v
 
 **Số nhị phân thực tế**
 
-Nó có thể dài vô hạn, ko bị giới hạn bởi 23bit **ví dụ** như $$\large1.101101001011100001010001101_{2}$$
+Nó có thể dài vô hạn, ko bị giới hạn bởi 23bit **ví dụ** như $$\large1.101101001011100001010001101\ldots_{2}$$
 
 **Significand dùng khi chuẩn hóa/rounding**
 
-ví dụ $$\large1.101101001011100001010001101..._{2}$$ và có thể giữ thêm các bit sau để quyết định rounding
+ví dụ $$\large1.101101001011100001010001101\ldots_{2}$$ và có thể giữ thêm các bit sau để quyết định rounding
 
 **Fraction field**
 
 ví dụ :
 
 $$\large
-\underbrace{10110100101110000101000​}*{\text{32bit}}
+\underbrace{10110100101110000101000​}_{\text{32bit}}
 $$
 
 #### 1.8.Trường số mũ (Exponent)
