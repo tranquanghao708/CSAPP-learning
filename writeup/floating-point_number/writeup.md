@@ -624,27 +624,27 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 > trích từ : [Tin học đại cương bách khoa hà nội](https://www.youtube.com/watch?v=ITpspAmKpCk&pp=ygUkc-G7kSB04buxYyBk4bqldSBwaOG6qXkgxJHhu5luZyBJRWVl)
 
-**như thế các bit theo thứ tự ta sẽ thu được :** $$\large0.81\approx0.11001011100001010..$$ suy ra nó là biểu diễn phần thập phân dưới dạng nhị phân, vậy ta có $$\large11101.11001011100001010_{2}$$.
+**như thế các bit theo thứ tự ta sẽ thu được :** $$\large0.81\approx0.1100111101011100001010..$$ suy ra nó là biểu diễn phần thập phân dưới dạng nhị phân, vậy ta có $$\large11101.1100111101011100001010_{2}$$.
 
 > [!NOTE]
 > **Lưu ý:** Quá trình nhân với 2 chỉ dừng khi phần dư bằng 0. Nếu phần dư cứ lặp lại và không bao giờ bằng 0 thì số đó có biểu diễn nhị phân vô hạn. Khi lưu vào IEEE 754, phần cứng sẽ cắt bớt các bit vượt quá số bit fraction cho phép và áp dụng quy tắc làm tròn (rounding) có ở chương [3.Rounding tổng quan và các chế độ làm tròn](#4rounding-tổng-quan-và-các-chế-độ-làm-tròn)
 
 #### 2.1.3.Chuẩn hóa số thực
 
-Tiếp theo là phần chuẩn hóa, phần này chúng ta đã biết tại chương [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized) bây giờ chúng ta có $$\large11101.11001011100001010_{2}$$ và ta thực hiện di chuyển dấu chấm sang bên trái :
+Tiếp theo là phần chuẩn hóa, phần này chúng ta đã biết tại chương [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized) bây giờ chúng ta có $$\large11101.1100111101011100001010_{2}$$ và ta thực hiện di chuyển dấu chấm sang bên trái :
 
 $$
-\large11101.11001011100001010_{2} \xrightarrow{\text{dịch trái 4bit}} 1.110111001011100001010_{2}
+\large11101.1100111101011100001010_{2} \xrightarrow{\text{dịch trái 4bit}} 1.11011100111101011100001010_{2}
 $$
 
-nó thành $$\large\boxed{1.110111001011100001010_{2}}$$ và ta nhớ ta dịch dấu chấm sang trái 4 lần, vì vậy ta có `actual exponent = 4` đây là mũ số thực (chưa cộng bias).
+nó thành $$\large\boxed{1.11011100111101011100001010_{2}}$$ và ta nhớ ta dịch dấu chấm sang trái 4 lần, vì vậy ta có `actual exponent = 4` đây là mũ số thực (chưa cộng bias).
 
 > [!IMPORTANT]
-> Actual Exponent không phải là trường Exponent lưu trong IEEE 754. Đây chỉ là số mũ toán học sau khi chuẩn hóa. Trường Exponent trong IEEE sẽ được tính ở bước tiếp theo bằng công thức `exponent field = actual expnent + bias`
+> Actual Exponent không phải là trường Exponent lưu trong IEEE 754. Đây chỉ là số mũ toán học sau khi chuẩn hóa. Trường Exponent trong IEEE sẽ được tính ở bước tiếp theo bằng công thức `exponent field = actual exponent + bias`
 
 #### 2.1.4.Tính Exponent Field
 
-Ta có `actual exponent = 4` từ phần thực hiện chuẩn hóa số thực, bây giờ chương này ta tính exponent field (trường số mũ), phần này ta dùng `actual expnent + bias`, khái niệm bias có tại chương [1.8.1.Độ lệch (Bias)](#181độ-lệch-bias) cũng ở chương đó ta có một bảng có 3 trường được phân bổ nhị phân do đó mỗi trường đều có toán hạng riêng cho nó, ở đây ta dùng hệ 32bit (float) vậy bias có giá trị là `127`
+Ta có `actual exponent = 4` từ phần thực hiện chuẩn hóa số thực, bây giờ chương này ta tính exponent field (trường số mũ), phần này ta dùng `actual exponent + bias`, khái niệm bias có tại chương [1.8.1.Độ lệch (Bias)](#181độ-lệch-bias) cũng ở chương đó ta có một bảng có 3 trường được phân bổ nhị phân do đó mỗi trường đều có toán hạng riêng cho nó, ở đây ta dùng hệ 32bit (float) vậy bias có giá trị là `127`
 
 > [!NOTE]
 > **Lưu ý:** giá trị `127` ở phần bias là kết quả của phép tính Tmax $$\large2^{N-1}-1$$, ở đây thực chất bias chỉ có toán hạng là 8bit thôi 
@@ -653,20 +653,20 @@ khi biết giá trị của bias ta tiến hành thực hiện tính trường s
 
 #### 2.1.5.Lấy Fraction
 
-IEEE754 quy định là phần này chỉ được lấy những bit sau dấu chấm, không được lấy các bit trước dấu chấm vậy ta có $$\large1.110111001011100001010_{2}\times2^{4}$$ thì ta lấy fraction `110111001011100001010` nhưng theo kiến trúc 32bit (32bit architecture) và dựa vào bảng ở chương bias ta thấy fraction có toán hạng là 23bit vậy ta thêm đơn vị `0` phía sau sao cho đủ 23bit, suy ra fraction là `11011100101110000101000` (đủ 23bit)
+IEEE754 quy định là phần này chỉ được lấy những bit sau dấu chấm, không được lấy các bit trước dấu chấm vậy ta có $$\large1.11011100111101011100001010_{2}\times2^{4}$$ thì ta lấy fraction `11011100111101011100001010` nhưng theo kiến trúc 32bit (32bit architecture) và dựa vào bảng ở chương bias ta thấy fraction có toán hạng là 23bit vậy ta thêm đơn vị `0` phía sau sao cho đủ 23bit, suy ra fraction là `11011100111101011100001010` (dư 3 bit) ta thực hiện cắt và làm tròn thành `11011100111101011100001` (do xét Guardbit = 0 nên giữ nguyên, theo quy tắc làm tròn có tại phần [3.2.Round to nearest, ties to even](#32round-to-nearest-ties-to-even))
 
 > [!NOTE]
 > Nếu trường hợp gắp số bit fraction nhiều hơn giới hạn toán hạn của fraction thì CPU sẽ thực hiện cắt bit và làm tròn (rounding), ví dụ fraction có toán hạng là 23bit nhưng đầu vào ở fraction là hơn 23bit thì CPU sẽ cắt sao cho đủ 23bit và rounding
 
 #### 2.1.6.Ghép Sign | Exponent | Fraction
 
-Phần này chỉ ghép lại thôi, bây giờ ta có sign = $$\large0_{2}$$ vì `29.81` là số dương, exponent field = $$\large131_{10} = 10000011_{2}\text{Chuẩn 8bit thỏa mãn trường số mũ}$$, Fraction field = $$\large11011100101110000101000_{2}\text{padding 0 cho đủ 23bit thảo mãn trường phần trị}$$ :
+Phần này chỉ ghép lại thôi, bây giờ ta có sign = $$\large0_{2}$$ vì `29.81` là số dương, exponent field = $$\large131_{10} = 10000011_{2}\text{Chuẩn 8bit thỏa mãn trường số mũ}$$, Fraction field = $$\large11011100111101011100001_{2}$$ (sau khi cắt/rounding) :
 
 | sign | Exponent | fraction |
 |------|----------|----------|
-| 0 | 10000011 | 11011100101110000101000 |
+| 0 | 10000011 | 11011100111101011100001 |
 
-**từ trên bảng ta có :** `0 10000011 11011100101110000101000`, bỏ dấu cách đi ta có `01000001111011100101110000101000`, suy ra $$\large29.81_{10} = \boxed{01000001111011100101110000101000_{2}}$$
+**từ trên bảng ta có :** `0 10000011 11011100111101011100001`, bỏ dấu cách đi ta có `01000001111011100111101011100001`, suy ra $$\large29.81_{10} = \boxed{01000001111011100111101011100001_{2}}$$
 
 #### 2.2.Decode
 
@@ -674,7 +674,7 @@ Chương này nói về chuyển đổi số thực biểu diễn dưới dạng
 
 #### 2.2.1.Tách Sign | Exponent | Fraction
 
-đây là việc tách một đoạn binary biểu diễn số thực theo 3 trường (sign, exponent và fraction). Ta có `01000001111011100101110000101000`, tách chúng thành `0(sign) 10000011(exponent) 11011100101110000101000(fraction)`
+đây là việc tách một đoạn binary biểu diễn số thực theo 3 trường (sign, exponent và fraction). Ta có `01000001111011100111101011100001`, tách chúng thành `0(sign) 10000011(exponent) 11011100111101011100001(fraction)`
 
 #### 2.2.2.Khôi phục Actual Exponent
 
@@ -686,9 +686,9 @@ Sau khi đã tính được Actual Exponent, bước tiếp theo là khôi phụ
 
 | sign | exponent | fraction |
 |------|----------|----------|
-| 0 | 10000011 | 11011100101110000101000 |
+| 0 | 10000011 | 11011100111101011100001 |
 
-Và ta đã tính được `Actual exponent = 4` đồng thời nhận thấy $$\large\text{Exponent}\neq00000000$$ và $$\large\text{Exponent}\neq11111111$$ , nên đây là normalized number, CPU sẽ tự động thêm `hiddenbit = 1`. Vậy ta có fraction ban đầu là `11011100101110000101000` nhưng sau khi khôi phục hiddenbit ta có `1.11011100101110000101000` vậy suy ra kết quả là $$\large\boxed{1.11011100101110000101000_{2}}$$
+Và ta đã tính được `Actual exponent = 4` đồng thời nhận thấy $$\large\text{Exponent}\neq00000000$$ và $$\large\text{Exponent}\neq11111111$$ , nên đây là normalized number, CPU sẽ tự động thêm `hiddenbit = 1`. Vậy ta có fraction ban đầu là `11011100111101011100001` nhưng sau khi khôi phục hiddenbit ta có `1.11011100111101011100001` vậy suy ra kết quả là $$\large\boxed{1.11011100111101011100001_{2}}$$
 
 > [!NOTE]
 > Hidden Bit không tồn tại trong bộ nhớ. Nó chỉ được CPU tự động thêm vào trong quá trình Decode nếu số thuộc dạng Normalized. Đối với Denormalized Number (Exponent = 00000000), Hidden Bit không còn bằng 1 nữa mà bằng 0. Điều này đã được trình bày ở chương [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized)
@@ -699,35 +699,38 @@ Cho `actual exponent = 127`, trong khi toán hạng của trường fraction ở
 
 #### 2.2.4.Nhân với 2^Exponent
 
-Đây không phải nhân như toán học thông thường mà chỉ là phép dịch dấu chấm ngược chiều lại, **ví dụ** khi encode việc chuẩn hóa dịch dấu chấm sang bên trái là số mũ actual exponent là dương còn sang bên phải nó là âm, thì bây giờ trong decode chúng ta có actual exponent đã giải ở phần [2.2.2.Khôi phục Actual Exponent](#222khôi-phục-actual-exponent), ta có `actual exponent = 4` vậy bây giờ encode mình dịch dấu chấm sang trái 4 lần là actual exponent là 4 thì bây giờ decode mình dịch dấu chấm sang phải như đang trả lại chỗ cũ thôi. Bây giờ ta có `1.11011100101110000101000` là kết quả của phần [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit), ta tiến hành dịch dấu chấm sang phải 4 lần (theo giá trị của actual exponent mà ta đã tính ra ở phần khôi phục exponent) ta có :
+Đây không phải nhân như toán học thông thường mà chỉ là phép dịch dấu chấm ngược chiều lại, **ví dụ** khi encode việc chuẩn hóa dịch dấu chấm sang bên trái là số mũ actual exponent là dương còn sang bên phải nó là âm, thì bây giờ trong decode chúng ta có actual exponent đã giải ở phần [2.2.2.Khôi phục Actual Exponent](#222khôi-phục-actual-exponent), ta có `actual exponent = 4` vậy bây giờ encode mình dịch dấu chấm sang trái 4 lần là actual exponent là 4 thì bây giờ decode mình dịch dấu chấm sang phải như đang trả lại chỗ cũ thôi. Bây giờ ta có `1.11011100111101011100001` là kết quả của phần [2.2.3.Khôi phục Hidden Bit](#223khôi-phục-hidden-bit), ta tiến hành dịch dấu chấm sang phải 4 lần (theo giá trị của actual exponent mà ta đã tính ra ở phần khôi phục exponent) ta có :
 
 $$
-\large1.11011100101110000101000_{2} \xrightarrow{\text{dịch phải 4}} 11101.1100101110000101000_{2}
+\large1.11011100111101011100001_{2} \xrightarrow{\text{dịch phải 4}} 11101.1100111101011100001_{2}
 $$ 
 
-vậy kết quả là $$\large\boxed{11101.1100101110000101000_{2}}$$ đây chính là số nhị phân ban đầu trước khi chuẩn hóa
+vậy kết quả là $$\large\boxed{11101.1100111101011100001_{2}}$$ đây chính là số nhị phân ban đầu trước khi chuẩn hóa
 
 #### 2.2.5.Áp dụng Sign
 
-Đây là bước cuối cùng trong quá trình Decode. Sau khi đã khôi phục lại số nhị phân ban đầu, CPU chỉ cần dựa vào trường Sign để xác định kết quả là số dương hay số âm. Ta có **formula =**$$\large1.xxxxx\times2^{N}$$ **ví dụ** $$\large12345_{10}$$ = $$\large1.2345_{10}\times10^{4}$$, ở các bước trước ta đã khôi phục được `Sign = 0, Actual exponent = 4, Significand = 1.11011100101110000101000` và sau khi thực hiện nhân với $$\large2^{\text{Actual Exponent}}$$ ta có `11101.1100101110000101000`, vì `sign = 0` nên $$\large(-1)^{0} = 1$$ do đó giá trị vẫn giữ nguyên `11101.1100101110000101000`, bây giờ ta chỉ cần chuyển phần nguyên sang thập phân và tính toán fraction (phần dãy bit sau dấu chấm)
+Đây là bước cuối cùng trong quá trình Decode. Sau khi đã khôi phục lại số nhị phân ban đầu, CPU chỉ cần dựa vào trường Sign để xác định kết quả là số dương hay số âm. Ta có **formula =**$$\large1.xxxxx\times2^{N}$$ **ví dụ** $$\large12345_{10}$$ = $$\large1.2345_{10}\times10^{4}$$, ở các bước trước ta đã khôi phục được `Sign = 0, Actual exponent = 4, Significand = 1.11011100111101011100001` và sau khi thực hiện nhân với $$\large2^{\text{Actual Exponent}}$$ ta có `11101.1100111101011100001`, vì `sign = 0` nên $$\large(-1)^{0} = 1$$ do đó giá trị vẫn giữ nguyên `11101.1100111101011100001`, bây giờ ta chỉ cần chuyển phần nguyên sang thập phân và tính toán fraction (phần dãy bit sau dấu chấm)
 
-Đầu tiên ta có `11101.1100101110000101000` và ta cần chuyển phần nguyên sang thập phân $$\large11101_{2} = 29_{10}$$, bây giờ ta tiến hành tính toán phần fraction sau dấu chấm cách tính là ta lấy số bit nhân với trọng số lũy thừa số nguyên âm **ví dụ** $$\large1\times2^{-1} + 1\times2^{-2} + 0\times2^{-3} +....+ 0\times2^{-N}$$, ở đây ta thấy giá trị bit `0` luôn ra kết quả là `0` vì thế khi tính tổng nó không thay đổi gì, vậy ta chỉ cần đếm lũy thừa giảm dần và tính toán những bit `1` thôi (trong phần tính toán này phải dùng toán học, không phải nhị phân nên các bit khi tính toán kiểu này là nó có hệ cơ số 10 vì sẽ ra giá trị là hệ thập phân) :
+Đầu tiên ta có `11101.1100111101011100001` và ta cần chuyển phần nguyên sang thập phân $$\large11101_{2} = 29_{10}$$, bây giờ ta tiến hành tính toán phần fraction sau dấu chấm cách tính là ta lấy số bit nhân với trọng số lũy thừa số nguyên âm **ví dụ** $$\large1\times2^{-1} + 1\times2^{-2} + 0\times2^{-3} +....+ 0\times2^{-N}$$, ở đây ta thấy giá trị bit `0` luôn ra kết quả là `0` vì thế khi tính tổng nó không thay đổi gì, vậy ta chỉ cần đếm lũy thừa giảm dần và tính toán những bit `1` thôi (trong phần tính toán này phải dùng toán học, không phải nhị phân nên các bit khi tính toán kiểu này là nó có hệ cơ số 10 vì sẽ ra giá trị là hệ thập phân) :
 
 | bit | trọng số | giá trị |
 |-----|----------|---------|
 | 1 | $$\large2^{-1}$$ | 0.5 |
 | 1 | $$\large2^{-2}$$ | 0.25 |
 | 1 | $$\large2^{-5}$$ | 0.03125 |
+| 1 | $$\large2^{-6}$$ | 0.015625 |
 | 1 | $$\large2^{-7}$$ | 0.0078125 |
 | 1 | $$\large2^{-8}$$ | 0.00390625 |
-| 1 | $$\large2^{-9}$$ | 0.001953125 |
+| 1 | $$\large2^{-10}$$ |  0.0009765625 |
+| 1 | $$\large2^{-12}$$ |  0.0002441406 |
+| 1 | $$\large2^{-13}$$ |  0.00012207031 |
 | 1 | $$\large2^{-14}$$ | 0.00006103516 |
-| 1 | $$\large2^{-16}$$ | 0.00001525879
+| 1 | $$\large2^{-19}$$ | 0.00000190735 |
 
-ta tiến hành tính tổng giá trị lại $$\large2^{-1} + 2^{-2} + 2^{-5} + 2^{-7} + 2^{-8} + 2^{-9} + 2^{-14} + 2^{-16} = 0.79499816895_{10}$$ bây giờ ghép lại ta có kết quả $$\large\boxed{29.79499816895_{10}}$$ . Chúng ta vẫn có thể ráp vào công thức như ở phần [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754) là $$\large(-1)^{S} \times 1.m \times 2^{e-b}$$ ta có $$\large(-1)^{0} \times (1.862187385559082) \times 2^{4}$$ và vẫn ra kết quả khớp là $$\large29.79499816895_{10}$$. Giá trị `1.862187385559082` trong biểu thức là phần trị `Significand = 1.11011100101110000101000` cái phần được tách ở trường fraction lúc đầu, chúng ta quy đổi cả phần này về hệ cơ số 10 bằng cách nhân với trọng số âm như trên bảng vừa rồi
+ta tiến hành tính tổng giá trị lại $$\large2^{-1} + 2^{-2} + 2^{-5} + 2^{-6} + 2^{-7} + 2^{-8} + 2^{-10} + 2^{-12} + 2^{-13} + 2^{-14} + 2^{-19} = 0.80999946594_{10}$$ bây giờ ghép lại ta có kết quả $$\large\boxed{29.80999946594_{10}}$$ . Chúng ta vẫn có thể ráp vào công thức như ở phần [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754) là $$\large(-1)^{S} \times 1.m \times 2^{e-b}$$ ta có $$\large(-1)^{0} \times (1.863124966621399) \times 2^{4}$$ và vẫn ra kết quả khớp là $$\large29.80999946594_{10}$$. Giá trị `1.863124966621399` trong biểu thức là phần trị `Significand = 1.11011100111101011100001` cái phần được tách ở trường fraction lúc đầu, chúng ta quy đổi cả phần này về hệ cơ số 10 bằng cách nhân với trọng số âm như trên bảng vừa rồi
 
 > [!IMPORTANT]
-> Ta thấy nó bị chênh lệch số thực, số lúc đầu là `29.81` nhưng sau khi encode và decode ra kết quả lại là `29.79499816895`. Lý do là vì quá trình chuyển phần thập phân bị cắt sớm (vì nó là số nhị phân vô hạn có trong chương [3.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#31biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn) ) theo giới hạn 23 bit fraction hay giới hạn bit fraction theo toán hạng của IEEE 754 single precision, nên suy ra nguyên nhân là do chuỗi nhị phân bị cắt sớm và rounding (do số thực nhị phân vô hạn)
+> Ta thấy nó bị chênh lệch số thực, số lúc đầu là `29.81` nhưng sau khi encode và decode ra kết quả lại là `29.80999946594`. Lý do là vì quá trình chuyển phần thập phân bị cắt sớm (vì nó là số nhị phân vô hạn có trong chương [3.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#31biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn) ) theo giới hạn 23 bit fraction hay giới hạn bit fraction theo toán hạng của IEEE 754 single precision, nên suy ra nguyên nhân là do chuỗi nhị phân bị cắt sớm và rounding (do số thực nhị phân vô hạn)
 
 #### 2.2.6.Phân biệt giữa exponent để tính trọng số bit fraction và exponent biểu thị cho dịch dấu chấm
 
