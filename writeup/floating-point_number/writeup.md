@@ -549,7 +549,7 @@ Phần `1.` phía trước không được lưu, vì với số normalized nó l
 nếu trường hợp độ rộng của chuỗi nhị phân lớn hơn độ rộng của trường fraction, ta thực hiện cắt và làm tròn. **Ví dụ** $$\large1.1101011010110101101011010_{2}$$ (có 25bit fraction) ta thực hiện cắt 2 bit dư đi ta được $$\large1.11010110101101011010110_{2}$$ và rounding
 
 > [!NOTE]
-> Với $$\large1.1101011010110101101011010_{2}$$ (25 bit fraction), CPU giữ 23 bit đầu làm Fraction Field. Hai bit còn lại cùng các bit phía sau (nếu có) sẽ được dùng để quyết định việc rounding theo chuẩn IEEE 754.
+> Với $$\Large1.1101011010110101101011010_{2}$$ (25 bit fraction), CPU giữ 23 bit đầu làm Fraction Field. Hai bit còn lại cùng các bit phía sau (nếu có) sẽ được dùng để quyết định việc rounding theo chuẩn IEEE 754.
 
 **Điểm quan trọng cần phân biệt:** Actual Exponent quyết định số lần dịch dấu chấm của giá trị số thực, còn Fraction Field chỉ quyết định số lượng bit được lưu trong bộ nhớ. Chuỗi nhị phân dùng trong quá trình chuẩn hóa hoặc khôi phục giá trị có thể dài hơn rất nhiều 23 bit, nhưng khi lưu vào float32, trường Fraction luôn chỉ chứa đúng 23 bit. Nếu số bit sau dấu chấm ít hơn 23 thì CPU thêm các bit 0 để lấp đầy; nếu nhiều hơn 23 thì các bit vượt quá sẽ được dùng để thực hiện rounding theo chuẩn IEEE 754.
 
