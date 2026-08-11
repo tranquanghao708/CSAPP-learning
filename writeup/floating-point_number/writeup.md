@@ -8,15 +8,15 @@
 
 **Phần trọng tâm**
 
-- [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754)
+- [1.Tổng quan về IEEE 754](#1tổng-quan-về-ieee-754)
 
     - [1.1.Chuẩn hóa số thực (normalized)](#11Chuẩn-hóa-số-thực-normalized)
 
     - [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized)
 
-       - [1.2.1.Khi nào IEEE 754 sử dụng Normalized và Denormalized?](#122Khi-nào-ieee-754-sử-dụng-normalized-và-denormalized)
+       - [1.2.1.Khi nào IEEE 754 sử dụng Normalized và Denormalized?](#122vhi-nào-ieee-754-sử-dụng-normalized-và-denormalized)
 
-    - [1.3.Vô hạn (infinity)](#13Vô-hạn-infinity)
+    - [1.3.Vô hạn (infinity)](#13vô-hạn-infinity)
 
     - [1.4.không phải một số (NaN)](#14không-phải-một-số-nan)
 
@@ -34,7 +34,7 @@
 
        - [1.7.2.Trường hợp nếu actual exponent lớn hơn độ rộng trường fraction để dịch dấu chấm](#172trường-hợp-nếu-actual-exponent-lớn-hơn-độ-rộng-trường-fraction-để-dịch-dấu-chấm)
 
-    - [1.8.Trường số mũ (Exponent)](#18Trường-số-mũ-exponent)
+    - [1.8.Trường số mũ (Exponent)](#18trường-số-mũ-exponent)
 
        - [1.8.1.Độ lệch (Bias)](#181độ-lệch-bias)
 
@@ -908,7 +908,7 @@ hay còn gọi là số thực hữu hạn lớn nhất, đối với float 32 b
 | 1 | $$\large2^{-2}$$ | 0.25 |
 | .. | .. | .. |
 
-như thế tính lần lượt cho hết bit 1 trong trường fraction. Dựa vào công thức có ở [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754) là $$\large(-1)^{S} \times 1.m \times 2^{e-b}$$, ta tiến hành ráp vào bây giờ sign = 0, actual exponent = 127, bias = 127, tổng cấp số nhân gía trị fraction là $$\large2-2^{-23}$$ khi ráp ta được $$\large(-1)^{0} \times (2-2^{-23}) \times 2^{127}$$ bây giờ ta lấy casio tính cái biểu thức này ra ta được $$\large\boxed{340282346638528859811704183484516925440}$$ đây chính là giá trị chính xác của số thực hữu hạn lớn nhất 32bit float
+như thế tính lần lượt cho hết bit 1 trong trường fraction. Dựa vào công thức có ở [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754) là $$\large(-1)^{S} \times 1.m \times 2^{e-b}$$, ta tiến hành ráp vào bây giờ sign = 0, actual exponent = 127, bias = 127, tổng cấp số nhân gía trị fraction là $$\large2-2^{-23}$$ khi ráp ta được $$\large(-1)^{0} \times (2-2^{-23}) \times 2^{127}$$ bây giờ ta lấy casio tính cái biểu thức này ra ta được $$\large\boxed{3.40282346638528859811704183484516925440}$$ đây chính là giá trị chính xác của số thực hữu hạn lớn nhất 32bit float
 
 lý do giá trị phần trị lại là $$\large2-2^{-23}$$ vì đó chỉ là phần rút gọn theo cấp số nhân của phần trị số thực thôi, điều này thường sẽ nói rất rõ bên phía toán học
 
