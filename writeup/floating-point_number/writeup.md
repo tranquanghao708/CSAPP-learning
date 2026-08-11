@@ -14,7 +14,7 @@
 
     - [1.2.Khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized)
 
-       - [1.2.1.Khi nào IEEE 754 sử dụng Normalized và Denormalized?](#122vhi-nào-ieee-754-sử-dụng-normalized-và-denormalized)
+       - [1.2.1.Khi nào IEEE 754 sử dụng Normalized và Denormalized?](#122khi-nào-ieee-754-sử-dụng-normalized-và-denormalized)
 
     - [1.3.Vô hạn (infinity)](#13vô-hạn-infinity)
 
@@ -230,7 +230,7 @@ thì đây không phải là parent $$\large1.0000000000_{2}\times2^{127}$$ mà 
 
 > Trích từ CS:APP
 
-- Trong IEEE chuẩn còn định nghĩa là dương vô cực ($$\large+\infty$$) và âm vô cực ($$\large-\infty$$), infinity xuất hiện khi kết quả của một phép tính vượt quá phạm vi biểu diễn của kiểu số thực. **Ví dụ** biểu thức cho float (32bits) $$\large3.5\times10^{38}\times10 = +\infty$$ với giá trị của biểu thức vừa rồi lớn hơn giá trị float lớn nhất (số thực lớn nhất) nên nó sẽ là dương vô cực ($$\large+\infty$$) vì `sign = 0` là số dương. Phần số thực lớn nhất ở mục [2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)](#3số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất)
+- Trong IEEE chuẩn còn định nghĩa là dương vô cực ($$\large+\infty$$) và âm vô cực ($$\large-\infty$$), infinity xuất hiện khi kết quả của một phép tính vượt quá phạm vi biểu diễn của kiểu số thực. **Ví dụ** biểu thức cho float (32bits) $$\large\approx3.4028235\ldots\times10^{38}\times10 = +\infty$$ với giá trị của biểu thức vừa rồi lớn hơn giá trị float lớn nhất (số thực lớn nhất) nên nó sẽ là dương vô cực ($$\large+\infty$$) vì `sign = 0` là số dương. Phần số thực lớn nhất ở mục [2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)](#3số-thực-lớn-nhất-và-tính-toán-số-thực-lớn-nhất)
 
 - IEEE 754 quy định Infinity có dạng:
 
@@ -908,7 +908,7 @@ hay còn gọi là số thực hữu hạn lớn nhất, đối với float 32 b
 | 1 | $$\large2^{-2}$$ | 0.25 |
 | .. | .. | .. |
 
-như thế tính lần lượt cho hết bit 1 trong trường fraction. Dựa vào công thức có ở [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754) là $$\large(-1)^{S} \times 1.m \times 2^{e-b}$$, ta tiến hành ráp vào bây giờ sign = 0, actual exponent = 127, bias = 127, tổng cấp số nhân gía trị fraction là $$\large2-2^{-23}$$ khi ráp ta được $$\large(-1)^{0} \times (2-2^{-23}) \times 2^{127}$$ bây giờ ta lấy casio tính cái biểu thức này ra ta được $$\large\boxed{3.40282346638528859811704183484516925440}$$ đây chính là giá trị chính xác của số thực hữu hạn lớn nhất 32bit float
+như thế tính lần lượt cho hết bit 1 trong trường fraction. Dựa vào công thức có ở [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754) là $$\large(-1)^{S} \times 1.m \times 2^{e-b}$$, ta tiến hành ráp vào bây giờ sign = 0, actual exponent = 127, bias = 127, tổng cấp số nhân gía trị fraction là $$\large2-2^{-23}$$ khi ráp ta được $$\large(-1)^{0} \times (2-2^{-23}) \times 2^{127}$$ bây giờ ta lấy casio tính cái biểu thức này ra ta được $$\large\boxed{3.40282346638528859811704183484516925440\times10^{38}}$$ đây chính là giá trị chính xác của số thực hữu hạn lớn nhất 32bit float
 
 lý do giá trị phần trị lại là $$\large2-2^{-23}$$ vì đó chỉ là phần rút gọn theo cấp số nhân của phần trị số thực thôi, điều này thường sẽ nói rất rõ bên phía toán học
 
