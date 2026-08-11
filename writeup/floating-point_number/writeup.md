@@ -32,7 +32,7 @@
 
        - [1.7.1.Hidden Bit](#171hidden-bit)
 
-       - [1.7.2.Trường hợp nếu actual exponent lớn hơn toán hạng trường fraction để dịch dấu chấm](#172trường-hợp-nếu-actual-exponent-lớn-hơn-toán-hạng-trường-fraction-để-dịch-dấu-chấm)
+       - [1.7.2.Trường hợp nếu actual exponent lớn hơn độ rộng trường fraction để dịch dấu chấm](#172trường-hợp-nếu-actual-exponent-lớn-hơn-độ-rộng-trường-fraction-để-dịch-dấu-chấm)
 
     - [1.8.Trường số mũ (Exponent)](#18Trường-số-mũ-exponent)
 
@@ -490,7 +490,7 @@ Trường Fraction quyết định precision (độ chính xác) của số th�
 
 Hidden Bit giúp IEEE 754 chỉ lưu 23 bit fraction (float) nhưng lại đạt độ chính xác tương đương 24 bit, hay 52 bit (double) nhưng tương đương 53 bit. Trong số thực IEEE 754 chuẩn hóa (Normalized), bit 1 đứng trước dấu chấm nhị phân không được lưu vào bộ nhớ. Bit này được phần cứng tự động khôi phục khi thực hiện tính toán, nên được gọi là Hidden Bit, Implicit Leading Bit hoặc Implicit 1.
 
-Sự phân biệt giữa hiddenbit và sign bit, khi nhắc tới đứng trước dấu chấm điều dễ nhầm nhất là hai khái niệm sign bit và hiddenbit tuy nhiên chúng không phải chung một khái niệm, phân biệt hidden bit khi thấy bit đứng trước dấu chấm (phải có dấu chấm) đối với số chuẩn hóa mới gọi là hidden bit còn phân biệt sign bit khi thấy bit không đứng trước dấu nào mà là bit MSB (bit có trọng số cao nhất) sau khi thực hiện ráp lại theo cấu trúc `sign | exponent | fraction` chuẩn IEEE đó mới gọi là sign bit. Tuy hai bit đều có toán hạng là 1 bit nhưng về mặt lý thuyết và kỹ thuật chúng phục vụ cho mục đích khác nhau
+Sự phân biệt giữa hiddenbit và sign bit, khi nhắc tới đứng trước dấu chấm điều dễ nhầm nhất là hai khái niệm sign bit và hiddenbit tuy nhiên chúng không phải chung một khái niệm, phân biệt hidden bit khi thấy bit đứng trước dấu chấm (phải có dấu chấm) đối với số chuẩn hóa mới gọi là hidden bit còn phân biệt sign bit khi thấy bit không đứng trước dấu nào mà là bit MSB (bit có trọng số cao nhất) sau khi thực hiện ráp lại theo cấu trúc `sign | exponent | fraction` chuẩn IEEE đó mới gọi là sign bit. Tuy hai bit đều có độ rộng là 1 bit nhưng về mặt lý thuyết và kỹ thuật chúng phục vụ cho mục đích khác nhau
 
 mục đích của hidden bit là giúp tăng độ chính xác của số thực, ví dụ nó lưu 23bit fraction float nhưng có độ chính xác tương đương với 24bit, điều này giúp tăng độ chính xác cao hơn. Còn mục đích của sign bit là giúp biểu diễn số thực là âm hay dương (Hai khái niệm này cần phân biệt rõ)
 
@@ -509,11 +509,18 @@ Nhưng hidden bit không phải lúc nào cũng bằng 1, nó chỉ đúng với
 | Infinity                 | Không sử dụng |
 | NaN                      | Không sử dụng |
 
-#### 1.7.2.Trường hợp nếu actual exponent lớn hơn toán hạng trường fraction để dịch dấu chấm
+#### 1.7.2.Trường hợp nếu actual exponent lớn hơn độ rộng trường fraction để dịch dấu chấm
 
-Cho `actual exponent = 127`, trong khi toán hạng của trường fraction ở ngành kiến trúc 32bit chỉ là 23bit thôi, vậy con số `127 > 23` nên chúng ta dịch dấu chấm như thế nào. Chúng ta sẽ dịch dấu chấm bằng cách thêm các padding 0 cho những phần cần thiếu, nghĩa là chúng ta cứ việc dịch dấu chấm ở fraction trước đến khi dấu chấm vượt quá toán hạng của trường fraction khi đó chúng ta mới thêm dấu chấm sao cho dịch đủ 127 ô theo giá trị của actual exponent là được. **Ví dụ** cho toán hạng fraction là 3 và actual exponent là 9, ta có `1.101` bây giờ ta dịch dấu chấm ở fraction sang bên phải 9 ô dịch trước 2 ô là `110.1` bây giờ ta thấy nó gần sắp vượt quá toán hạng của trường fraction. Bây giờ ta tiến hành thêm padding 0 vào và dịch sao cho đủ 9 ô, ta có `1101000000.0` vậy là đủ 9 ô thỏa mãn actual exponent
+Cho `actual exponent = 127`. Điều này có nghĩa khi khôi phục giá trị số thực, dấu chấm nhị phân phải được dịch sang phải `127` vị trí. Tuy nhiên, trường Fraction của float chỉ lưu 23 bit. Điều này dễ khiến người học nhầm rằng cần phải tạo ra một trường Fraction dài 127 bit, nhưng thực tế không phải vậy.
 
-**vậy việc thêm padding thỏa mãn actual exponent có làm vi phạm toán hạng của trường fraction?**
+Chúng ta cần dịch dấu chấm bằng cách thêm các padding 0 cho những phần cần thiếu, nghĩa là chúng ta cứ việc dịch dấu chấm ở fraction trước đến khi dấu chấm vượt quá độ rộng của trường fraction khi đó chúng ta mới thêm dấu chấm sao cho dịch đủ `127` vị trí theo giá trị của actual exponent là được.
+
+**Ví dụ** cho độ rộng trường fraction là 3 và actual exponent là 9, ta có `1.101` bây giờ ta dịch dấu chấm ở fraction sang bên phải 9 vị trí dịch trước 2 vị trí là dịch dấu chấm sao cho nó tới phần cuối cùng như `110.1` bây giờ ta thấy nó gần sắp vượt quá độ rộng của trường fraction. Bây giờ ta tiến hành thêm padding 0 vào và dịch sao cho đủ 9 vị trí (theo actual exponent), ta có $$\large\boxed{1101000000.0_{2}}$$ vậy là đủ 9 ô thỏa mãn actual exponent
+
+> [!NOTE]
+> kết quả $$\large1101000000.0_{2}$$ có thể bỏ `.0` ở cuối đi cũng ko sao, vì $$\large1101000000_{2}$$ cũng đúng
+
+**vậy việc thêm padding thỏa mãn actual exponent có làm vi phạm độ rộng của trường fraction?**
 
 Ví dụ trường fraction của float là 23bit, nhưng việc thêm padding vô tình làm chuỗi nhị phân lớn hơn 23bit với các bit zero. Tuy nhiên về cơ bản padding chúng không làm trường fraction vượt quá 23 bit, nếu phân biệt đúng giữa chuỗi biểu diễn trung gian và field fraction thực sự được lưu trong IEEE 754. Chúng ta cần phân biệt :
 
@@ -530,16 +537,21 @@ ví dụ $$\large1.101101001011100001010001101\ldots_{2}$$ và có thể giữ t
 ví dụ :
 
 $$\large
-\underbrace{10110100101110000101000​}_{\text{32bit}}
+\underbrace{10110100101110000101000​}_{\text{23bit fraction field}}
 $$
 
 Phần `1.` phía trước không được lưu, vì với số normalized nó là hidden bit.
 
-**padding theo actual exponent**
+**Padding trong quá trình biểu diễn trung gian**
 
-đây là yếu tố góp một phần ở chương này, cũng là yếu tố khá dễ nhầm . Ở đây, ta cần phân tách riêng cho nó hai trường hợp, với chuỗi nhị phân có toán hạng nhỏ hơn toán hạng fraction field, và với chuỗi nhị phân có toán hạng lớn hơn toán hạng fraction field. Đối với chuỗi nhị phân có toán hạng nhỏ hơn toán hạng fraction field ví dụ $$\large1.11010_{2}$$ (có 5bit fraction) để có thể lắp đầy toán hạng của trường fraction ta cần thêm zero vào (đây cũng là kỹ thuật đã nói ở phần đầu tiên) sao cho lắp đầy đủ 23bit
+đây là yếu tố góp một phần ở chương này, cũng là yếu tố khá dễ nhầm . Ở đây, ta cần phân tách riêng cho nó hai trường hợp, với chuỗi nhị phân có độ rộng nhỏ hơn độ rộng fraction field, và với chuỗi nhị phân có độ rộng lớn hơn độ rộng fraction field. Đối với chuỗi nhị phân có độ rộng nhỏ hơn độ rộng fraction field ví dụ $$\large1.11010_{2}$$ (có 5bit fraction) để có thể lắp đầy độ rộng của trường fraction ta cần thêm zero vào (đây cũng là kỹ thuật đã nói ở phần đầu tiên) sao cho lắp đầy đủ 23bit
 
-nếu trường hợp toán hạng của chuỗi nhị phân lớn hơn toán hạng của trường fraction, ta thực hiện cắt và làm tròn. **Ví dụ** $$\large1.1101011010110101101011010_{2}$$ (có 25bit fraction) ta thực hiện cắt 2 bit dư đi ta được $$\large1.11010110101101011010110_{2}$$ và rounding
+nếu trường hợp độ rộng của chuỗi nhị phân lớn hơn độ rộng của trường fraction, ta thực hiện cắt và làm tròn. **Ví dụ** $$\large1.1101011010110101101011010_{2}$$ (có 25bit fraction) ta thực hiện cắt 2 bit dư đi ta được $$\large1.11010110101101011010110_{2}$$ và rounding
+
+> [!NOTE]
+> Với $$\large1.1101011010110101101011010_{2}$$ (25 bit fraction), CPU giữ 23 bit đầu làm Fraction Field. Hai bit còn lại cùng các bit phía sau (nếu có) sẽ được dùng để quyết định việc rounding theo chuẩn IEEE 754.
+
+**Điểm quan trọng cần phân biệt:** Actual Exponent quyết định số lần dịch dấu chấm của giá trị số thực, còn Fraction Field chỉ quyết định số lượng bit được lưu trong bộ nhớ. Chuỗi nhị phân dùng trong quá trình chuẩn hóa hoặc khôi phục giá trị có thể dài hơn rất nhiều 23 bit, nhưng khi lưu vào float32, trường Fraction luôn chỉ chứa đúng 23 bit. Nếu số bit sau dấu chấm ít hơn 23 thì CPU thêm các bit 0 để lấp đầy; nếu nhiều hơn 23 thì các bit vượt quá sẽ được dùng để thực hiện rounding theo chuẩn IEEE 754.
 
 **Tóm lại:** Padding để đủ 23 bit thì được. Nhưng padding không được phép làm thay đổi số bit mà field fraction chứa. Vì thế nó ko làm trường fraction vượt quá 23bit
 
@@ -680,10 +692,10 @@ nó thành $$\large\boxed{1.11011100111101011100001010_{2}}$$ và ta nhớ ta d�
 
 #### 2.1.4.Tính Exponent Field
 
-Ta có `actual exponent = 4` từ phần thực hiện chuẩn hóa số thực, bây giờ chương này ta tính exponent field (trường số mũ), phần này ta dùng `actual exponent + bias`, khái niệm bias có tại chương [1.8.1.Độ lệch (Bias)](#181độ-lệch-bias) cũng ở chương đó ta có một bảng có 3 trường được phân bổ nhị phân do đó mỗi trường đều có toán hạng riêng cho nó, ở đây ta dùng hệ 32bit (float) vậy bias có giá trị là `127`
+Ta có `actual exponent = 4` từ phần thực hiện chuẩn hóa số thực, bây giờ chương này ta tính exponent field (trường số mũ), phần này ta dùng `actual exponent + bias`, khái niệm bias có tại chương [1.8.1.Độ lệch (Bias)](#181độ-lệch-bias) cũng ở chương đó ta có một bảng có 3 trường được phân bổ nhị phân do đó mỗi trường đều có độ rộng riêng cho nó, ở đây ta dùng hệ 32bit (float) vậy bias có giá trị là `127`
 
 > [!NOTE]
-> **Lưu ý:** giá trị `127` ở phần bias là kết quả của phép tính Tmax $$\large2^{N-1}-1$$, ở đây thực chất bias chỉ có toán hạng là 8bit thôi 
+> **Lưu ý:** giá trị `127` ở phần bias là kết quả của phép tính Tmax $$\large2^{N-1}-1$$, ở đây thực chất bias chỉ có độ rộng là 8bit thôi 
 
 khi biết giá trị của bias ta tiến hành thực hiện tính trường số mũ (Exponent field) = $$\large4 + 127 = \boxed{131_{10}}$$ vậy suy ra trường số mũ có giá trị là `131`
 
@@ -692,7 +704,7 @@ khi biết giá trị của bias ta tiến hành thực hiện tính trường s
 IEEE754 quy định là phần này chỉ được lấy những bit sau dấu chấm, không được lấy các bit trước dấu chấm vậy ta có $$\large1.11011100111101011100001010_{2}\times2^{4}$$ thì ta lấy fraction `11011100111101011100001010` nhưng theo định dạng IEEE 754 binary32 (32-bit floating-point format) và dựa vào bảng ở chương bias ta thấy fraction có 23bit nhưng fraction là `11011100111101011100001010` (dư 3 bit) ta thực hiện cắt và làm tròn thành `11011100111101011100001` (do xét Guardbit = 0 nên giữ nguyên, theo quy tắc làm tròn có tại phần [3.2.Round to nearest, ties to even](#32round-to-nearest-ties-to-even))
 
 > [!NOTE]
-> Nếu trường hợp gắp số bit fraction nhiều hơn giới hạn toán hạn của fraction thì CPU sẽ thực hiện cắt bit và làm tròn (rounding), ví dụ fraction có toán hạng là 23bit nhưng đầu vào ở fraction là hơn 23bit thì CPU sẽ cắt sao cho đủ 23bit và rounding
+> Nếu trường hợp gắp số bit fraction nhiều hơn giới hạn toán hạn của fraction thì CPU sẽ thực hiện cắt bit và làm tròn (rounding), ví dụ fraction có độ rộng là 23bit nhưng đầu vào ở fraction là hơn 23bit thì CPU sẽ cắt sao cho đủ 23bit và rounding
 
 #### 2.1.6.Ghép Sign | Exponent | Fraction
 
@@ -762,7 +774,7 @@ vậy kết quả là $$\large\boxed{11101.1100111101011100001_{2}}$$ đây chí
 ta tiến hành tính tổng giá trị lại $$\large2^{-1} + 2^{-2} + 2^{-5} + 2^{-6} + 2^{-7} + 2^{-8} + 2^{-10} + 2^{-12} + 2^{-13} + 2^{-14} + 2^{-19} = 0.80999946594_{10}$$ bây giờ ghép lại ta có kết quả $$\large\boxed{29.80999946594_{10}}$$ . Chúng ta vẫn có thể ráp vào công thức như ở phần [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754) là $$\large(-1)^{S} \times 1.m \times 2^{e-b}$$ ta có $$\large(-1)^{0} \times (1.863124966621399) \times 2^{4}$$ và vẫn ra kết quả khớp là $$\large29.80999946594_{10}$$. Giá trị `1.863124966621399` trong biểu thức là phần trị `Significand = 1.11011100111101011100001` cái phần được tách ở trường fraction lúc đầu, chúng ta quy đổi cả phần này về hệ cơ số 10 bằng cách nhân với trọng số âm như trên bảng vừa rồi
 
 > [!IMPORTANT]
-> Ta thấy nó bị chênh lệch số thực, số lúc đầu là `29.81` nhưng sau khi encode và decode ra kết quả lại là `29.80999946594`. Lý do là vì quá trình chuyển phần thập phân bị cắt sớm (vì nó là số nhị phân vô hạn có trong chương [3.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#31biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn) ) theo giới hạn 23 bit fraction hay giới hạn bit fraction theo toán hạng của IEEE 754 single precision, nên suy ra nguyên nhân là do chuỗi nhị phân bị cắt sớm và rounding (do số thực nhị phân vô hạn)
+> Ta thấy nó bị chênh lệch số thực, số lúc đầu là `29.81` nhưng sau khi encode và decode ra kết quả lại là `29.80999946594`. Lý do là vì quá trình chuyển phần thập phân bị cắt sớm (vì nó là số nhị phân vô hạn có trong chương [3.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#31biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn) ) theo giới hạn 23 bit fraction hay giới hạn bit fraction theo độ rộng của IEEE 754 single precision, nên suy ra nguyên nhân là do chuỗi nhị phân bị cắt sớm và rounding (do số thực nhị phân vô hạn)
 
 #### 2.2.6.Phân biệt giữa exponent để tính trọng số bit fraction và exponent biểu thị cho dịch dấu chấm
 
@@ -888,7 +900,7 @@ hay còn gọi là số thực hữu hạn lớn nhất, đối với float 32 b
 
 **Lưu ý:** đối với exponent field để biểu diễn số thực lớn nhất tuyệt đối không đươc là `11111111` vì tất cả bit số 1 này được dùng riêng trong việc biểu diễn infinity và NaN. Như thế đối với 32bit ta có chuỗi bit của số thực hữu hạn lớn nhất như sau `01111111011111111111111111111111` việc decode ra sang số thực hệ cơ số 10 thì chúng ta làm tương tự như [2.2.Decode](#22decode) bây giờ chúng ta tiến hành tính toán số thực lớn nhất của ngành kiến trúc 32bit (float)
 
-đầu tiên như trong chương decode, ta tách các bit ra ở đây chúng ta đã có và tách bit ở bảng trên rồi. Tiếp theo ta tính actual exponent bằng cách chuyển chuỗi nhị phân ở trường exponent sang hệ cơ số 10 $$\large11111110_{2} = 254_{10}$$ bây giờ ta lấy nó đi trừ với bias $$\large254 - 127 = 127$$ vậy actual exponent = $$\large\boxed{127}$$, tiếp theo chúng ta tiến hành tính toán phần trị, đầu tiên là khôi phục hiddenbit ta dịch dấu chấm theo actual exponent nhưng ta thấy nó lớn hơn toán hạng được có ở phần fraction nên chúng ta sẽ thêm padding là 0 để thỏa mãn actual exponent ta có $$\large11111111111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.0_{2}$$ tuy hơi dài nhưng nó đã thỏa mãn actual exponent do đây là số chuẩn hóa nên bit ẩn sẽ thêm 1 là bit ở phần có trọng số cao nhất. Bây giờ chúng ta tiến hành tính toán phần fraction với phép mũ âm ta có:
+đầu tiên như trong chương decode, ta tách các bit ra ở đây chúng ta đã có và tách bit ở bảng trên rồi. Tiếp theo ta tính actual exponent bằng cách chuyển chuỗi nhị phân ở trường exponent sang hệ cơ số 10 $$\large11111110_{2} = 254_{10}$$ bây giờ ta lấy nó đi trừ với bias $$\large254 - 127 = 127$$ vậy actual exponent = $$\large\boxed{127}$$, tiếp theo chúng ta tiến hành tính toán phần trị, đầu tiên là khôi phục hiddenbit ta dịch dấu chấm theo actual exponent nhưng ta thấy nó lớn hơn độ rộng được có ở phần fraction nên chúng ta sẽ thêm padding là 0 để thỏa mãn actual exponent ta có $$\large11111111111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.0_{2}$$ tuy hơi dài nhưng nó đã thỏa mãn actual exponent do đây là số chuẩn hóa nên bit ẩn sẽ thêm 1 là bit ở phần có trọng số cao nhất. Bây giờ chúng ta tiến hành tính toán phần fraction với phép mũ âm ta có:
 
 | bit | trọng số | gía trị |
 |-----|----------|---------|
@@ -1080,7 +1092,7 @@ Các chế độ của Rounding (làm tròn)
 
 Đây là chương sẽ lý giải tại sao cùng một phép cộng số thực nhưng `1.50 + 1.25 = 2.75` và không có khái niệm rounding nào xảy ra ở phép cộng `1.50`. Tất cả là do biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn
 
-**Biểu diễn nhị phân hữu hạn:** là việc biểu diễn nhị phân có độ rộng toán hạng được giới hạn ở một ngưỡng nào đó **ví dụ** $$\large1.101_{2}$$ chỉ có 3bit fraction rồi xong hết, còn các fraction nếu dư sẽ luôn có bit là 0. **Ví dụ2:** cho số $$\large1.50_{10}$$ nó cũng là hữu hạn. 
+**Biểu diễn nhị phân hữu hạn:** là việc biểu diễn nhị phân có độ rộng độ rộng được giới hạn ở một ngưỡng nào đó **ví dụ** $$\large1.101_{2}$$ chỉ có 3bit fraction rồi xong hết, còn các fraction nếu dư sẽ luôn có bit là 0. **Ví dụ2:** cho số $$\large1.50_{10}$$ nó cũng là hữu hạn. 
 
 **Bằng chứng nào để chứng minh nó hữu hạn?:** Là khi số hữu hạn luôn thực hiện phép nhân và fraction có giá trị là 0, chúng ta dùng số gốc để nhân 2 và nếu có phần dư thì lấy phần dư nhân tiếp cho 2 **ví dụ** với số thực $$\large1.25_{10}$$ ta xét bit fraction là $$\large0.25_{10}$$ :
 
@@ -1142,7 +1154,7 @@ Ta thấy nó vẫn là kết quả chính xấc, không có rounding nào ở �
 
 </details>
 
-**Biểu diễn nhị phân vô hạn:** là việc biểu diễn nhị phân có độ rộng toán hạng không được giới hạn tới khi bị cắt bởi phần cứng do giới hạn độ rộng toán hạng bên phía phần cứng **ví dụ** $$\large0.1_{2}$$ tính fraction nó với 2:
+**Biểu diễn nhị phân vô hạn:** là việc biểu diễn nhị phân có độ rộng độ rộng không được giới hạn tới khi bị cắt bởi phần cứng do giới hạn độ rộng độ rộng bên phía phần cứng **ví dụ** $$\large0.1_{2}$$ tính fraction nó với 2:
 
 | Bước | x2      | Bit | Dư  |
 | ---- | ------- | --- | --- |
@@ -1204,7 +1216,7 @@ Ta thấy nó vẫn bị rounding
 **Định lý đẹp của biểu diễn vô hạn và hữu hạn:** một phân số tối giản $$\large\frac{a}{b}$$ sẽ có biểu diễn hữu hạn trong cơ số 2 khi và chỉ khi mẫu số b chỉ chứa thừa số nguyên tố 2. **Ví dụ** $$\large0.5_{10} = \frac{1}{2}$$ ta có mẫu là 2 suy ra nó hữu hạn, $$\large0.25_{10} = \frac{1}{4}$$ mẫu là $$\large2^{2}$$ suy ra nó hữu hạn, $$\large0.75_{10} = \frac{3}{4}$$ mẫu là $$\large2^{2}$$ suy ra nó hữu hạn. Nhưng còn, $$\large0.1_{10} = \frac{1}{10} = \frac{1}{2\times5}$$ mẫu có 5 và nó không thể viết hữu hạn trong cơ số 2, suy ra nó vô hạn
 
 > [!IMPORTANT]
-> **Điều quan trọng:** Không phải mọi phép cộng, trừ, nhân hay chia số thực đều sinh ra sai số làm tròn. Nếu các toán hạng và kết quả đều biểu diễn chính xác được trong IEEE 754 thì sẽ không phát sinh sai số tại bước biểu diễn hay bước làm tròn. **Ví dụ** `1.50 + 1.25 = 2.75` được biểu diễn chính xác nên kết quả vẫn đúng tuyệt đối.
+> **Điều quan trọng:** Không phải mọi phép cộng, trừ, nhân hay chia số thực đều sinh ra sai số làm tròn. Nếu các độ rộng và kết quả đều biểu diễn chính xác được trong IEEE 754 thì sẽ không phát sinh sai số tại bước biểu diễn hay bước làm tròn. **Ví dụ** `1.50 + 1.25 = 2.75` được biểu diễn chính xác nên kết quả vẫn đúng tuyệt đối.
 >
 > Ngược lại, nếu một số không thể biểu diễn chính xác trong IEEE 754 (chẳng hạn `0.1`, `0.2` có biểu diễn nhị phân vô hạn) thì ngay từ khi lưu vào bộ nhớ chúng đã phải làm tròn. Sau đó các phép toán tiếp theo sẽ làm việc trên các giá trị đã được làm tròn này, nên kết quả có thể tiếp tục xuất hiện sai số. Ví dụ `0.1 + 0.2` không cho đúng chính xác `0.3`.
 
@@ -1406,7 +1418,7 @@ các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nế
 
 <br>
 
-**Ý tưởng:** dùng số thực vô hạn để tạo ra hiệu ứng rounding của hệ thống, và tính toán lại để so sánh chế độ làm tròn round to nearest, ties to even xem có đúng như ban đầu không đồng thời truy tìm các bit bị cắt có thể là tầm 5 bit vì 2 bit cho G, R và 3 bit cho S. Ở đây, ta nhắm tới fraction và dùng float 32bit và fraction trong architecture này là 23bit bảng toán hạng được phân cho từng trường có tại chương [1.8.1.Độ lệch (Bias)](#181độ-lệch-bias)
+**Ý tưởng:** dùng số thực vô hạn để tạo ra hiệu ứng rounding của hệ thống, và tính toán lại để so sánh chế độ làm tròn round to nearest, ties to even xem có đúng như ban đầu không đồng thời truy tìm các bit bị cắt có thể là tầm 5 bit vì 2 bit cho G, R và 3 bit cho S. Ở đây, ta nhắm tới fraction và dùng float 32bit và fraction trong architecture này là 23bit bảng độ rộng được phân cho từng trường có tại chương [1.8.1.Độ lệch (Bias)](#181độ-lệch-bias)
 
 ```c
 #include <stdio.h>
@@ -1779,7 +1791,7 @@ ta thấy `0.09999999999999999167` và `7.47999999999999953814`, đây chính l�
 
 <br>
 
-có thể có hoặc không, tùy thời điểm phép làm tròn diễn ra. Trường hợp đầu tiên là hằng số dấu phẩy động trong mã nguồn **ví dụ** `double a = 0.1;` số `0.1` trong mã nguồn không thể biểu diễn chính xác theo IEEE, vì nó là số vô hạn (có thể biểu diễn số này vô hạn tuần hoàn nhưng toán hạng fraction là hữu hạn).
+có thể có hoặc không, tùy thời điểm phép làm tròn diễn ra. Trường hợp đầu tiên là hằng số dấu phẩy động trong mã nguồn **ví dụ** `double a = 0.1;` số `0.1` trong mã nguồn không thể biểu diễn chính xác theo IEEE, vì nó là số vô hạn (có thể biểu diễn số này vô hạn tuần hoàn nhưng độ rộng fraction là hữu hạn).
 
 Để biểu diễn chính xác thì phải cần biết nó có phải số hữu hạn hay vô hạn. Về cơ bản thì nếu việc gán vào cho biến kiểu số thực là số vô hạn thì nó vẫn rounding theo round to nearest tie to even như thường, vì nó xảy ra trước rồi và nó đã hardcode trong file nhị phân (file thực thi sau khi biên dịch) rồi
 
@@ -1862,7 +1874,7 @@ suy ra chế độ làm tròn `round toward zero` khả năng cao đã hoạt đ
 
 nhưng về kỹ thuật chúng ta không thể kết luận chính xác tuyệt đối được vì `round to nearest, tie to even` không chỉ là tăng lên hay giữ nguyên, nó có thể tăng, giảm, giữ nguyên cả ba trường hợp tùy thuộc vào GRS có trong bit. Nhưng chắc chắn hai bit này nếu là `round to nearest, tie to even` thì sẽ giữ nguyên vì cả hai có guard bit là 0
 
-**Nếu round to nearest mà nó nhỏ hơn half ULP thì nó giữ nguyên vậy chả khác gì hệ thống đã lấy bit bị cắt bỏ rồi và nó có hành vi giống round toward zero là lấy phần bit theo toán hạng fraction à?**
+**Nếu round to nearest mà nó nhỏ hơn half ULP thì nó giữ nguyên vậy chả khác gì hệ thống đã lấy bit bị cắt bỏ rồi và nó có hành vi giống round toward zero là lấy phần bit theo độ rộng fraction à?**
 
 Trong trường hợp phần bị cắt nhỏ hơn ví dụ 0.5 ULP thì kết quả của `Round to Nearest, Ties to Even` và `Round Toward Zero` hoàn toàn có thể giống hệt nhau. Nhưng không đồng nghĩa hai thuật toán của chung tương đồng nhau, điều này khá hiếm có thể xảy ra ta có bảng so sánh :
 
