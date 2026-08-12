@@ -1980,4 +1980,21 @@ hay còn gọi là roundUp hoặc round toward $$\large+\infty$$, là một tron
 
 **Ví dụ** với số dương giả sử precision chỉ cho phép $$\large1.001_{2}$$ nhưng giá trị thực là $$\large1.001101_{2}$$ ta có $$\large1.001_{2} < 1.001101_{2} < 1.010_{2}$$ vậy nên nó sẽ làm tròn thành $$\large\boxed{1.010_{2}}$$ vì round toward $$\large+\infty$$ phải chọn số lớn hơn hoặc bằng giá trị ban đầu tức là số dương bị làm tròn lên.
 
+Nhưng với số âm điều này rất dễ bị nhầm trong quy tắc làm tròn này, **cho ví dụ** $$\large-1.001_{2}$$ và giá trị chính xác nằm giữa $$\large-1.001_{2}$$ và $$\large-1.010_{2}$$ và trên trục số :
+
+```
+-1.010        exact        -1.001
+   |------------|-------------|
+            -> +∞
+```
+
+Round toward $$\large+\infty$$ phải chọn giá trị lớn hơn, tức nằm về phía bên phải $$\large\boxed{-1.001_{2}}$$. Nó không phải là làm cho trị tuyệt đối lớn hơn. Ta có bảng so sánh và phép so sánh trực quan như : 
+
+| Giá trị chính xác | Round toward +∞ |
+| ----------------: | --------------: |
+|       `1.001101₂` |        `1.010₂` |
+|      `-1.001101₂` |       `-1.001₂` |
+
+vì : $$\large−1.001_{2} > −1.001101_{2} > −1.010_{2}$$ . Nên round toward $$\large+\infty$$ luôn chọn upper bound.
+
 ### 3.5.Round toward negative infinity (−∞)
