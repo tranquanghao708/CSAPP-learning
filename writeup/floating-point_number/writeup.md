@@ -100,7 +100,7 @@
 
        - [3.3.1.biểu diễn làm tròn trên hệ nhị phân](#331biểu-diễn-làm-tròn-trên-hệ-nhị-phân)
 
-    - 3.4.Round toward positive infinity (+∞)
+    - [3.4.Round toward positive infinity (+∞)]()
 
     - 3.5.Round toward negative infinity (−∞)
 
@@ -1973,3 +1973,7 @@ và thấy nếu cùng nhỏ hơn half ULP thì cả hai có kết quả y như 
 ---
 
 </details>
+
+### 3.4.Round toward positive infinity (+∞)
+
+hay còn gọi là roundUp hoặc round toward $$\large+\infty$$, là một trong 4 rounding mode (rounding-direction attributes) của IEEE754. Quy tắc của chế độ làm tròn này là chọn giá trị floating-point biểu diễn được nhỏ nhất nhưng vẫn lớn hơn hoặc bằng giá trị chính xác cần làm tròn. Nói đơn giản là nó làm tròn về $$\large+\infty$$
