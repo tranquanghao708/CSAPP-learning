@@ -1043,6 +1043,16 @@ Nếu IEEE dùng `actual exponent = 0 - 127 = -127` đối với khử chuẩn h
 
 ### 2.6.Số thực lớn nhất trong miền khử chuẩn hóa (Largest subnormal)
 
+Là một giá trị khá quan trọng vì nó nằm ngay sát giữa số chuẩn hóa (normalized) và khử chuẩn hóa (denormalized), là giá trị lớn nhất vẫn còn thuộc miền subnormal, ngay trước khi chuyển sang số normalized. Nó có dạng như sau :
+
+| sign | exponent | fraction |
+|------|----------|----------|
+| 0 | 00000000 | 11111111111111111111111 |
+
+> đối với float 32bit, tuy các bit lớn hơn vẫn thế
+
+
+
 ---
 
 ## 3.Rounding tổng quan và các chế độ làm tròn
