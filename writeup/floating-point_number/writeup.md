@@ -104,6 +104,8 @@
 
     - [3.5.Round toward negative infinity (−∞)](#35round-toward-negative-infinity-)
 
+    - [3.6.Tác dụng và mức biểu diễn độ chính xác của 4 quy tắc làm tròn, khi nào nên dùng quy tắc nào?](#36tác-dụng-và-mức-biểu-diễn-độ-chính-xác-của-4-quy-tắc-làm-tròn-khi-nào-nên-dùng-quy-tắc-nào)
+
 - 4.kết luận
 
 **Phần mở rộng**
@@ -1999,4 +2001,54 @@ vì : $$\large−1.001_{2} > −1.001101_{2} > −1.010_{2}$$ . Nên round towar
 
 **Nếu số đã biểu diễn chính xác được:** ko có bit nào cần thay đổi ví dụ như $$\large1.010_{2}$$ thì vẫn là chính nó ,vì đã nằm đúng trên một giá trị floating-point có thể biểu diễn nên $$\large\boxed{1.010_{2}\rightarrow1.010_{2}}$$
 
+<details>
+	<summary>giá trị mà format floating-point hiện tại có thể lưu được là sao?</summary>
+
+---
+
+Với một format cụ thể, máy tính chỉ có thể lưu một tập hữu hạn các giá trị. Những giá trị nằm trong tập đó gọi là các giá trị biểu diễn được (representable values). **Ví dụ** cho một đoạn nhị phân biểu diễn số thực như sau $$\large1.1001001_{2}$$ tuy nhiên CPU chỉ muốn lấy 3 bit fraction nên bit $$\large1001_{2}$$ phía sau bị cắt, trở thành một phần cho việc phục vụ rounding (GRS)
+
+và ta có 3bit fraction sau khi cắt sau $$\large1.100_{2}$$ vậy gía trị mà format floating-point hiện tại có thể lưu được ở 3bit fraction này là :
+
+```
+1.101
+1.110
+1.111
+```
+
+3 giá trị trên chính là các giá trị representable của format này trong khoảng đó. Nhưng nếu :
+
+```
+1.0001
+1.0011
+1.0101
+1.0111
+```
+
+không nằm trong tập đó, vì format chỉ có 3 bit sau dấu chấm. Ví dụ `1.101` -> representable, còn `1.0001` -> ko representable trong format 3bit này
+
+**Tại sao với ví dụ này, cũng tương tự như máy tính chúng ko lưu được số bit vượt ngưỡng format độ rộng fraction hiện tại?**
+
+ko phải nó ko biết số `1.0001` hay các số nhị phân khác. Mà là format của nó có độ rộng hữu hạng, và độ rộng fraction đó ko đủ để mã hóa số nhị phân đó. Với ví dụ trên format của chúng ta có quy định là $$\large1.xxx_{2}$$ chỉ có 3 vị trí :
+
+```
+1	.	x	x	x
+		|	|	|_____ (bit1)
+		|	|_________ (bit2)
+		|_____________ (bit3)
+
+        <-------->
+		(tổng cộng 3 bit)
+```
+
+và trong khi số `1.0001` cần độ rộng fraction 4 bit, vì thế `1.0101` không phải là một giá trị mà format này có thể biểu diễn chính xác.
+
+<sub>--Đã hết phần giải thích--</sub>
+
+---
+
+</details>
+
 ### 3.5.Round toward negative infinity (−∞)
+
+### 3.6.Tác dụng và mức biểu diễn độ chính xác của 4 quy tắc làm tròn, khi nào nên dùng quy tắc nào?
