@@ -1051,7 +1051,9 @@ Là một giá trị khá quan trọng vì nó nằm ngay sát giữa số chu�
 
 > đối với float 32bit, tuy các bit lớn hơn vẫn thế
 
+**Vì sao đây là lớn nhất?:** với khử chuẩn hóa (denormalized) `exponent = 00000000, hiddenbit = 0, actual exponent cố định ở 1 - bias` và ở đây với float binary có `bias = 127` nên `actual exponent = 1 - 127 = -126`, do `hiddenbit = 0` nên significand lớn nhất là $$\large0.11111111111111111111111_{2}$$
 
+Vậy $$\large0.11111111111111111111111_{2}\times2^{-126}$$ phần significand bằng $$\large0.11111111111111111111111_{2} = 1 - 2^{-23}$$ nên $$\large(1-2^{-23})2^{-126}$$ hay tương đương $$\large2^{-126}-2^{-149}$$ suy ra $$\large(1-2^{-23})2^{-126} = 2^{-126}-2^{-149} \approx\boxed{1.1754942106924411\times10^{−38}​}$$
 
 ---
 
