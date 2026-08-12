@@ -1044,13 +1044,13 @@ Nếu IEEE dùng `actual exponent = 0 - 127 = -127` đối với khử chuẩn h
 
 ### 2.6.Số thực lớn nhất trong miền khử chuẩn hóa (Largest subnormal)
 
-Là một giá trị khá quan trọng vì nó nằm ngay sát giữa số chuẩn hóa (normalized) và khử chuẩn hóa (denormalized), là giá trị lớn nhất vẫn còn thuộc miền subnormal, ngay trước khi chuyển sang số normalized. Nó có dạng như sau :
+Là một giá trị khá quan trọng vì nó nằm ngay tại biên trên của miền subnormal, sát với biên dưới của miền normalized, là giá trị lớn nhất vẫn còn thuộc miền subnormal, ngay trước khi chuyển sang số normalized. Nó có dạng như sau :
 
 | sign | exponent | fraction |
 |------|----------|----------|
 | 0 | 00000000 | 11111111111111111111111 |
 
-> đối với float 32bit, tuy các bit lớn hơn vẫn thế
+> ví dụ bảng là của float 32bit
 
 **Vì sao đây là lớn nhất?:** với khử chuẩn hóa (denormalized) `exponent = 00000000, hiddenbit = 0, actual exponent cố định ở 1 - bias` và ở đây với float binary có `bias = 127` nên `actual exponent = 1 - 127 = -126`, do `hiddenbit = 0` nên significand lớn nhất là $$\large0.11111111111111111111111_{2}$$
 
@@ -1062,7 +1062,7 @@ Vậy $$\large0.11111111111111111111111_{2}\times2^{-126}$$ phần significand b
 |------|----------|----------|
 | 0 | 00000001 | 000000000000000000000000 |
 
-nghĩa là theo nhị phân, số thực khử chuẩn hóa lớn nhất và số thực chuẩn hóa nhỏ nhất nằm sát nhau. Ở đây, ta biết số thực khử chuẩn hóa lớn nhất có $$\large1 - 2^{-23}2^{-126}$$ và số chuẩn hóa nhỏ nhất có $$\large1.0_{2} \times 2^{-126}$$ vậy hiệu của chúng là $$\large-126 - (1 - 2^{-23}2^{-126}) = \boxed{2^{-149}}$$ mà $$\large2^{-149}$$ lại là ULP/subnormal spacing ở vùng này. Do đó ta thấy :
+nghĩa là theo nhị phân, số thực khử chuẩn hóa lớn nhất và số thực chuẩn hóa nhỏ nhất nằm sát nhau. Ở đây, ta biết số thực khử chuẩn hóa lớn nhất có $$\large1 - 2^{-23}2^{-126}$$ và số chuẩn hóa nhỏ nhất có $$\large1.0_{2} \times 2^{-126}$$ vậy hiệu của chúng là $$\large2^{-126} - (1 - 2^{-23}2^{-126}) = \boxed{2^{-149}}$$ mà $$\large2^{-149}$$ lại là ULP/subnormal spacing ở vùng này. Do đó ta thấy :
 
 ```
 Largest subnormal
@@ -1070,7 +1070,8 @@ Largest subnormal
        v
 0.11111111111111111111111 x 2^-126
 	   |
-       v + 2^-149
+	   | + 2^-149
+       v
 1.00000000000000000000000 x 2^-126
 	   |
        v
@@ -1078,6 +1079,40 @@ Smallest normal
 ```
 
 **Đây chính là lý do subnormal rất quan trọng:** nó lấp khoảng trống giữa 0 và số normalized dương nhỏ nhất, thay vì để một khoảng nhảy lớn.
+
+Đối với binary 32, ta có spacing = $$\large2^{-149}$$ từ đó suy ra tất cả subnormal dương có dạng $$\large k\times2^{-149}$$ với $$\large k = 1,2\ldots,2^{23}-1$$ do đó ta có :
+
+```
+0
+|
+| + 2^-149
+v
+2^-149
+|
+| + 2^-149
+v
+2×2^-149
+|
+|
+v
+...
+|
+|
+v
+(2^23 - 1)×2^-149
+|
+| + 2^-149
+v
+2^23×2^-149
+```
+
+mà $$\large2^{23}\times2^{-149} = 2^{-126}$$ và kết quả này chính là số chuẩn hóa nhỏ nhất (smallest normalized). Đây là cách nhìn rất đẹp về toàn bộ miền subnormal:
+
+$$\large
+\boxed{0\rightarrow2^{-149}\rightarrow2(2^{-149})\rightarrow\ldots\rightarrow(2^{23}-1)2^{-149}\rightarrow2^{-126}}
+$$
+
+Trong đó phần tử cuối cùng trước $$\large2^{-126}$$ chính là largest subnormal.
 
 ---
 
