@@ -1997,4 +1997,6 @@ Round toward $$\large+\infty$$ phải chọn giá trị lớn hơn, tức nằm 
 
 vì : $$\large−1.001_{2} > −1.001101_{2} > −1.010_{2}$$ . Nên round toward $$\large+\infty$$ luôn chọn upper bound.
 
+**Nếu số đã biểu diễn chính xác được:** ko có bit nào cần thay đổi ví dụ như $$\large1.010_{2}$$ thì vẫn là chính nó ,vì đã nằm đúng trên một giá trị floating-point có thể biểu diễn nên $$\large\boxed{1.010_{2}\rightarrow1.010_{2}}$$
+
 ### 3.5.Round toward negative infinity (−∞)
