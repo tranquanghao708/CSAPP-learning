@@ -827,16 +827,16 @@ Do đó dựa trên bảng ta được với biểu thức sau :
 
 $$\large
 1.1011_{2}​\times2^{-126} = 
-\underbrace{1\times2^{-126}}*{\text{Hidden Bit}}
+\underbrace{1\times2^{-126}}_{\text{Hidden Bit}}
 +
-\underbrace{1\times2^{-127}}*{\text{Fraction bit 1}}
+\underbrace{1\times2^{-127}}_{\text{Fraction bit 1}}
 +
-\underbrace{1\times2^{-129}}*{\text{Fraction bit 3}}
+\underbrace{1\times2^{-129}}_{\text{Fraction bit 3}}
 +
-\underbrace{1\times2^{-130}}*{\text{Fraction bit 4}}
+\underbrace{1\times2^{-130}}_{\text{Fraction bit 4}}
 $$
 
-điểm quan trọng là $$\large-126 \neq -127 \neq -128 \neq -129 \neq -130$$ (đây là các bit-weight exponents) nhưng tất cả chúng đều được suy ra từ `actual exponent = -126`
+điểm quan trọng là $$\large-126 \neq -127 \neq -129 \neq -130$$ (đây là các bit-weight exponents) nhưng tất cả chúng đều được suy ra từ `actual exponent = -126`
 
 > Phần giải thích bit-weight exponents
 
@@ -897,6 +897,14 @@ Cho nên `bit-weight exponent = -126 - i` (giá trị `-126` là kết quả c�
 
 ### 2.3.Số thực lớn nhất và tính toán số thực lớn nhất (Largest finite)
 
+> **Reading checkpoint**
+>
+> Đến đây, bạn cần hiểu:
+> - Decode số thực
+> - Công thức tổng quan của IEEE
+>
+> Nếu đã rõ thì có thể tiếp tục
+
 hay còn gọi là số thực hữu hạn lớn nhất, đối với float 32 bit chúng thường có dạng :
 
 | sign | exponent | fraction |
@@ -919,13 +927,6 @@ lý do giá trị phần trị lại là $$\large2-2^{-23}$$ vì đó chỉ là 
 
 ### 2.4.Số thực chuẩn hóa nhỏ nhất và tính toán số thực chuẩn hóa nhỏ nhất (Smallest normalized)
 
-> **Reading checkpoint**
->
-> Đến đây, bạn cần hiểu:
-> - Hiddenbit của số thực dạng chuẩn hóa ra sao
-> - Công thức tổng quan của IEEE
->
-> Nếu đã rõ thì có thể tiếp tục
 
 Số thực chuẩn hóa nhỏ nhất (Smallest Normalized) là số thực dương nhỏ nhất vẫn còn thuộc miền Normalized, nghĩa là trường Exponent không bằng toàn bit 0. **Ví dụ** với `float` có `exponent = 8, fraction = 23, bias = 127` bây giờ số thực chuẩn hóa nhỏ nhất của `float` là :
 
@@ -1053,7 +1054,28 @@ Là một giá trị khá quan trọng vì nó nằm ngay sát giữa số chu�
 
 **Vì sao đây là lớn nhất?:** với khử chuẩn hóa (denormalized) `exponent = 00000000, hiddenbit = 0, actual exponent cố định ở 1 - bias` và ở đây với float binary có `bias = 127` nên `actual exponent = 1 - 127 = -126`, do `hiddenbit = 0` nên significand lớn nhất là $$\large0.11111111111111111111111_{2}$$
 
-Vậy $$\large0.11111111111111111111111_{2}\times2^{-126}$$ phần significand bằng $$\large0.11111111111111111111111_{2} = 1 - 2^{-23}$$ nên $$\large(1-2^{-23})2^{-126}$$ hay tương đương $$\large2^{-126}-2^{-149}$$ suy ra $$\large(1-2^{-23})2^{-126} = 2^{-126}-2^{-149} \approx\boxed{1.1754942106924411\times10^{−38}​}$$
+Vậy $$\large0.11111111111111111111111_{2}\times2^{-126}$$ phần significand bằng $$\large0.11111111111111111111111_{2} = 1 - 2^{-23}$$ nên $$\large(1-2^{-23})2^{-126}$$ hay tương đương $$\large2^{-126}-2^{-149}$$ suy ra $$\large(1-2^{-23})2^{-126} = 2^{-126}-2^{-149} \approx\boxed{1.1754942106924411\times10^{−38}​}$$ (số xấp xỉ chính là giá trị số thực lớn nhất trong miền khử chuẩn hóa)
+
+**chi tiết quan trọng:** Giá trị này nằm sát số chuẩn hóa nhỏ nhất (smallest normalized). Ta thấy ở chương [2.4.Số thực chuẩn hóa nhỏ nhất và tính toán số thực chuẩn hóa nhỏ nhất (Smallest normalized)](#24số-thực-chuẩn-hóa-nhỏ-nhất-và-tính-toán-số-thực-chuẩn-hóa-nhỏ-nhất-smallest-normalized) có một bảng số thực chuẩn hóa nhỏ nhất như sau :
+
+| sign | exponent | fraction |
+|------|----------|----------|
+| 0 | 00000001 | 000000000000000000000000 |
+
+nghĩa là theo nhị phân, số thực khử chuẩn hóa lớn nhất và số thực chuẩn hóa nhỏ nhất nằm sát nhau. Ở đây, ta biết số thực khử chuẩn hóa lớn nhất có $$\large1 - 2^{-23}2^{-126$$ và số chuẩn hóa nhỏ nhất có $$\large1.0_{2} \times 2^{-126}$$ vậy hiệu của chúng là $$\large-126 - (1 - 2^{-23}2^{-126) = \boxed{2^{-149}}$$ mà $$\large2^{-149}$$ lại là ULP/subnormal spacing ở vùng này. Do đó ta thấy :
+
+
+Largest subnormal
+	   |
+       v
+$$0.11111111111111111111111\times2^{-126}$$
+	   |
+       v + $$\large2^{-149}$$
+$$1.00000000000000000000000\times2^{-126}$$
+	   |
+       v
+Smallest normal
+
 
 ---
 
