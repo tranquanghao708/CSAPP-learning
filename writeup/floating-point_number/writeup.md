@@ -1064,18 +1064,20 @@ Vậy $$\large0.11111111111111111111111_{2}\times2^{-126}$$ phần significand b
 
 nghĩa là theo nhị phân, số thực khử chuẩn hóa lớn nhất và số thực chuẩn hóa nhỏ nhất nằm sát nhau. Ở đây, ta biết số thực khử chuẩn hóa lớn nhất có $$\large1 - 2^{-23}2^{-126}$$ và số chuẩn hóa nhỏ nhất có $$\large1.0_{2} \times 2^{-126}$$ vậy hiệu của chúng là $$\large-126 - (1 - 2^{-23}2^{-126}) = \boxed{2^{-149}}$$ mà $$\large2^{-149}$$ lại là ULP/subnormal spacing ở vùng này. Do đó ta thấy :
 
-
+```
 Largest subnormal
 	   |
        v
-$$0.11111111111111111111111\times2^{-126}$$
+0.11111111111111111111111 x 2^-126
 	   |
-       v + $$\large2^{-149}$$
-$$1.00000000000000000000000\times2^{-126}$$
+       v + 2^-149
+1.00000000000000000000000 x 2^-126
 	   |
        v
 Smallest normal
+```
 
+**Đây chính là lý do subnormal rất quan trọng:** nó lấp khoảng trống giữa 0 và số normalized dương nhỏ nhất, thay vì để một khoảng nhảy lớn.
 
 ---
 
