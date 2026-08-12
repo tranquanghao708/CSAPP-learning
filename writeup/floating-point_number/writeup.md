@@ -100,9 +100,9 @@
 
        - [3.3.1.biểu diễn làm tròn trên hệ nhị phân](#331biểu-diễn-làm-tròn-trên-hệ-nhị-phân)
 
-    - [3.4.Round toward positive infinity (+∞)]()
+    - [3.4.Round toward positive infinity (+∞)](#34round-toward-positive-infinity-)
 
-    - 3.5.Round toward negative infinity (−∞)
+    - [3.5.Round toward negative infinity (−∞)](#35round-toward-negative-infinity-)
 
 - 4.kết luận
 
@@ -1976,4 +1976,8 @@ và thấy nếu cùng nhỏ hơn half ULP thì cả hai có kết quả y như 
 
 ### 3.4.Round toward positive infinity (+∞)
 
-hay còn gọi là roundUp hoặc round toward $$\large+\infty$$, là một trong 4 rounding mode (rounding-direction attributes) của IEEE754. Quy tắc của chế độ làm tròn này là chọn giá trị floating-point biểu diễn được nhỏ nhất nhưng vẫn lớn hơn hoặc bằng giá trị chính xác cần làm tròn. Nói đơn giản là nó làm tròn về $$\large+\infty$$
+hay còn gọi là roundUp hoặc round toward $$\large+\infty$$, là một trong 4 rounding mode (rounding-direction attributes) của IEEE754. Quy tắc của chế độ làm tròn này là chọn giá trị floating-point biểu diễn được nhỏ nhất nhưng vẫn lớn hơn hoặc bằng giá trị chính xác cần làm tròn. Nói đơn giản là nó làm tròn về $$\large+\infty$$.
+
+**Ví dụ** với số dương giả sử precision chỉ cho phép $$\large1.001_{2}$$ nhưng giá trị thực là $$\large1.001101_{2}$$ ta có $$\large1.001_{2} < 1.001101_{2} < 1.010_{2}$$ vậy nên nó sẽ làm tròn thành $$\large\boxed{1.010_{2}}$$ vì round toward $$\large+\infty$$ phải chọn số lớn hơn hoặc bằng giá trị ban đầu tức là số dương bị làm tròn lên.
+
+### 3.5.Round toward negative infinity (−∞)
