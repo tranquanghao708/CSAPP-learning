@@ -2045,6 +2045,10 @@ và trong khi số `1.0001` cần độ rộng fraction 4 bit, vì thế `1.0101
 
 <sub>--Đã hết phần giải thích--</sub>
 
+---
+
+</details>
+
 > [!IMPORTANT]
 > Điều kiện để round toward $$\large+\infty$$ :
 > 
@@ -2052,10 +2056,6 @@ và trong khi số `1.0001` cần độ rộng fraction 4 bit, vì thế `1.0101
 > x, & x \text{representable}\\
 > \text{gía trị representable nhỏ nhất} \ge x, & x\text{x ko representable}
 > \end{case}$$
-
----
-
-</details>
 
 ### 3.5.Round toward negative infinity (−∞)
 
