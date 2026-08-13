@@ -2059,7 +2059,9 @@ và trong khi số `1.0001` cần độ rộng fraction 4 bit, vì thế `1.0101
 >
 > Nghĩa là x thuộc representable, là giá trị nằm trong khoảng miền mà format floating-point hiện tại có thể lưu được thì sẽ ko được làm tròn (rounding) thay vào đó chúng sẽ giữ nguyên. Còn nếu x ko thuộc representable thì mới xảy ra rounding, với chế độ này nó sẽ làm tròn về số gần nhất với dương vô cực ($$\large+\infty$$)
 
-Cho các trường hợp sau:
+Cho trường hợp representable. Giả sử format có 3bit fraction $$\large x = 1.010_{2}$$ và chuỗi nhị phân $$\large1.010_{2}$$ là một giá trị thuộc miền mà format floating-point hiện tại có thể lưu được (representable) nên $$\large\boxed{R_{+\infty}(1.010_{2}) = 1.010_{2}}$$ nó vẫn giữ nguyên ko có rounding thực sự xảy ra
+
+Trường hợp ko representable. cho $$\large x = 1.0101_{2}$$ nhưng với giả sử trên, format chỉ giữ được độ rộng fraction là 3bit thôi nên $$\large1.010 < 1.0101 < 1.011$$ , round toward $$\large+\infty$$ chọn giá trị phía $$\large+\infty$$ nên $$\large\boxed{R_{+\infty}(1.0101_{2}) = 1.011_{2}}$$
 
 ### 3.5.Round toward negative infinity (−∞)
 
