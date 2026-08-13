@@ -2056,6 +2056,10 @@ và trong khi số `1.0001` cần độ rộng fraction 4 bit, vì thế `1.0101
 > x, & x \text{  representable}\\
 > \text{gía trị representable nhỏ nhất} \ge x, & x \text{  x ko representable}
 > \end{cases}$$
+>
+> Nghĩa là x thuộc representable, là giá trị nằm trong khoảng miền mà format floating-point hiện tại có thể lưu được thì sẽ ko được làm tròn (rounding) thay vào đó chúng sẽ giữ nguyên. Còn nếu x ko thuộc representable thì mới xảy ra rounding, với chế độ này nó sẽ làm tròn về số gần nhất với dương vô cực ($$\large+\infty$$)
+
+Cho các trường hợp sau:
 
 ### 3.5.Round toward negative infinity (−∞)
 
