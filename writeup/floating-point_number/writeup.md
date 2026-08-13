@@ -2067,6 +2067,27 @@ Cho thêm trường hợp đối với số âm, với $$\large−1.011 < −1.0
 
 **Mấu chốt ở đây là :** chế độ round toward $$\large+\infty$$ hướng về trên trục số, ko phải tăng bit hay tăng trị tuyệt đối
 
+nhìn theo lower và upper Giả sử giá trị chính xác $$\largex$$ nằm giữa hai số floating-point liên tiếp $$\large L < x < U$$ thì round toward $$\large+\infty$$ -> L và $$\large-\infty$$ -> U, còn nếu `x = L` hoặc `x = U` thì giữ nguyên (ko rounding). Vì vậy ta có :
+
+$$\Large
+RN_{+\infty}(x) = min\\{f \in F | f \ge x \\}
+$$
+
+Trong đó $$\large F$$ là tập các giá trị floating-point có thể biểu diễn.
+
+<details>
+	<summary>minh họa với C</summary>
+</details>
+
 ### 3.5.Round toward negative infinity (−∞)
 
 ### 3.6.Tác dụng và mức biểu diễn độ chính xác của 4 quy tắc làm tròn, khi nào nên dùng quy tắc nào?
+
+từ 4 quy tắc làm tròn trên, trước hết ta có bảng so sánh :
+
+| Rounding mode             | Ý nghĩa               |
+| ------------------------- | --------------------- |
+| **toward +∞**             | đi về `+∞`            |
+| **toward −∞**             | đi về `−∞`            |
+| **toward 0**              | đi về `0`             |
+| **nearest, ties to even** | chọn giá trị gần nhất |
