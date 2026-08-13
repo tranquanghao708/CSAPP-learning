@@ -2067,16 +2067,35 @@ Cho thêm trường hợp đối với số âm, với $$\large−1.011 < −1.0
 
 **Mấu chốt ở đây là :** chế độ round toward $$\large+\infty$$ hướng về trên trục số, ko phải tăng bit hay tăng trị tuyệt đối
 
-nhìn theo lower và upper Giả sử giá trị chính xác $$\large x$$ nằm giữa hai số floating-point liên tiếp $$\large L < x < U$$ thì round toward $$\large+\infty$$ -> L và $$\large-\infty$$ -> U, còn nếu `x = L` hoặc `x = U` thì giữ nguyên (ko rounding). Vì vậy ta có :
+nhìn theo lower và upper Giả sử giá trị chính xác $$\large x$$ nằm giữa hai số floating-point liên tiếp $$\large L < x < U$$ thì round toward $$\large+\infty$$ -> U và $$\large-\infty$$ -> L, còn nếu `x = L` hoặc `x = U` thì giữ nguyên (ko rounding). Vì vậy ta có :
 
 $$\Large
 RN_{+\infty}(x) = min\\{f \in F | f \ge x \\}
 $$
 
-Trong đó $$\large F$$ là tập các giá trị floating-point có thể biểu diễn.
+Trong đó $$\large F$$ là tập các giá trị floating-point có thể biểu diễn. Biểu thức này có nghĩa là `trong tất cả các giá trị floating-point có thể biểu diễn mà lớn hơn hoặc bằng x, chọn giá trị nhỏ nhất.`
 
 <details>
 	<summary>minh họa với C</summary>
+
+```
+#include <stdio.h>
+#include <fenv.h>
+
+#pragma STDC FENV_ACCESS ON
+
+int main(void){
+	if (fesetround(0x800) != 0){
+		printf("changed mode failed\n");
+		return -1;
+	} //chuyển đỏi sang round toward positive infinity
+
+	float a =
+
+	return 0;
+}
+```
+
 </details>
 
 ### 3.5.Round toward negative infinity (−∞)
