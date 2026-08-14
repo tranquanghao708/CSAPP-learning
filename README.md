@@ -2,11 +2,11 @@
 
 <div align="right">
 
-![alt text](document/avarta.png)
+![alt text](documents/avarta.png)
 
 </div>
 
-<div align="left">
+<div align="top">
 
 Đây là một cuốn sách về khoa học máy tính mà tôi được một anh sinh viên đại học giới thiệu. Nội dung của cuốn sách chủ yếu tập trung vào cách chương trình được thực thi và vận hành bên trong máy tính.
 
