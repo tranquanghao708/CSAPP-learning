@@ -2151,7 +2151,35 @@ Bây giờ ta khai triển biểu thức toán để tính toán giá trị củ
 
 ---
 
-Với gía trị như `123` thì chúng ta có hai cách để tính ra giá trị này, cách 1 là dùng các số thủ công như $$\large123_{10} = 1\times10^{2} + 2\times10^{1} + 3\times10^{0}$$
+Với gía trị như `123` thì chúng ta có hai cách để tính ra giá trị này, cách 1 là dùng các số thủ công như $$\large abc = 123_{10} = 3\times1 + 2\times10 + 1\times100$$, theo toán lớp 6 thì cái này được nêu rõ như sau, ta tiến hành đọc số 3 trước (đọc từ phải qua trái), số 3 thuộc hàng đơn vị, ta đem nhân với 1 thì vẫn nguyên số 3, đọc tiếp số 2 thuộc hàng chục ta đi nhân với 10 thì là 20 mà `20 + 3 = 23`, tiếp tục ta đọc số 1 là hàng trăm vậy đi nhân 100 ta có 100 vậy `100 + 20 + 3 = 123` giá trị này đúng với giá trị ban đầu. Ta thấy hàng đơn vị, chục, trăm ... luôn luôn là `1,10,100...`
+
+cách 2 là dùng số mũ $$\large123_{10} = 1\times10^{2} + 2\times10^{1} + 3\times10^{0}$$ cách này thường dùng ở việc tính nhị phân nhiều hơn vì nó đơn giản và dễ trình bày cũng dễ nhìn. Với cách này ta lấy số đem đi nhân với hệ cơ số của chính số đó và số mũ được xem là thứ quyết định hàng `đơn vị, chục, trăm v.v..` Số mũ càng lớn thì hàng đó sẽ thường nhiều hơn, với `123`, ta tiến hành tính:
+
+Đầu tiên với số 3 nó thuộc hàng đơn vị vậy ta có $$\large10^{0}$$ số 10 là hệ cơ số, vì đây là số nguyên và nó luôn có hệ cơ số là 10. Bây giờ ta biết được mốc rồi ta chỉ cần đếm lần lượt thôi, ở đây đơn vị là mũ 0 vậy chục là mũ 1 và trăm là mũ 2 vậy ta xét:
+
+<div align="center">
+
+$$\Large
+3_{10} = 10^{0} , 2_{10} = 10^{1} , 1_{10} = 10^{2}
+$$
+
+</div>
+
+từ đó suy ra $$\large123_{10} = 1\times10^{2} + 2\times10^{1} + 3\times10^{0}$$ là đúng. Thêm một chi tiết nữa, bên trên ta có đề cập tới đoạn thẳng của số nguyên theo hướng ngược lại vậy bây giờ ta trình bày nó, gỉa sử ta có đoạn thẳng gồm số nguyên dương và số nguyên âm:
+
+```
+---|--|--|--|--|--|--|--|--|--|--|--|-->
+  -4 -3 -2 -1  0  1  2  3  4  5  6  7
+```
+
+ta thấy đó gọi là đoạn thẳng số nguyên truyền thống, đoạn thẳng của số nguyên theo hướng ngược lại thì sẽ thế này:
+
+```
+<---|--|--|--|--|--|--|--|--|--|--|--|--
+   4  3  2  1  0 -1 -2 -3 -4 -5 -6 -7
+```
+
+và số mũ với hệ cơ số 10, hay hệ cơ số 2 đều dựa vào đoạn thẳng của số nguyên theo hướng ngược lại thế này. Ví dụ với $$912.219_{10} = 9\times10^{2} + 1\times10^{1} + 2\times10^{0} + 2\times10^{-1} + 1\times10^{-2} + 9\times10^{-3}$$
 
 <sub>--đã hết phần giải thích--</sub>
 
