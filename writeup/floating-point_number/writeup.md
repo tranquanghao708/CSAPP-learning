@@ -2090,7 +2090,8 @@ int main(void){
 		return -1;
 	} //chuyển đỏi sang round toward positive infinity
 
-    volatile float a = 1.0f;
+    volatile float a = 1.0f; //sẽ bị can thiệp bởi tie to even
+
     volatile float b = 0x1.000002p-24f;
 
     float result = a + b;
@@ -2100,6 +2101,29 @@ int main(void){
 	return 0;
 }
 ```
+
+> gcc -o round_toward_positive_infinity round_toward_positive_infinity.c -lm
+
+![alt text](image/image24.png)
+
+Ta có chuỗi số `1.00000011920928955079` ta thấy rõ ràng nó đã được làm tròn nhưng vẫn có sự can thiệp của `tie to even` trước khi tới `caculating`, ở phần transmit số thực vô hạn `1.0f` vào biến a rồi và `0x1.000002p-24f` vào biến b
+
+> giải thích chuỗi số 0x1.000002p-24f
+
+<details>
+	<summary>chuỗi số 0x1.000002p-24f là gì?</summary>
+
+---
+
+chuỗi 0x1.000002p-24f là một chuỗi số kết hợp với nhiều tiền tố, đây được gọi là `hexadecimal floating-point literal` của `C/C++`, không phải một chuỗi số thập phân bình thường.
+
+<sub>--đã hết phần giải thích--</sub>
+
+---
+
+</details>
+
+bây giờ 
 
 </details>
 
