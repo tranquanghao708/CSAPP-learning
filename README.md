@@ -5,6 +5,8 @@
 
 Đây là một cuốn sách về khoa học máy tính mà tôi được một anh sinh viên đại học giới thiệu. Nội dung của cuốn sách chủ yếu tập trung vào cách chương trình được thực thi và vận hành bên trong máy tính.
 
+Theo tôi tìm hiểu chúng được xuất bản bởi hai tác gỉa tên là  Randal E. Bryant và David R. O'Hallaron và được giảng dạy tại nhiều trường đại học lớn trên thế giới bắt nguồn từ Đại học Carnegie Mellon (CMU). Đi kèm hệ thống bài thực hành (Labs) thực tế giúp làm chủ công cụ Linux/Unix, gỡ lỗi và kiểm tra mã nhị phân.
+
 </td>
 
 <td width="40%" align="center">
