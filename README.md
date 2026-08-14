@@ -1,5 +1,6 @@
 # CS:APP là gì?
 
+<table>
 <div align="right">
 
 ![alt text](documents/avarta.png)
@@ -10,6 +11,7 @@
 
 </td>
 </div>
+</table>
   
 # Mục đích của repository này
 
