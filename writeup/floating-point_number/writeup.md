@@ -2179,13 +2179,15 @@ ta thấy đó gọi là đoạn thẳng số nguyên truyền thống, đoạn 
    4  3  2  1  0  -1 -2 -3 -4 -5 -6 -7
 ```
 
-và số mũ với hệ cơ số 10, hay hệ cơ số 2 đều dựa vào đoạn thẳng của số nguyên theo hướng ngược lại thế này. Ví dụ với $$\large912.219_{10} = 9\times10^{2} + 1\times10^{1} + 2\times10^{0} + 2\times10^{-1} + 1\times10^{-2} + 9\times10^{-3}$$
+và số mũ với hệ cơ số 10 đều dựa vào đoạn thẳng của số nguyên theo hướng ngược lại thế này. Ví dụ với $$\large912.219_{10} = 9\times10^{2} + 1\times10^{1} + 2\times10^{0} + 2\times10^{-1} + 1\times10^{-2} + 9\times10^{-3}$$ ta thấy chúng dựa theo đoạn thẳng của số nguyên theo hướng ngược lại
 
 <sub>--đã hết phần giải thích--</sub>
 
 ---
 
 </details>
+
+Nên bây giờ ta tiến hành khai triển `0x1.000002` thành $$\large0x1.000002_{16} = 1 + \frac{2}{16^{-6}}$$ (vì 2 là hệ cơ số 2 sang nhị phân, 1 là hàng đơn vị và $$\large16^{-6}$$ là hệ cơ số thập lục phân và giá trị `2` nằm ở vị trí `-6`)
 
 <sub>--đã hết phần giải thích--</sub>
 
