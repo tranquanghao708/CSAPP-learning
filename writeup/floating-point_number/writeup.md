@@ -2128,7 +2128,7 @@ chuỗi `0x1.000002p-24f` là một chuỗi số kết hợp với nhiều tiề
 
 Ý nghĩa chi tiết của từng yếu tố như sau :
 
-với `suffix f (hậu tố f)` cho biết đây là kiểu số thực thuộc float, trong implementation đang xét, float là IEEE 754 binary32 nên có độ rộng 32 bit. Tiếp theo là `-24`, cái này là binary exponent trong cú pháp hexadecimal floating-point literal của C, ký hiệu `p` chính là ký hiệu phân cách `binary exponent trong hexadecimal floating-point literal` công thức tổng quát của ký hiệu `p` là :
+với `suffix f (hậu tố f)` cho biết đây là kiểu số thực thuộc float, trong implementation đang xét, float là IEEE 754 binary32 nên có độ rộng 32 bit. Tiếp theo là `p-24`, cái này là binary exponent trong cú pháp hexadecimal floating-point literal của C, ký hiệu `p` chính là ký hiệu phân cách `binary exponent trong hexadecimal floating-point literal` và chúng đi chung cùng nhau, với `p-24` thì sẽ là $$\large\times2^{-24}$$. Công thức tổng quát của ký hiệu `p` là :
 
 <div align="center">
 
@@ -2138,7 +2138,9 @@ $$
 
 </div>
 
-vậy nên cái này đi chung với `-24` nên ta có $$\large\times2^{-24}$$. Còn phần `...000002` là phần significand ở hệ 16, tại sao lại là hệ 16 thì phần `0x...` vốn dĩ đã là tiền tố của hexdecimal (hệ thập lục phân) rồi, theo hệ cơ số của hexa luôn là 16 nên đây là chuỗi số `hexadecimal float (số thực float theo hệ thập lục phân)` và các `actual exponent = -24`
+**Ví dụ** cho `0x1.8p+1`, nghĩa là $$\large1.8_{16}\times2^{1}$$, số thực có hệ cơ số 2 do `0x` và số mũ là 1 do `p+1`. Hexadecimal chỉ dùng cho significand; exponent sau p vẫn là số mũ của cơ số 2.
+
+Còn phần `...000002` là phần significand ở hệ 16, tại sao lại là hệ 16 thì phần `0x...` vốn dĩ đã là tiền tố của hexdecimal (hệ thập lục phân) rồi, theo hệ cơ số của hexa luôn là 16 nên đây là chuỗi số `hexadecimal float (số thực float theo hệ thập lục phân)` và các `actual exponent = -24`
 
 Từ chuỗi và thông tin trên, ta biết nó có `sign = 1`, `fraction = 23`, `actual exponent = -24` vì đây là float nên ta tuân theo cấu trúc `sign | exponent | fraction` theo tiêu chuẩn độ rộng của từng trường
 
