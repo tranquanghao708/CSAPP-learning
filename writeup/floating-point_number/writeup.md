@@ -2142,7 +2142,7 @@ $$
 
 Còn phần `...000002` là phần significand ở hệ 16, tại sao lại là hệ 16 thì phần `0x...` vốn dĩ đã là tiền tố của hexdecimal (hệ thập lục phân) rồi, theo hệ cơ số của hexa luôn là 16 nên đây là chuỗi số `hexadecimal float (số thực float theo hệ thập lục phân)` và các `actual exponent = -24`
 
-Bây giờ ta khai triển biểu thức toán để tính toán giá trị của chuỗi `0x1.000002p-24f`, dựa vào chuỗi này với toán lớp 6 ($$\large abc = 123_{10} = 3\times1 + 2\times10 + 1\times100$$ vì `3` là hàng đơn vị nên nhân `1`, `2` là hàng chục nên nhân `10`, `1` là hàng trăm nên nhân `100`) nhưng bây giờ đơn giản và giúp cho trình bày dễ nhìn hơn ta dùng phép lũy thừa ta có $$\large123_{10} = 1\times10^{2} + 2\times10^{1} + 3\times10^{0}$$, và dùng phép lũy thừa khá giống với việc ta tính nhị phân decode (tính phần fraction ở chương decode) nó giống như tuân theo đoạn thẳng của số nguyên vậy.
+Bây giờ ta khai triển biểu thức toán để tính toán giá trị của chuỗi `0x1.000002p-24f`, dựa vào chuỗi này với toán lớp 6 ($$\large abc = 123_{10} = 3\times1 + 2\times10 + 1\times100$$ vì `3` là hàng đơn vị nên nhân `1`, `2` là hàng chục nên nhân `10`, `1` là hàng trăm nên nhân `100`) nhưng bây giờ đơn giản và giúp cho trình bày dễ nhìn hơn ta dùng phép lũy thừa ta có $$\large123_{10} = 1\times10^{2} + 2\times10^{1} + 3\times10^{0}$$, và dùng phép lũy thừa khá giống với việc ta tính nhị phân decode (tính phần fraction ở chương decode) nó giống như tuân theo đoạn thẳng của số nguyên theo hướng ngược lại vậy.
 
 > rõ hơn về toán học trên tại đây
 
@@ -2151,7 +2151,10 @@ Bây giờ ta khai triển biểu thức toán để tính toán giá trị củ
 
 ---
 
+Với gía trị như `123` thì chúng ta có hai cách để tính ra giá trị này, cách 1 là dùng các số thủ công như $$\large123_{10} = 1\times10^{2} + 2\times10^{1} + 3\times10^{0}$$
+
 <sub>--đã hết phần giải thích--</sub>
+
 ---
 
 </details>
