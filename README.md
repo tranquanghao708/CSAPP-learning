@@ -4,14 +4,13 @@
 
 ![alt text](documents/avarta.png)
 
-</div>
-
 <div align="top">
 
 Đây là một cuốn sách về khoa học máy tính mà tôi được một anh sinh viên đại học giới thiệu. Nội dung của cuốn sách chủ yếu tập trung vào cách chương trình được thực thi và vận hành bên trong máy tính.
 
 </div>
-
+</div>
+  
 # Mục đích của repository này
 
 Tại đây tôi sẽ ghi lại những gì mình học được từ CS:APP cùng với các tài liệu, bài viết và video liên quan. Các nội dung được trình bày theo cách hiểu của tôi.
