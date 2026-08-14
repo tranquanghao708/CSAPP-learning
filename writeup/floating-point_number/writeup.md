@@ -2176,10 +2176,10 @@ ta thấy đó gọi là đoạn thẳng số nguyên truyền thống, đoạn 
 
 ```
 <---|--|--|--|--|--|--|--|--|--|--|--|--
-   4  3  2  1  0 -1 -2 -3 -4 -5 -6 -7
+   4  3  2  1  0  -1 -2 -3 -4 -5 -6 -7
 ```
 
-và số mũ với hệ cơ số 10, hay hệ cơ số 2 đều dựa vào đoạn thẳng của số nguyên theo hướng ngược lại thế này. Ví dụ với $$912.219_{10} = 9\times10^{2} + 1\times10^{1} + 2\times10^{0} + 2\times10^{-1} + 1\times10^{-2} + 9\times10^{-3}$$
+và số mũ với hệ cơ số 10, hay hệ cơ số 2 đều dựa vào đoạn thẳng của số nguyên theo hướng ngược lại thế này. Ví dụ với $$\large912.219_{10} = 9\times10^{2} + 1\times10^{1} + 2\times10^{0} + 2\times10^{-1} + 1\times10^{-2} + 9\times10^{-3}$$
 
 <sub>--đã hết phần giải thích--</sub>
 
