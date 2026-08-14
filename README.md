@@ -8,7 +8,7 @@
 
 </td>
 
-<td width="45%" align="center">
+<td width="40%" align="center">
   <img src=documents/avarta.png/>
 </td>
 
