@@ -9,7 +9,7 @@
 </td>
 
 <td align="center", valign="top">
-  ![alt text](documents/avarta.png)
+  <img src=documents/avarta.png/>
 </td>
 
 </tr>
