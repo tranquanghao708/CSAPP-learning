@@ -4,11 +4,11 @@
 
 ![alt text](documents/avarta.png)
 
-<div align="top">
+<td align="top">
 
 Đây là một cuốn sách về khoa học máy tính mà tôi được một anh sinh viên đại học giới thiệu. Nội dung của cuốn sách chủ yếu tập trung vào cách chương trình được thực thi và vận hành bên trong máy tính.
 
-</div>
+</td>
 </div>
   
 # Mục đích của repository này
