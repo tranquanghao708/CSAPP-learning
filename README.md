@@ -9,7 +9,7 @@
 </td>
 
 <td align="center", valign="top">
-  <img src=documents/avarta.png/>
+  <img src=documents/avarta.png/ width=225>
 </td>
 
 </tr>
