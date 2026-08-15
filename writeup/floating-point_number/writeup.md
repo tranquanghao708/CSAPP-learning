@@ -2193,6 +2193,18 @@ vậy ta có $$\large16^{6}$$ mà $$\large16 = 2^{4}$$ nên ta có $$\large16^{6
 
 Bây giờ ta thế vào phép chia (phân số) ta có $$\large16^{6} = 2^{24}$$ vậy suy ra $$\large0x1.000002_{16} = 1 + \frac{2}{2^{24}}$$ (thay số 16 mũ -6 thành 2 mũ 24) và ta tính cái này ra $$\large\frac{2}{2^{24}} = 2^{-23}$$ lý do nó ra kết quả $$\large2^{-23}$$ là trong toán học có quy tắc, $$\large\frac{a^{m}}{a^{n}} = a^{m - n}$$ nên $$\large\frac{2^{1}}{2^{24}} = 2^{1 - 24} = 2^{-23}$$
 
+rồi bây giờ ta biết chuỗi `0x1.000002` có `p -24` nghĩa là số mũ là `-24` vậy ta có : 
+
+<div align="center">
+
+$$\Large
+0x1.000002_{16} = 1 + \frac{2}{16^{-6} = (1 + 2^{-23})2^{-24} = \boxed{2^{-24} + 2^{-47}}}
+$$
+
+tính biểu thức $$\large(1 + 2^{-23})2^{-24}$$ bằng đơn nhân đa, và áp dụng quy tăc $$\large a^{m} \times a^{n} = a^{m + n}$$. Từ đó suy ra kết quả của gía trị `0x1.000002p-24f` là $$\large\boxed{2^{-24} + 2^{-47}}$$
+
+</div>
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
