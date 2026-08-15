@@ -2199,11 +2199,29 @@ $$
 
 tiếp theo ta bắt đầu tính rút gọn đi ở $$\large16^{6}$$, với giá trị `16` thì $$\large16 = 2^{4}$$
 
-vậy ta có $$\large16^{6}$$ mà $$\large16 = 2^{4}$$ nên ta có $$\large16^{6} = (2^{4})^{6}$$ nghĩa là `6` giá trị `16` nhân lại với nhau mà `16` lại tương đương 2 mũ 4 sau khi rút gọn, vậy ta có 6 phép 2 mũ 4 nhân lại với nhau. Bây giờ có quy tắc toán là $$\large(a^{m})^{n} = a^{m \times n}$$ nên ta có $$\large(2^{4})^{6} = 2^{4 \times 6} = 2^{24}$$ vậy ta có $$\large16^{6} = 2^{24}$$ . Đây chỉ là đổi cách viết cùng một con số.
+vậy ta có $$\large16^{6}$$ mà $$\large16 = 2^{4}$$ nên ta có $$\large16^{6} = (2^{4})^{6}$$ nghĩa là `6` giá trị `16` nhân lại với nhau mà `16` lại tương đương 2 mũ 4 sau khi rút gọn, vậy ta có 6 phép 2 mũ 4 nhân lại với nhau. Bây giờ có quy tắc toán là 
 
-Bây giờ ta thế vào phép chia (phân số) ta có $$\large16^{6} = 2^{24}$$ vậy suy ra $$\large0x1.000002_{16} = 1 + \frac{2}{2^{24}}$$ (thay số 16 mũ -6 thành 2 mũ 24) và ta tính cái này ra $$\large\frac{2}{2^{24}} = 2^{-23}$$ lý do nó ra kết quả $$\large2^{-23}$$ là trong toán học có quy tắc, $$\large\frac{a^{m}}{a^{n}} = a^{m - n}$$ nên $$\large\frac{2^{1}}{2^{24}} = 2^{1 - 24} = 2^{-23}$$
+<div align="center">
 
-rồi bây giờ ta biết chuỗi `0x1.000002` có `p -24` nghĩa là số mũ là `-24` vậy ta có : 
+$$\Large
+(a^{m})^{n} = a^{m \times n}
+$$
+
+</div>
+
+nên ta có $$\large(2^{4})^{6} = 2^{4 \times 6} = 2^{24}$$ vậy ta có $$\large16^{6} = 2^{24}$$ . Đây chỉ là đổi cách viết cùng một con số.
+
+Bây giờ ta thế vào phép chia (phân số) ta có $$\large16^{6} = 2^{24}$$ vậy suy ra $$\large0x1.000002_{16} = 1 + \frac{2}{2^{24}}$$ (thay số 16 mũ -6 thành 2 mũ 24) và ta tính cái này ra $$\large\frac{2}{2^{24}} = 2^{-23}$$ lý do nó ra kết quả $$\large2^{-23}$$ là trong toán học có quy tắc :
+
+<div align="center">
+
+$$\Large
+\frac{a^{m}}{a^{n}} = a^{m - n}
+$$
+
+</div>
+
+nên $$\large\frac{2^{1}}{2^{24}} = 2^{1 - 24} = 2^{-23}$$. Rồi bây giờ ta biết chuỗi `0x1.000002` có `p -24` nghĩa là số mũ là `-24` vậy ta có : 
 
 <div align="center">
 
