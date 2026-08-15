@@ -2201,9 +2201,10 @@ $$\Large
 0x1.000002_{16} = 1 + \frac{2}{16^{-6}} = (1 + 2^{-23})2^{-24} = \boxed{2^{-24} + 2^{-47}}
 $$
 
-tính biểu thức $$\large(1 + 2^{-23})2^{-24}$$ bằng đơn nhân đa, và áp dụng quy tăc $$\large a^{m} \times a^{n} = a^{m + n}$$. Từ đó suy ra kết quả của gía trị `0x1.000002p-24f` là $$\large\boxed{2^{-24} + 2^{-47}}$$
-
 </div>
+
+
+tính biểu thức $$\large(1 + 2^{-23})2^{-24}$$ bằng đơn nhân đa, và áp dụng quy tăc $$\large a^{m} \times a^{n} = a^{m + n}$$. Từ đó suy ra kết quả của gía trị `0x1.000002p-24f` là $$\large\boxed{2^{-24} + 2^{-47}}$$
 
 <sub>--đã hết phần giải thích--</sub>
 
