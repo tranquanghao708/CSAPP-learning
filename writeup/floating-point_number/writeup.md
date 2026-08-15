@@ -2187,7 +2187,7 @@ và số mũ với hệ cơ số 10 đều dựa vào đoạn thẳng của số
 
 </details>
 
-Nên bây giờ ta tiến hành khai triển `0x1.000002` thành $$\large0x1.000002_{16} = 1 + \frac{2}{16^{6}}$$ (vì 2 là hệ cơ số 2 sang nhị phân, 1 là phần nguyên và $$\large16^{6}$$ là hệ cơ số thập lục phân và giá trị `2` nằm ở vị trí `-6`), lý do nó thành $$\large\frac2^{6}$$ trong khi thực chất vị trí nó nằm ở `-6` , chính là trong toán học có 1 quy tắc là $$\large a^{-m} = \frac{1}{a^{m}$$
+Nên bây giờ ta tiến hành khai triển `0x1.000002` thành $$\large0x1.000002_{16} = 1 + \frac{2}{16^{6}}$$ (vì 2 là hệ cơ số 2 sang nhị phân, 1 là phần nguyên và $$\large16^{6}$$ là hệ cơ số thập lục phân và giá trị `2` nằm ở vị trí `-6`), lý do nó thành $$\large\frac2^{6}$$ trong khi thực chất vị trí nó nằm ở `-6` , chính là trong toán học có 1 quy tắc là $$\large a^{-m} = \frac{1}{a^{m}}$$
 
 tiếp theo ta bắt đầu tính rút gọn đi ở $$\large16^{6}$$, với giá trị `16` thì $$\large16 = 2^{4}$$
 
