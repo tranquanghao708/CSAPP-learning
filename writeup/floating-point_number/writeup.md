@@ -2187,7 +2187,9 @@ và số mũ với hệ cơ số 10 đều dựa vào đoạn thẳng của số
 
 </details>
 
-Nên bây giờ ta tiến hành khai triển `0x1.000002` thành $$\large0x1.000002_{16} = 1 + \frac{2}{16^{-6}}$$ (vì 2 là hệ cơ số 2 sang nhị phân, 1 là hàng đơn vị và $$\large16^{-6}$$ là hệ cơ số thập lục phân và giá trị `2` nằm ở vị trí `-6`), tiếp theo ta bắt đầu tính rút gọn đi ở $$\large16^{6}$$, với giá trị `16` thì $$\large16 = 2^{4}$$
+Nên bây giờ ta tiến hành khai triển `0x1.000002` thành $$\large0x1.000002_{16} = 1 + \frac{2}{16^{6}}$$ (vì 2 là hệ cơ số 2 sang nhị phân, 1 là phần nguyên và $$\large16^{6}$$ là hệ cơ số thập lục phân và giá trị `2` nằm ở vị trí `-6`), lý do nó thành $$\large\frac2^{6}$$ trong khi thực chất vị trí nó nằm ở `-6` , chính là trong toán học có 1 quy tắc là $$\large a^{-m} = \frac{1}{a^{m}}$$
+
+tiếp theo ta bắt đầu tính rút gọn đi ở $$\large16^{6}$$, với giá trị `16` thì $$\large16 = 2^{4}$$
 
 vậy ta có $$\large16^{6}$$ mà $$\large16 = 2^{4}$$ nên ta có $$\large16^{6} = (2^{4})^{6}$$ nghĩa là `6` giá trị `16` nhân lại với nhau mà `16` lại tương đương 2 mũ 4 sau khi rút gọn, vậy ta có 6 phép 2 mũ 4 nhân lại với nhau. Bây giờ có quy tắc toán là $$\large(a^{m})^{n} = a^{m \times n}$$ nên ta có $$\large(2^{4})^{6} = 2^{4 \times 6} = 2^{24}$$ vậy ta có $$\large16^{6} = 2^{24}$$ . Đây chỉ là đổi cách viết cùng một con số.
 
