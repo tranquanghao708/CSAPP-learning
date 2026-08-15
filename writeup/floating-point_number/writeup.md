@@ -2197,7 +2197,18 @@ $$
 
 </div>
 
-Ta thấy theo quy tắc, ta có $$\large1 + 16^{-6} = 1 + 2 \times \frac{1}{16^{6}}$$ từ đó ta áp dụng nhân chia trước, cộng trừ sau với phép này. Ta lấy giá trị `2` đi nhân với tử của $$\large\frac{1}{16^{6}}$$ ta có $$\large\frac{2}{16^{6}}$$
+Ta thấy theo quy tắc, ta có $$\large1 + 16^{-6} = 1 + 2 \times \frac{1}{16^{6}}$$ từ đó ta áp dụng nhân chia trước, cộng trừ sau với phép này. Ta lấy giá trị `2` đi nhân với tử của $$\large\frac{1}{16^{6}}$$ ta có $$\large\frac{2}{16^{6}}$$, suy ra kết quả đúng là $$\large\boxed{1 + \frac{2}{16^{6}}}$$.
+
+<details>
+	<summary>Vậy số `2` từ đâu mà ra</summary>
+
+---
+
+<sub>--đã hết phần giải thích--</sub>
+
+---
+
+</details>
 
 tiếp theo ta bắt đầu tính rút gọn đi ở $$\large16^{6}$$, với giá trị `16` thì $$\large16 = 2^{4}$$
 
