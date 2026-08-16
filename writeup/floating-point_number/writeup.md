@@ -2289,11 +2289,22 @@ Từ đó suy ra kết quả của gía trị `0x1.000002p-24f` là $$\large\box
 
 ```
 sign       = 1 bit
-exponent    = 8 bits
+exponent   = 8 bits
 fraction   = 23 bits
 ```
 
 Nên giá trị này nằm đúng trên một giá trị binary32 representable.
+
+<details>
+	<summary>Rõ hơn về phần 32bit này</summary>
+
+---
+
+<sub>--đã hết phần giải thích--</sub>
+
+---
+
+</details>
 
 <sub>--đã hết phần giải thích--</sub>
 
