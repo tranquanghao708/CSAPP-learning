@@ -2232,7 +2232,7 @@ Thực chất nó không hề bỏ số 2. Nó chỉ được biến đổi từ
 
 Sau đó mới đổi $$\large16 = 2^{4}$$ và $$\large16^{6} = (2^{4})^{6} = 2^{24}$$ suy ra ta có $$\large\frac{2}{16^{6}} = \frac{2}{2^{24}}$$, ta viết từ số 2 thành $$\large2^{1}$$ nên $$\large\frac{2^{1}}{2{24}} = 2^{1 - 24} = 2^{-23}$$
 
-Vậy ta có $$\large1 + 2^{-23}$$. Cho nên số 2 đã đi đâu, nó ko biến mất mà nó đi từ 2 thành $$2^{1}$$ rồi gộp vào phép trừ số mũ $$\large\frac{2^{1}}{2^{24}} = 2^{1 - 24} = 2^{-23}$$. Đây chính là câu trả lời cho câu hỏi 2.
+Vậy ta có $$\large1 + 2^{-23}$$. Cho nên số 2 đã đi đâu, nó ko biến mất mà nó đi từ 2 thành $$\large2^{1}$$ rồi gộp vào phép trừ số mũ $$\large\frac{2^{1}}{2^{24}} = 2^{1 - 24} = 2^{-23}$$. Đây chính là câu trả lời cho câu hỏi 2.
 
 <sub>--đã hết phần giải thích--</sub>
 
