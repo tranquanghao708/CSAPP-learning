@@ -2230,6 +2230,10 @@ và số nguyên này có hệ cơ số `10` nên ta có $$\large4\times10^{-3}$
 
 Thực chất nó không hề bỏ số 2. Nó chỉ được biến đổi từ chữ số thành hệ số của trọng số vị trí, rồi sau đó khi đổi sang dạng $$\large2^{−23}$$, nó được hấp thụ vào số mũ. Cụ thể, ta có $$\large0x1.000002_{16}$$ chữ số `2` ở vị trí `-6` nên $$\large1+2\times16^{-6}$$ dùng $$16^{-6} = \frac{1}{16^{6}}$$ vì quy tắc $$\large a^{-m} = \frac{1}{a^{m}}$$ ta được $$1 + 2 \times \frac{1}{16^{6}} = 1 + \frac{2}{16^{-6}}$$ (lấy `2` nhân cho tử của phân số) và ta thấy số 2 vẫn còn nguyên
 
+Sau đó mới đổi $$\large16 = 2^{4}$$ và $$\large16^{6} = (2^{4})^{6} = 2^{24}$$ suy ra ta có $$\large\frac{2}{16^{6}} = \frac{2}{2^{24}}$$, ta viết từ số 2 thành $$\large2^{1}$$ nên $$\large\frac{2^{1}}{2{24}} = 2^{1 - 24} = 2^{-23}$$
+
+Vậy ta có $$\large1 + 2^{23}$$. Cho nên số 2 đã đi đâu, nó ko biến mất mà nó đi từ 2 thành $$2^{1}$$ rồi gộp vào phép trừ số mũ $$\large\frac{2^{1}}{2^{24}} = 2^{1 - 24} = 2^{-23}$$. Đây chính là câu trả lời cho câu hỏi 2.
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
