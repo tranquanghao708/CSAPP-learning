@@ -2285,7 +2285,15 @@ $$
 
 </div>
 
-Từ đó suy ra kết quả của gía trị `0x1.000002p-24f` là $$\large\boxed{2^{-24} + 2^{-47}}$$
+Từ đó suy ra kết quả của gía trị `0x1.000002p-24f` là $$\large\boxed{2^{-24} + 2^{-47}}$$ và số này thực ra được biểu diễn chính xác bằng binary32 cũng là phần liên quan trực tiếp tới chương rounding. Ta có, $$\large(1 + 2^{-23})2^{-24}$$ (biểu thức trước khi tính đơn nhân đa), ta viết thành $$\large1.00000000000000000000001_{2} \times 2^{-24}$$. Ở đây, $$\large1+2^{-23}$$ có đúng 23 bit fraction sau hidden bit 1. Binary32 có:
+
+```
+sign       = 1 bit
+exponent    = 8 bits
+fraction   = 23 bits
+```
+
+Nên giá trị này nằm đúng trên một giá trị binary32 representable.
 
 <sub>--đã hết phần giải thích--</sub>
 
