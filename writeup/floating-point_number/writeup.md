@@ -2228,6 +2228,8 @@ và số nguyên này có hệ cơ số `10` nên ta có $$\large4\times10^{-3}$
 
 **Câu hỏi 2:** Tại sao ngay từ đầu lại có giá trị 2 nhưng sau này lại bỏ?
 
+Thực chất nó không hề bỏ số 2. Nó chỉ được biến đổi từ chữ số thành hệ số của trọng số vị trí, rồi sau đó khi đổi sang dạng $$\large2^{−23}$$, nó được hấp thụ vào số mũ. Cụ thể, ta có $$\large0x1.000002_{16}$$ chữ số `2` ở vị trí `-6` nên $$\large1+2\times16^{-6}$$ dùng $$16^{-6} = \frac{1}{16^{6}}$$ vì quy tắc $$\large a^{-m} = \frac{1}{a^{m}}$$ ta được $$1 + 2 \times \frac{1}{16^{6}} = 1 + \frac{2}{16^{-6}}$$ (lấy `2` nhân cho tử của phân số) và ta thấy số 2 vẫn còn nguyên
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
