@@ -124,6 +124,10 @@
 
     - 1.6.Gradual underflow
 
+    - 1.7.ULP error
+
+- 2.cancellation examples
+
 ---
 
 # Phần trọng tâm
@@ -2299,6 +2303,8 @@ Nên giá trị này nằm đúng trên một giá trị binary32 representable.
 	<summary>Rõ hơn về phần 32bit này</summary>
 
 ---
+
+Ta xét $$\large1+2^{-23}$$ và ta đã biết $$\large2^{-1} = \frac{1}{2^{1}} = \frac{1}{2}$$, $$\large2^{-2} = \frac{1}{2^{2}} = \frac{1}{4}$$... Vậy $$\large2^{-23}$$ chính là một bit `1` nằm ở vị trí thứ 23 sau dấu chấm nhị phân. **Ví dụ** $$\large1+2^{-1}=1.1_{2}$$, $$\large1+2^{-2}=1.01_{2}$$, $$\large1+2^{-3}=1.001_{2}$$... (giá trị `1` đằng trước là phần nguyên) vậy tương tự với $$\large1+2^{-23}=\boxed{1.00000000000000000000001_{2}}$$
 
 <sub>--đã hết phần giải thích--</sub>
 
