@@ -2187,7 +2187,7 @@ và số mũ với hệ cơ số 10 đều dựa vào đoạn thẳng của số
 
 </details>
 
-Nên bây giờ ta tiến hành khai triển `0x1.000002` thành $$\large0x1.000002_{16} = 1 + 2 \times 16^{-6} = 1 + \frac{2}{16^{6}}$$ (vì 2 là hệ cơ số 2 sang nhị phân, 1 là phần nguyên và $$\large16^{6}$$ là hệ cơ số thập lục phân và giá trị `2` nằm ở vị trí `-6`), lý do nó thành $$\large\frac{2}{2^{6}}$$ trong khi thực chất vị trí nó nằm ở `-6` , chính là trong toán học có 1 quy tắc là 
+Nên bây giờ ta tiến hành khai triển $$\large0x1.000002_{16}$$ thành $$\large0x1.000002_{16} = 1 + 2 \times 16^{-6} = 1 + \frac{2}{16^{6}}$$ (vì 2 là một chữ số hexadecimal có giá trị 2, 1 là phần nguyên và $$\large16^{6}$$ là hệ cơ số thập lục phân và giá trị `2` nằm ở vị trí `-6`), lý do nó thành $$\large\frac{2}{16^{6}}$$ trong khi thực chất vị trí nó nằm ở `-6` , chính là trong toán học có 1 quy tắc là 
 
 <div align="center">
 
@@ -2197,12 +2197,24 @@ $$
 
 </div>
 
-Ta thấy theo quy tắc, ta có $$\large1 + 16^{-6} = 1 + 2 \times \frac{1}{16^{6}}$$ từ đó ta áp dụng nhân chia trước, cộng trừ sau với phép này. Ta lấy giá trị `2` đi nhân với tử của $$\large\frac{1}{16^{6}}$$ ta có $$\large\frac{2}{16^{6}}$$, suy ra kết quả đúng là $$\large\boxed{1 + \frac{2}{16^{6}}}$$.
+Ta thấy theo quy tắc, ta có $$\large1 + 16^{-6} = 1 + \frac{1}{16^{6}}$$ từ đó ta áp dụng nhân chia trước, cộng trừ sau với phép này. Ta lấy giá trị `2` đi nhân với tử của $$\large\frac{1}{16^{6}}$$ ta có $$\large\frac{2}{16^{6}}$$, suy ra kết quả đúng là $$\large\boxed{1 + \frac{2}{16^{6}}}$$.
 
 <details>
-	<summary>Vậy số `2` từ đâu mà ra</summary>
+	<summary>Vậy số 2 từ đâu mà ra vì sao lại nhân cho hệ cơ số của lục phân? Tại sao ngay từ đầu lại có giá trị 2 nhưng sau này lại bỏ?</summary>
 
 ---
+
+**câu hỏi 1:** số 2 từ đâu mà ra vì sao lại nhân cho hệ cơ số của lục phân?
+
+Trong $$\large0x1.000002_{16}$$, số `2` chính là chữ số `2` đang nằm ở vị trí thứ 6 sau dấu chấm.
+
+```
+1  .  0  0  0  0  0  2
+      |  |  |  |  |  |
+     -1 -2 -3 -4 -5 -6
+```
+
+vì giá trị `2` nằm ở vị trí `-6` và đây là hệ thập lục phân có hệ cơ số 10, để tính trọng số thì dùng `hệ cơ số` lũy thừa với `vị trí số` nên ta có $$\large2\times16^{-6}$$
 
 <sub>--đã hết phần giải thích--</sub>
 
