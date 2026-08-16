@@ -2204,7 +2204,7 @@ Ta thấy theo quy tắc, ta có $$\large1 + 16^{-6} = 1 + \frac{1}{16^{6}}$$ t�
 
 ---
 
-**câu hỏi 1:** số 2 từ đâu mà ra vì sao lại nhân cho hệ cơ số của lục phân?
+**Câu hỏi 1:** số 2 từ đâu mà ra vì sao lại nhân cho hệ cơ số của lục phân?
 
 Trong $$\large0x1.000002_{16}$$, số `2` chính là chữ số `2` đang nằm ở vị trí thứ 6 sau dấu chấm.
 
@@ -2214,7 +2214,19 @@ Trong $$\large0x1.000002_{16}$$, số `2` chính là chữ số `2` đang nằm 
      -1 -2 -3 -4 -5 -6
 ```
 
-vì giá trị `2` nằm ở vị trí `-6` và đây là hệ thập lục phân có hệ cơ số 10, để tính trọng số thì dùng `hệ cơ số` lũy thừa với `vị trí số` nên ta có $$\large2\times16^{-6}$$
+vì giá trị `2` nằm ở vị trí `-6` và đây là hệ thập lục phân có hệ cơ số 16, để tính trọng số thì dùng `hệ cơ số` lũy thừa với `vị trí số` nên ta có $$\large2\times16^{-6}$$
+
+Ví dụ khác, cho số $$\large123.004_{10}$$ ta khai triển như sau $$\large123.004_{10} = 1\times10^{2} + 2\times10^{1} + 3\times10^{0} + 4\times10^{-3}$$ vậy tại sao có $$\large4\times10^{-3}$$, ko phải là 10 tự sinh ra nó mà là do số 4 nằm ở vị trí `-3`:
+
+```
+1  2  3  .  0  0  4
+|  |  |  |  |  |  |
+2  1  0    -1 -2 -3 (4 nằm tại -3)
+```
+
+và số nguyên này có hệ cơ số `10` nên ta có $$\large4\times10^{-3}$$ và tương tự với hệ thập lục phân hay hệ nhị phân thôi
+
+**Câu hỏi 2:** Tại sao ngay từ đầu lại có giá trị 2 nhưng sau này lại bỏ?
 
 <sub>--đã hết phần giải thích--</sub>
 
