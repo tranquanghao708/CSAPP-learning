@@ -2314,6 +2314,9 @@ Ta xét $$\large1+2^{-23}$$ và ta đã biết $$\large2^{-1} = \frac{1}{2^{1}} 
 
 Điều quan trọng là `fraction = 23 bit` , Với một số normalized binary32, significand được hiểu là `1.fraction` nghĩa là theo chuẩn hóa thì `hiddenbit = 1` và có 23bit fraction ví dụ binary32 có `fraction = 00000000000000000000001` thì nó sẽ là $$\large\boxed{\mathrm{1}.00000000000000000000001_{2}}$$ và giá trị này đúng y hệt cái ta đang có ở biểu thức $$\large1+2^{-23}$$
 
+
+Bây giờ tới phần ghép thêm $$\large2^{-24}$$, như đã nói phần gía trị `-24` đã được cho ở chuỗi `0x1.000002p-24f` (phần `p-24`) trước đó ta ghép lại thành $$\large(1 + 2^{-23})2^{-24}$$ cái này chỉ đơn giản là làm đúng dạng normalized theo như công thức ở chương [1.Tổng quan về IEEE 754](#1tổng-quan-về-ieee-754) là $$\large(-1)^{S}\times1.m\times2^{e - b}$$ với significand = $$\large1.00000000000000000000001_{2}$$ và actual exponent = -24
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
