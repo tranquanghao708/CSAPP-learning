@@ -2312,7 +2312,7 @@ Ta xét $$\large1+2^{-23}$$ và ta đã biết $$\large2^{-1} = \frac{1}{2^{1}} 
 |-----|----------|----------|
 |  1  |    8     |    23    |
 
-Điều quan trọng là `fraction = 23 bit` , Với một số normalized binary32, significand được hiểu là `1.fraction` nghĩa là theo chuẩn hóa thì `hiddenbit = 1` và có 23bit fraction ví dụ binary32 có `fraction = 00000000000000000000001` thì nó sẽ là $$\large\boxed1.00000000000000000000001_{2}$$ và giá trị này đúng y hệt cái ta đang có ở biểu thức $$\large1+2^{-23}$$
+Điều quan trọng là `fraction = 23 bit` , Với một số normalized binary32, significand được hiểu là `1.fraction` nghĩa là theo chuẩn hóa thì `hiddenbit = 1` và có 23bit fraction ví dụ binary32 có `fraction = 00000000000000000000001` thì nó sẽ là $$\large\boxed{1.00000000000000000000001_{2}}$$ và giá trị này đúng y hệt cái ta đang có ở biểu thức $$\large1+2^{-23}$$
 
 <sub>--đã hết phần giải thích--</sub>
 
