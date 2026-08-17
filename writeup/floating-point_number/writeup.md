@@ -2347,7 +2347,7 @@ $$\large
 5.960465188081798e-08_{10} = 5.960465188081798\times10^{-8}_{10}
 $$
 
-và giá trị nhị phân là $$\large\oxed{00110011100000000000000000000001_{2}}$$
+và giá trị nhị phân là $$\large\boxed{00110011100000000000000000000001_{2}}$$
 
 > **câu hỏi mở rộng :** vì sao app máy tính casio trên điện thoại lại tính được $$\large2^{-24} + 2^{-47} = 0.0000000596_{10}$$ nhưng với máy tính terminal linux bên ngành kiến trúc CPU x86-64 lại ko mà nếu đổi má sang quy tắc toán học như $$\large a^{-m} = \frac{1}{a^{m}}$$ lại luôn ra giá trị `0` mà gõ trực tiếp thì bị lỗi cú pháp với $(())?
 
