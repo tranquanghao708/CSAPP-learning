@@ -2082,6 +2082,8 @@ Trong đó $$\large F$$ là tập các giá trị floating-point có thể biể
 <details>
 	<summary>minh họa với C</summary>
 
+---
+
 ```c
 #include <stdio.h>
 #include <fenv.h>
@@ -2339,7 +2341,24 @@ ghép lại thành $$\large\boxed{00110011100000000000000000000001_{2}}$$. Đây
 
 </details>
 
-bây giờ, ta đã biết gía trị số nguyên của chuỗi `0x1.000002p-24f` là $$\large2^{-24} + 2^{-47}$$ và giá trị nhị phân là $$\large00110011100000000000000000000001_{2}$$
+bây giờ, ta đã biết gía trị số nguyên của chuỗi `0x1.000002p-24f` là $$\large2^{-24} + 2^{-47} = 0.0000000596_{10}$$ và giá trị nhị phân là $$\large00110011100000000000000000000001_{2}$$
+
+> **câu hỏi mở rộng :** vì sao app máy tính casio trên điện thoại lại tính được $$\large2^{-24} + 2^{-47} = 0.0000000596_{10}$$ nhưng với máy tính terminal linux bên ngành kiến trúc CPU x86-64 lại ko mà nếu đổi má sang quy tắc toán học như $$\large a^{-m} = \frac{1}{a^{m}}$$ lại luôn ra giá trị `0` mà gõ trực tiếp thì bị lỗi cú pháp với $(())?
+
+<details>
+<summary>Trả lời</summary>
+
+---
+
+<sub>--đã hết phần giải thích--</sub>
+
+---
+
+</details>
+
+<sub>--đã hết phần giải thích--</sub>
+
+---
 
 </details>
 
