@@ -2354,6 +2354,16 @@ Ko phải vì CPU ko biết tính được biểu thức trên, hiện tượng 
 
 ![alt text](image/image25.png)
 
+Đây ko phải là do architecture mà do bash syntax, vì cú pháp `$(())` chủ yếu làm việc với số nguyên **ví dụ** `echo $((1 / 2))` kết quả ra `0` như trên ảnh, ko phải vì $$\large\frac{1}{2} = 0_{10}$$ mà vì bash đang thực hiện integer division, nên $$\large\frac{1}{2} = 0.5_{10}$$ (thấy phần nguyên là `0`) nên bash lấy nó, ko có gì cao siêu
+
+Vậy giải pháp, chúng ta dùng `python3`:
+
+> python3
+
+![alt text](image/image26.png)
+
+và mọi chuyện ổn thỏa
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
