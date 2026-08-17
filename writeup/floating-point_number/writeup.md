@@ -2325,7 +2325,13 @@ Bây giờ tới phần ghép thêm $$\large2^{-24}$$, như đã nói phần gí
 
 </details>
 
-Bây giờ ta chuyển chuỗi `0x1.000002p-24f` sang binary, ta vừa chuyển nó thành giá trị ở hệ cơ số 10 bây giờ là hệ cơ số 2.
+Bây giờ ta chuyển chuỗi `0x1.000002p-24f` sang binary, ta vừa chuyển nó thành giá trị ở hệ cơ số 10 bây giờ là hệ cơ số 2. Bây giờ ta biết hiddenbit là 1, fraction là $$\large00000000000000000000001_{2}$$ và số mũ là `-24` ở phần `p-24` kiểu float (32bit). Cách tính chuỗi `0x1.000002p-24f` có ở phần details trên. Bây giờ tính trường số mũ (exponent field) bằng cách lấy `-24` cộng với bias, ta biết `bias = 127` trong hệ 32bits và `-24 + 127 = 103` và chuyển $$\large103_{10} = 01100111_{2}$$ ta có:
+
+| sign | exponent | fraction |
+|-----|----------|----------|
+|  0  |    01100111     |    00000000000000000000001    |
+
+ghép lại thành $$\large\boxed{00110011100000000000000000000001_{2}}$$. Đây là nhị phân của chuỗi `0x1.000002p-24f`
 
 <sub>--đã hết phần giải thích--</sub>
 
