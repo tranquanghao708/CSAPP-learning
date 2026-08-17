@@ -2350,6 +2350,10 @@ bây giờ, ta đã biết gía trị số nguyên của chuỗi `0x1.000002p-24
 
 ---
 
+Ko phải vì CPU ko biết tính được biểu thức trên, hiện tượng như :
+
+![alt text](imae/image25.png)
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
