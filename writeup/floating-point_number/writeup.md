@@ -2341,7 +2341,7 @@ ghép lại thành $$\large\boxed{00110011100000000000000000000001_{2}}$$. Đây
 
 </details>
 
-bây giờ, ta đã biết gía trị số nguyên của chuỗi `0x1.000002p-24f` là $$\large2^{-24} + 2^{-47} = {5.960465188081798e-08}_{10} = \boxed{0.00000005960465188081798_{10}}$$ (thêm 8 số 0 bên trái và chuẩn hóa số thực vì `e-08`)
+bây giờ, ta đã biết gía trị số nguyên của chuỗi `0x1.000002p-24f` là $$\large2^{-24} + 2^{-47} = {5.960465188081798e-08}_{10} = \boxed{0.00000005960465188081798_{10}}\text{(thêm 8 số 0 bên trái và chuẩn hóa số thực vì có e-08)}$$
 
 rõ hơn với giá trị `e-08` viết tắt là `exponent = -8` nghĩa là nhân hệ cơ số có lũy thừa `-08` nên $$\large
 {5.960465188081798e-08}_{10} = {5.960465188081798\times10^{-8}}_{10}$$ và giá trị nhị phân là $$\large00110011100000000000000000000001_{2}$$
