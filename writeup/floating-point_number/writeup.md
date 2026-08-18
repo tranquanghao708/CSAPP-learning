@@ -1337,7 +1337,7 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 
 > số thực nhị phân vô hạn
 
-**tổng cộng :** $$\large0.81\approx0.1100111101011100001010..$$ (đây gọi là thu thập nhị phân của phần thập phân). Phần này dùng khi ta muốn chuyển phần thập phân sang hệ cơ số 2 (nhị phân)
+**tổng cộng :** $$\large0.81\approx0.1100111101011100001010\ldots_{2}$$ (đây gọi là thu thập nhị phân của phần thập phân). Phần này dùng khi ta muốn chuyển phần thập phân sang hệ cơ số 2 (nhị phân)
 
 **trường hợp 2:** Nếu chỉ muốn biết số thập phân này khi biểu diễn dưới hệ cơ số 2 (nhị phân) là số hữu hạn hay vô hạn, nhưng ko cần lấy nhị phân. Nghĩa là chỉ muốn biết nó là vô hạn hay hữu hạn chứ ko cần phải covert sang hệ nhị phân. Thì ta dùng công thức :
 
