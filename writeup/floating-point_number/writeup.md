@@ -1357,7 +1357,7 @@ Với $$\large b_{k}\in\{0,1\}$$ và chỉ có hữu hạn số hạng, đều c
 
 - n : cận trên (upper bound) của k. Nó cho biết k dừng ở đâu
 
-- $$\large b_{k}$$ :
+- $$\large b_{k}$$ : hệ số tại vị trí k
 
 - $$\large2^{k}$$ : tính trọng số theo hệ cơ số 2 (nhị phân)
 
