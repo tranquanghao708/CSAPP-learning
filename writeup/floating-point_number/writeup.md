@@ -1343,9 +1343,11 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 
 <div align="center">
 
-$$\large
+$$\Large
 \sum_{k=m}^{n}b_k2^k
 $$
+
+Với $$\large b_{k}\in\{0,1\}$$ và chỉ có hữu hạn số hạng, đều có biểu diễn nhị phân hữu hạn.
 
 </div>
 
