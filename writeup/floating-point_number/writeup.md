@@ -1306,6 +1306,43 @@ Ta thấy nó vẫn bị rounding
 
 #### 3.1.1.Hai phương cách để có thể làm việc với các trường hợp liên quan tới nhị phân vô hạn và hữu hạn
 
+Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gian khi làm việc với nhị phân vô hạn và hữu hạn khi biễu diễn số thực dưới dạng hệ cơ số 2. Chúng ta phân chúng theo hai trường hợp:
+
+**trường hợp 1:** Nếu muốn tính số thực lấy nhị phân của significand hay được gọi đơn giản là phần thập phân, mục đích là lấy phần nguyên `0 hoặc 1` để phục vụ cho việc encode thì ta xét bảng, ví dụ :
+
+| Bước | Giá trị | x2   | Bit lấy |
+| ---: | ------- | ---- | ------- |
+|    1 | 0.81    | 1.62 | 1       |
+|    2 | 0.62    | 1.24 | 1       |
+|    3 | 0.24    | 0.48 | 0       |
+|    4 | 0.48    | 0.96 | 0       |
+|    5 | 0.96    | 1.92 | 1       |
+|    6 | 0.92    | 1.84  | 1     |
+| 7 | 0.84 | 1.68 | 1 |
+| 8 | 0.68 | 1.36 | 1 |
+| 9 | 0.36 | 0.72 | 0 |
+| 10 | 0.72 | 1.44 | 1 |
+| 11 | 0.44 | 0.88 | 0 |
+| 12 | 0.88 | 1.76 | 1 |
+| 13 | 0.76 | 1.52 | 1 |
+| 14 | 0.52 | 1.04 | 1 |
+| 15 | 0.04 | 0.08 | 0 |
+| 16 | 0.08 | 0.16 | 0 |
+| 17 | 0.16 | 0.32 | 0 |
+| 18 | 0.32 | 0.64 | 0 |
+| 19 | 0.64 | 1.28 | 1 |
+| 20 | 0.28 | 0.56 | 0 |
+| 21 | 0.56 | 1.12 | 1 |
+| 22 | 0.12 | 0.24 | 0 |
+
+> số thực nhị phân vô hạn
+
+**tổng cộng :** $$\large0.81\approx0.1100111101011100001010..$$ (đây gọi là thu thập nhị phân của phần thập phân). Phần này dùng khi ta muốn chuyển phần thập phân sang hệ cơ số 2 (nhị phân)
+
+**trường hợp 2:** Nếu chỉ muốn biết số thập phân này khi biểu diễn dưới hệ cơ số 2 (nhị phân) là số hữu hạn hay vô hạn, nhưng ko cần lấy nhị phân. Nghĩa là chỉ muốn biết nó là vô hạn hay hữu hạn chứ ko cần phải covert sang hệ nhị phân. Thì ta dùng công thức :
+
+
+
 ### 3.2.Round to nearest, ties to even
 
 - Đây là chế độ mặc định của việc làm tròn số thực dấu phẩy động của IEEE , nó thực hiện làm tròn về số gần nhất, nếu đúng giữa hai số thì chọn số chẵn. Ý tưởng gồm hai bước, đầu tiên là nó chọn giá trị gần nhất với số cần biểu diễn, thứ hai là phân theo ba trường hợp, trường hợp số nhỏ hơn nữa sẽ giữ nguyên, trường hợp số lớn hơn nữa sẽ làm tròn lên, trường hợp số đúng bằng nữa (tie) thì chọn số bit cuối là 0 (even)
