@@ -1347,9 +1347,19 @@ $$\Large
 \sum_{k=m}^{n}b_k2^k
 $$
 
-Với $$\large b_{k}\in\{0,1\}$$ và chỉ có hữu hạn số hạng, đều có biểu diễn nhị phân hữu hạn.
-
 </div>
+
+Với $$\large b_{k}\in\{0,1\}$$ và chỉ có hữu hạn số hạng, đều có biểu diễn nhị phân hữu hạn. Trong đó ý nghĩa của biểu thức trong trường hợp này là :
+
+- k : k là chỉ số (index). Nó lần lượt nhận các giá trị `m, m + 1, m + 2, ... n`
+
+- m : cận dưới (lower bound) của k. Nó cho biết k bắt đầu từ đâu
+
+- n : cận trên (upper bound) của k. Nó cho biết k dừng ở đâu
+
+- $$\large b_{k}$$ :
+
+- $$\large2^{k}$$ : tính trọng số theo hệ cơ số 2 (nhị phân)
 
 ### 3.2.Round to nearest, ties to even
 
