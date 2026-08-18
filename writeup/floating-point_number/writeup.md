@@ -82,6 +82,8 @@
 
     - [3.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#31biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn)
 
+       - [3.1.1.Hai phương cách để có thể làm việc với các trường hợp liên quan tới nhị phân vô hạn và hữu hạn](#311hai-phương-cách-để-có-thể-làm-việc-với-các-trường-hợp-liên-quan-tới-nhị-phân-vô-hạn-và-hữu-hạn)
+
     - [3.2.Round to nearest, ties to even](#32round-to-nearest-ties-to-even)
 
        - [3.2.1.guard bit](#321guard-bit)
@@ -1302,6 +1304,8 @@ Ta thấy nó vẫn bị rounding
 >
 > Ngược lại, nếu một số không thể biểu diễn chính xác trong IEEE 754 (chẳng hạn `0.1`, `0.2` có biểu diễn nhị phân vô hạn) thì ngay từ khi lưu vào bộ nhớ chúng đã phải làm tròn. Sau đó các phép toán tiếp theo sẽ làm việc trên các giá trị đã được làm tròn này, nên kết quả có thể tiếp tục xuất hiện sai số. Ví dụ `0.1 + 0.2` không cho đúng chính xác `0.3`.
 
+#### 3.1.1.Hai phương cách để có thể làm việc với các trường hợp liên quan tới nhị phân vô hạn và hữu hạn
+
 ### 3.2.Round to nearest, ties to even
 
 - Đây là chế độ mặc định của việc làm tròn số thực dấu phẩy động của IEEE , nó thực hiện làm tròn về số gần nhất, nếu đúng giữa hai số thì chọn số chẵn. Ý tưởng gồm hai bước, đầu tiên là nó chọn giá trị gần nhất với số cần biểu diễn, thứ hai là phân theo ba trường hợp, trường hợp số nhỏ hơn nữa sẽ giữ nguyên, trường hợp số lớn hơn nữa sẽ làm tròn lên, trường hợp số đúng bằng nữa (tie) thì chọn số bit cuối là 0 (even)
@@ -1816,13 +1820,13 @@ Nên nhiều ví dụ thấy chúng gần như tương đồng nhau nhưng chún
 `round toward zero` nó không quan tâm bit bị bỏ là gì, không xét GRS hay đi tính một nữa khoảng cách biểu diễn được (half ULP) như round to nearest tie to even cần, nó chỉ biết `1.1010` là xong, suy ra kết quả :
 
 $$
-\large1.101011100..._{2} \xrightarrow{\text{round toward zero}} \boxed{1.1010_{2}}
+\large1.101011100\ldots_{2} \xrightarrow{\text{round toward zero}} \boxed{1.1010_{2}}
 $$
 
 Kết quả của nó là bit được giữ lại và không ngó gì tới bit bị cắt, tương tự với số âm `-1.101011100...` :
 
 $$
-\large-1.101011100..._{2} \xrightarrow{\text{round toward zero}} \boxed{-1.1010_{2}}
+\large-1.101011100\ldots_{2} \xrightarrow{\text{round toward zero}} \boxed{-1.1010_{2}}
 $$
 
 biểu diễn bit ở chế độ làm tròn này đơn giản chỉ có thế
@@ -2379,6 +2383,52 @@ và mọi chuyện ổn thỏa
 ---
 
 </details>
+
+Tiếp đến, ta cần biết cái số mà của chuỗi `0x1.000002p-24f` có phải là số thực vô hạn khi biểu diễn dưới dạng nhị phân hay ko. Ta cần phải tính dựa trên kết quả, ta có $$\large0.00000005960465188081798_{10}$$ với hệ cơ số 10. Bây giờ, như cũ ta lấy đó nhân hai xem nó có lặp lại tuần hoàn vô hạn ko:
+
+| số | nhân hai |
+|----|----------|
+| 5.960465188081798e-8 | 1.1920930376163597e-7 |
+| 1.1920930376163597e-7 | 2.3841860752327194e-8 |
+| 2.3841860752327194e-8 | 4.768372150465439e-08 |
+| 4.768372150465439e-08 | 9.536744300930877e-08 |
+| 9.536744300930877e-08 | 1.9073488601861755e-07 |
+| 1.9073488601861755e-07 | 3.814697720372351e-07 |
+| 3.814697720372351e-07 | 7.629395440744702e-07 |
+| 7.629395440744702e-07 | 1.5258790881489404e-06 |
+| 1.5258790881489404e-06 | 3.051758176297881e-06 |
+| 3.051758176297881e-06 | 6.103516352595762e-06 |
+| 6.103516352595762e-06 | 1.2207032705191523e-05 |
+| 1.2207032705191523e-05 | 2.4414065410383046e-05 |
+| 2.4414065410383046e-05 | 4.882813082076609e-05 |
+| 4.882813082076609e-05 | 9.765626164153219e-05 |
+| 9.765626164153219e-05 | 0.00019531252328306437 |
+| 0.00019531252328306437 | 0.00039062504656612874 |
+| 0.00039062504656612874 | 0.0007812500931322575 |
+| 0.0007812500931322575 | 0.001562500186264515 |
+| 0.001562500186264515 | 0.00312500037252903 |
+| 0.00312500037252903 | 0.00625000074505806 |
+| 0.00625000074505806 | 0.01250000149011612 |
+| 0.01250000149011612 | 0.02500000298023224 |
+| 0.02500000298023224 | 0.05000000596046448 |
+| 0.05000000596046448 | 0.10000001192092896 |
+| 0.10000001192092896 | 0.20000002384185792 |
+| 0.20000002384185792 | 0.40000004768371583 |
+| 0.40000004768371583 | 0.8000000953674317 |
+| 0.8000000953674317 | 1.6000001907348633 |
+| 0.6000001907348633 | 1.2000003814697267 |
+| 0.2000003814697267 | 0.4000007629394534 |
+| 0.4000007629394534 | 0.8000015258789068 |
+| 0.8000015258789068 | 1.6000030517578137 |
+| 0.6000030517578137 | 1.2000061035156273 |
+| 0.2000061035156273 | 0.4000122070312546 |
+| 0.4000122070312546 | 0.8000244140625092 |
+| 0.8000244140625092 | 1.6000488281250185 |
+| 0.6000488281250185 | 1.200097656250037 |
+| 0.200097656250037 | 0.400195312500074 |
+| 0.400195312500074 | 0.800390625000148 | 
+| 0.800390625000148 | 1.600781250000296 |
+| 0.600781250000296 | 1.201562500000592 |
 
 <sub>--đã hết phần giải thích--</sub>
 
