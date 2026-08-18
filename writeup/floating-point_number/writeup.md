@@ -1341,7 +1341,13 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 
 **trường hợp 2:** Nếu chỉ muốn biết số thập phân này khi biểu diễn dưới hệ cơ số 2 (nhị phân) là số hữu hạn hay vô hạn, nhưng ko cần lấy nhị phân. Nghĩa là chỉ muốn biết nó là vô hạn hay hữu hạn chứ ko cần phải covert sang hệ nhị phân. Thì ta dùng công thức :
 
+<div align="center">
 
+$$\large
+\sum_{k=m}^{n}b_k2^k
+$$
+
+</div>
 
 ### 3.2.Round to nearest, ties to even
 
