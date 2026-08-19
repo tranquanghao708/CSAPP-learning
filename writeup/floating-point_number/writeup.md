@@ -1368,9 +1368,13 @@ Với $$\large b_{k}\in\{0,1\}$$ và chỉ có hữu hạn số hạng, đều c
 
 Đầu tiên là chỉ số ký hiệu (k) trong biểu thức này là biến cộng lần lượt các số tới n lần theo số lượng từ cận dưới (m) tới giới hạn cận trên (n), **Ví dụ:**
 
-$$\large
+<div align="center">
+
+$$\Large
 \sum_{k=5}^{3}k = 1 + 2 + 3 + 4 + 5
 $$
+
+</div>
 
 <sub>--đã hết phần giải thích--</sub>
 
