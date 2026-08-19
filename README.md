@@ -20,6 +20,13 @@ Tại đây tôi sẽ ghi lại những gì mình học được từ CS:APP cù
 
 Ngoài phần lý thuyết, tôi sẽ sử dụng các ví dụ thực tế, chương trình viết bằng C, hợp ngữ (Assembly), cùng các kỹ thuật phân tích và dịch ngược để kiểm chứng những kiến thức được đề cập trong sách, chẳng hạn như biểu diễn số nguyên, số thực theo chuẩn IEEE 754, cách dữ liệu được lưu trữ trong bộ nhớ, hay cách chương trình được thực thi trên hệ thống.
 
+> [!WARNING]
+> **Cảnh báo:** tôi ko phải là thầy giáo hay tốt nghiệp sư phạm hay các kỹ năng giảng dạy của tôi ko được tốt. Mục đích tôi tạo repo này là để có thể cho chính bản thân mình trong quá khứ có thể tra cứu lại khi cần thiết hay kiến thức bị bão hóa trong tương lai
+> 
+> Vì vậy, cấu trúc trình bày hay văn xuôi thường khá lộn xộn hay là có thể ko hiểu với người ngoài người ta đọc vào ngoài người biên tập các bản writeup về các kiến thức trong CsApp. Bởi vì, cá nhân tôi luôn có thói quen phải nêu rõ vì sao, dùng nhiều từ lặp, viết rất chi tiết và có thể các chủ đề ngoài ý chính để tránh hiểu sai hiểu nhầm và tránh lỗ hổng kiến thức bám dai dẳn trong tương lai mà tôi ko hề hay biết
+> 
+> Về phần public, là vì tôi tin rằng nếu có thể đóng góp cho cộng đồng dù nó khá lộn xộn thì điều này sẽ tốt hơn so với việc giữ cho riêng mình (private mode). Nếu có người có thể hiểu, có thể họ đã được học trước đó rồi hay muốn vào đây để tìm hiểu và đào sâu v.v. tùy động cơ từng người thì việc công khai cũng sẽ là một nguồn trợ giúp tuy nhỏ nhưng góp phần kiến thức cho cộng đồng
+
 # Cuốn sách này dạy gì?
 
 Theo quan điểm của tôi, CS:APP chủ yếu dạy tư duy hệ thống.
