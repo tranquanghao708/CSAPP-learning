@@ -108,7 +108,21 @@
 
     - [3.6.Tác dụng và mức biểu diễn độ chính xác của 4 quy tắc làm tròn, khi nào nên dùng quy tắc nào?](#36tác-dụng-và-mức-biểu-diễn-độ-chính-xác-của-4-quy-tắc-làm-tròn-khi-nào-nên-dùng-quy-tắc-nào)
 
-- 4.kết luận
+- 4.Các phép toán trong số thực dấu phẩy động IEEE754
+
+    - 4.1.Phép cộng
+
+    - 4.2.Phép trừ
+
+    - 4.3.Phép nhân
+
+    - 4.4.Phép chia
+
+       - 4.4.1.Chia lấy dư
+
+       - 4.4.2.Chia ko lấy dư
+
+- 5.kết luận
 
 **Phần mở rộng**
 
@@ -1371,10 +1385,12 @@ Với $$\large b_{k}\in\{0,1\}$$ và chỉ có hữu hạn số hạng, đều c
 <div align="center">
 
 $$\Large
-\sum_{k=5}^{3}k = 1 + 2 + 3 + 4 + 5
+\sum_{k=5}^{3}k = 5 + 6 + 7
 $$
 
 </div>
+
+Ở đây, biến k là chỉ số, theo ví dụ ta thấy nếu k bắt đầu từ cận dưới có giá trị là 5, và kết thúc sau khi cộng dần lần lượt 3 lần theo cận trên ta có `5 + 6 + 7`
 
 <sub>--đã hết phần giải thích--</sub>
 
