@@ -1357,9 +1357,26 @@ Với $$\large b_{k}\in\{0,1\}$$ và chỉ có hữu hạn số hạng, đều c
 
 - n : cận trên (upper bound) của k. Nó cho biết k dừng ở đâu
 
-- $$\large b_{k}$$ : hệ số tại vị trí k
+- $$\large b_{k}$$ : hệ số tại vị trí k ,chỉ nhận 0 hoặc 1.
 
 - $$\large2^{k}$$ : tính trọng số theo hệ cơ số 2 (nhị phân)
+
+<details>
+	<summary>Chi tiết về các ý nghĩa của biểu thức trên tại đây</summary>
+
+---
+
+Đầu tiên là chỉ số ký hiệu (k) trong biểu thức này là biến cộng lần lượt các số tới n lần theo số lượng từ cận dưới (m) tới giới hạn cận trên (n), **Ví dụ:**
+
+$$\large
+\sum_{k=5}^{3}k = 1 + 2 + 3 + 4 + 5
+$$
+
+<sub>--đã hết phần giải thích--</sub>
+
+---
+
+</details>
 
 ### 3.2.Round to nearest, ties to even
 
