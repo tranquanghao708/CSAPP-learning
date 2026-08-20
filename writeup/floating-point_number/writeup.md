@@ -1461,12 +1461,22 @@ $$
 
 <kbd>
 
-<img src="image/image27.png" alt="địng lý chương 3.1"/>
+<img src="image/image27.png" alt="định lý chương 3.1"/>
 
 </kbd>
 
 
 > định lý được đề cập tới tại chương 3.1
+
+Ở đây, ta khám phá cách dùng định lý tiêu chuẩn phân số để tối ưu hóa thay vì cứ nhân hai liên tục như :
+
+<kbd>
+
+<img src="image/image28.png" alt="nhân hai liên tục"/>
+
+</kbd>
+
+và điều này rất bất tiện, tốn times và gây rối lẫn sai nhiều hơn. Thay vào đó ta có cách phù hợp hơn khi làm việc chỉ để nhận biết số hữu hạn và vô hạn chính là dùng phân số. Cách làm đầu tiên ta cần chuyển số thực hệ cơ số 10 sang hệ thập phân (nhưng đã rút gọn), tiếp theo là phân tích mẫu số và so sánh nếu mẫu số chỉ chứa thừa số nguyên tố $$\large2^{N}\rightarrow\text{\mathrm{hữu hạn}}$$ nhưng nếu nó còn chứa bất kỳ thừa số nguyên tố nào khác `(3,5,7...)` $$\large\rightarrow\text{\mathrm{vô hạn}}$$
 
 ### 3.2.Round to nearest, ties to even
 
