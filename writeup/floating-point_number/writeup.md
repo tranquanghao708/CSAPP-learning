@@ -1256,14 +1256,14 @@ Ta thấy nó vẫn là kết quả chính xấc, không có rounding nào ở �
 
 | Bước | $$\large\times2$$      | Bit | Dư  |
 | ---- | ------- | --- | --- |
-| 1    | 0.1$$\large\rightarrow$$0.2 | 0   | 0.2 |
-| 2    | 0.2$$\large\rightarrow$$0.4 | 0   | 0.4 |
-| 3    | 0.4$$\large\rightarrow$$0.8 | 0   | 0.8 |
-| 4    | 0.8$$\large\rightarrow$$1.6 | 1   | 0.6 |
-| 5    | 0.6$$\large\rightarrow$$1.2 | 1   | 0.2 |
-| 6    | 0.2$$\large\rightarrow$$0.4 | 0   | 0.4 |
-| 7    | 0.4$$\large\rightarrow$$0.8 | 0   | 0.8 |
-| 8    | 0.8$$\large\rightarrow$$1.6 | 1   | 0.6 |
+| 1    | $$\large0.1\rightarrow0.2$$ | 0   | 0.2 |
+| 2    | $$\large0.2\rightarrow0.4$$ | 0   | 0.4 |
+| 3    | $$\large0.4\rightarrow0.8$$ | 0   | 0.8 |
+| 4    | $$\large0.8\rightarrow1.6$$ | 1   | 0.6 |
+| 5    | $$\large0.6\rightarrow1.2$$ | 1   | 0.2 |
+| 6    | $$\large0.2\rightarrow0.4$$ | 0   | 0.4 |
+| 7    | $$\large0.4\rightarrow0.8$$ | 0   | 0.8 |
+| 8    | $$\large0.8\rightarrow1.6$$ | 1   | 0.6 |
 
 Ta thấy nó cứ lặp lại từ `0.2 -> 0.6` giống kim đồng hồ và số dư không có điểm dừng. Đây gọi là biểu diễn nhị phân vô hạn, và đây cũng là điều kiện để hệ thống rounding (làm tròn) dãy này
 
