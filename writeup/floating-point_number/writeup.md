@@ -1324,6 +1324,8 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 
 **trường hợp 1:** Nếu muốn tính số thực lấy nhị phân của significand hay được gọi đơn giản là phần thập phân, mục đích là lấy phần nguyên `0 hoặc 1` để phục vụ cho việc encode thì ta xét bảng, ví dụ :
 
+<table>
+<td>
 | Bước | Giá trị | x2   | Bit lấy |
 | ---: | ------- | ---- | ------- |
 |    1 | 0.81    | 1.62 | 1       |
@@ -1337,6 +1339,8 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 | 9 | 0.36 | 0.72 | 0 |
 | 10 | 0.72 | 1.44 | 1 |
 | 11 | 0.44 | 0.88 | 0 |
+</td>
+<td>
 | 12 | 0.88 | 1.76 | 1 |
 | 13 | 0.76 | 1.52 | 1 |
 | 14 | 0.52 | 1.04 | 1 |
@@ -1348,6 +1352,8 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 | 20 | 0.28 | 0.56 | 0 |
 | 21 | 0.56 | 1.12 | 1 |
 | 22 | 0.12 | 0.24 | 0 |
+</td>
+</table>
 
 > số thực nhị phân vô hạn
 
@@ -1476,7 +1482,7 @@ $$
 
 </kbd>
 
-và điều này rất bất tiện, tốn times và gây rối lẫn sai nhiều hơn. Thay vào đó ta có cách phù hợp hơn khi làm việc chỉ để nhận biết số hữu hạn và vô hạn chính là dùng phân số. Cách làm đầu tiên ta cần chuyển số thực hệ cơ số 10 sang hệ thập phân (nhưng đã rút gọn), tiếp theo là phân tích mẫu số và so sánh nếu mẫu số chỉ chứa thừa số nguyên tố $$\large2^{N}\rightarrow\text{hữu hạn}$$ nhưng nếu nó còn chứa bất kỳ thừa số nguyên tố nào khác `(3,5,7...)` $$\large\rightarrow\text{vô hạn}$$
+và điều này rất bất tiện, tốn times và gây rối lẫn sai nhiều hơn. Thay vào đó ta có cách phù hợp hơn khi làm việc chỉ để nhận biết số hữu hạn và vô hạn chính là dùng phân số. Cách làm đầu tiên ta cần chuyển số thực hệ cơ số 10 sang hệ thập phân (nhưng đã rút gọn), tiếp theo là phân tích mẫu số và so sánh nếu mẫu số chỉ chứa thừa số nguyên tố $$\large2^{N}\rightarrow\text{hữu hạn}$$ ,nhưng nếu nó còn chứa bất kỳ thừa số nguyên tố nào khác `(3,5,7...)` $$\large\rightarrow\text{vô hạn}$$
 
 ### 3.2.Round to nearest, ties to even
 
