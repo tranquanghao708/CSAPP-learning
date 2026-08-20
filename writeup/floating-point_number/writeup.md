@@ -1414,7 +1414,19 @@ Còn các giá trị như $$\large b_{k}$$ là hệ số tại vị trí k ,ch�
 |------------|---|---|---|---|---|---|
 | các bit    | 0 | 1 | 1 | 0 | 1 | 0 |
 
-vì vậy : $$\large b_{0} = 0$$, $$\large b_{1} = 1$$, $$\large b_{2} = 0$$, $$\large b_{3} = 1$$, $$\large b_{4} = 1$$, $$\large b_{5} = 0$$
+vì vậy : $$\large b_{0} = 0$$, $$\large b_{1} = 1$$, $$\large b_{2} = 0$$, $$\large b_{3} = 1$$, $$\large b_{4} = 1$$, $$\large b_{5} = 0$$. Nên $$\large b_{k}$$ là bit tại vị trí k, đồng thời đóng vai trò là trọng số của hệ số $$\large2^{k}$$. Vì đây là hệ nhị phân nên $$\large b_{k} \in \{0,1\}$$
+
+còn ký hiệu $$\large2^k$$ là trọng số của vị trí bit k trong hệ nhị phân. **Ví dụ:**
+
+| $$\large k$$ | $$\large b_k$$ |    $$\large2^{k}$$ | $$\large b_k2^{k}$$ |
+| --: | ----: | -------: | -------: |
+|   5 |     0 | $$\large2^{5}=32$$ |      0 |
+|   4 |     1 | $$\large2^{4}=16$$ |     16 |
+|   3 |     1 | $$\large2^{3}=8$$ |      8 |
+|   2 |     0 | $$\large2^{2}=4$$ |      0 |
+|   1 |     1 | $$\large2^{1}=2$$ |      2 |
+|   0 |     0 | $$\large2^{0}=1$$ |      0 |
+
 
 <sub>--đã hết phần giải thích--</sub>
 
