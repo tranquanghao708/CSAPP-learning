@@ -1325,6 +1325,7 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 **trường hợp 1:** Nếu muốn tính số thực lấy nhị phân của significand hay được gọi đơn giản là phần thập phân, mục đích là lấy phần nguyên `0 hoặc 1` để phục vụ cho việc encode thì ta xét bảng, ví dụ :
 
 <table>
+<tr>
 <td>
 | Bước | Giá trị | x2   | Bit lấy |
 | ---: | ------- | ---- | ------- |
@@ -1353,6 +1354,7 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 | 21 | 0.56 | 1.12 | 1 |
 | 22 | 0.12 | 0.24 | 0 |
 </td>
+</tr>
 </table>
 
 > số thực nhị phân vô hạn
