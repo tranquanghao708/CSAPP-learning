@@ -1380,17 +1380,41 @@ Với $$\large b_{k}\in\{0,1\}$$ và chỉ có hữu hạn số hạng, đều c
 
 ---
 
-Đầu tiên là chỉ số ký hiệu (k) trong biểu thức này là biến cộng lần lượt các số tới n lần theo số lượng từ cận dưới (m) tới giới hạn cận trên (n), **Ví dụ:**
+Đầu tiên là chỉ số ký hiệu (k) trong biểu thức này là biến chỉ số tới n lần theo số lượng từ cận dưới (m) tới giới hạn cận trên (n) và ký hiệu sigma ($$\large\sum$$) đây là ký hiệu yêu cầu cộng các giá trị tương ứng. **Ví dụ:**
 
 <div align="center">
 
 $$\Large
-\sum_{k=5}^{3}k = 5 + 6 + 7
+\sum_{k=5}^{7}k = 5 + 6 + 7
 $$
 
 </div>
 
-Ở đây, biến k là chỉ số, theo ví dụ ta thấy nếu k bắt đầu từ cận dưới có giá trị là 5, và kết thúc sau khi cộng dần lần lượt 3 lần theo cận trên ta có `5 + 6 + 7`
+Ở đây, k bắt đầu từ cận dưới 5, sau đó lần lượt nhận các giá trị 6 và 7. Khi k đạt tới cận trên 7, quá trình cộng kết thúc:
+
+```
+k = 5 -> lấy 5
+k = 6 -> lấy 6
+k = 7 -> lấy 7
+```
+
+Vì vậy :
+
+<div align="center">
+
+$$\Large
+\sum_{k=5}^{7}k = 5 + 6 + 7 = 18
+$$
+
+</div>
+
+Còn các giá trị như $$\large b_{k}$$ là hệ số tại vị trí k ,chỉ nhận 0 hoặc 1. Nghĩa là xét các vị trí của bit, **ví dụ** cho :
+
+| vị trí bit | 5 | 4 | 3 | 2 | 1 | 0 |
+|------------|---|---|---|---|---|---|
+| các bit    | 0 | 1 | 1 | 0 | 1 | 0 |
+
+vì vậy : $$\large b_{0} = 0$$, $$\large b_{1} = 1$$, $$\large b_{2} = 0$$, $$\large b_{3} = 1$$, $$\large b_{4} = 1$$, $$\large b_{5} = 0$$
 
 <sub>--đã hết phần giải thích--</sub>
 
