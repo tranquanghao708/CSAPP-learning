@@ -1354,7 +1354,7 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 **tổng cộng :** $$\large0.81\approx0.1100111101011100001010\ldots_{2}$$ (đây gọi là thu thập nhị phân của phần thập phân). Phần này dùng khi ta muốn chuyển phần thập phân sang hệ cơ số 2 (nhị phân)
 
 <details>
-	<summary>làm iệc với Sigma</summary>
+	<summary>làm việc số hữu hạn với Sigma</summary>
 
 ---
 
