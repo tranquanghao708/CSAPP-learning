@@ -1476,7 +1476,7 @@ $$
 
 </kbd>
 
-và điều này rất bất tiện, tốn times và gây rối lẫn sai nhiều hơn. Thay vào đó ta có cách phù hợp hơn khi làm việc chỉ để nhận biết số hữu hạn và vô hạn chính là dùng phân số. Cách làm đầu tiên ta cần chuyển số thực hệ cơ số 10 sang hệ thập phân (nhưng đã rút gọn), tiếp theo là phân tích mẫu số và so sánh nếu mẫu số chỉ chứa thừa số nguyên tố $$\large2^{N}\rightarrow\text{\mathrm{hữu hạn}}$$ nhưng nếu nó còn chứa bất kỳ thừa số nguyên tố nào khác `(3,5,7...)` $$\large\rightarrow\text{\mathrm{vô hạn}}$$
+và điều này rất bất tiện, tốn times và gây rối lẫn sai nhiều hơn. Thay vào đó ta có cách phù hợp hơn khi làm việc chỉ để nhận biết số hữu hạn và vô hạn chính là dùng phân số. Cách làm đầu tiên ta cần chuyển số thực hệ cơ số 10 sang hệ thập phân (nhưng đã rút gọn), tiếp theo là phân tích mẫu số và so sánh nếu mẫu số chỉ chứa thừa số nguyên tố $$\large2^{N}\rightarrow\text{hữu hạn}$$ nhưng nếu nó còn chứa bất kỳ thừa số nguyên tố nào khác `(3,5,7...)` $$\large\rightarrow\text{vô hạn}$$
 
 ### 3.2.Round to nearest, ties to even
 
