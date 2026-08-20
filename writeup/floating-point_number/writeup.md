@@ -1456,7 +1456,8 @@ $$
 
 </details>
 
-**trường hợp 2:** Nếu chỉ muốn biết số thập phân này khi biểu diễn dưới hệ cơ số 2 (nhị phân) là số hữu hạn hay vô hạn, nhưng ko cần lấy nhị phân. Nghĩa là chỉ muốn biết nó là vô hạn hay hữu hạn chứ ko cần phải covert sang hệ nhị phân. Thì ta dùng công thức :
+**trường hợp 2:** Nếu chỉ muốn biết số thập phân này khi biểu diễn dưới hệ cơ số 2 (nhị phân) là số hữu hạn hay vô hạn, nhưng ko cần lấy nhị phân. Nghĩa là chỉ muốn biết nó là vô hạn hay hữu hạn chứ ko cần phải covert sang hệ nhị phân. Thì ta có hai cách, cách đầu tiên thì tính bảng giá trị như trên ra cũng ổn nhưng thực tế kỹ thuật này nó ko tối ưu hóa thời gian cho công đoạn này, bây giờ ta khám phá tới định lý toán học đã được đề cập tới ở chương [3.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#31biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn)
+đó là định lý tiêu chuẩn phân số
 
 ### 3.2.Round to nearest, ties to even
 
@@ -2223,7 +2224,7 @@ Cho trường hợp representable. Giả sử format có 3bit fraction $$\large 
 
 Trường hợp ko representable. cho $$\large x = 1.0101_{2}$$ nhưng với giả sử trên, format chỉ giữ được độ rộng fraction là 3bit thôi nên $$\large1.010 < 1.0101 < 1.011$$ , round toward $$\large+\infty$$ chọn giá trị phía $$\large+\infty$$ nên $$\large\boxed{R_{+\infty}(1.0101_{2}) = 1.011_{2}}$$
 
-Cho thêm trường hợp đối với số âm, với $$\large−1.011 < −1.0101 < −1.010$$ thì Round toward $$\large+\infty$$ vẫn đi sang phải trên trục số vì nó chọn số gần với dương vô cực nhất, nên $$\large\boxed{R_{+\infty}(-1.0101_{2}) = -1.010_{2}}$$
+Cho thêm trường hợp đối với số âm, với $$\large(−1.011) < (−1.0101) < (−1.010)$$ thì Round toward $$\large+\infty$$ vẫn đi sang phải trên trục số vì nó chọn số gần với dương vô cực nhất, nên $$\large\boxed{R_{+\infty}(-1.0101_{2}) = -1.010_{2}}$$
 
 **Mấu chốt ở đây là :** chế độ round toward $$\large+\infty$$ hướng về trên trục số, ko phải tăng bit hay tăng trị tuyệt đối
 
