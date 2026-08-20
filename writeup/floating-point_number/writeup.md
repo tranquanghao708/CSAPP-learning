@@ -1254,16 +1254,16 @@ Ta thấy nó vẫn là kết quả chính xấc, không có rounding nào ở �
 
 **Biểu diễn nhị phân vô hạn:** là việc biểu diễn nhị phân có độ rộng độ rộng không được giới hạn tới khi bị cắt bởi phần cứng do giới hạn độ rộng độ rộng bên phía phần cứng **ví dụ** $$\large0.1_{2}$$ tính fraction nó với 2:
 
-| Bước | x2      | Bit | Dư  |
+| Bước | $$\large\times2$$      | Bit | Dư  |
 | ---- | ------- | --- | --- |
-| 1    | 0.1->0.2 | 0   | 0.2 |
-| 2    | 0.2->0.4 | 0   | 0.4 |
-| 3    | 0.4->0.8 | 0   | 0.8 |
-| 4    | 0.8->1.6 | 1   | 0.6 |
-| 5    | 0.6->1.2 | 1   | 0.2 |
-| 6    | 0.2->0.4 | 0   | 0.4 |
-| 7    | 0.4->0.8 | 0   | 0.8 |
-| 8    | 0.8->1.6 | 1   | 0.6 |
+| 1    | 0.1$$\large\rightarrow$$0.2 | 0   | 0.2 |
+| 2    | 0.2$$\large\rightarrow$$0.4 | 0   | 0.4 |
+| 3    | 0.4$$\large\rightarrow$$0.8 | 0   | 0.8 |
+| 4    | 0.8$$\large\rightarrow$$1.6 | 1   | 0.6 |
+| 5    | 0.6$$\large\rightarrow$$1.2 | 1   | 0.2 |
+| 6    | 0.2$$\large\rightarrow$$0.4 | 0   | 0.4 |
+| 7    | 0.4$$\large\rightarrow$$0.8 | 0   | 0.8 |
+| 8    | 0.8$$\large\rightarrow$$1.6 | 1   | 0.6 |
 
 Ta thấy nó cứ lặp lại từ `0.2 -> 0.6` giống kim đồng hồ và số dư không có điểm dừng. Đây gọi là biểu diễn nhị phân vô hạn, và đây cũng là điều kiện để hệ thống rounding (làm tròn) dãy này
 
