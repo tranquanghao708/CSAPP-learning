@@ -1254,7 +1254,7 @@ Ta thấy nó vẫn là kết quả chính xấc, không có rounding nào ở �
 
 **Biểu diễn nhị phân vô hạn:** là việc biểu diễn nhị phân có độ rộng độ rộng không được giới hạn tới khi bị cắt bởi phần cứng do giới hạn độ rộng độ rộng bên phía phần cứng **ví dụ** $$\large0.1_{2}$$ tính fraction nó với 2:
 
-| Bước | $$\large\times2$$      | Bit | Dư  |
+| Bước | $$\large\mathrm{\times2}$$      | Bit | Dư  |
 | ---- | ------- | --- | --- |
 | 1    | $$\large0.1\rightarrow0.2$$ | 0   | 0.2 |
 | 2    | $$\large0.2\rightarrow0.4$$ | 0   | 0.4 |
