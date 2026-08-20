@@ -82,7 +82,7 @@
 
     - [3.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#31biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn)
 
-       - [3.1.1.Hai phương cách để có thể làm việc với các trường hợp liên quan tới nhị phân vô hạn và hữu hạn](#311hai-phương-cách-để-có-thể-làm-việc-với-các-trường-hợp-liên-quan-tới-nhị-phân-vô-hạn-và-hữu-hạn)
+       - [3.1.1.Hai phương pháp xử lý biểu diễn nhị phân hữu hạn và vô hạn](#311hai-phương-pháp-xử-lý-biểu-diễn-nhị-phân-hữu-hạn-và-vô-hạn)
 
     - [3.2.Round to nearest, ties to even](#32round-to-nearest-ties-to-even)
 
@@ -1318,7 +1318,7 @@ Ta thấy nó vẫn bị rounding
 >
 > Ngược lại, nếu một số không thể biểu diễn chính xác trong IEEE 754 (chẳng hạn `0.1`, `0.2` có biểu diễn nhị phân vô hạn) thì ngay từ khi lưu vào bộ nhớ chúng đã phải làm tròn. Sau đó các phép toán tiếp theo sẽ làm việc trên các giá trị đã được làm tròn này, nên kết quả có thể tiếp tục xuất hiện sai số. Ví dụ `0.1 + 0.2` không cho đúng chính xác `0.3`.
 
-#### 3.1.1.Hai phương cách để có thể làm việc với các trường hợp liên quan tới nhị phân vô hạn và hữu hạn
+#### 3.1.1.Hai phương pháp xử lý biểu diễn nhị phân hữu hạn và vô hạn
 
 Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gian khi làm việc với nhị phân vô hạn và hữu hạn khi biễu diễn số thực dưới dạng hệ cơ số 2. Chúng ta phân chúng theo hai trường hợp:
 
@@ -1353,7 +1353,10 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 
 **tổng cộng :** $$\large0.81\approx0.1100111101011100001010\ldots_{2}$$ (đây gọi là thu thập nhị phân của phần thập phân). Phần này dùng khi ta muốn chuyển phần thập phân sang hệ cơ số 2 (nhị phân)
 
-**trường hợp 2:** Nếu chỉ muốn biết số thập phân này khi biểu diễn dưới hệ cơ số 2 (nhị phân) là số hữu hạn hay vô hạn, nhưng ko cần lấy nhị phân. Nghĩa là chỉ muốn biết nó là vô hạn hay hữu hạn chứ ko cần phải covert sang hệ nhị phân. Thì ta dùng công thức :
+<details>
+	<summary>làm iệc với Sigma</summary>
+
+---
 
 <div align="center">
 
@@ -1446,6 +1449,14 @@ $$
 ---
 
 </details>
+
+<sub>--đã hết phần giải thích--</sub>
+
+---
+
+</details>
+
+**trường hợp 2:** Nếu chỉ muốn biết số thập phân này khi biểu diễn dưới hệ cơ số 2 (nhị phân) là số hữu hạn hay vô hạn, nhưng ko cần lấy nhị phân. Nghĩa là chỉ muốn biết nó là vô hạn hay hữu hạn chứ ko cần phải covert sang hệ nhị phân. Thì ta dùng công thức :
 
 ### 3.2.Round to nearest, ties to even
 
