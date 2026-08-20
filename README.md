@@ -26,6 +26,8 @@ Ngoài phần lý thuyết, tôi sẽ sử dụng các ví dụ thực tế, ch�
 > Vì vậy, cấu trúc trình bày hay văn xuôi thường khá lộn xộn hay là có thể ko hiểu với người ngoài người ta đọc vào ngoài người biên tập các bản writeup về các kiến thức trong CsApp. Bởi vì, cá nhân tôi luôn có thói quen phải nêu rõ vì sao, dùng nhiều từ lặp, viết rất chi tiết và có thể các chủ đề ngoài ý chính để tránh hiểu sai hiểu nhầm và tránh lỗ hổng kiến thức bám dai dẳn trong tương lai mà tôi ko hề hay biết
 > 
 > Về phần public, là vì tôi tin rằng nếu có thể đóng góp cho cộng đồng dù nó khá lộn xộn thì điều này sẽ tốt hơn so với việc giữ cho riêng mình (private mode). Nếu có người có thể hiểu, có thể họ đã được học trước đó rồi hay muốn vào đây để tìm hiểu và đào sâu v.v. tùy động cơ từng người thì việc công khai cũng sẽ là một nguồn trợ giúp tuy nhỏ nhưng góp phần kiến thức cho cộng đồng
+>
+> **NÊN:** Mọi writeup mà tôi viết trong repo này ko vì chép sách, có những khái niệm ngoài sách. Mục đích của tôi viết các bản writeup nhằm để **Tránh mơ hồ kiến thức** nên nó rất kỹ và rất dài, hoàn toàn ko dành cho việc học nước rút mà ko dành nhiều thời gian để nghiên cứu
 
 # Cuốn sách này dạy gì?
 
