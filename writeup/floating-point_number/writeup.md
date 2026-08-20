@@ -1427,6 +1427,19 @@ còn ký hiệu $$\large2^k$$ là trọng số của vị trí bit k trong hệ 
 |   1 |     1 | $$\large2^{1}=2$$ |      2 |
 |   0 |     0 | $$\large2^{0}=1$$ |      0 |
 
+nó thuộc danh mục là tính trọng số và là giá trị hệ cơ số 10 của toàn chuỗi nhị phân sau khi cộng lại, nên nếu vị trí bit là 0 nó là 0 và 1 nó là chính giá trị trọng số của hệ số $$\large2^{k}$$. Điều này cũng đã được đề cập tới ở phần [two-complement-code](https://github.com/tranquanghao708/CSAPP-learning/blob/main/writeup/two-complement-code/two-complement-code.md).
+
+Nên : $$\large0110102​_{2} = 0_{10} + 16_{10} + 8_{10} + 0_{10} + 2_{10} + 0_{10} = 26_{10}$$​ . Lúc này, dùng sigma mới thực sự ý nghĩa vì nó chỉ là gom gọn lại các phép toán dài hoằn của phép cộng lại thôi:
+
+<div align="center">
+
+$$\Large
+\sum_{k=0}^{5}b_k2^k = 0 \times 2^{0} + 1 \times 2^{1} + 0 \times 2^{2} + 1 \times 2^{3} + 1 \times 2^{4} + 0 \times 2^{5} = 26
+$$
+
+</div>
+
+Đây chính là toàn bộ ý nghĩa của biểu thức. Nó lấy các vị trí bit nhân với hệ số $$\large2^{k}$$ và cộng lại ra giá trị
 
 <sub>--đã hết phần giải thích--</sub>
 
