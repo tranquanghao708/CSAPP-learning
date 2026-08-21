@@ -710,6 +710,10 @@ IEEE 754 quy định các parent phổ biến như bảng
 
 - Ở đây sẽ chuyển phân thập phân sang nhị phân, ví dụ vừa rồi là $$\large29.81_{10}$$ ta đã chuyển thành $$\large11101_{2}.81_{10}$$ bây giờ còn phần thập phân là $$\large0.81_{10}$$ ta tiến hành chuyển đổi đổi nó, cách chuyển phần thập phân sang nhị phân phức tạp hơn phần nguyên. Thay vì liên tục chia cho 2 như phần nguyên, ta sẽ **liên tục nhân phần thập phân với 2**, sau mỗi lần nhân lấy phần nguyên của kết quả làm bit tiếp theo, rồi tiếp tục lặp với phần thập phân còn lại. Theo sơ đồ :
 
+<table>
+<tr>
+<td>
+
 | Bước | Giá trị | x2   | Bit lấy |
 | ---: | ------- | ---- | ------- |
 |    1 | 0.81    | 1.62 | 1       |
@@ -723,6 +727,12 @@ IEEE 754 quy định các parent phổ biến như bảng
 | 9 | 0.36 | 0.72 | 0 |
 | 10 | 0.72 | 1.44 | 1 |
 | 11 | 0.44 | 0.88 | 0 |
+
+</td>
+<td>
+
+| Bước | Giá trị | x2   | Bit lấy |
+| ---: | ------- | ---- | ------- |
 | 12 | 0.88 | 1.76 | 1 |
 | 13 | 0.76 | 1.52 | 1 |
 | 14 | 0.52 | 1.04 | 1 |
@@ -734,6 +744,10 @@ IEEE 754 quy định các parent phổ biến như bảng
 | 20 | 0.28 | 0.56 | 0 |
 | 21 | 0.56 | 1.12 | 1 |
 | 22 | 0.12 | 0.24 | 0 |
+
+</td>
+</tr>
+</table>
 
 > số thực nhị phân vô hạn
 
