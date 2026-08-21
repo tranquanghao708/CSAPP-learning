@@ -1634,7 +1634,7 @@ ví dụ tiếp theo, ta cho `0.319` bây giờ ta thấy có 3 số sau dấu p
 <div align="center">
 
 $\large
-0.319 = \boxed{\frac{319}{1000}}
+\boxed{0.319 = \frac{319}{1000}}
 $
 
 </div>
@@ -1643,9 +1643,6 @@ $
 
 ---
 
-</td>
-</tr>
-</table>
 </td>
 </tr>
 </table>
