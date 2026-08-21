@@ -1619,9 +1619,25 @@ Trước tiên về toán học căn bản, ta cần phải nhìn vào số th�
 
 Vậy nên ta có mẫu là `100`, tiếp theo phần `tử` của phân số để biết ta tính ước chung lớn nhất `GCD` ta cần biết phải lấy gì vào ước chung lớn nhất, đó chính là tất cả giá trị ở phần đuôi sau dấu phẩy (ko lấy phàn nguyên) và số giá trị `n(value)`, ở đây ta có tất cả giá trị ở phần đuôi sau dấu phẩy `0.25` là `25` vì giá trị này nằm sau phần đuôi, tới lượt là số giá trị `n(value)` là `100` là cái mà ta nhìn vào phần số thập phân như trên. Vậy ta có `GCD(25,100) = 25`
 
-Nên từ dữ kiện, ta có $$\large10^{2} = 100_{10}$$ cho mẫu và `GCD(25,100) = 25` cho tử thì ta có phân số $$\large\boxed{0.25 = \frac{25}{100}}$$
+Nên từ dữ kiện, ta có $$\large10^{2} = 100_{10}$$ cho mẫu và `GCD(25,100) = 25` cho tử thì ta có phân số 
 
-ví dụ tiếp theo, ta cho `0.319` bây giờ ta thấy có 3 số sau dấu phẩy suy ra tử là `1000`, và mẫu là `GCD(319,1000) = 1` ta thấy 1 nghĩa là ko thể rút được nữa, trường hợp này ta giữ nguyên. Ta có $\large0.319 = \boxed{\frac{319}{1000}}$
+<div align="center">
+
+$$\large
+\boxed{0.25 = \frac{25}{100}}
+$$
+
+</div>
+
+ví dụ tiếp theo, ta cho `0.319` bây giờ ta thấy có 3 số sau dấu phẩy suy ra tử là `1000`, và mẫu là `GCD(319,1000) = 1` ta thấy 1 nghĩa là ko thể rút được nữa, trường hợp này ta giữ nguyên. Suy ra :
+
+<div align="center">
+
+$\large
+0.319 = \boxed{\frac{319}{1000}}
+$
+
+</div>
 
 <sub>--đã hết phần giải thích--</sub>
 
