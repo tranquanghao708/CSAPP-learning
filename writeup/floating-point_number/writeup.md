@@ -286,7 +286,7 @@ nếu `sign = 1` : âm vô cực $$\large-\infty$$
 > - Fraction = tất cả bit 0.
 
 <details>
-	<summary>ví dụ với C</summary>
+	<summary><b>[Chi tiết]</b> ví dụ với C</summary>
 
 <table>
 <tr>
@@ -362,7 +362,7 @@ Trong đó QuietBit là phần có thể là `0` hoặc `1`, khi quiet bit là `
 > - nếu quiet bit = 0 đó là sNaN (Signaling NaN)
 
 <details>
-	<summary>Ví dụ với C</summary>
+	<summary><b>[Chi tiết]</b> Ví dụ với C</summary>
 
 <table>
 <tr>
@@ -419,7 +419,7 @@ IEEE quy định sNaN phải thỏa điều kiện xảy ra NaN là exponent fie
 > sNaN được tạo ra để phát hiện lỗi sớm. Khi CPU hoặc FPU sử dụng sNaN trong một phép toán, chuẩn IEEE 754 cho phép phần cứng phát sinh Invalid Operation Exception. Sau đó, trên nhiều kiến trúc, giá trị này sẽ được chuyển thành Quiet NaN (qNaN) để tiếp tục lan truyền qua các phép tính tiếp theo.
 
 <details>
-	<summary>ví dụ sNaN với C</summary>
+	<summary><b>[Chi tiết]</b> ví dụ sNaN với C</summary>
 
 <table>
 <tr>
@@ -473,7 +473,7 @@ dù vậy nhưng nó vẫn quy định `+0 == -0` vẫn phải True. Tuy nhiên 
 **Vì sao nó phải làm vậy?:** Ở đây, $$\large x -> 0^{-}$$ (tiến tới 0 từ phía âm) và $$\large x -> 0^{+}$$ (tiến tới 0 từ phía dương). Và trong giải tích hai giới hạn này khác nhau ở nhiều hàm ví dụ $$\large\frac{1}{x}$$ ở đây khi x tiến tới 0 từ phía âm ($$\large x -> 0^{-}$$) thì giá trị sẽ là âm vô hạn ($$\large-\infty$$) còn nếu khi x tiến tới 0 từ phía dương ($$\large x -> 0^{+}$$) thì giá trị sẽ là dương vô hạn ($$\large+\infty$$) IEEE quy định giữ lại dấu của giá trị `0` để phần cứng có thể phân biệt hai trường hợp này và cho ra kết quả đúng
 
 <details>
-	<summary>ví dụ với C</summary>
+	<summary><b>[Chi tiết]</b> ví dụ với C</summary>
 
 <table>
 <tr>
@@ -642,7 +642,7 @@ nếu trường hợp độ rộng của chuỗi nhị phân lớn hơn độ r�
 **Điều dễ nhầm khi học Bias này:** là cách CPU nó lưu values, với bias biểu diễn số thực IEEE 754 **ví dụ** khi exponent field (11bit) của kiểu double(64bit) khi tính phải lấy giá trị exponent cộng với bias khi biểu diễn số dương (quy tắc encode) và trừ với bias khi chuyển đổi lại sang âm (quy tắc decode) , **ví dụ** giá trị `exponent = 6` vì dịch dấu chấm sang trái 6 lần nhưng tính thì $$\large6_{10} + 2^{11-1}-1 = 6_{10} + 1023_{10} = 1029_{10}$$ và CPU sẽ lưu giá trị `1029` dạng mã nhị phân thay vì lưu trực tiếp giá trị 6. Còn **ví dụ** về số âm, `exponent = -7` vì dịch dấu chấm sang phải 7 lần thì $$\large-7_{10} + 1023_{10} = 1016_{10}$$ CPU sẽ lưu gía trị `1016` với nhị phân, thay vì lưu trực tiếp `-7`. Còn muốn phục hồi về `-7` thì nó sẽ dùng $$\large1016_{10} - 1023_{10} = -7_{10}$$
 
 <details>
-	<summary>vì sao IEEE 754 không dùng two_complement_code để biểu diễn số âm cho bias?</summary>
+	<summary><b>[Câu hỏi]</b> vì sao IEEE 754 không dùng two_complement_code để biểu diễn số âm cho bias?</summary>
 
 <table>
 <tr>
@@ -919,7 +919,7 @@ $$
 > Phần giải thích bit-weight exponents
 
 <details>
-	<summary>bit-weight exponents là gì?</summary>
+	<summary><b>[Câu hỏi]</b> bit-weight exponents là gì?</summary>
 
 <table>
 <tr>
@@ -1044,7 +1044,7 @@ do `exponent field = 0` nên `hidden bit = 0` (yes sir, vì vốn dĩ khử chu�
 > giá trị `-23` là bao quát hết fraction của `float` còn nếu muốn lý do vì sao nó lại là số âm thì mở phần details
 
 <details>
-	<summary>vì sao lại là -23 (lại là số âm)?</summary>
+	<summary><b>[Câu hỏi]</b> vì sao lại là -23 (lại là số âm)?</summary>
 
 <table>
 <tr>
@@ -1093,7 +1093,7 @@ Vậy số thực khử chuẩn hóa nhỏ nhất của float là $$\large2^{-14
 > trả lời câu hỏi tại phần details
 
 <details>
-	<summary>vậy phép tính actual exponent = 1 - 127 = -126 là tính 1 - bias à, này là của khử chuẩn hóa mà sao trước đó tại chương chuẩn hóa lại sử dụng và chương này cũng sử dụng chung phép tính này?</summary>
+	<summary><b>[Câu hỏi]</b> vậy phép tính actual exponent = 1 - 127 = -126 là tính 1 - bias à, này là của khử chuẩn hóa mà sao trước đó tại chương chuẩn hóa lại sử dụng và chương này cũng sử dụng chung phép tính này?</summary>
 
 <table>
 <tr>
@@ -1222,7 +1222,7 @@ Trong đó phần tử cuối cùng trước $$\large2^{-126}$$ chính là large
 **Vì sao lại phải rounding?:** Trong hệ thống máy tính, bit nhị phân là hữu hạn nhưng biểu diễn số thực một cách chính xác lại phải vô hạn nên khi đến một ngưỡng nào đó đụng tới rào cản hữu hạn sẽ xem như làm tròn của bit nhị phân đó ví dụ 4 bit $$\large0000_{2}$$ thì số thực chỉ được biểu diễn ở phạm vi bit này, bit được cấp cho trường fraction và các trường khác lại rất ít nên độ chính xác vì thế mà giảm rất đáng kể
 
 <details>
-	<summary>Ví dụ C</summary>
+	<summary><b>[Chi tiết]</b> Ví dụ C</summary>
 
 <table>
 <tr>
@@ -1293,7 +1293,7 @@ Dừng ở bước 2 do phần dư là 0, ta có $$\large0.25_{10} = 0.01_{2}$$ 
 ta cũng dừng ở bước 2, ta có $$\large0.75_{10} = \boxed{0.11_{2}}$$, nó là hữu hạn vì số dư là 0 ở bước 2
 
 <details>
-	<summary>Ví dụ với C</summary>
+	<summary><b>[Chi tiết]</b> Ví dụ với C</summary>
 
 <table>
 <tr>
@@ -1359,7 +1359,7 @@ Ta thấy nó vẫn là kết quả chính xấc, không có rounding nào ở �
 Ta thấy nó cứ lặp lại từ `0.2 -> 0.6` giống kim đồng hồ và số dư không có điểm dừng. Đây gọi là biểu diễn nhị phân vô hạn, và đây cũng là điều kiện để hệ thống rounding (làm tròn) dãy này
 
 <details>
-	<summary>Ví dụ với C</summary>
+	<summary><b>[Chi tiết]</b> Ví dụ với C</summary>
 
 <table>
 <tr>
@@ -1466,7 +1466,7 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 **tổng cộng :** $$\large0.81\approx0.1100111101011100001010\ldots_{2}$$ (đây gọi là thu thập nhị phân của phần thập phân). Phần này dùng khi ta muốn chuyển phần thập phân sang hệ cơ số 2 (nhị phân)
 
 <details>
-	<summary>làm việc số hữu hạn với Sigma</summary>
+	<summary><b>[Chi tiết]</b> làm việc số hữu hạn với Sigma</summary>
 
 <table>
 <tr>
@@ -1495,7 +1495,7 @@ Với $$\large b_{k}\in\{0,1\}$$ và chỉ có hữu hạn số hạng, đều c
 - $$\large2^{k}$$ : tính trọng số theo hệ cơ số 2 (nhị phân)
 
 <details>
-	<summary>Chi tiết về các ý nghĩa của biểu thức trên tại đây</summary>
+	<summary><b>[Chi tiết]</b> Chi tiết về các ý nghĩa của biểu thức trên tại đây</summary>
 
 <table>
 <tr>
@@ -1607,7 +1607,7 @@ và điều này rất bất tiện, tốn times và gây rối lẫn sai nhiề
 **Ví dụ:** Ta muốn biết số `0.3` là số hữu hạn hay vô hạn, trước tiên ta biến đổi thập phân sang phân số trước đã, ta có $$\large0.3_{10} = \frac{3}{10}$$
 
 <details>
-	<summary>Cách chuyển đổi số thập phân sang phân số</summary>
+	<summary><b>[Chi tiết]</b> Cách chuyển đổi số thập phân sang phân số</summary>
 
 <table>
 <tr>
@@ -1650,7 +1650,7 @@ bây giờ so sánh **phần bị cắt với đúng một ngưỡng là một n
 > Phần details về ULP
 
 <details>
-	<summary>ULP(unit in the last place)</summary>
+	<summary><b>[Chi tiết]</b> ULP(unit in the last place)</summary>
 
 <table>
 <tr>
@@ -1693,7 +1693,7 @@ Vậy ULP = 0.25, nếu gặp trường hợp như `một nữa của ULP` thì 
 $\large\mathrm{ULP} = \boxed{0.25}$ vậy bây giờ ta biết $$\large0.25_{10} = \mathbf{0.01_{2}}$$ bây giờ ta lấy nó chia cho hai vì half ULP mà $$\large\frac{0.25}{2} = \mathbf{0.125_{10}}$$ bây giờ ta biết $$\large0.125_{10} = 0.001_{2}$$ bây giờ viết đầy đủ 4bit ta có $$\large0.0010_{2}$$ và nó chính là ngưỡng làm tròn, tiến hành so sánh phần bị cắt với half ULP $$\large0001_{2} < 0010_{2}$$ ta thấy nó nhỏ hơn vậy nó sẽ giữ nguyên $$\large\boxed{1.01_{2}}$$
 
 <details>
-	<summary>Vì sao lại đem phần bị cắt đi so với half ULP?</summary> 
+	<summary><b>[Câu hỏi]</b> Vì sao lại đem phần bị cắt đi so với half ULP?</summary> 
 
 <table>
 <tr>
@@ -1730,7 +1730,7 @@ vẫn như cũ, $$\large\mathrm{ULP} = \boxed{0.25}$$ và ta biết half ULP c�
 > Câu hỏi về làm tròn
 
 <details>
-	<summary>Nhưng vấn đề mà chúng ta thường hay rối ở đây là nếu có lệnh quyết định làm tròn sau khi so sánh half ULP thì tự hỏi nó làm tròn một đơn vị bit hay làm tròn cả dãy bit theo mô hình toán học?</summary>
+	<summary><b>[Câu hỏi]</b> Nhưng vấn đề mà chúng ta thường hay rối ở đây là nếu có lệnh quyết định làm tròn sau khi so sánh half ULP thì tự hỏi nó làm tròn một đơn vị bit hay làm tròn cả dãy bit theo mô hình toán học?</summary>
 
 <table>
 <tr>
@@ -1856,7 +1856,7 @@ Theo 3 chương về guard bit, round bit, sticky bit (GRS) ta có bảng :
 các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nếu `R = 1, G = 1` chắc chắn `x > half ULP`. Nên phần cứng không thể soi riêng biệt một bit trừ khi bit đó có quy luật khi là 0 thì chắc chắn có giá trị này ví dụ như guard bit. Bảng trên thì đó là cách phần cứng dùng GRS để biết khi nào giữ nguyên, khi nào làm tròn và khi nào lấy LSB = 0.
 
 <details>
-	<summary>Vì sao không thể quan sát Guard, Round và Sticky bit trên một biến float?</summary>
+	<summary><b>[Câu hỏi]</b> Vì sao không thể quan sát Guard, Round và Sticky bit trên một biến float?</summary>
 
 <table>
 <tr>
@@ -1902,7 +1902,7 @@ ta thấy đây là fraction sau khi IEEE754 đã hoàn tất quá trình encode
 > Phần tính toán thủ công để lấy bit GRS và so sánh
 
 <details>
-	<summary>tính toán (encode) lại sang nhị phân</summary>
+	<summary><b>[Chi tiết]</b> tính toán (encode) lại sang nhị phân</summary>
 
 <table>
 <tr>
@@ -1978,7 +1978,7 @@ vậy thao tác bitwise raw manipulation trên `uint32_t` là dùng các toán t
 **Lưu ý** FPU vẫn có thể được sử dụng cho việc làm tròn, xử lý số thực sang phần nguyên hay nhi phân trước đó phổ biến khi gán `0.1f` vào một valriable, chương này chỉ thao tác nghĩa là dịch bit, dùng các phép toán nhị phân để thao tác với số thực thay cho cú pháp bình thường sẽ lỗi nếu thao tác trực tiếp với biến số thực
 
 <details>
-	<summary>ví dụ với C</summary>
+	<summary><b>[Chi tiết]</b> ví dụ với C</summary>
 
 <table>
 <tr>
@@ -2065,7 +2065,7 @@ Thực tế, FPU không đi tìm Guard, Round, Sticky trong dữ liệu đã lư
 > phần cho ceil và floor
 
 <details>
-	<summary>ceil và floor là gì</summary>
+	<summary><b>[Câu hỏi]</b> ceil và floor là gì?</summary>
 
 <table>
 <tr>
@@ -2102,7 +2102,7 @@ Ceil (hàm trần) luôn làm tròn về phía dương vô cực ($$\large+\inft
 Ở đây, $$\large4 \geq 3.1$$ nên kết quả là 4 và $$\large-3 \geq -3.1$$ nên kết quả là -3. Có thể mở rộng lý thuyết của hai hàm làm tròn này [tại đây](https://en-wikipedia-org.translate.goog/wiki/Floor_and_ceiling_functions?_x_tr_sl=en&_x_tr_tl=vi&_x_tr_hl=vi&_x_tr_pto=tc)
 
 <details>
-	<summary>dùng hàm floor(),ceil() trong thư viện math.h để tính floor,ceil trong C</summary>
+	<summary><b>[Chi tiết]</b> dùng hàm floor(),ceil() trong thư viện math.h để tính floor,ceil trong C</summary>
 
 <table>
 <tr>
@@ -2180,7 +2180,7 @@ ta thấy floor luôn làm tròn về $$\large-\infty$$ và ceil luôn làm trò
 Do đó, về cơ bản chương `round toward zero` này chỉ có vậy. Nếu chế độ làm tròn này được bật thì FPU không cần phải xét GRS vì đó thuộc round to nearest tie to even
 
 <details>
-	<summary>liệu round toward zero và (int)x.x có phải là một không?</summary>
+	<summary><b>[Câu hỏi]</b> liệu round toward zero và (int)x.x có phải là một không?</summary>
 
 <table>
 <tr>
@@ -2228,7 +2228,7 @@ $$
 biểu diễn bit ở chế độ làm tròn này đơn giản chỉ có thế
 
 <details>
-	<summary>minh họa với C</summary>
+	<summary><b>[Chi tiết]</b> minh họa với C</summary>
 
 <table>
 <tr>
@@ -2275,7 +2275,7 @@ int main(void){
 ta thấy `0.09999999999999999167` và `7.47999999999999953814`, đây chính là kết quả được làm tròn bởi `round toward zero`.
 
 <details>
-	<summary>Liệu sau khi chuyển chế độ sang round toward zero, thì FPU có thực hiện round to nearest tie to even khi gán số thực vào biến không?</summary>
+	<summary><b>[Câu hỏi]</b> Liệu sau khi chuyển chế độ sang round toward zero, thì FPU có thực hiện round to nearest tie to even khi gán số thực vào biến không?</summary>
 
 <table>
 <tr>
@@ -2420,7 +2420,7 @@ vì : $$\large−1.001_{2} > −1.001101_{2} > −1.010_{2}$$ . Nên round towar
 **Nếu số đã biểu diễn chính xác được:** ko có bit nào cần thay đổi ví dụ như $$\large1.010_{2}$$ thì vẫn là chính nó ,vì đã nằm đúng trên một giá trị floating-point có thể biểu diễn nên $$\large\boxed{1.010_{2}\rightarrow1.010_{2}}$$
 
 <details>
-	<summary>giá trị mà format floating-point hiện tại có thể lưu được là sao?</summary>
+	<summary><b>[Câu hỏi]</b> giá trị mà format floating-point hiện tại có thể lưu được là sao?</summary>
 
 <table>
 <tr>
@@ -2501,7 +2501,7 @@ $$
 Trong đó $$\large F$$ là tập các giá trị floating-point có thể biểu diễn. Biểu thức này có nghĩa là `trong tất cả các giá trị floating-point có thể biểu diễn mà lớn hơn hoặc bằng x, chọn giá trị nhỏ nhất.`
 
 <details>
-	<summary>minh họa với C</summary>
+	<summary><b>[Chi tiết]</b> minh họa với C</summary>
 
 <table>
 <tr>
@@ -2542,7 +2542,7 @@ Ta có chuỗi số `1.00000011920928955079` ta thấy rõ ràng nó đã đư�
 > giải thích chuỗi số 0x1.000002p-24f
 
 <details>
-	<summary>chuỗi số 0x1.000002p-24f là gì?</summary>
+	<summary><b>[Câu hỏi]</b> chuỗi số 0x1.000002p-24f là gì?</summary>
 
 <table>
 <tr>
@@ -2582,7 +2582,7 @@ Bây giờ ta khai triển biểu thức toán để tính toán giá trị củ
 > rõ hơn về toán học trên tại đây
 
 <details>
-	<summary>rõ hơn</summary>
+	<summary><b>[Chi tiết]</b> rõ hơn</summary>
 
 <table>
 <tr>
@@ -2642,7 +2642,7 @@ $$
 Ta thấy theo quy tắc, ta có $$\large1 + 16^{-6} = 1 + \frac{1}{16^{6}}$$ từ đó ta áp dụng nhân chia trước, cộng trừ sau với phép này. Ta lấy giá trị `2` đi nhân với tử của $$\large\frac{1}{16^{6}}$$ ta có $$\large\frac{2}{16^{6}}$$, suy ra kết quả đúng là $$\large\boxed{1 + \frac{2}{16^{6}}}$$.
 
 <details>
-	<summary>Vậy số 2 từ đâu mà ra vì sao lại nhân cho hệ cơ số của lục phân? Tại sao ngay từ đầu lại có giá trị 2 nhưng sau này lại bỏ?</summary>
+	<summary><b>[Câu hỏi]</b> Vậy số 2 từ đâu mà ra vì sao lại nhân cho hệ cơ số của lục phân? Tại sao ngay từ đầu lại có giá trị 2 nhưng sau này lại bỏ?</summary>
 
 <table>
 <tr>
@@ -2745,7 +2745,7 @@ fraction   = 23 bits
 Nên giá trị này nằm đúng trên một giá trị binary32 representable.
 
 <details>
-	<summary>Rõ hơn về phần 32bit này</summary>
+	<summary><b>[Chi tiết]</b> Rõ hơn về phần 32bit này</summary>
 
 <table>
 <tr>
