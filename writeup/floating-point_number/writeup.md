@@ -1496,9 +1496,8 @@ và điều này rất bất tiện, tốn times và gây rối lẫn sai nhiề
 
 <details>
 	<summary>Cách chuyển đổi số thập phân sang phân số</summary>
-<table>
-<tr>
-<td>
+
+<blockquote>
 
 ---
 
@@ -1512,9 +1511,8 @@ Nên từ dữ kiện, ta có $$\large10^{2} = 100_{10}$$ cho mẫu và `GCD(25,
 
 ---
 
-</td>
-</tr>
-</table>
+</blockquote>
+
 </details>
 
 ### 3.2.Round to nearest, ties to even
