@@ -199,7 +199,7 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 > Trong IEEE 754 (đối với các số normalized), sau khi chuẩn hóa, biểu diễn luôn có dạng: $$\large1.xxxxx\times2^{N}$$ .Nghĩa là trước dấu chấm luôn chỉ có đúng một bit 1. Chính vì bit đầu tiên luôn là 1, IEEE 754 không cần lưu bit này vào bộ nhớ (hidden bit), chỉ lưu phần phía sau dấu chấm trong trường Fraction.
 
 <details>
-	<summary><u><b>[Câu hỏi]</b>tại sao phải chuẩn hóa số thực?</u></summary>
+	<summary><b>[Câu hỏi]</b> tại sao phải chuẩn hóa số thực?</summary>
 
 <table>
 <tr>
