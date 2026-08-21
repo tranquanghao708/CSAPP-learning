@@ -199,7 +199,7 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 > Trong IEEE 754 (đối với các số normalized), sau khi chuẩn hóa, biểu diễn luôn có dạng: $$\large1.xxxxx\times2^{N}$$ .Nghĩa là trước dấu chấm luôn chỉ có đúng một bit 1. Chính vì bit đầu tiên luôn là 1, IEEE 754 không cần lưu bit này vào bộ nhớ (hidden bit), chỉ lưu phần phía sau dấu chấm trong trường Fraction.
 
 <details>
-	<summary>tại sao phải chuẩn hóa số thực?</summary>
+	<summary><code><b>[Câu hỏi]</b></code>tại sao phải chuẩn hóa số thực?</summary>
 
 <table>
 <tr>
@@ -235,7 +235,7 @@ Exponent = 00000000
 Fraction = 00000000000000000000001
 ```
 
-thì đây không phải là parent $$\large1.0000000000_{2}\times2^{-127}$$ mà là $$\large0.0000000000000000000001_{2}\times2^{-126}$$ vì hiddenbit đã bằng 0.
+thì đây không phải là pattern $$\large1.0000000000_{2}\times2^{-127}$$ mà là $$\large0.0000000000000000000001_{2}\times2^{-126}$$ vì hiddenbit đã bằng 0.
 
 > [!NOTE]
 > **Lưu ý:** `actual exponent = -127` của $$\large1.0000000000_{2}\times2^{-127}$$ là do `actual exponent = E - bias` suy ra `0 - 127 = -127` vì E là viết tắt của exponent field vầ trường hợp này với số chuẩn hóa exponent field là 0. Còn với số khử chuẩn hóa luôn dùng `actual exponent = 1 - bias` nên `1 - 127 = -126` nên mới có biểu thức $$\large0.0000000000000000000001_{2}\times2^{-126}$$
@@ -673,7 +673,7 @@ nếu trường hợp độ rộng của chuỗi nhị phân lớn hơn độ r�
 | Double precision    |          64 |       11 |       52 |  1023 |
 | Quadruple precision |         128 |       15 |      112 | 16383 |
 
-IEEE 754 quy định các parent phổ biến như bảng
+IEEE 754 quy định các pattern phổ biến như bảng
 
 **Khái niệm chính xác đơn (Single precision) và chính xác kép (Double precision) là gì?:** kiểu chính xác đơn là kiểu số thực IEEE dài 32bit ví dụ float, còn chính xác kép là kiểu IEEE dài 64bit ví du double vì trong lịch sử tên gọi đơn biểu thị cho độ chính xác ban đầu và kép biểu thị cho gấp đôi độ chính xác ban đầu
 
