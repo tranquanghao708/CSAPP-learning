@@ -98,15 +98,17 @@
 
        - [3.2.6.Vì sao phần cứng biết vị trí của Guard, Round và Sticky Bit?](#326vì-sao-phần-cứng-biết-vị-trí-của-guard-round-và-sticky-bit)
 
-    - [3.3.Round toward zero](#33round-toward-zero)
+    - 3.3.Round to nearest, ties away from zero (Ties to away)
 
-       - [3.3.1.biểu diễn làm tròn trên hệ nhị phân](#331biểu-diễn-làm-tròn-trên-hệ-nhị-phân)
+    - [3.4.Round toward zero](#34round-toward-zero)
 
-    - [3.4.Round toward positive infinity (+∞)](#34round-toward-positive-infinity-)
+       - [3.4.1.biểu diễn làm tròn trên hệ nhị phân](#341biểu-diễn-làm-tròn-trên-hệ-nhị-phân)
 
-    - [3.5.Round toward negative infinity (−∞)](#35round-toward-negative-infinity-)
+    - [3.5.Round toward positive infinity (+∞)](#35round-toward-positive-infinity-)
 
-    - [3.6.Tác dụng và mức biểu diễn độ chính xác của 4 quy tắc làm tròn, khi nào nên dùng quy tắc nào?](#36tác-dụng-và-mức-biểu-diễn-độ-chính-xác-của-4-quy-tắc-làm-tròn-khi-nào-nên-dùng-quy-tắc-nào)
+    - [3.6.Round toward negative infinity (−∞)](#36round-toward-negative-infinity-)
+
+    - [3.7.Tác dụng và mức biểu diễn độ chính xác của 5 quy tắc làm tròn, khi nào nên dùng quy tắc nào?](#37tác-dụng-và-mức-biểu-diễn-độ-chính-xác-của-5-quy-tắc-làm-tròn-khi-nào-nên-dùng-quy-tắc-nào)
 
 - 4.Các phép toán trong số thực dấu phẩy động IEEE754
 
@@ -1648,7 +1650,7 @@ $
 </table>
 </details>
 
-Bây giờ từ $$\large\frac{3}{10}$$ ta cần phân tích mẫu số với thừa số nguyên tố $$\large2^{N}$$, với `10` ta có $$\large2\times5 = 10_{10}$$ vậy trong đó có `5` mà gía trị số này lại ko chia hết cho 2, nên số thực `0.3` khi biểu diễn dưới dạng nhị phân là vô hạn
+Bây giờ từ $$\large\frac{3}{10}$$ ta cần phân tích mẫu số với thừa số nguyên tố $$\large2^{N}$$, với `10` ta có $$\large2\times5 = 10_{10}$$ vậy trong đó có `5` mà gía trị số này lại ko chia hết cho 2, nên số thực `0.3` khi biểu diễn dưới dạng nhị phân là vô hạn. Đây chính xác là thứ ta muốn chứng minh mà không cần ngồi nhân 2 hàng chục/hàng trăm bước với trường hợp này
 
 ### 3.2.Round to nearest, ties to even
 
@@ -2066,7 +2068,7 @@ Thực tế, FPU không đi tìm Guard, Round, Sticky trong dữ liệu đã lư
 > [!IMPORTANT]
 > GRS được tạo ra từ kết quả trung gian trước khi làm tròn, rồi được dùng để quyết định cách làm tròn, sau khi làm tròn 3bit này bị bác bỏ và nếu có thể thấy 3bit cuối khi thực hiện dump nhị phân của số thực đó thực chất chỉ là sự trùng hợp
 
-### 3.3.Round toward zero
+### 3.4.Round toward zero
 
 `Round toward Zero (làm tròn về 0 hay còn gọi là truncation)` là chế độ làm tròn trong đó phần lẻ bị loại bỏ, khiến kết quả luôn tiến gần về giá trị 0. Chế độ này không xét khoảng cách giữa hai số biểu diễn được như Round to Nearest, Ties to Even, mà chỉ đơn giản cắt bỏ phần không thể biểu diễn. **Ví dụ** :
 
@@ -2411,7 +2413,7 @@ và thấy nếu cùng nhỏ hơn half ULP thì cả hai có kết quả y như 
 </table>
 </details>
 
-### 3.4.Round toward positive infinity (+∞)
+### 3.5.Round toward positive infinity (+∞)
 
 hay còn gọi là roundUp hoặc round toward $$\large+\infty$$, là một trong 4 rounding mode (rounding-direction attributes) của IEEE754. Quy tắc của chế độ làm tròn này là chọn giá trị floating-point biểu diễn được nhỏ nhất nhưng vẫn lớn hơn hoặc bằng giá trị chính xác cần làm tròn. Nói đơn giản là nó làm tròn về $$\large+\infty$$.
 
@@ -2912,9 +2914,9 @@ Tiếp đến, ta cần biết cái số mà của chuỗi `0x1.000002p-24f` có
 </table>
 </details>
 
-### 3.5.Round toward negative infinity (−∞)
+### 3.6.Round toward negative infinity (−∞)
 
-### 3.6.Tác dụng và mức biểu diễn độ chính xác của 4 quy tắc làm tròn, khi nào nên dùng quy tắc nào?
+### 3.7.Tác dụng và mức biểu diễn độ chính xác của 5 quy tắc làm tròn, khi nào nên dùng quy tắc nào?
 
 từ 4 quy tắc làm tròn trên, trước hết ta có bảng so sánh :
 
