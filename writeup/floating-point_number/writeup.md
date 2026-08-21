@@ -1621,7 +1621,7 @@ Vậy nên ta có mẫu là `100`, tiếp theo phần `tử` của phân số đ
 
 Nên từ dữ kiện, ta có $$\large10^{2} = 100_{10}$$ cho mẫu và `GCD(25,100) = 25` cho tử thì ta có phân số $$\large\boxed{0.25 = \frac{25}{100}}$$
 
-ví dụ tiếp theo, ta cho `0.319` bây giờ ta thấy có 3 số sau dấu phẩy suy ra tử là `1000`, và mẫu là `GCD(319,1000) = 1` ta thấy 1 nghĩa là ko thể rút được nữa, trường hợp này ta giữ nguyên. Ta có $$\large0.319 = \boxed{\frac{319}{1000}}$$
+ví dụ tiếp theo, ta cho `0.319` bây giờ ta thấy có 3 số sau dấu phẩy suy ra tử là `1000`, và mẫu là `GCD(319,1000) = 1` ta thấy 1 nghĩa là ko thể rút được nữa, trường hợp này ta giữ nguyên. Ta có $\large0.319 = \boxed{\frac{319}{1000}}$
 
 <sub>--đã hết phần giải thích--</sub>
 
