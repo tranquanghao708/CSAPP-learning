@@ -1648,6 +1648,8 @@ $
 </table>
 </details>
 
+Bây giờ từ $$\large\frac{3}{10}$$ ta cần phân tích mẫu số với thừa số nguyên tố $$\large2^{N}$$, với `10` ta có $$\large2\times5 = 10_{10}$$ vậy trong đó có `5` mà gía trị số này lại ko chia hết cho 2, nên số thực `0.3` khi biểu diễn dưới dạng nhị phân là vô hạn
+
 ### 3.2.Round to nearest, ties to even
 
 - Đây là chế độ mặc định của việc làm tròn số thực dấu phẩy động của IEEE , nó thực hiện làm tròn về số gần nhất, nếu đúng giữa hai số thì chọn số chẵn. Ý tưởng gồm hai bước, đầu tiên là nó chọn giá trị gần nhất với số cần biểu diễn, thứ hai là phân theo ba trường hợp, trường hợp số nhỏ hơn nữa sẽ giữ nguyên, trường hợp số lớn hơn nữa sẽ làm tròn lên, trường hợp số đúng bằng nữa (tie) thì chọn số bit cuối là 0 (even)
