@@ -1495,7 +1495,7 @@ và điều này rất bất tiện, tốn times và gây rối lẫn sai nhiề
 **Ví dụ:** Ta muốn biết số `0.3` là số hữu hạn hay vô hạn, trước tiên ta biến đổi thập phân sang phân số trước đã, ta có $$\large0.3_{10} = \frac{3}{10}$$
 
 <details>
-	<summary>Cách chuyển đổi số thập phân sang phân số</summary>
+	<summary><b>Cách chuyển đổi số thập phân sang phân số</b></summary>
 
 ---
 
@@ -1506,6 +1506,7 @@ Vậy nên ta có mẫu là `100`, tiếp theo phần `tử` của phân số đ
 Nên từ dữ kiện, ta có $$\large10^{2} = 100_{10}$$ cho mẫu và `GCD(25,100) = 25` cho tử thì ta có phân số $$\large\boxed{0.25 = \frac{25}{100}}$$
 
 <sub>--đã hết phần giải thích--</sub>
+
 ---
 
 </details>
