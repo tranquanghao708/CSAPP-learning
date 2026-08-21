@@ -1495,7 +1495,10 @@ và điều này rất bất tiện, tốn times và gây rối lẫn sai nhiề
 **Ví dụ:** Ta muốn biết số `0.3` là số hữu hạn hay vô hạn, trước tiên ta biến đổi thập phân sang phân số trước đã, ta có $$\large0.3_{10} = \frac{3}{10}$$
 
 <details>
-	<summary><b>Cách chuyển đổi số thập phân sang phân số</b></summary>
+	<summary>Cách chuyển đổi số thập phân sang phân số</summary>
+<table>
+<tr>
+<td>
 
 ---
 
@@ -1509,6 +1512,9 @@ Nên từ dữ kiện, ta có $$\large10^{2} = 100_{10}$$ cho mẫu và `GCD(25,
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 ### 3.2.Round to nearest, ties to even
