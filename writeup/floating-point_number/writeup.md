@@ -201,6 +201,10 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 <details>
 	<summary>tại sao phải chuẩn hóa số thực?</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 <br>
@@ -213,6 +217,9 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 ### 1.2.Khử chuẩn hóa số thực (Denormalized)
@@ -281,6 +288,10 @@ nếu `sign = 1` : âm vô cực $$\large-\infty$$
 <details>
 	<summary>ví dụ với C</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 <br>
@@ -311,6 +322,9 @@ ta thấy hiện `inf` nghĩa là dương vô cực $$\large+\infty$$
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 ### 1.4.không phải một số (NaN)
@@ -350,6 +364,10 @@ Trong đó QuietBit là phần có thể là `0` hoặc `1`, khi quiet bit là `
 <details>
 	<summary>Ví dụ với C</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 <br>
@@ -384,6 +402,9 @@ int main(void){
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 Nếu trong condition ta thấy `if(x != x)` thì điều đó chỉ đúng khi `x = NaN` vì NaN là thứ duy nhất giúp `x != x` trả true. Đây là một mẹo thường gặp trong các câu hỏi về C, compiler và IEEE 754. Vì NaN là giá trị duy nhất mà biểu thức `x != x` luôn đúng, một số mã nguồn hoặc trình biên dịch có thể dùng tính chất này để phát hiện NaN.
@@ -399,6 +420,10 @@ IEEE quy định sNaN phải thỏa điều kiện xảy ra NaN là exponent fie
 
 <details>
 	<summary>ví dụ sNaN với C</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -428,6 +453,9 @@ Khác với NAN (thường là Quiet NaN), ngôn ngữ C không cung cấp sẵn
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 ### 1.5.Zero
@@ -446,6 +474,10 @@ dù vậy nhưng nó vẫn quy định `+0 == -0` vẫn phải True. Tuy nhiên 
 
 <details>
 	<summary>ví dụ với C</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -497,6 +529,9 @@ Lưu ý: trong C, phép chia số nguyên cho 0 trong C là undefined behavior (
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 ### 1.6.scanf và các hàm lệnh đọc khác có thể đọc các chỉ thị nan, infinity
@@ -609,6 +644,10 @@ nếu trường hợp độ rộng của chuỗi nhị phân lớn hơn độ r�
 <details>
 	<summary>vì sao IEEE 754 không dùng two_complement_code để biểu diễn số âm cho bias?</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 <br>
@@ -621,6 +660,9 @@ nếu trường hợp độ rộng của chuỗi nhị phân lớn hơn độ r�
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 - dạng có độ chính xác đơn tương ứng 32bit và dạng có độ chính xác kép tương ứng 64bit và kép mở rộng tương đương 80bit :
@@ -865,6 +907,10 @@ $$
 <details>
 	<summary>bit-weight exponents là gì?</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 <br>
@@ -887,6 +933,9 @@ Nên ta có : $$\large1.1011_{2} = 1 \times 2^{0} + 1 \times 2^{-1} + 0 \times 2
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 **Tại sao dù biết là exponent dịch dấu chấm là dương, âm để dịch trái,phải dấu chấm, nhưng sao tính exponent trọng số lại phải dùng số âm?**
@@ -983,6 +1032,10 @@ do `exponent field = 0` nên `hidden bit = 0` (yes sir, vì vốn dĩ khử chu�
 <details>
 	<summary>vì sao lại là -23 (lại là số âm)?</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 <br>
@@ -1005,6 +1058,9 @@ Bit 1 duy nhất nằm ở vị trí thứ 23 sau dấu chấm, nên giá trị 
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 Vậy số thực khử chuẩn hóa nhỏ nhất của float là $$\large2^{-149} = \boxed{1.40129846432\times10^{-45}}$$
@@ -1024,6 +1080,10 @@ Vậy số thực khử chuẩn hóa nhỏ nhất của float là $$\large2^{-14
 
 <details>
 	<summary>vậy phép tính actual exponent = 1 - 127 = -126 là tính 1 - bias à, này là của khử chuẩn hóa mà sao trước đó tại chương chuẩn hóa lại sử dụng và chương này cũng sử dụng chung phép tính này?</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -1062,6 +1122,9 @@ Nếu IEEE dùng `actual exponent = 0 - 127 = -127` đối với khử chuẩn h
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 ### 2.6.Số thực lớn nhất trong miền khử chuẩn hóa (Largest subnormal)
@@ -1147,6 +1210,10 @@ Trong đó phần tử cuối cùng trước $$\large2^{-126}$$ chính là large
 <details>
 	<summary>Ví dụ C</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 <br>
@@ -1182,6 +1249,9 @@ ta thấy số thực nó đã bị làm tròn ở đây khá hỗn loạn nên 
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 Các chế độ của Rounding (làm tròn)
@@ -1210,6 +1280,10 @@ ta cũng dừng ở bước 2, ta có $$\large0.75_{10} = \boxed{0.11_{2}}$$, n�
 
 <details>
 	<summary>Ví dụ với C</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -1250,6 +1324,9 @@ Ta thấy nó vẫn là kết quả chính xấc, không có rounding nào ở �
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 **Biểu diễn nhị phân vô hạn:** là việc biểu diễn nhị phân có độ rộng độ rộng không được giới hạn tới khi bị cắt bởi phần cứng do giới hạn độ rộng độ rộng bên phía phần cứng **ví dụ** $$\large0.1_{2}$$ tính fraction nó với 2:
@@ -1269,6 +1346,10 @@ Ta thấy nó cứ lặp lại từ `0.2 -> 0.6` giống kim đồng hồ và s�
 
 <details>
 	<summary>Ví dụ với C</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -1309,6 +1390,9 @@ Ta thấy nó vẫn bị rounding
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 **Định lý đẹp của biểu diễn vô hạn và hữu hạn:** một phân số tối giản $$\large\frac{a}{b}$$ sẽ có biểu diễn hữu hạn trong cơ số 2 khi và chỉ khi mẫu số b chỉ chứa thừa số nguyên tố 2. **Ví dụ** $$\large0.5_{10} = \frac{1}{2}$$ ta có mẫu là 2 suy ra nó hữu hạn, $$\large0.25_{10} = \frac{1}{4}$$ mẫu là $$\large2^{2}$$ suy ra nó hữu hạn, $$\large0.75_{10} = \frac{3}{4}$$ mẫu là $$\large2^{2}$$ suy ra nó hữu hạn. Nhưng còn, $$\large0.1_{10} = \frac{1}{10} = \frac{1}{2\times5}$$ mẫu có 5 và nó không thể viết hữu hạn trong cơ số 2, suy ra nó vô hạn
@@ -1370,6 +1454,10 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 <details>
 	<summary>làm việc số hữu hạn với Sigma</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 <div align="center">
@@ -1394,6 +1482,10 @@ Với $$\large b_{k}\in\{0,1\}$$ và chỉ có hữu hạn số hạng, đều c
 
 <details>
 	<summary>Chi tiết về các ý nghĩa của biểu thức trên tại đây</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -1462,12 +1554,18 @@ $$
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 <sub>--đã hết phần giải thích--</sub>
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 **trường hợp 2:** Nếu chỉ muốn biết số thập phân này khi biểu diễn dưới hệ cơ số 2 (nhị phân) là số hữu hạn hay vô hạn, nhưng ko cần lấy nhị phân. Nghĩa là chỉ muốn biết nó là vô hạn hay hữu hạn chứ ko cần phải covert sang hệ nhị phân. Thì ta có hai cách, cách đầu tiên thì tính bảng giá trị như trên ra cũng ổn nhưng thực tế kỹ thuật này nó ko tối ưu hóa thời gian cho công đoạn này, bây giờ ta khám phá tới định lý toán học đã được đề cập tới ở chương [3.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#31biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn)
@@ -1516,6 +1614,9 @@ Nên từ dữ kiện, ta có $$\large10^{2} = 100_{10}$$ cho mẫu và `GCD(25,
 </td>
 </tr>
 </table>
+</td>
+</tr>
+</table>
 </details>
 
 ### 3.2.Round to nearest, ties to even
@@ -1537,6 +1638,10 @@ bây giờ so sánh **phần bị cắt với đúng một ngưỡng là một n
 <details>
 	<summary>ULP(unit in the last place)</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 <br>
@@ -1557,6 +1662,12 @@ Vậy ULP = 0.25, nếu gặp trường hợp như `một nữa của ULP` thì 
 
 ---
 
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
 </details>
 
 Ở đây ta tiến hành tính ULP trước tiên phải biết $$\large1.01 = \mathbf{1.25_{10}}$$ và $$\large1.10 = \mathbf{1.50_{10}}$$ :
@@ -1570,6 +1681,10 @@ $\large\mathrm{ULP} = \boxed{0.25}$ vậy bây giờ ta biết $$\large0.25_{10}
 <details>
 	<summary>Vì sao lại đem phần bị cắt đi so với half ULP?</summary> 
 
+<table>
+<tr>
+<td>
+
 ---
 
 <br>
@@ -1582,6 +1697,12 @@ $\large\mathrm{ULP} = \boxed{0.25}$ vậy bây giờ ta biết $$\large0.25_{10}
 
 ---
 
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
 </details>
 
 nếu trường hợp số lớn hơn nữa sẽ làm tròn, **ví dụ** $$\large1.010011_{2}$$ và như cũ CPU giữ lại 2 fraction là $$\large1.01_{2}$$ và $$\large1.10_{2}$$ và số bit bị cắt là $$\large0011_{2}$$ bây giờ ta tính ULP:
@@ -1596,6 +1717,10 @@ vẫn như cũ, $$\large\mathrm{ULP} = \boxed{0.25}$$ và ta biết half ULP c�
 
 <details>
 	<summary>Nhưng vấn đề mà chúng ta thường hay rối ở đây là nếu có lệnh quyết định làm tròn sau khi so sánh half ULP thì tự hỏi nó làm tròn một đơn vị bit hay làm tròn cả dãy bit theo mô hình toán học?</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -1625,6 +1750,9 @@ khi làm tròn, CPU chỉ thực hiện cộng một đơn vị bit vào bit cu�
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 nếu trường hợp số bằng đúng bằng nữa (tie) thì chọn số bit cuối là 0 (even) nó sẽ chọn số có LSB là 0, **ví dụ** ta có $$\large0.010010_{2}$$ với CPU chỉ giữ fraction ta có hai dạng như ví dụ trước là $$\large0.01_{2}$$ hay $$\large0.10_{2}$$ ở đây phần bị cắt là $$\large0010_{2}$$ và ta biết `half ULP = 0.125` vì nó vẫn tương tự ở các ví dụ trên thôi.
@@ -1716,6 +1844,10 @@ các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nế
 <details>
 	<summary>Vì sao không thể quan sát Guard, Round và Sticky bit trên một biến float?</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 <br>
@@ -1758,6 +1890,10 @@ ta thấy đây là fraction sau khi IEEE754 đã hoàn tất quá trình encode
 <details>
 	<summary>tính toán (encode) lại sang nhị phân</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 <br>
@@ -1782,6 +1918,9 @@ ta thấy đây là fraction sau khi IEEE754 đã hoàn tất quá trình encode
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 **nhưng ở đây dù có nhị phân đã được in quá fraction là 34bit trong đoạn code C thì chúng ta vẫn sẽ không đảm bảo thấy được GRS thật sự vì sao?**
@@ -1804,6 +1943,9 @@ nhưng vấn đề khiến nó gần như trùng khớp với bit quyết địn
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 #### 3.2.5.Thao tác Bitwise Raw Manipulation trên uint32_t
@@ -1823,6 +1965,10 @@ vậy thao tác bitwise raw manipulation trên `uint32_t` là dùng các toán t
 
 <details>
 	<summary>ví dụ với C</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -1877,6 +2023,9 @@ Vậy nên nó chỉ thao tác đọc ghi v.v. , chứ không ngăn được FPU
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 #### 3.2.6.Vì sao phần cứng biết vị trí của Guard, Round và Sticky Bit?
@@ -1903,6 +2052,10 @@ Thực tế, FPU không đi tìm Guard, Round, Sticky trong dữ liệu đã lư
 
 <details>
 	<summary>ceil và floor là gì</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -1937,6 +2090,10 @@ Ceil (hàm trần) luôn làm tròn về phía dương vô cực ($$\large+\inft
 <details>
 	<summary>dùng hàm floor(),ceil() trong thư viện math.h để tính floor,ceil trong C</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 <br>
@@ -1968,6 +2125,9 @@ int main (void){
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 <br>
@@ -1976,6 +2136,9 @@ int main (void){
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 **so sánh floor, ceil và toward zero**
@@ -2005,6 +2168,10 @@ Do đó, về cơ bản chương `round toward zero` này chỉ có vậy. Nếu
 <details>
 	<summary>liệu round toward zero và (int)x.x có phải là một không?</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 <br>
@@ -2023,6 +2190,9 @@ Nên nhiều ví dụ thấy chúng gần như tương đồng nhau nhưng chún
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 #### 3.3.1.biểu diễn làm tròn trên hệ nhị phân
@@ -2045,6 +2215,10 @@ biểu diễn bit ở chế độ làm tròn này đơn giản chỉ có thế
 
 <details>
 	<summary>minh họa với C</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -2089,6 +2263,10 @@ ta thấy `0.09999999999999999167` và `7.47999999999999953814`, đây chính l�
 <details>
 	<summary>Liệu sau khi chuyển chế độ sang round toward zero, thì FPU có thực hiện round to nearest tie to even khi gán số thực vào biến không?</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 <br>
@@ -2111,6 +2289,9 @@ Còn về trường hợp dùng định dạng chuỗi chuyển sang số thực
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 Để biết được là `0.09999999999999999167` và `7.47999999999999953814` có phải là kết quả của `round toward zero` hay không thì trước hết phải biết các số thực được gán vào biến trong mã nguồn thuộc số thực vô hạn tuần hoàn hay hữu hạn. Bây giờ để có số liệu thì chúng ta lấy hai cái này đi encode sang nhị phân trước, encode giúp xác định chuỗi bit trước khi lưu vào IEEE 754, từ đó biết liệu giá trị toán học có biểu diễn hữu hạn hay vô hạn trong hệ nhị phân và hiểu vì sao FPU phải thực hiện làm tròn , với `0.09999999999999999167` ta có :
@@ -2194,6 +2375,9 @@ và thấy nếu cùng nhỏ hơn half ULP thì cả hai có kết quả y như 
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 ### 3.4.Round toward positive infinity (+∞)
@@ -2223,6 +2407,10 @@ vì : $$\large−1.001_{2} > −1.001101_{2} > −1.010_{2}$$ . Nên round towar
 
 <details>
 	<summary>giá trị mà format floating-point hiện tại có thể lưu được là sao?</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -2267,6 +2455,9 @@ và trong khi số `1.0001` cần độ rộng fraction 4 bit, vì thế `1.0101
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 > [!IMPORTANT]
@@ -2297,6 +2488,10 @@ Trong đó $$\large F$$ là tập các giá trị floating-point có thể biể
 
 <details>
 	<summary>minh họa với C</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -2335,6 +2530,10 @@ Ta có chuỗi số `1.00000011920928955079` ta thấy rõ ràng nó đã đư�
 <details>
 	<summary>chuỗi số 0x1.000002p-24f là gì?</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 chuỗi `0x1.000002p-24f` là một chuỗi số kết hợp với nhiều tiền tố, đây được gọi là `hexadecimal floating-point literal` của `C/C++`, không phải một chuỗi số thập phân bình thường. Bây giờ ta thử tách nó ra:
@@ -2370,6 +2569,10 @@ Bây giờ ta khai triển biểu thức toán để tính toán giá trị củ
 
 <details>
 	<summary>rõ hơn</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -2407,6 +2610,9 @@ và số mũ với hệ cơ số 10 đều dựa vào đoạn thẳng của số
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 Nên bây giờ ta tiến hành khai triển $$\large0x1.000002_{16}$$ thành $$\large0x1.000002_{16} = 1 + 2 \times 16^{-6} = 1 + \frac{2}{16^{6}}$$ (vì 2 là một chữ số hexadecimal có giá trị 2, 1 là phần nguyên và $$\large16^{6}$$ là hệ cơ số thập lục phân và giá trị `2` nằm ở vị trí `-6`), lý do nó thành $$\large\frac{2}{16^{6}}$$ trong khi thực chất vị trí nó nằm ở `-6` , chính là trong toán học có 1 quy tắc là 
@@ -2423,6 +2629,10 @@ Ta thấy theo quy tắc, ta có $$\large1 + 16^{-6} = 1 + \frac{1}{16^{6}}$$ t�
 
 <details>
 	<summary>Vậy số 2 từ đâu mà ra vì sao lại nhân cho hệ cơ số của lục phân? Tại sao ngay từ đầu lại có giá trị 2 nhưng sau này lại bỏ?</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -2460,6 +2670,9 @@ Vậy ta có $$\large1 + 2^{-23}$$. Cho nên số 2 đã đi đâu, nó ko biế
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 tiếp theo ta bắt đầu tính rút gọn đi ở $$\large16^{6}$$, với giá trị `16` thì $$\large16 = 2^{4}$$
@@ -2520,6 +2733,10 @@ Nên giá trị này nằm đúng trên một giá trị binary32 representable.
 <details>
 	<summary>Rõ hơn về phần 32bit này</summary>
 
+<table>
+<tr>
+<td>
+
 ---
 
 Ta xét $$\large1+2^{-23}$$ và ta đã biết $$\large2^{-1} = \frac{1}{2^{1}} = \frac{1}{2}$$, $$\large2^{-2} = \frac{1}{2^{2}} = \frac{1}{4}$$... Vậy $$\large2^{-23}$$ chính là một bit `1` nằm ở vị trí thứ 23 sau dấu chấm nhị phân. **Ví dụ** $$\large1+2^{-1}=1.1_{2}$$, $$\large1+2^{-2}=1.01_{2}$$, $$\large1+2^{-3}=1.001_{2}$$... (giá trị `1` đằng trước là phần nguyên) vậy tương tự với $$\large1+2^{-23}=\boxed{1.00000000000000000000001_{2}}$$
@@ -2541,6 +2758,9 @@ Bây giờ tới phần ghép thêm $$\large2^{-24}$$, như đã nói phần gí
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 Bây giờ ta chuyển chuỗi `0x1.000002p-24f` sang binary, ta vừa chuyển nó thành giá trị ở hệ cơ số 10 bây giờ là hệ cơ số 2. Bây giờ ta biết hiddenbit là 1, fraction là $$\large00000000000000000000001_{2}$$ và số mũ là `-24` ở phần `p-24` kiểu float (32bit). Cách tính chuỗi `0x1.000002p-24f` có ở phần details trên. Bây giờ tính trường số mũ (exponent field) bằng cách lấy `-24` cộng với bias, ta biết `bias = 127` trong hệ 32bits và `-24 + 127 = 103` và chuyển $$\large103_{10} = 01100111_{2}$$ ta có:
@@ -2555,6 +2775,9 @@ ghép lại thành $$\large\boxed{00110011100000000000000000000001_{2}}$$. Đây
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 bây giờ, ta đã biết gía trị số nguyên của chuỗi `0x1.000002p-24f` là $$\large2^{-24} + 2^{-47} = 5.960465188081798e-08_{10} = \boxed{0.00000005960465188081798_{10}}$$ (thêm 8 số 0 bên trái và chuẩn hóa số thực vì `e-08`) rõ hơn với giá trị `e-08` viết tắt là `exponent = -8` nghĩa là nhân hệ cơ số có lũy thừa `-08` nên :
@@ -2572,7 +2795,11 @@ và giá trị nhị phân là $$\large\boxed{00110011100000000000000000000001_{
 > **câu hỏi mở rộng :** vì sao app máy tính casio trên điện thoại lại tính được $$\large2^{-24} + 2^{-47} = 0.0000000596_{10}$$ nhưng với máy tính terminal linux bên ngành kiến trúc CPU x86-64 lại ko mà nếu đổi má sang quy tắc toán học như $$\large a^{-m} = \frac{1}{a^{m}}$$ lại luôn ra giá trị `0` mà gõ trực tiếp thì bị lỗi cú pháp với $(())?
 
 <details>
-<summary>Trả lời</summary>
+	<summary>Trả lời</summary>
+
+<table>
+<tr>
+<td>
 
 ---
 
@@ -2594,6 +2821,9 @@ và mọi chuyện ổn thỏa
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 Tiếp đến, ta cần biết cái số mà của chuỗi `0x1.000002p-24f` có phải là số thực vô hạn khi biểu diễn dưới dạng nhị phân hay ko. Ta cần phải tính dựa trên kết quả, ta có $$\large0.00000005960465188081798_{10}$$ với hệ cơ số 10. Bây giờ, như cũ ta lấy đó nhân hai xem nó có lặp lại tuần hoàn vô hạn ko:
@@ -2646,6 +2876,9 @@ Tiếp đến, ta cần biết cái số mà của chuỗi `0x1.000002p-24f` có
 
 ---
 
+</td>
+</tr>
+</table>
 </details>
 
 ### 3.5.Round toward negative infinity (−∞)
