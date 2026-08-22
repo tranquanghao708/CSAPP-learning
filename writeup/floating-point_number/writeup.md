@@ -2804,10 +2804,6 @@ và giá trị nhị phân là $$\large\boxed{00110011100000000000000000000001_{
 <details>
 	<summary>Trả lời</summary>
 
-<table>
-<tr>
-<td>
-
 ---
 
 Ko phải vì CPU ko biết tính được biểu thức trên, hiện tượng như :
@@ -2828,9 +2824,6 @@ và mọi chuyện ổn thỏa
 
 ---
 
-</td>
-</tr>
-</table>
 </details>
 
 Tiếp đến, ta cần biết cái số mà của chuỗi `0x1.000002p-24f` có phải là số thực vô hạn khi biểu diễn dưới dạng nhị phân hay ko. Ta cần phải tính dựa trên kết quả, ta có $$\large0.00000005960465188081798_{10}$$ với hệ cơ số 10. Bây giờ, ta cần biết là số này là biểu diễn nhị phân vô hạn hay là biểu diễn nhị phân hữu hạn chứ ko phải lấy binary của giá trị trên, đó là mục đích chính và ta nhận thức được điều đó nên ta dùng định lý phân số ở chương [3.1.1.Hai phương pháp xử lý biểu diễn nhị phân hữu hạn và vô hạn](#311hai-phương-pháp-xử-lý-biểu-diễn-nhị-phân-hữu-hạn-và-vô-hạn)
