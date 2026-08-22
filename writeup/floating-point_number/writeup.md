@@ -2873,7 +2873,8 @@ $$\Large
 
 </div>
 
-giá trị `5e+21` nghĩa là thêm 21 số 0 đằng sau ta có `5e+21 = 5000000000000000000000`
+giá trị $$\large5e+21$$ là $$\large5 \times 10^{21}$$ nghĩa là thêm 21 số 0 đằng sau ta có $$\large5e+21 = 5000000000000000000000_{10}$$
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
