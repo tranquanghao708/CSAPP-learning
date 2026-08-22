@@ -1604,7 +1604,7 @@ $$
 
 </kbd>
 
-và điều này rất bất tiện, tốn times và gây rối lẫn sai nhiều hơn. Thay vào đó ta có cách phù hợp hơn khi làm việc chỉ để nhận biết số hữu hạn và vô hạn chính là dùng phân số. Cách làm đầu tiên ta cần chuyển số thực hệ cơ số 10 sang hệ thập phân (nhưng đã rút gọn), tiếp theo là phân tích mẫu số và so sánh nếu mẫu số chỉ chứa thừa số nguyên tố $$\large2^{N}\rightarrow\text{hữu hạn}$$ ,nhưng nếu nó còn chứa bất kỳ thừa số nguyên tố nào khác `(3,5,7...)` $$\large\rightarrow\text{vô hạn}$$
+và điều này rất bất tiện, tốn times và gây rối lẫn sai nhiều hơn. Thay vào đó ta có cách phù hợp hơn khi làm việc chỉ để nhận biết số hữu hạn và vô hạn chính là dùng phân số. Cách làm đầu tiên ta cần chuyển số thập phân sang dạng phân số tối giản, tiếp theo là phân tích mẫu số và so sánh nếu mẫu số chỉ chứa thừa số nguyên tố $$\large2^{N}\rightarrow\text{hữu hạn}$$ ,nhưng nếu nó còn chứa bất kỳ thừa số nguyên tố nào khác `(3,5,7...)` $$\large\rightarrow\text{vô hạn}$$
 
 **Ví dụ:** Ta muốn biết số `0.3` là số hữu hạn hay vô hạn, trước tiên ta biến đổi thập phân sang phân số trước đã, ta có $$\large0.3_{10} = \frac{3}{10}$$
 
@@ -1621,17 +1621,17 @@ Trước tiên về toán học căn bản, ta cần phải nhìn vào số th�
 
 Vậy nên ta có mẫu là `100`, tiếp theo phần `tử` của phân số để biết ta tính ước chung lớn nhất `GCD` ta cần biết phải lấy gì vào ước chung lớn nhất, đó chính là tất cả giá trị ở phần đuôi sau dấu phẩy (ko lấy phàn nguyên) và số giá trị `n(value)`, ở đây ta có tất cả giá trị ở phần đuôi sau dấu phẩy `0.25` là `25` vì giá trị này nằm sau phần đuôi, tới lượt là số giá trị `n(value)` là `100` là cái mà ta nhìn vào phần số thập phân như trên. Vậy ta có `GCD(25,100) = 25`
 
-Nên từ dữ kiện, ta có $$\large10^{2} = 100_{10}$$ cho mẫu và `GCD(25,100) = 25` cho tử thì ta có phân số 
+Nên từ dữ kiện, ta có $$\large10^{2} = 100_{10}$$ cho mẫu và `GCD(25,100) = 25` cho tử thì ta lấy giá trị kết quả của ước chung lớn nhất chia cho cả mẫu và tử và ta có phân số 
 
 <div align="center">
 
 $$\large
-\boxed{0.25 = \frac{25}{100}}
+\boxed{0.25 = \frac{25 \div 25}{100 \div 25} = \frac{1}{4}}
 $$
 
 </div>
 
-ví dụ tiếp theo, ta cho `0.319` bây giờ ta thấy có 3 số sau dấu phẩy suy ra tử là `1000`, và mẫu là `GCD(319,1000) = 1` ta thấy 1 nghĩa là ko thể rút được nữa, trường hợp này ta giữ nguyên. Suy ra :
+ví dụ tiếp theo, ta cho `0.319` bây giờ ta thấy có 3 số sau dấu phẩy suy ra tử là `1000`, và mẫu là `GCD(319,1000) = 1` ta thấy 1 nghĩa là ko thể rút được nữa vì nếu chia cả hai mẫu và tử với 1 chúng vẫn là chính nó nên trường hợp này ta giữ nguyên. Suy ra :
 
 <div align="center">
 
@@ -2863,8 +2863,17 @@ và mọi chuyện ổn thỏa
 
 Tiếp đến, ta cần biết cái số mà của chuỗi `0x1.000002p-24f` có phải là số thực vô hạn khi biểu diễn dưới dạng nhị phân hay ko. Ta cần phải tính dựa trên kết quả, ta có $$\large0.00000005960465188081798_{10}$$ với hệ cơ số 10. Bây giờ, ta cần biết là số này là biểu diễn nhị phân vô hạn hay là biểu diễn nhị phân hữu hạn chứ ko phải lấy binary của giá trị trên, đó là mục đích chính và ta nhận thức được điều đó nên ta dùng định lý phân số ở chương [3.1.1.Hai phương pháp xử lý biểu diễn nhị phân hữu hạn và vô hạn](#311hai-phương-pháp-xử-lý-biểu-diễn-nhị-phân-hữu-hạn-và-vô-hạn)
 
-Đầu tiên ta có 23 chữ số sau dấu phẩy nên phần mẫu là `10000000000000000000000`, bây giờ ta dùng ước chung lớn nhất để lấy phần tử ta có `GCD(5960465188081798, 10000000000000000000000) = 2`
+Đầu tiên ta có 23 chữ số sau dấu phẩy nên phần mẫu là `10000000000000000000000`, bây giờ ta dùng ước chung lớn nhất để lấy phần tử ta có `GCD(5960465188081798, 10000000000000000000000) = 2` bây giờ ta lấy kết quả của ước chung lớn nhất chia cho cả hai mẫu và tử, ta có : 
 
+<div align="center">
+
+$$\Large
+5.960465188081798e-7_{10} = \frac{5960465188081798 \div 2}{10000000000000000000000 \div 2}
+ = \frac{2980232594040899}{5e+21}$$
+
+</div>
+
+giá trị `5e+21` nghĩa là thêm 21 số 0 đằng sau ta có `5e+21 = 5000000000000000000000`
 <sub>--đã hết phần giải thích--</sub>
 
 ---
