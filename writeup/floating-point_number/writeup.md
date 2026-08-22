@@ -98,7 +98,7 @@
 
        - [3.2.6.Vì sao phần cứng biết vị trí của Guard, Round và Sticky Bit?](#326vì-sao-phần-cứng-biết-vị-trí-của-guard-round-và-sticky-bit)
 
-    - 3.3.Round to nearest, ties away from zero (Ties to away)
+    - [3.3.Round to nearest, ties away from zero (Ties to away)](#33round-to-nearest-ties-away-from-zero-ties-to-away)
 
     - [3.4.Round toward zero](#34round-toward-zero)
 
@@ -1792,7 +1792,7 @@ nếu trường hợp số bằng đúng bằng nữa (tie) thì chọn số bit
 
 Bây giờ, ta so sánh thấy phần đặc biệt là half ULP bằng với bit bị cắt $$\mathbf{\large0010_{2}\text{(số bit bị cắt)} == 0010_{2}\text{(Half ULP)}}$$ vì $$\large0.125_{10} = 0.001_{2}\text{(half ULP)}$$ tính theo đúng 4bit sẽ là $$\large\mathbf{0010_{2} \text{(half ULP)}}$$ ở đây việc nó bằng nhau thế này ta gọi đó là trường hợp bằng đúng bằng nữa (tie) nghĩa là giá trị phần bị cắt (round error) bằng đúng half ULP, tức sai số khi giữ nguyên và sai số khi làm tròn lên là như nhau. Số cần biểu diễn nằm đúng ở chính giữa hai số IEEE 754 có thể biểu diễn được.
 
-Lúc này, IEEE không được phép lúc nào cũng làm tròn lên vì nếu vậy thì nó sẽ sinh ra sai số dương tích lũy sau hàng triệu phép tính, thay vào đó nó quy định nếu đúng bằng half ULP thì chọn số có bit cuối cùng (LSB) bằng 0 (even). Ví dụ trường hợp này $$\mathbf{\large0010_{2}\text{(số bit bị cắt)} == 0010_{2}\text{(Half ULP)}}$$ thì đối tượng được làm tròn là $$\large0.10_{2}\text{hay}0.01_{2}$$
+Lúc này, IEEE không được phép lúc nào cũng làm tròn lên vì nếu vậy thì nó sẽ sinh ra sai số dương tích lũy sau hàng triệu phép tính, thay vào đó nó quy định nếu đúng bằng half ULP thì chọn số có bit cuối cùng (LSB) bằng 0 (even). Ví dụ trường hợp này $$\mathbf{\large0010_{2}\text{(số bit bị cắt)} == 0010_{2}\text{(Half ULP)}}$$ thì đối tượng được làm tròn là $$\large0.10_{2}$$ hay $$\large0.01_{2}$$
 
 Ta phân tích hai số này, $$\large0.10_{2}$$ có `LSB = 0` và $$\large0.01_{2}$$ có `LSB = 1` ta thấy IEEE quy định thì nó sẽ chọn số bit cuối cùng (LSB) bằng 0 (even) thì `LSB = 1` sẽ không được chọn vì nó khác 0, `LSB = 0` sẽ được chọn vì nó bằng 0. Nên, số làm tròn sẽ thành $$\large\boxed{0.10_{2}}$$ vì nó có `LSB = 0` (thỏa mãn quy định của IEEE)
 
@@ -2068,6 +2068,8 @@ Thực tế, FPU không đi tìm Guard, Round, Sticky trong dữ liệu đã lư
 > [!IMPORTANT]
 > GRS được tạo ra từ kết quả trung gian trước khi làm tròn, rồi được dùng để quyết định cách làm tròn, sau khi làm tròn 3bit này bị bác bỏ và nếu có thể thấy 3bit cuối khi thực hiện dump nhị phân của số thực đó thực chất chỉ là sự trùng hợp
 
+### 3.3.Round to nearest, ties away from zero (Ties to away)
+
 ### 3.4.Round toward zero
 
 `Round toward Zero (làm tròn về 0 hay còn gọi là truncation)` là chế độ làm tròn trong đó phần lẻ bị loại bỏ, khiến kết quả luôn tiến gần về giá trị 0. Chế độ này không xét khoảng cách giữa hai số biểu diễn được như Round to Nearest, Ties to Even, mà chỉ đơn giản cắt bỏ phần không thể biểu diễn. **Ví dụ** :
@@ -2228,7 +2230,7 @@ Nên nhiều ví dụ thấy chúng gần như tương đồng nhau nhưng chún
 </table>
 </details>
 
-#### 3.3.1.biểu diễn làm tròn trên hệ nhị phân
+#### 3.4.1.biểu diễn làm tròn trên hệ nhị phân
 
 Để hiểu sâu hơn chúng ta cần phải hiểu rõ là `round toward zero` nó tác động lên bit nhị phân như thế nào đã, ở phần chương vừa rồi ta có lập bảng so sánh ở hệ cơ số 10, nhưng bây giờ ta cần phải xem thêm nó tác động tới hệ cơ số 2 như thế nào ở phần tính toán thủ công và minh họa với C. Bây giờ **ví dụ** chỉ cho phép 4bit fraction để dễ quan sát, kết quả trung gian là `1.101011100...` trong đó nó giữ lại `1.1010` và bit bị cắt là `11100...`
 
@@ -2859,51 +2861,9 @@ và mọi chuyện ổn thỏa
 </table>
 </details>
 
-Tiếp đến, ta cần biết cái số mà của chuỗi `0x1.000002p-24f` có phải là số thực vô hạn khi biểu diễn dưới dạng nhị phân hay ko. Ta cần phải tính dựa trên kết quả, ta có $$\large0.00000005960465188081798_{10}$$ với hệ cơ số 10. Bây giờ, như cũ ta lấy đó nhân hai xem nó có lặp lại tuần hoàn vô hạn ko:
+Tiếp đến, ta cần biết cái số mà của chuỗi `0x1.000002p-24f` có phải là số thực vô hạn khi biểu diễn dưới dạng nhị phân hay ko. Ta cần phải tính dựa trên kết quả, ta có $$\large0.00000005960465188081798_{10}$$ với hệ cơ số 10. Bây giờ, ta cần biết là số này là biểu diễn nhị phân vô hạn hay là biểu diễn nhị phân hữu hạn chứ ko phải lấy binary của giá trị trên, đó là mục đích chính và ta nhận thức được điều đó nên ta dùng định lý phân số ở chương [3.1.1.Hai phương pháp xử lý biểu diễn nhị phân hữu hạn và vô hạn](#311hai-phương-pháp-xử-lý-biểu-diễn-nhị-phân-hữu-hạn-và-vô-hạn)
 
-| số | nhân hai |
-|----|----------|
-| 5.960465188081798e-8 | 1.1920930376163597e-7 |
-| 1.1920930376163597e-7 | 2.3841860752327194e-8 |
-| 2.3841860752327194e-8 | 4.768372150465439e-08 |
-| 4.768372150465439e-08 | 9.536744300930877e-08 |
-| 9.536744300930877e-08 | 1.9073488601861755e-07 |
-| 1.9073488601861755e-07 | 3.814697720372351e-07 |
-| 3.814697720372351e-07 | 7.629395440744702e-07 |
-| 7.629395440744702e-07 | 1.5258790881489404e-06 |
-| 1.5258790881489404e-06 | 3.051758176297881e-06 |
-| 3.051758176297881e-06 | 6.103516352595762e-06 |
-| 6.103516352595762e-06 | 1.2207032705191523e-05 |
-| 1.2207032705191523e-05 | 2.4414065410383046e-05 |
-| 2.4414065410383046e-05 | 4.882813082076609e-05 |
-| 4.882813082076609e-05 | 9.765626164153219e-05 |
-| 9.765626164153219e-05 | 0.00019531252328306437 |
-| 0.00019531252328306437 | 0.00039062504656612874 |
-| 0.00039062504656612874 | 0.0007812500931322575 |
-| 0.0007812500931322575 | 0.001562500186264515 |
-| 0.001562500186264515 | 0.00312500037252903 |
-| 0.00312500037252903 | 0.00625000074505806 |
-| 0.00625000074505806 | 0.01250000149011612 |
-| 0.01250000149011612 | 0.02500000298023224 |
-| 0.02500000298023224 | 0.05000000596046448 |
-| 0.05000000596046448 | 0.10000001192092896 |
-| 0.10000001192092896 | 0.20000002384185792 |
-| 0.20000002384185792 | 0.40000004768371583 |
-| 0.40000004768371583 | 0.8000000953674317 |
-| 0.8000000953674317 | 1.6000001907348633 |
-| 0.6000001907348633 | 1.2000003814697267 |
-| 0.2000003814697267 | 0.4000007629394534 |
-| 0.4000007629394534 | 0.8000015258789068 |
-| 0.8000015258789068 | 1.6000030517578137 |
-| 0.6000030517578137 | 1.2000061035156273 |
-| 0.2000061035156273 | 0.4000122070312546 |
-| 0.4000122070312546 | 0.8000244140625092 |
-| 0.8000244140625092 | 1.6000488281250185 |
-| 0.6000488281250185 | 1.200097656250037 |
-| 0.200097656250037 | 0.400195312500074 |
-| 0.400195312500074 | 0.800390625000148 | 
-| 0.800390625000148 | 1.600781250000296 |
-| 0.600781250000296 | 1.201562500000592 |
+Đầu tiên ta có 23 chữ số sau dấu phẩy nên phần mẫu là `10000000000000000000000`, bây giờ ta dùng ước chung lớn nhất để lấy phần tử ta có `GCD(5960465188081798, 10000000000000000000000) = 2`
 
 <sub>--đã hết phần giải thích--</sub>
 
