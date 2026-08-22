@@ -2565,10 +2565,6 @@ Ta có chuỗi số `1.00000011920928955079` ta thấy rõ ràng nó đã đư�
 <details>
 	<summary><b>[Câu hỏi]</b> chuỗi số 0x1.000002p-24f là gì?</summary>
 
-<table>
-<tr>
-<td>
-
 ---
 
 chuỗi `0x1.000002p-24f` là một chuỗi số kết hợp với nhiều tiền tố, đây được gọi là `hexadecimal floating-point literal` của `C/C++`, không phải một chuỗi số thập phân bình thường. Bây giờ ta thử tách nó ra:
@@ -2604,10 +2600,6 @@ Bây giờ ta khai triển biểu thức toán để tính toán giá trị củ
 
 <details>
 	<summary><b>[Chi tiết]</b> rõ hơn</summary>
-
-<table>
-<tr>
-<td>
 
 ---
 
@@ -2645,9 +2637,6 @@ và số mũ với hệ cơ số 10 đều dựa vào đoạn thẳng của số
 
 ---
 
-</td>
-</tr>
-</table>
 </details>
 
 Nên bây giờ ta tiến hành khai triển $$\large0x1.000002_{16}$$ thành $$\large0x1.000002_{16} = 1 + 2 \times 16^{-6} = 1 + \frac{2}{16^{6}}$$ (vì 2 là một chữ số hexadecimal có giá trị 2, 1 là phần nguyên và $$\large16^{6}$$ là hệ cơ số thập lục phân và giá trị `2` nằm ở vị trí `-6`), lý do nó thành $$\large\frac{2}{16^{6}}$$ trong khi thực chất vị trí nó nằm ở `-6` , chính là trong toán học có 1 quy tắc là 
@@ -2664,10 +2653,6 @@ Ta thấy theo quy tắc, ta có $$\large1 + 16^{-6} = 1 + \frac{1}{16^{6}}$$ t�
 
 <details>
 	<summary><b>[Câu hỏi]</b> Vậy số 2 từ đâu mà ra vì sao lại nhân cho hệ cơ số của lục phân? Tại sao ngay từ đầu lại có giá trị 2 nhưng sau này lại bỏ?</summary>
-
-<table>
-<tr>
-<td>
 
 ---
 
@@ -2705,9 +2690,6 @@ Vậy ta có $$\large1 + 2^{-23}$$. Cho nên số 2 đã đi đâu, nó ko biế
 
 ---
 
-</td>
-</tr>
-</table>
 </details>
 
 tiếp theo ta bắt đầu tính rút gọn đi ở $$\large16^{6}$$, với giá trị `16` thì $$\large16 = 2^{4}$$
@@ -2768,10 +2750,6 @@ Nên giá trị này nằm đúng trên một giá trị binary32 representable.
 <details>
 	<summary><b>[Chi tiết]</b> Rõ hơn về phần 32bit này</summary>
 
-<table>
-<tr>
-<td>
-
 ---
 
 Ta xét $$\large1+2^{-23}$$ và ta đã biết $$\large2^{-1} = \frac{1}{2^{1}} = \frac{1}{2}$$, $$\large2^{-2} = \frac{1}{2^{2}} = \frac{1}{4}$$... Vậy $$\large2^{-23}$$ chính là một bit `1` nằm ở vị trí thứ 23 sau dấu chấm nhị phân. **Ví dụ** $$\large1+2^{-1}=1.1_{2}$$, $$\large1+2^{-2}=1.01_{2}$$, $$\large1+2^{-3}=1.001_{2}$$... (giá trị `1` đằng trước là phần nguyên) vậy tương tự với $$\large1+2^{-23}=\boxed{1.00000000000000000000001_{2}}$$
@@ -2793,9 +2771,6 @@ Bây giờ tới phần ghép thêm $$\large2^{-24}$$, như đã nói phần gí
 
 ---
 
-</td>
-</tr>
-</table>
 </details>
 
 Bây giờ ta chuyển chuỗi `0x1.000002p-24f` sang binary, ta vừa chuyển nó thành giá trị ở hệ cơ số 10 bây giờ là hệ cơ số 2. Bây giờ ta biết hiddenbit là 1, fraction là $$\large00000000000000000000001_{2}$$ và số mũ là `-24` ở phần `p-24` kiểu float (32bit). Cách tính chuỗi `0x1.000002p-24f` có ở phần details trên. Bây giờ tính trường số mũ (exponent field) bằng cách lấy `-24` cộng với bias, ta biết `bias = 127` trong hệ 32bits và `-24 + 127 = 103` và chuyển $$\large103_{10} = 01100111_{2}$$ ta có:
@@ -2810,9 +2785,6 @@ ghép lại thành $$\large\boxed{00110011100000000000000000000001_{2}}$$. Đây
 
 ---
 
-</td>
-</tr>
-</table>
 </details>
 
 bây giờ, ta đã biết gía trị số nguyên của chuỗi `0x1.000002p-24f` là $$\large2^{-24} + 2^{-47} = 5.960465188081798e-08_{10} = \boxed{0.00000005960465188081798_{10}}$$ (thêm 8 số 0 bên trái và chuẩn hóa số thực vì `e-08`) rõ hơn với giá trị `e-08` viết tắt là `exponent = -8` nghĩa là nhân hệ cơ số có lũy thừa `-08` nên :
