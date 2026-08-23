@@ -2838,7 +2838,7 @@ $$\Large
 
 </div>
 
-giá trị $$\large5e+21$$ là $$\large5 \times 10^{21}$$ nghĩa là thêm 21 số 0 đằng sau ta có $$\large5e+21 = 5000000000000000000000_{10}$$ bây giờ ta tiến hành phân tích nó ra thành $$\large5e+21 mod 2 = 0_{10}$$, bây giờ tiến hành chia $$\large5e+21 \div 2 = 2.5e+21_{10}$$ và bây giờ ta tính tiếp $$\large2.5e+21 mod 2 = 0_{10}$$ vậy ta thấy cả hai giá trị `2` và `2.5e+21` đều chia hết cho 2, nên ta có :
+giá trị $$\large5e+21$$ là $$\large5 \times 10^{21}$$ nghĩa là thêm 21 số 0 đằng sau ta có $$\large5e+21 = 5000000000000000000000_{10}$$ bây giờ ta tiến hành phân tích nó ra thành $$\large5e+21 \text{ mod } 2 = 0_{10}$$, bây giờ tiến hành chia $$\large5e+21 \div 2 = 2.5e+21_{10}$$ và bây giờ ta tính tiếp $$\large2.5e+21 \text{ mod } 2 = 0_{10}$$ vậy ta thấy cả hai giá trị `2` và `2.5e+21` đều chia hết cho 2, nên ta có :
 
 <div align="center">
 
@@ -2847,6 +2847,8 @@ $$\Large
 $$
 
 </div>
+
+tuy nhiên ta thấy $$\large2.5e+21 \text{ mod } 2 = 0_{10}$$, kết quả chia lấy dư là `0` nó chia hết cho `2`, mà nếu $$\large2.5e+21 \times 2 = 5e+21 \text{ mod } 2 = 0_{10}$$ thì nó vẫn chia hết cho `2`. Ta thấy `2.5` với riêng lẻ chia cho `2` nó dư `0.5` nhưng với `2.5e+21` thì nhờ vào số mũ làm thay đổi giá trị rất lớn và nó khác hoàn toàn nên chia hết cho `2`. Vậy nên nếu phép giá trị đã phân tích chia hết cho `2` thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
 
 <sub>--đã hết phần giải thích--</sub>
 
