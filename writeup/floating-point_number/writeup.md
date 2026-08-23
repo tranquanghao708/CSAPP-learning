@@ -2840,9 +2840,13 @@ $$\Large
 
 giá trị $$\large5e+21$$ là $$\large5 \times 10^{21}$$ nghĩa là thêm 21 số 0 đằng sau ta có $$\large5e+21 = 5000000000000000000000_{10}$$ bây giờ ta tiến hành phân tích nó ra thành $$\large5e+21 mod 2 = 0_{10}$$, bây giờ tiến hành chia $$\large5e+21 \div 2 = 2.5e+21_{10}$$ và bây giờ ta tính tiếp $$\large2.5e+21 mod 2 = 0_{10}$$ vậy ta thấy cả hai giá trị `2` và `2.5e+21` đều chia hết cho 2, nên ta có :
 
-$$\large
-\boxed{5e+21 = 2.5e+21 \times 2}
+<div align="center">
+
+$$\Large
+\boxed{5e+21 = (2.5e+21) \times 2}
 $$
+
+</div>
 
 <sub>--đã hết phần giải thích--</sub>
 
