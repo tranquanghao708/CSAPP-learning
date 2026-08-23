@@ -2853,6 +2853,12 @@ $$
 
 ---
 
+Với cách này khắc phục được vấn đề phân tích cấu trúc đại số cực kỳ lớn. **Ví dụ**, khi ta phân tích cấu trúc mấy đại số nhỏ như `10 = 2 x 5` hay `4 = 2 x 2` nó khá đơn giản. Nhưng với số cực lớn như `9e+52` hay các số cấp trăm tỷ, thì lúc đó ko thể áp dụng phân tích bằng cách đoán mò được. Ta cần phải hiểu và biết cách phân tích cấu trúc có hệ thống và logic hơn nhằm tiết kiệm thời gian và công sức.
+
+Đầu tiên là chia lấy dư (modulo) với phép nhỏ nhất, ta cần phải dùng lần lượt các phép như `2,3,4,5,...,N` để chia lấy dư với giá trị. **Ví dụ** cho số $$\large4000$$ bây giờ ta thấy $$\large4000 \text{ mod } 2 = 0_{10}$$ vậy giá trị $$\large4000$$ chia hết cho 2. Tiếp theo, ta lấy giá trị bị chia chia tiếp cho 2, thành $$\large4000 \div 2 = 2000_{10}$$, và $$\large2000 \text{ mod } 2 = 0_{10}$$ và nó vẫn chia hết cho 2
+
+Tiếp theo, khi đã biết nó chia hết cho 2 với phép chia lấy dư (suy ra thỏa mãn), ta tiến hành lấy giá trị chia và giá trị kết quả của phép $$\large4000 \div 2 = 2000_{10}$$ đem đi nhân lại, suy ra ta có $$\large\boxed{4000 = 2000 \times 2}$$
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
