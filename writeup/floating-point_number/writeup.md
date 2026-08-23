@@ -2848,7 +2848,18 @@ $$
 
 </div>
 
-tuy nhiên ta thấy $$\large2.5e+21 \text{ mod } 2 = 0_{10}$$, kết quả chia lấy dư là `0` nó chia hết cho `2`, mà nếu $$\large2.5e+21 \times 2 = 5e+21 \text{ mod } 2 = 0_{10}$$ thì nó vẫn chia hết cho `2`. Ta thấy `2.5` với riêng lẻ chia cho `2` nó dư `0.5` nhưng với `2.5e+21` thì nhờ vào số mũ làm thay đổi giá trị rất lớn và nó khác hoàn toàn nên chia hết cho `2`. Vậy nên nếu phép giá trị đã phân tích chia hết cho `2` thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
+<details>
+	<summary><b>[Chi tiết]</b> Rõ hơn về phép toán phân tích cấu trúc đại số</summary>
+
+---
+
+<sub>--đã hết phần giải thích--</sub>
+
+---
+
+</details>
+
+tuy nhiên ta thấy $$\large2.5e+21 \text{ mod } 2 = 0_{10}$$, kết quả chia lấy dư là `0` nó chia hết cho `2`, mà nếu $$\large(2.5e+21) \times 2 = (5e+21) \text{ mod } 2 = 0_{10}$$ thì nó vẫn chia hết cho `2`. Ta thấy `2.5` với riêng lẻ chia cho `2` nó dư `0.5` nhưng với `2.5e+21` thì nhờ vào số mũ làm thay đổi giá trị rất lớn và nó khác hoàn toàn nên chia hết cho `2`. Vậy nên nếu phép giá trị đã phân tích chia hết cho `2` thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
 
 <sub>--đã hết phần giải thích--</sub>
 
