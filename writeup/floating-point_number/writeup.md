@@ -2849,7 +2849,7 @@ $$
 </div>
 
 <details>
-	<summary><b>[Chi tiết]</b> Rõ hơn về phép toán phân tích cấu trúc đại số</summary>
+	<summary><b>[Chi tiết]</b> Rõ hơn về phép toán nhân tố thừa số</summary>
 
 ---
 
@@ -2857,7 +2857,29 @@ Với cách này khắc phục được vấn đề phân tích cấu trúc đ�
 
 Đầu tiên là chia lấy dư (modulo) với phép nhỏ nhất, ta cần phải dùng lần lượt các phép như `2,3,4,5,...,N` để chia lấy dư với giá trị. **Ví dụ** cho số $$\large4000$$ bây giờ ta thấy $$\large4000 \text{ mod } 2 = 0_{10}$$ vậy giá trị $$\large4000$$ chia hết cho 2. Tiếp theo, ta lấy giá trị bị chia chia tiếp cho 2, thành $$\large4000 \div 2 = 2000_{10}$$, và $$\large2000 \text{ mod } 2 = 0_{10}$$ và nó vẫn chia hết cho 2
 
-Tiếp theo, khi đã biết nó chia hết cho 2 với phép chia lấy dư (suy ra thỏa mãn), ta tiến hành lấy giá trị chia và giá trị kết quả của phép $$\large4000 \div 2 = 2000_{10}$$ đem đi nhân lại, suy ra ta có $$\large\boxed{4000 = 2000 \times 2}$$
+Tiếp theo, khi đã biết nó chia hết cho 2 với phép chia lấy dư (suy ra thỏa mãn), ta tiến hành lấy giá trị chia và giá trị kết quả của phép $$\large4000 \div 2 = 2000_{10}$$ đem đi nhân lại, suy ra ta có $$\large\boxed{4000 = 2000 \times 2}$$. Nghe qua thì cũng logic, nhưng kết quả này chỉ là phép kiểm chứng rằng phép chia được thực hiện chính xác. Chưa phải bước cần thiết để suy ra chính xác, để nhân tố thừa số, ta cần các bước nữa
+
+<details>
+	<summary><b>[Câu hỏi]</b> Tại sao lại phải dùng phép kiểm chứng rằng phép chia được thực hiện chính xác?</summary>
+
+---
+
+<sub>--Đã hết phần giải thích--</sub>
+
+---
+
+</details>
+
+<details>
+	<summary><b>[Câu hỏi]</b> Tại sao có thể dùng phép kiểm chứng phép chia thực hiện chính xác để nhân tố số 5e+21 và có thể suy ra là số biễu diễn nhị phân hữu hạn?</summary>
+
+---
+
+<sub>--Đã hết phần giải thích--</sub>
+
+---
+
+</details>
 
 <sub>--đã hết phần giải thích--</sub>
 
