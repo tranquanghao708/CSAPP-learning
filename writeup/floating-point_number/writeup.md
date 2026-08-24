@@ -2891,9 +2891,11 @@ Nếu N % 7 == 0  ->  7 là factor
 <p align="center">
 <table>
 <tr>
+<td align="center">
 <kbd>
 	<image alt="tính số modulo" src="image/image29.png" width="680"/>
 </kdb>
+</td>
 </tr>
 </table>
 </p>
