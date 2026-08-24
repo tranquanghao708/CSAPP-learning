@@ -2886,6 +2886,12 @@ Nếu N % 7 == 0  ->  7 là factor
 
 **Tại sao phải làm bước này?:** Vì nó cực kỳ rẻ. Chỉ tốn vài chục phép chia (máy tính làm trong tích tắc). Nhiều số trong thực tế có factor nhỏ (đặc biệt là các số không được tạo cẩn thận). Nếu bỏ qua bước này mà nhảy thẳng sang Pollard's Rho thì vẫn chạy được, nhưng hơi lãng phí thời gian nếu số đó may mắn có factor nhỏ.
 
+**Cho ví dụ:** ta cho số `N = 501349247128579388923`, vậy ta có :
+
+![tính số modulo](image/image29.png)
+
+Ta thấy như trong ảnh, khi thực hiện phép tính chia lấy dư nó luôn có dư đi từ giá trị lớn dần lên, vậy 30 số nguyên tố nhỏ nhất ko chia hết cho gía trị `N` ở trên. Ta tiến hành đi sang bước tiếp theo
+
 <details>
 	<summary><b>[Câu hỏi]</b> Tại sao có thể dùng phép kiểm chứng phép chia thực hiện chính xác để nhân tố số 5e+21 và có thể suy ra là số biễu diễn nhị phân hữu hạn?</summary>
 
