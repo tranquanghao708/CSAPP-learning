@@ -2870,8 +2870,10 @@ Tiếp theo, khi đã biết nó chia hết cho 2 với phép chia lấy dư (su
 
 </details>
 
+Đầu tiên, là kiểm tra nhanh các factor siêu nhỏ chỉ thử chia cho vài chục số nguyên tố nhỏ nhất `(2, 3, 5, 7, 11…)`. Nếu có thì lấy luôn. Nếu không có thì bỏ qua.
+
 <details>
-	<summary><b>[Câu hỏi]</b> Tại sao có thể dùng phép kiểm chứng phép chia thực hiện chính xác để nhân tố số 5e+21 và có thể suy ra là số biễu diễn nhị phân hữu hạn?</summary>
+	<summary><b>[Câu hỏi]</b> Tại sao có thể dùng phép kiểm chứng phép chia thực hiện chính xác để nhân tố số <code>5e+21</code> và có thể suy ra là số biễu diễn nhị phân hữu hạn?</summary>
 
 ---
 
