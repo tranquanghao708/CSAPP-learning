@@ -2870,7 +2870,7 @@ Tiếp theo, khi đã biết nó chia hết cho 2 với phép chia lấy dư (su
 
 </details>
 
-bước đầu tiên, là kiểm tra nhanh các factor siêu nhỏ chỉ thử chia cho vài chục số nguyên tố nhỏ nhất `(2, 3, 5, 7, 11…)`. Nếu có thì lấy luôn. Nếu không có thì bỏ qua. Trước khi dùng những thuật toán phức tạp (Pollard's Rho, ECM…), người ta luôn kiểm tra xem số $  N  $ có chia hết cho các số nguyên tố siêu nhỏ hay không. Các số nguyên tố cực nhỏ thường là `2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37;...` (thường chỉ cần khoảng 20–50 số đầu tiên là đủ).
+bước đầu tiên, là kiểm tra nhanh các factor siêu nhỏ chỉ thử chia cho vài chục số nguyên tố nhỏ nhất `(2, 3, 5, 7, 11…)`. Nếu có thì lấy luôn. Nếu không có thì bỏ qua. Trước khi dùng những thuật toán phức tạp (Pollard's Rho, ECM…), người ta luôn kiểm tra xem số N có chia hết cho các số nguyên tố siêu nhỏ hay không. Các số nguyên tố cực nhỏ thường là `2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37;...` (thường chỉ cần khoảng 20–50 số đầu tiên là đủ).
 
 <details>
 	<summary><b>[Câu hỏi]</b> Tại sao có thể dùng phép kiểm chứng phép chia thực hiện chính xác để nhân tố số 5e+21 và có thể suy ra là số biễu diễn nhị phân hữu hạn?</summary>
