@@ -1627,7 +1627,7 @@ $$
 
 <kbd>
 
-<img src="image/image27.png" alt="định lý chương 3.1" width="680"/>
+<img src="image/image27.png" alt="định lý chương 3.1" width="380"/>
 
 </kbd>
 
