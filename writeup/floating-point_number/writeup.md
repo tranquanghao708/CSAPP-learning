@@ -152,7 +152,9 @@
 
 ## 1.Tổng quan về IEEE 754.
 
-![alt text](image/image1.png)
+<p align="center">
+	<image alt="alt text" src="image/image1.png" width="680"/>
+</p>
 
 > không phải CS:APP, tham khảo từ cuốn kiến trúc máy tính vì tính dễ hiểu về formula
 
@@ -173,7 +175,9 @@ b : là độ lệch, viết tắt bias
 
 ### 1.1.Chuẩn hóa số thực (normalized)
 
-![alt text](image/image2.png)
+<p align="center">
+	<image alt="alt text" src="image/image2.png" width="680"/>
+</p>
 
 > Trích từ CS:APP
 
@@ -226,7 +230,9 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 
 ### 1.2.Khử chuẩn hóa số thực (Denormalized)
 
-![alt text](image/image3.png)
+<p align="center">
+	<image alt="alt text" src="image/image3.png" width="680"/>
+</p>
 
 > trích từ CS:APP
 
@@ -262,7 +268,9 @@ thì đây không phải là pattern $$\large1.0000000000_{2}\times2^{-127}$$ m�
 
 ### 1.3.Vô hạn (infinity)
 
-![alt text](image/image4.png)
+<p align="center">
+	<image alt="alt text" src="image/image4.png" width="680"/>
+</p>
 
 > Trích từ CS:APP
 
@@ -314,7 +322,9 @@ int main(void){
 
 khi compiled ra ta thấy compiler nó cảnh baó với info `warning: floating constant exceeds range of ‘float’ [-Woverflow]` đó là chúng ta cần test, bây giờ chạy thử :
 
-![alt text](image/image5.png)
+<p align="center">
+	<image alt="alt text" src="image/image5.png" width="680"/>
+</p>
 
 ta thấy hiện `inf` nghĩa là dương vô cực $$\large+\infty$$
 
@@ -333,7 +343,9 @@ ta thấy hiện `inf` nghĩa là dương vô cực $$\large+\infty$$
 
 #### 1.4.1.Quiet NaN (qNaN)
 
-![alt text](image/image6.png)
+<p align="center">
+	<image alt="alt text" src="image/image6.png" width="680"/>
+</p>
 
 > trích từ CS:APP
 
@@ -354,7 +366,9 @@ Nghĩa là Exponent phải là tòan bộ bit là một và Fraction phải có 
 
 NaN có tính chất đặc biệt là **không bằng bất kỳ giá trị nào kể cả chính nó**, trong dãy fraction phần bit có trọng số cao nhất của dãy bit fraction là `Quiet bit` minh họa với 32bit(float) :
 
-![alt text](image/image20.png)
+<p align="center">
+	<image alt="alt text" src="image/image20.png" width="680"/>
+</p>
 
 Trong đó QuietBit là phần có thể là `0` hoặc `1`, khi quiet bit là `1` thì đó gọi là Quiet NaN là cái mà chúng ta đang nói ở chương này, còn khi QuietBit là `0` thì đó gọi là Signaling NaN (sNaN), là cái mà chúng ta sẽ nói ở chương [1.4.2.Signaling NaN (sNaN)](#142signaling-nan-snan) tiếp theo
 
@@ -392,7 +406,9 @@ int main(void){
 
 > gcc -o Double_NaN Double_NaN.c
 
-![alt text](image/image7.png)
+<p align="center">
+	<image alt="alt text" src="image/image7.png" width="680"/>
+</p>
 
 **Vì sao nó lại ra 0?:** Theo chuẩn IEEE 754, mọi phép so sánh bằng (==) với NaN đều trả về false, kể cả khi so sánh chính nó. `0` và `1` được xem làm gía trị boolean true false trong việc này. Ở đây so sánh `x == x` vốn dĩ x lại là NaN nên giá trị là `False = 0`. Điều này cũng như vậy với phép so sánh khác như lớn hơn, bé hơn, lớn hơn hoặc bằng và bé hơn hoặc bằng trừ các hàm chuyên biệt như `isnan()`
 
@@ -445,7 +461,9 @@ int main(void){
 }
 ```
 
-![alt text](image/image21.png)
+<p align="center">
+	<image alt="alt text" src="image/image21.png" width="680"/>
+</p>
 
 Khác với NAN (thường là Quiet NaN), ngôn ngữ C không cung cấp sẵn một hằng Signaling NaN. Muốn tạo sNaN, lập trình viên phải xây dựng trực tiếp mẫu bit IEEE754 (bit pattern) bằng các kỹ thuật như memcpy hoặc union. Tuy nhiên, trên nhiều hệ thống, sNaN sẽ nhanh chóng được phần cứng chuyển thành Quiet NaN khi tham gia phép toán.
 
@@ -501,7 +519,9 @@ int main(void){
 
 > gcc -o zero zero.c
 
-![alt text](image/image8.png)
+<p align="center">
+	<image alt="alt text" src="image/image8.png" width="680"/>
+</p>
 
 ta thấy khi runtime program, nó trả SIGFPE vậy lỗi này không phải SIGSEGV (truy cập vaddr không hợp lệ) **vậy nó là gì?**, tuy nó là có tên gọi là Floating-Pointing (FP) số thực dấu phẩy động nhưng thực chất lỗi này đại diện cho tất cả phép toán không phù hợp kể cả các lỗi tràn số (overflow) nghiêm trọng hoặc dùng phép tính như chia cho 0, căn bậc hai của một số âm mà không dùng thư viện số phức hay kết quả tính toán số thực không xác định. Ta cần sửa lại đoạn C thành:
 
@@ -517,7 +537,9 @@ int main(void){
 }
 ```
 
-![alt text](image/image9.png)
+<p align="center">
+	<image alt="alt text" src="image/image9.png" width="680"/>
+</p>
 
 Đây là kết quả chính xác của phép $$\large x -> 0^{-} = -\infty$$ (tiến tới 0 từ phía âm) và $$\large x -> 0^{+} = +\infty$$ (tiến tới 0 từ phía dương) và $$\large\frac{1}{-0} = -\infty$$, $$\large\frac{1}{+0} = +\infty$$
 
@@ -544,7 +566,9 @@ Trong C, các hàm như scanf có thể đọc các chỉ thị nan, infinity kh
 
 - Là trường lưu các bit phía sau dấu chấm của số nhị phân sau khi đã chuẩn hóa số thực theo dạng chuẩn hóa $$\large1.xxxxx\times2^{N}$$:
 
-![alt text](image/image0.png)
+<p align="center">
+	<image alt="alt text" src="image/image0.png" width="680"/>
+</p>
 
 Trường Fraction quyết định precision (độ chính xác) của số thực. IEEE 754 càng dành nhiều bit cho trường Fraction thì càng biểu diễn được nhiều chữ số có nghĩa hơn. Lúc này, độ chính xác vì thế mà tăng. 
 
@@ -753,7 +777,9 @@ IEEE 754 quy định các pattern phổ biến như bảng
 
 > số thực nhị phân vô hạn
 
-![alt text](image/image10.png)
+<p align="center">
+	<image alt="alt text" src="image/image10.png" width="680"/>
+</p>
 
 > trích từ : [Tin học đại cương bách khoa hà nội](https://www.youtube.com/watch?v=ITpspAmKpCk&pp=ygUkc-G7kSB04buxYyBk4bqldSBwaOG6qXkgxJHhu5luZyBJRWVl)
 
@@ -1255,7 +1281,9 @@ int main(void)
 
 > gcc -o float_rounding float_rounding.c
 
-![alt text](image/image11.png)
+<p align="center">
+	<image alt="alt text" src="image/image11.png" width="680"/>
+</p>
 
 ta thấy số thực nó đã bị làm tròn ở đây khá hỗn loạn nên cũng là lý do x($$\large0.1_{10} + 0.2_{10}$$) $$\large\neq$$ 0.3, chỉ có thể biểu diễn **xấp xỉ** với trường hợp này chứ không thể dùng **tuyệt đối** như `==`
 
@@ -1316,7 +1344,9 @@ int main(void){
 
 > gcc -o dump_floating_point_fraction dump_floating_point_fraction.c
 
-![alt text](image/image12.png)
+<p align="center">
+	<image alt="alt text" src="image/image12.png" width="680"/>
+</p>
 
 Ta thấy khi gán vào x là 1.50, và ta dump ra nó vẫn đúng số 1.5 nhưng fraction phía sau này là giá trị 0 hết. Chúng ta thử thực hiện phép tính cộng vào xem sao
 
@@ -1330,7 +1360,9 @@ int main(void){
 }
 ```
 
-![alt text](image/image13.png)
+<p align="center">
+	<image alt="alt text" src="image/image13.png" width="680"/>
+</p>
 
 Ta thấy nó vẫn là kết quả chính xấc, không có rounding nào ở đây vì nó là số hữu hạn.
 
@@ -1382,7 +1414,9 @@ int main(void){
 
 > gcc -o dump_floating_point_fraction3 dump_floating_point_fraction3.c
 
-![alt text](image/image14.png)
+<p align="center">
+	<image alt="alt text" src="image/image14.png" width="680"/>
+</p>
 
 Ta thấy khi gán vào x là 0.1, và ta dump ra nó đã bị rounding ở fraction phía sau do đây là biểu diễn nhị phân vô hạn. Chúng ta thử thực hiện phép tính cộng vào xem sao
 
@@ -1396,7 +1430,9 @@ int main(void){
 }
 ```
 
-![alt text](image/image15.png)
+<p align="center">
+	<image alt="alt text" src="image/image15.png" width="680"/>
+</p>
 
 Ta thấy nó vẫn bị rounding
 
@@ -1763,7 +1799,9 @@ vẫn như cũ, $$\large\mathrm{ULP} = \boxed{0.25}$$ và ta biết half ULP c�
 
 **Ví dụ** $$\large1.0111_{2}$$ CPU giữ 4 fration trong đó là $$\large0111_{2}$$, bit cuối cùng của fraction là `1`, còn bit đầu tiên của fraction là `0`
 
-![alt text](image/image19.png)
+<p align="center">
+	<image alt="alt text" src="image/image19.png" width="680"/>
+</p>
 
 khi làm tròn, CPU chỉ thực hiện cộng một đơn vị bit vào bit cuối cùng của fraction thôi nghĩa là nó chỉ thực hiện:
 
@@ -1914,7 +1952,9 @@ int main(void){
 
 > gcc -o rounding_tester rounding_tester.c
 
-![alt text](image/image16.png)
+<p align="center">
+	<image alt="alt text" src="image/image16.png" width="680"/>
+</p>
 
 ta thấy đây là fraction sau khi IEEE754 đã hoàn tất quá trình encode và rounding, chứ không phải dãy bit vô hạn ban đầu và ta có `00001100110011001100110011010000000`
 
@@ -2042,11 +2082,15 @@ int main() {
 
 > gcc -o bitwise_manipulation bitwise_manipulation.c
 
-![alt text](image/image17.png)
+<p align="center">
+	<image alt="alt text" src="image/image17.png" width="680"/>
+</p>
 
 từ đoạn mã ta có sơ đồ biểu diễn logic như sau (để tránh gây hiểu lầm):
 
-![alt text](image/image18.png)
+<p align="center">
+	<image alt="alt text" src="image/image18.png" width="680"/>
+</p>
 
 Vậy nên nó chỉ thao tác đọc ghi v.v. , chứ không ngăn được FPU đã xử lý phần 0.1f
 
@@ -2150,7 +2194,9 @@ int main (void){
 
 > gcc -o floor_ceil floor_ceil.c
 
-![alt text](image/image22.png)
+<p align="center">
+	<image alt="alt text" src="image/image22.png" width="680"/>
+</p>
 
 **Lưu ý:** `floor()` và `ceil()` trả về kiểu dấu phẩy động (double hoặc phiên bản tương ứng như `floorf()` cho `float`), không phải `int`. **Ví dụ** `floor(3.8)` trả về `3.0`, không phải `3`.
 
@@ -2291,7 +2337,9 @@ int main(void){
 
 > gcc -o round_toward_zero round_toward_zero.c -lm
 
-![alt text](image/image23.png)
+<p align="center">
+	<image alt="alt text" src="image/image23.png" width="680"/>
+</p>
 
 ta thấy `0.09999999999999999167` và `7.47999999999999953814`, đây chính là kết quả được làm tròn bởi `round toward zero`.
 
@@ -2556,7 +2604,9 @@ int main(void){
 
 > gcc -o round_toward_positive_infinity round_toward_positive_infinity.c -lm
 
-![alt text](image/image24.png)
+<p align="center">
+	<image alt="alt text" src="image/image24.png" width="680"/>
+</p>
 
 Ta có chuỗi số `1.00000011920928955079` ta thấy rõ ràng nó đã được làm tròn nhưng vẫn có sự can thiệp của `tie to even` trước khi tới `caculating`, ở phần transmit số thực hữu hạn `1.0f` vào biến a rồi và `0x1.000002p-24f` vào biến b. Ta vẫn chưa biết là sẽ xảy ra rounding hay chưa, nên việc ta cần làm đầu tiên là phân tích và xem gía trị cả hai chuỗi xem nó biễu diễn hữu hạn hay vô hạn bây giờ ta biết `1.0f` là hữu hạn tiếp theo là tính toán giá trị chuỗi số `0x1.000002p-24f`
 
@@ -2808,7 +2858,9 @@ và giá trị nhị phân là $$\large\boxed{00110011100000000000000000000001_{
 
 Ko phải vì CPU ko biết tính được biểu thức trên, hiện tượng như :
 
-![alt text](image/image25.png)
+<p align="center">
+	<image alt="alt text" src="image/image25.png" width="680"/>
+</p>
 
 Đây ko phải là do architecture mà do bash syntax, vì cú pháp `$(())` chủ yếu làm việc với số nguyên **ví dụ** `echo $((1 / 2))` kết quả ra `0` như trên ảnh, ko phải vì $$\large\frac{1}{2} = 0_{10}$$ mà vì bash đang thực hiện integer division, nên $$\large\frac{1}{2} = 0.5_{10}$$ (thấy phần nguyên là `0`) nên bash lấy nó, ko có gì cao siêu
 
@@ -2816,7 +2868,9 @@ Vậy giải pháp, chúng ta dùng `python3`:
 
 > python3
 
-![alt text](image/image26.png)
+<p align="center">
+	<image alt="alt text" src="image/image26.png" width="680"/>
+</p>
 
 và mọi chuyện ổn thỏa
 
