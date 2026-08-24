@@ -2870,7 +2870,27 @@ Tiếp theo, khi đã biết nó chia hết cho 2 với phép chia lấy dư (su
 
 </details>
 
-bước đầu tiên, là kiểm tra nhanh các factor siêu nhỏ chỉ thử chia cho vài chục số nguyên tố nhỏ nhất `(2, 3, 5, 7, 11…)`. Nếu có thì lấy luôn. Nếu không có thì bỏ qua. Trước khi dùng những thuật toán phức tạp (Pollard's Rho, ECM…), người ta luôn kiểm tra xem số N có chia hết cho các số nguyên tố siêu nhỏ hay không. Các số nguyên tố cực nhỏ thường là `2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37;...` (thường chỉ cần khoảng 20–50 số đầu tiên là đủ).
+bước đầu tiên, là kiểm tra nhanh các factor siêu nhỏ chỉ thử chia cho vài chục số nguyên tố nhỏ nhất `(2, 3, 5, 7, 11…)`. Nếu có thì lấy luôn. Nếu không có thì bỏ qua. Trước khi dùng những thuật toán phức tạp (Pollard's Rho, ECM…), người ta luôn kiểm tra xem số N có chia hết cho các số nguyên tố siêu nhỏ hay không. Các số nguyên tố cực nhỏ thường là `2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37;...` (thường chỉ cần khoảng 20–50 số đầu tiên là đủ). Cách làm khá đơn giản chỉ cần chia nó với số nguyên tố cực nhỏ như :
+
+```
+Nếu N % 2 == 0  ->  2 là factor
+Nếu N % 3 == 0  ->  3 là factor
+Nếu N % 5 == 0  ->  5 là factor
+Nếu N % 7 == 0  ->  7 là factor
+...
+```
+
+- Nếu tìm được số nào chia hết : lấy luôn factor đó, rồi chia N cho nó và tiếp tục với phần còn lại.
+
+- Nếu không có số nào chia hết : bỏ qua bước này, chuyển sang bước tiếp theo.
+
+**Tại sao phải làm bước này?:** Vì nó cực kỳ rẻ:
+
+    - Chỉ tốn vài chục phép chia (máy tính làm trong tích tắc).
+
+    - Nhiều số trong thực tế có factor nhỏ (đặc biệt là các số không được tạo cẩn thận).
+
+    - Nếu bỏ qua bước này mà nhảy thẳng sang Pollard's Rho thì vẫn chạy được, nhưng hơi lãng phí thời gian nếu số đó may mắn có factor nhỏ.
 
 <details>
 	<summary><b>[Câu hỏi]</b> Tại sao có thể dùng phép kiểm chứng phép chia thực hiện chính xác để nhân tố số 5e+21 và có thể suy ra là số biễu diễn nhị phân hữu hạn?</summary>
