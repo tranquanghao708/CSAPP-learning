@@ -2888,7 +2888,11 @@ Nếu N % 7 == 0  ->  7 là factor
 
 **Cho ví dụ:** ta cho số `N = 501349247128579388923`, vậy ta có :
 
-![tính số modulo](image/image29.png)
+<p align="center">
+<kbd>
+	<image alt="tính số modulo" src="image/image29.png" width="680"/>
+</kdb>
+</p>
 
 Ta thấy như trong ảnh, khi thực hiện phép tính chia lấy dư nó luôn có dư đi từ giá trị lớn dần lên, vậy 30 số nguyên tố nhỏ nhất ko chia hết cho gía trị `N` ở trên. Ta tiến hành đi sang bước tiếp theo
 
