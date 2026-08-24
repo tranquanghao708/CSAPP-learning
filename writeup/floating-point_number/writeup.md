@@ -1623,22 +1623,29 @@ $$
 **trường hợp 2:** Nếu chỉ muốn biết số thập phân này khi biểu diễn dưới hệ cơ số 2 (nhị phân) là số hữu hạn hay vô hạn, nhưng ko cần lấy nhị phân. Nghĩa là chỉ muốn biết nó là vô hạn hay hữu hạn chứ ko cần phải covert sang hệ nhị phân. Thì ta có hai cách, cách đầu tiên thì tính bảng giá trị như trên ra cũng ổn nhưng thực tế kỹ thuật này nó ko tối ưu hóa thời gian cho công đoạn này, bây giờ ta khám phá tới định lý toán học đã được đề cập tới ở chương [3.1.biểu diễn nhị phân hữu hạn và biểu diễn nhị phân vô hạn](#31biểu-diễn-nhị-phân-hữu-hạn-và-biểu-diễn-nhị-phân-vô-hạn)
 đó là định lý tiêu chuẩn phân số
 
+<p align="center">
+
 <kbd>
 
-<img src="image/image27.png" alt="định lý chương 3.1"/>
+<img src="image/image27.png" alt="định lý chương 3.1" width="680"/>
 
 </kbd>
 
+</p>
 
 > định lý được đề cập tới tại chương 3.1
 
 Ở đây, ta khám phá cách dùng định lý tiêu chuẩn phân số để tối ưu hóa thay vì cứ nhân hai liên tục như :
 
+<p align="center">
+
 <kbd>
 
-<img src="image/image28.png" alt="nhân hai liên tục"/>
+<img src="image/image28.png" alt="nhân hai liên tục" width="680"/>
 
 </kbd>
+
+</p>
 
 và điều này rất bất tiện, tốn times và gây rối lẫn sai nhiều hơn. Thay vào đó ta có cách phù hợp hơn khi làm việc chỉ để nhận biết số hữu hạn và vô hạn chính là dùng phân số. Cách làm đầu tiên ta cần chuyển số thập phân sang dạng phân số tối giản, tiếp theo là phân tích mẫu số và so sánh nếu mẫu số chỉ chứa thừa số nguyên tố $$\large2^{N}\rightarrow\text{hữu hạn}$$ ,nhưng nếu nó còn chứa bất kỳ thừa số nguyên tố nào khác `(3,5,7...)` $$\large\rightarrow\text{vô hạn}$$
 
