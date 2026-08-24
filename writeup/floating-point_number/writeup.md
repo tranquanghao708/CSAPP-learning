@@ -2884,13 +2884,7 @@ Nếu N % 7 == 0  ->  7 là factor
 
 - Nếu không có số nào chia hết : bỏ qua bước này, chuyển sang bước tiếp theo.
 
-**Tại sao phải làm bước này?:** Vì nó cực kỳ rẻ:
-
-    - Chỉ tốn vài chục phép chia (máy tính làm trong tích tắc).
-
-    - Nhiều số trong thực tế có factor nhỏ (đặc biệt là các số không được tạo cẩn thận).
-
-    - Nếu bỏ qua bước này mà nhảy thẳng sang Pollard's Rho thì vẫn chạy được, nhưng hơi lãng phí thời gian nếu số đó may mắn có factor nhỏ.
+**Tại sao phải làm bước này?:** Vì nó cực kỳ rẻ. Chỉ tốn vài chục phép chia (máy tính làm trong tích tắc). Nhiều số trong thực tế có factor nhỏ (đặc biệt là các số không được tạo cẩn thận). Nếu bỏ qua bước này mà nhảy thẳng sang Pollard's Rho thì vẫn chạy được, nhưng hơi lãng phí thời gian nếu số đó may mắn có factor nhỏ.
 
 <details>
 	<summary><b>[Câu hỏi]</b> Tại sao có thể dùng phép kiểm chứng phép chia thực hiện chính xác để nhân tố số 5e+21 và có thể suy ra là số biễu diễn nhị phân hữu hạn?</summary>
