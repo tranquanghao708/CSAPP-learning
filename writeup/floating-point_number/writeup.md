@@ -2612,7 +2612,7 @@ int main(void){
 > gcc -o round_toward_positive_infinity round_toward_positive_infinity.c -lm
 
 <p align="center">
-	<image alt="alt text" src="image/image24.png" width="680"/>
+	<image alt="alt text" src="image/image24.png" width="980"/>
 </p>
 
 Ta có chuỗi số `1.00000011920928955079` ta thấy rõ ràng nó đã được làm tròn nhưng vẫn có sự can thiệp của `tie to even` trước khi tới `caculating`, ở phần transmit số thực hữu hạn `1.0f` vào biến a rồi và `0x1.000002p-24f` vào biến b. Ta vẫn chưa biết là sẽ xảy ra rounding hay chưa, nên việc ta cần làm đầu tiên là phân tích và xem gía trị cả hai chuỗi xem nó biễu diễn hữu hạn hay vô hạn bây giờ ta biết `1.0f` là hữu hạn tiếp theo là tính toán giá trị chuỗi số `0x1.000002p-24f`
