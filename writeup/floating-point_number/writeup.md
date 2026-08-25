@@ -694,7 +694,7 @@ nếu trường hợp độ rộng của chuỗi nhị phân lớn hơn độ r�
 - dạng có độ chính xác đơn tương ứng 32bit và dạng có độ chính xác kép tương ứng 64bit và kép mở rộng tương đương 80bit :
 
 | name                 | Tổng số bit | Exponent | Fraction |  Bias |
-| ------------------- | ---------- | ------- | ------- | ---- |
+| ------------------- | :----------: | :-------: | :-------: | :----: |
 | Single precision    |          32 |        8 |       23 |   127 |
 | Double precision    |          64 |       11 |       52 |  1023 |
 | Quadruple precision |         128 |       15 |      112 | 16383 |
@@ -741,7 +741,7 @@ IEEE 754 quy định các pattern phổ biến như bảng
 <td>
 
 | Bước | Giá trị | x2   | Bit lấy |
-| ---: | ------- | ---- | ------- |
+| :---: | :-------: | :----: | :-------: |
 |    1 | 0.81    | 1.62 | 1       |
 |    2 | 0.62    | 1.24 | 1       |
 |    3 | 0.24    | 0.48 | 0       |
@@ -758,7 +758,7 @@ IEEE 754 quy định các pattern phổ biến như bảng
 <td>
 
 | Bước | Giá trị | x2   | Bit lấy |
-| ---: | ------- | ---- | ------- |
+| :---: | :-------: | :----: | :-------: |
 | 12 | 0.88 | 1.76 | 1 |
 | 13 | 0.76 | 1.52 | 1 |
 | 14 | 0.52 | 1.04 | 1 |
@@ -869,7 +869,7 @@ vậy kết quả là $$\large\boxed{11101.1100111101011100001_{2}}$$ đây chí
 Đầu tiên ta có `11101.1100111101011100001` và ta cần chuyển phần nguyên sang thập phân $$\large11101_{2} = 29_{10}$$, bây giờ ta tiến hành tính toán phần fraction sau dấu chấm cách tính là ta lấy số bit nhân với trọng số lũy thừa số nguyên âm **ví dụ** $$\large1\times2^{-1} + 1\times2^{-2} + 0\times2^{-3} +....+ 0\times2^{-N}$$, ở đây ta thấy giá trị bit `0` luôn ra kết quả là `0` vì thế khi tính tổng nó không thay đổi gì, vậy ta chỉ cần đếm lũy thừa giảm dần và tính toán những bit `1` thôi (trong phần tính toán này phải dùng toán học, không phải nhị phân nên các bit khi tính toán kiểu này là nó có hệ cơ số 10 vì sẽ ra giá trị là hệ thập phân) :
 
 | bit | trọng số | giá trị |
-|-----|----------|---------|
+|:-----:|:----------:|:---------:|
 | 1 | $$\large2^{-1}$$ | 0.5 |
 | 1 | $$\large2^{-2}$$ | 0.25 |
 | 1 | $$\large2^{-5}$$ | 0.03125 |
@@ -922,7 +922,7 @@ $$
 Sau khi có actual exponent ở trên rồi, thì chúng ta mới tính exponent của trọng số bit và mỗi bit trong significand sẽ có trọng số riêng với $$\large1.1011_{2}​\times2^{-126}$$ ta có :
 
 | Bit              | Vị trí |   Trọng số |
-| ---------------- | -----: | ---------: |
+| ---------------- | :-----: | :---------: |
 | hidden bit `1`   |      0 | $$\large2^{-126}$$ |
 | fraction bit `1` |      1 | $$\large2^{-127}$$ |
 | fraction bit `0` |      2 | $$\large2^{-128}$$ |
@@ -960,7 +960,7 @@ $$
 hiểu đơn giản là số mũ nằm trên trọng số của một bit cụ thể. Nó không phải một trường riêng trong IEEE 754, cũng không phải một giá trị được lưu trong Exponent field. Đây chỉ là cách gọi để phân tích toán học. **Ví dụ** cho $$\large1.1011_{2}$$ ta xét :
 
 | Bit | Vị trí | Trọng số | Bit-weight exponent |
-| --- | -----: | -------: | ------------------: |
+| :---: | :-----: | :-------: | :------------------: |
 | `1` |      0 |    $\large2^0$ |     $\large0$ |
 | `1` |      1 | $\large2^{-1}$ |    $\large-1$ |
 | `0` |      2 | $\large2^{-2}$ |    $\large-2$ |
@@ -998,7 +998,7 @@ Subnormal không có hidden bit 1. Vì vậy bit đầu tiên của fraction có
 Với binary32 thì `1 - bias = 1 - 127 = -126` (nó y chang kết quả với cái số thực chuẩn hóa phía trên), do khử chuẩn hóa (denormalized/subnormal) không có hiddenbit và nó là 0 nên ta được $$\large0.1011_{2}\times2^{-126}$$, khai triển ra ta có $$\large(2^{-1} + 2^{-3} + 2^{-4}) \times 2^{-126}$$ và các `bit-weight exponents` của nó là $$\large\boxed{2^{-127} , 2^{-129} , 2^{-130}}$$ . Có thể nhìn trực tiếp với bảng sau:
 
 | Bit | Vị trí trong `0.f` | Trọng số trước nhân $$\large2^{-126}$$ | Bit-weight exponent sau nhân |
-| --- | -----------------: | -----------------------------: | ---------------------------: |
+| :---: | :-----------------: | :-----------------------------: | :---------------------------: |
 | `1` |                  1 |                       $$\large(2^{-1})$$ |                   $$\large(2^{-127})$$ |
 | `0` |                  2 |                       $$\large(2^{-2})$$ |                   $$\large(2^{-128})$$ |
 | `1` |                  3 |                       $$\large(2^{-3})$$ |                   $$\large(2^{-129})$$ |
@@ -1029,7 +1029,7 @@ hay còn gọi là số thực hữu hạn lớn nhất, đối với float 32 b
 đầu tiên như trong chương decode, ta tách các bit ra ở đây chúng ta đã có và tách bit ở bảng trên rồi. Tiếp theo ta tính actual exponent bằng cách chuyển chuỗi nhị phân ở trường exponent sang hệ cơ số 10 $$\large11111110_{2} = 254_{10}$$ bây giờ ta lấy nó đi trừ với bias $$\large254 - 127 = 127$$ vậy actual exponent = $$\large\boxed{127}$$, tiếp theo chúng ta tiến hành tính toán phần trị, đầu tiên là khôi phục hiddenbit ta dịch dấu chấm theo actual exponent nhưng ta thấy nó lớn hơn độ rộng được có ở phần fraction nên chúng ta sẽ thêm padding là 0 để thỏa mãn actual exponent ta có $$\large11111111111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.0_{2}$$ tuy hơi dài nhưng nó đã thỏa mãn actual exponent do đây là số chuẩn hóa nên bit ẩn sẽ thêm 1 là bit ở phần có trọng số cao nhất. Bây giờ chúng ta tiến hành tính toán phần fraction với phép mũ âm ta có:
 
 | bit | trọng số | gía trị |
-|-----|----------|---------|
+|:-----:|:----------:|:---------:|
 | 1 | $$\large2^{-1}$$ | 0.5 |
 | 1 | $$\large2^{-2}$$ | 0.25 |
 | .. | .. | .. |
@@ -1085,7 +1085,7 @@ do `exponent field = 0` nên `hidden bit = 0` (yes sir, vì vốn dĩ khử chu�
 không có gì cao siêu, chỉ là phép tính decode bit fraction ở chương [2.2.5.Áp dụng Sign](#225áp-dụng-sign) . Ở đây, lý dó `-23` là số âm vì do dịch vị trí của bit. Cho bảng sau :
 
 | Vị trí     | Giá trị   |
-| ---------- | --------- |
+| ---------- | :---------: |
 | bit thứ 1  | $$\large2^{-1}$$  |
 | bit thứ 2  | $$\large2^{-2}$$  |
 | bit thứ 3  | $$\large2^{-3}$$  |
@@ -1309,14 +1309,14 @@ Các chế độ của Rounding (làm tròn)
 **Bằng chứng nào để chứng minh nó hữu hạn?:** Là khi số hữu hạn luôn thực hiện phép nhân và fraction có giá trị là 0, chúng ta dùng số gốc để nhân 2 và nếu có phần dư thì lấy phần dư nhân tiếp cho 2 **ví dụ** với số thực $$\large1.25_{10}$$ ta xét bit fraction là $$\large0.25_{10}$$ :
 
 | Bước | Giá trị x2  | Bit | Phần dư |
-| ---- | ----------- | --- | ------- |
+| :----: | :-----------: | :---: | :-------: |
 | 1    | 0.25×2=0.50 | 0   | 0.50    |
 | 2    | 0.50×2=1.00 | 1   | 0       |
 
 Dừng ở bước 2 do phần dư là 0, ta có $$\large0.25_{10} = 0.01_{2}$$ vì bit ở bước 1 và 2 lần lượt là 0 và 1, nên ta có $$\large1.25_{10} = \boxed{1.01_{2}}$$ . Đây là hữu hạn do phần dư là 0 ở bước hai, ta cho thêm **ví dụ** là $$\large0.75_{10}$$ tính fraction trước y nhưu trên :
 
 | Bước | x2          | Bit | Dư   |
-| ---- | ----------- | --- | ---- |
+| :----: | :-----------: | :---: | :----: |
 | 1    | 0.75×2=1.50 | 1   | 0.50 |
 | 2    | 0.50×2=1.00 | 1   | 0    |
 
@@ -1380,7 +1380,7 @@ Ta thấy nó vẫn là kết quả chính xấc, không có rounding nào ở �
 **Biểu diễn nhị phân vô hạn:** là việc biểu diễn nhị phân có độ rộng độ rộng không được giới hạn tới khi bị cắt bởi phần cứng do giới hạn độ rộng độ rộng bên phía phần cứng **ví dụ** $$\large0.1_{2}$$ tính fraction nó với 2:
 
 | Bước | x2      | Bit | Dư  |
-| ---- | ------- | --- | --- |
+| :----: | :-------: | :---: | :---: |
 | 1    | $$\large0.1\rightarrow0.2$$ | 0   | 0.2 |
 | 2    | $$\large0.2\rightarrow0.4$$ | 0   | 0.4 |
 | 3    | $$\large0.4\rightarrow0.8$$ | 0   | 0.8 |
@@ -1465,7 +1465,7 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 <td>
 
 | Bước | Giá trị | x2   | Bit lấy |
-| ---: | ------- | ---- | ------- |
+| :---: | :-------: | :----: | :-------: |
 |    1 | 0.81    | 1.62 | 1       |
 |    2 | 0.62    | 1.24 | 1       |
 |    3 | 0.24    | 0.48 | 0       |
@@ -1482,7 +1482,7 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 <td>
 
 | Bước | Giá trị | x2   | Bit lấy |
-| ---: | ------- | ---- | ------- |
+| :---: | :-------: | :----: | :-------: |
 | 12 | 0.88 | 1.76 | 1 |
 | 13 | 0.76 | 1.52 | 1 |
 | 14 | 0.52 | 1.04 | 1 |
@@ -1580,7 +1580,7 @@ vì vậy : $$\large b_{0} = 0$$, $$\large b_{1} = 1$$, $$\large b_{2} = 0$$, $$
 còn ký hiệu $$\large2^k$$ là trọng số của vị trí bit k trong hệ nhị phân. **Ví dụ:**
 
 | $$\large k$$ | $$\large b_k$$ |    $$\large2^{k}$$ | $$\large b_k2^{k}$$ |
-| --: | ----: | -------: | -------: |
+| :--: | :----: | :-------: | :-------: |
 |   5 |     0 | $$\large2^{5}=32$$ |      0 |
 |   4 |     1 | $$\large2^{4}=16$$ |     16 |
 |   3 |     1 | $$\large2^{3}=8$$ |      8 |
@@ -1725,7 +1725,7 @@ bây giờ so sánh **phần bị cắt với đúng một ngưỡng là một n
 Đây là khái niệm dùng để giải thích vì sao CPU làm tròn bằng cách này, không phải cấu trúc chính của IEEE. Về nghĩa đen là giá trị của 1 đơn vị ở bit cuối cùng ở fraction, đơn giản hơn nó là khoảng cách giữa hai số IEEE 754 có thể biểu diễn được **ví dụ** sau chuẩn hóa ta có tập hợp $$\large(1.00_{2},1.01_{2},1.10_{2},1.11_{2})$$ và các số này lần lượt tương ứng với tập hợp $$\large(1.00_{10},1.25_{10},1.50_{10},1.75_{10})$$ và bây giờ khoảng cách giữa chúng là :
 
 | phép tính | kết quả |
-|-----------|---------|
+|:-----------:|:---------:|
 | 1.25 - 1.00 | 0.25 |
 | 1.50 - 1.25 | 0.25 |
 | 1.75 - 1.50 | 0.25 |
@@ -1749,7 +1749,7 @@ Vậy ULP = 0.25, nếu gặp trường hợp như `một nữa của ULP` thì 
 Ở đây ta tiến hành tính ULP trước tiên phải biết $$\large1.01 = \mathbf{1.25_{10}}$$ và $$\large1.10 = \mathbf{1.50_{10}}$$ :
 
 | phép tính | kết quả |
-|-----------|---------|
+|:-----------:|:---------:|
 | 1.50 - 1.25 | 0.25 |
 
 $\large\mathrm{ULP} = \boxed{0.25}$ vậy bây giờ ta biết $$\large0.25_{10} = \mathbf{0.01_{2}}$$ bây giờ ta lấy nó chia cho hai vì half ULP mà $$\large\frac{0.25}{2} = \mathbf{0.125_{10}}$$ bây giờ ta biết $$\large0.125_{10} = 0.001_{2}$$ bây giờ viết đầy đủ 4bit ta có $$\large0.0010_{2}$$ và nó chính là ngưỡng làm tròn, tiến hành so sánh phần bị cắt với half ULP $$\large0001_{2} < 0010_{2}$$ ta thấy nó nhỏ hơn vậy nó sẽ giữ nguyên $$\large\boxed{1.01_{2}}$$
@@ -1784,7 +1784,7 @@ $\large\mathrm{ULP} = \boxed{0.25}$ vậy bây giờ ta biết $$\large0.25_{10}
 nếu trường hợp số lớn hơn nữa sẽ làm tròn, **ví dụ** $$\large1.010011_{2}$$ và như cũ CPU giữ lại 2 fraction là $$\large1.01_{2}$$ và $$\large1.10_{2}$$ và số bit bị cắt là $$\large0011_{2}$$ bây giờ ta tính ULP:
 
 | phép tính | kết quả |
-|-----------|---------|
+|:-----------:|:---------:|
 | 1.50 - 1.25 | 0.25 |
 
 vẫn như cũ, $$\large\mathrm{ULP} = \boxed{0.25}$$ và ta biết half ULP của này là $$\large0.125_{10} = 0.001_{2}$$ tròn 4bit là $$\large0.0010_{2}$$ vì đó có sẵn ở ví dụ trước. Bây giờ so sánh phần sai số (round error) và nữa khoảng cách giữa hai số biểu diễn được (half ULP) suy ra $$\large0011_{2} > 0.0010_{2}$$ suy ra nó sẽ làm tròn thành $$\large\boxed{1.10}$$
@@ -1866,13 +1866,13 @@ Ta thấy, `G = 0` suy ra `guard bit = 0`, `R = 1` suy ra `round bit = 1`, `S = 
 Round bit là bit thứ hai bị cắt, nó nằm phía sau Guard bit. Nó có ý nghĩa nếu guardbit là 1, nếu guardbit (G) là 0 thì biết chắc chắn là `x < half ULP` rồi không cần phải soi round và sticky, nhưng nếu guard là 1 thì bây giờ mới soi round. Ở đây, cũng như ví dụ trên ta có :
 
 | Fraction | G | R | S |
-|----------|---|---|---|
+|:----------:|:---:|:---:|:---:|
 | 1.01	   | 0 | 1 | 101 |
 
 Cái này chắc chắn là `x < half ULP` vì `G = 0` nên round sẽ không có ý nghĩa, nhưng giả sử ta cho `G = 1` như :
 
 | Fraction | G | R | S |
-|----------|---|---|---|
+|:----------:|:---:|:---:|:---:|
 | 1.01	   | 1 | 1 | 101 |
 
 thì lúc này `G = 1` nó sẽ soi thêm R vì lúc này round mới thực sự có ý nghĩa, nếu `G = 1 và R = 1` thì nó chắc chắn sẽ lớn hơn half ULP `x > half ULP` lúc này sẽ làm tròn lên
@@ -1887,19 +1887,19 @@ thì lúc này `G = 1` nó sẽ soi thêm R vì lúc này round mới thực s�
 Sticky bit là bit thứ 3, nó đứng ngay sau round bit cái đặc biệt của sticky bit này không phải là một bit cụ thể bị cắt, mà là kết quả OR với tất cả các bit còn lại phía sau roundbit, nó luôn soi là sau roundbit còn bit nào nữa không, nếu không còn bit nào nữa thì `S = 0` còn nếu có thì `S = 1`. Đó là lý do mà sticky bit (S) là bit 0 hoặc bit 1 dù sau nó là hàng chục hay hàng trăm bit. Ví dụ ở trên là ;
 
 | Fraction | G | R | S |
-|----------|---|---|---|
+|:----------:|:---:|:---:|:---:|
 | 1.01	   | 1 | 1 | 101 |
 
 Ở đây ta thấy trường sticky bit có chuỗi nhị phân là `101` vậy nên sticky sẽ có bit 1 `S = 1`. Ví dụ khác :
 
 | Fraction | G | R | S |
-|----------|---|---|---|
+|:----------:|:---:|:---:|:---:|
 | 1.01	   | 1 | 1 | 000 |
 
 Ở đây ta thấy trường sticky bit có chuỗi nhị phân là `000` vậy nên sticky sẽ có bit 1 `S = 0` (do không có bit nào là 1). Ví dụ khác :
 
 | Fraction | G | R | S |
-|----------|---|---|---|
+|:----------:|:---:|:---:|:---:|
 | 1.01	   | 1 | 1 | 010 |
 
 Ở đây ta thấy trường sticky bit có chuỗi nhị phân là `010` vậy nên sticky sẽ có bit 1 `S = 1` (do có bit giữa là 1). Từ 3 ví dụ, ta thấy hễ một binary strings sau trường roundbit có một bit 1 thì `S = 1` còn nếu không có bit 1 nào thì `S = 0`
@@ -1981,7 +1981,7 @@ ta thấy đây là fraction sau khi IEEE754 đã hoàn tất quá trình encode
 Để có thể xét, ta cần phải tính thủ công bằng tay. Encode số `0.1` theo chương [2.1.Encode](#21encode) thành nhị phân sao cho có phần bit bị cắt vượt quá 23 bit fraction. Lúc đó ta mới có thể thực hiện xét bit, rounding hay tính half ULP v.v. cũng hợp lệ vì ta đang dựng lại cách phần cứng thực sự tính toán số thực. Nhìn `0.1` ta biết ngay `sign = 0`, phần nguyên là 0 luôn bây giờ tính phần thập phân sang bit
 
 | số  | nhân hai | bit lấy |
-|-----|----------|---------|
+|:-----:|:----------:|:---------:|
 | 0.1 | 0.2      | 0       |
 | 0.2 | 0.4      | 0       |
 | 0.4 | 0.8      | 0       |
@@ -2126,7 +2126,7 @@ Thực tế, FPU không đi tìm Guard, Round, Sticky trong dữ liệu đã lư
 `Round toward Zero (làm tròn về 0 hay còn gọi là truncation)` là chế độ làm tròn trong đó phần lẻ bị loại bỏ, khiến kết quả luôn tiến gần về giá trị 0. Chế độ này không xét khoảng cách giữa hai số biểu diễn được như Round to Nearest, Ties to Even, mà chỉ đơn giản cắt bỏ phần không thể biểu diễn. **Ví dụ** :
 
 | Giá trị | Kết quả |
-|---------|---------|
+|:---------:|:---------:|
 | 3.9     | 3       |
 | 3.1     | 3       |
 | -3.9    | -3      |
@@ -2152,7 +2152,7 @@ Thực tế, FPU không đi tìm Guard, Round, Sticky trong dữ liệu đã lư
 Floor (hàm sàn) luôn làm tròn về phía âm vô cực ($$\large-\infty$$) và có ký hiệu ($$\large\lfloor x \rfloor$$) định nghĩa của nó là số nguyên lớn nhất nhỏ hơn hoặc bằng x. **Ví dụ:** 
 
 |  (x) | $$\large\lfloor x \rfloor$$ |
-| ---: | -------: |
+| :---: | :-------: |
 |  3.8 |        3 |
 |  3.0 |        3 |
 |  3.1 |        3 |
@@ -2164,7 +2164,7 @@ Floor (hàm sàn) luôn làm tròn về phía âm vô cực ($$\large-\infty$$) 
 Ceil (hàm trần) luôn làm tròn về phía dương vô cực ($$\large+\infty$$) và có ký hiệu $$\large\lceil x \rceil$$ định nghĩa của nó là số nguyên nhỏ nhất lớn hơn hoặc bằng x. **ví dụ:**
 
 |  (x) | Ceil(x) |
-| ---: | ------: |
+| :---: | :------: |
 |  3.1 |       4 |
 |  3.8 |       4 |
 |  3.0 |       3 |
@@ -2234,14 +2234,14 @@ int main (void){
 Ta cho bảng so sánh như sau:
 
 | Giá trị | Toward Zero | Floor | Ceil |
-| ------- | ----------: | ----: | ---: |
+| :-------: | :----------: | :----: | :---: |
 | 3.9     |           3 |     3 |    4 |
 | -3.9    |          -3 |    -4 |   -3 |
 
 đối với số âm thì sự khác biệt khá rõ, floor luôn đi về phía âm vô cực ($$\large-\infty$$) còn `round toward zero` luôn đi về 0. **Ví dụ** ta cho `-3.8` thì :
 
 | Chế độ            | Kết quả |
-| ----------------- | ------: |
+| :-----------------: | :------: |
 | Floor             |      -4 |
 | Ceil              |      -3 |
 | Round toward Zero |      -3 |
@@ -2389,7 +2389,7 @@ Còn về trường hợp dùng định dạng chuỗi chuyển sang số thực
 biết sign và phần nguyên có bit là `0` vậy nên ta chỉ cần nhân đôi thôi 
 
 | phần số thực | nhân 2 | dư | giá trị bit |
-|-----|--------|----|-------------|
+|:-----:|:--------:|:----:|:-------------:|
 | 0.09..167 | 0.2 | 0.2 | 0 |
 | 0.2 | 0.4 | 0.4 | 0 |
 | 0.4 | 0.8 | 0.8 | 0 |
@@ -2407,7 +2407,7 @@ suy ra `actual exponent = -4` tính trường exponent là `exponent field = -4 
 Còn giá trị `7.47999999999999953814`, đầu tiên ta có `sign = 0` và $$\large7_{10} = 111_{2}$$ và tính fraction :
 
 | phần số thực | nhân 2 | dư | giá trị bit |
-|-----|--------|----|-------------|
+|:-----:|:--------:|:----:|:-------------:|
 | 0.4799..953814 | 0.96 | 0.96 | 0 |
 | 0.96 | 1.92 | 0.92 | 1 |
 | 0.92 | 1.84 | 0.84 | 1 |
@@ -2452,7 +2452,7 @@ nhưng về kỹ thuật chúng ta không thể kết luận chính xác tuyệt
 Trong trường hợp phần bị cắt nhỏ hơn ví dụ 0.5 ULP thì kết quả của `Round to Nearest, Ties to Even` và `Round Toward Zero` hoàn toàn có thể giống hệt nhau. Nhưng không đồng nghĩa hai thuật toán của chung tương đồng nhau, điều này khá hiếm có thể xảy ra ta có bảng so sánh :
 
 | discarded part | Round-to-nearest      | Toward zero |
-| -------------- | --------------------- | ----------- |
+| :--------------: | :---------------------: | :-----------: |
 | <0.5 ULP       | giữ nguyên            | giữ nguyên  |
 | =0.5 ULP       | even                  | giữ nguyên  |
 | >0.5 ULP       | tăng/giảm tới nearest | giữ nguyên  |
@@ -2487,7 +2487,7 @@ Nhưng với số âm điều này rất dễ bị nhầm trong quy tắc làm t
 Round toward $$\large+\infty$$ phải chọn giá trị lớn hơn, tức nằm về phía bên phải $$\large\boxed{-1.001_{2}}$$. Nó không phải là làm cho trị tuyệt đối lớn hơn. Ta có bảng so sánh và phép so sánh trực quan như : 
 
 | Giá trị chính xác | Round toward +∞ |
-| ----------------: | --------------: |
+| :----------------: | :--------------: |
 |       `1.001101₂` |        `1.010₂` |
 |      `-1.001101₂` |       `-1.001₂` |
 
@@ -2814,7 +2814,7 @@ Ta xét $$\large1+2^{-23}$$ và ta đã biết $$\large2^{-1} = \frac{1}{2^{1}} 
 **Vì sao nó lại liên quan tới 32bit?:** với 32bit (Float) biểu diễn cấu trúc nhị phân của số thực có dạng:
 
 | sign | exponent | fraction |
-|-----|----------|----------|
+|:-----:|:----------:|:----------:|
 |  1  |    8     |    23    |
 
 Điều quan trọng là `fraction = 23 bit` , Với một số normalized binary32, significand được hiểu là `1.fraction` nghĩa là theo chuẩn hóa thì `hiddenbit = 1` và có 23bit fraction ví dụ binary32 có `fraction = 00000000000000000000001` thì nó sẽ là $$\large\boxed{\mathrm{1}.00000000000000000000001_{2}}$$ và giá trị này đúng y hệt cái ta đang có ở biểu thức $$\large1+2^{-23}$$
@@ -2833,7 +2833,7 @@ Bây giờ tới phần ghép thêm $$\large2^{-24}$$, như đã nói phần gí
 Bây giờ ta chuyển chuỗi `0x1.000002p-24f` sang binary, ta vừa chuyển nó thành giá trị ở hệ cơ số 10 bây giờ là hệ cơ số 2. Bây giờ ta biết hiddenbit là 1, fraction là $$\large00000000000000000000001_{2}$$ và số mũ là `-24` ở phần `p-24` kiểu float (32bit). Cách tính chuỗi `0x1.000002p-24f` có ở phần details trên. Bây giờ tính trường số mũ (exponent field) bằng cách lấy `-24` cộng với bias, ta biết `bias = 127` trong hệ 32bits và `-24 + 127 = 103` và chuyển $$\large103_{10} = 01100111_{2}$$ ta có:
 
 | sign | exponent | fraction |
-|-----|----------|----------|
+|:-----:|:----------:|:----------:|
 |  0  |    01100111     |    00000000000000000000001    |
 
 ghép lại thành $$\large\boxed{00110011100000000000000000000001_{2}}$$. Đây là nhị phân của chuỗi `0x1.000002p-24f`
@@ -2990,7 +2990,7 @@ tuy nhiên ta thấy $$\large2.5e+21 \text{ mod } 2 = 0_{10}$$, kết quả chia
 từ 4 quy tắc làm tròn trên, trước hết ta có bảng so sánh :
 
 | Rounding mode             | Ý nghĩa               |
-| ------------------------- | --------------------- |
+| :-------------------------: | :---------------------: |
 | **toward +∞**             | đi về `+∞`            |
 | **toward −∞**             | đi về `−∞`            |
 | **toward 0**              | đi về `0`             |
