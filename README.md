@@ -29,6 +29,8 @@ Ngoài phần lý thuyết, tôi sẽ sử dụng các ví dụ thực tế, ch�
 >
 > **NÊN:** Mọi writeup mà tôi viết trong repo này ko vì chép sách, có những khái niệm ngoài sách. Mục đích của tôi viết các bản writeup nhằm để **Tránh mơ hồ kiến thức** nên nó rất kỹ và rất dài, hoàn toàn ko dành cho việc học nước rút mà ko dành nhiều thời gian để nghiên cứu
 
+*Nếu bạn chọn repo này để làm tài liệu học hỏi, nghĩa là bạn đã chuẩn bị tinh thần dám bước vào vùng research sâu, nơi đối mặt với câu hỏi còn nhiều hơn chủ đề trọng tâm và là nơi dành cực nhiều thời gian cho một chủ đề, dám đối mặt với những thứ khô khan và dám đối mặt với một dãy văn bản dài ngoặc, khó có thể đọc nếu chưa hiểu hoặc chưa được học trước ở nguồn khác trước đó*
+
 # Cuốn sách này dạy gì?
 
 Theo quan điểm của tôi, CS:APP chủ yếu dạy tư duy hệ thống.
