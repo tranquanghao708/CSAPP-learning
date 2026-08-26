@@ -2982,7 +2982,7 @@ Ta thấy như trong ảnh, khi thực hiện phép tính chia lấy dư nó lu�
 
 </details>
 
-Bước 2 là bước kiểm tra xem $$\large N$$ có phải là số nguyên tố không, trước khi cố gắng phân tích thừa số (factor) của $N$, ta phải hỏi một câu rất quan trọng <code>"$\large N$ có phải là số nguyên tố không?"</code>. Nếu có thì việc phân tích thừa số đã xong luôn:
+Bước 2 là bước kiểm tra xem $$\large N$$ có phải là số nguyên tố không, trước khi cố gắng phân tích thừa số (factor) của $N$, ta phải hỏi một câu rất quan trọng $\large N$ có phải là số nguyên tố không?. Nếu có thì việc phân tích thừa số đã xong luôn:
 
 <sub>--đã hết phần giải thích--</sub>
 
