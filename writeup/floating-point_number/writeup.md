@@ -2949,7 +2949,7 @@ Nếu N % 7 == 0  ->  7 là factor
 
 **Cho ví dụ:** ta cho số $$\large N = 40$$, xét $$\large40 \bmod 2 = 0$$ ta thấy `2` là factor, vậy ta tiếp tục chia nó $$\large40 \div 2 = 20$$ và tiếp tục chia lấy dư $$\large20 \bmod 2 = 0$$ vậy nên ta có $$\large\boxed{40 = 20 \times 2}$$. Tuy nhiên nó vẫn có thể chia lấy dư tiếp với giá trị `20` vậy nên ta xét $$\large20 \div 2 = 10 \bmod 2 = 0$$ và $$\large10 \div 2 = 5 \bmod 2 = 1 (1 \neq 0)$$.
 
-Từ đây ta đếm có bao nhiêu giá trị chia hết cho 2, `40,20,10` có 3 giá trị vậy ta có $$\large2^{3}$$ còn có một giá trị là `5` ko chia hết cho 2, vậy nên ta lấy gía trị ko chia hết này nhân với $$\large2^{3}$$. Vậy ta có, $$\large\boxed{40 = 2^{3} \times 5}$$
+Từ đây ta đếm có bao nhiêu giá trị chia hết cho 2, `40,20,10` có 3 giá trị vậy ta có $$\large2^{3}$$ còn có một giá trị là `5` ko chia hết cho 2, vậy nên ta lấy gía trị ko chia hết này nhân với $$\large2^{3}$$. Vậy ta có, $$\large\boxed{40 = 2^{3} \times 5}$$ . Nhưng với trường hợp này với ví dụ này là số `40` có thể chia hết cho 2, chỉ khi $$\large N\bmod p \neq 0$$ thì mới chuyển sang factor/prime tiếp theo như `3,5,7,...N`
 
 Logic chuẩn của cách này là :
 
@@ -2981,6 +2981,8 @@ Ta thấy như trong ảnh, khi thực hiện phép tính chia lấy dư nó lu�
 ---
 
 </details>
+
+Bước 2 là bước kiểm tra xem $$\large N$$ có phải là số nguyên tố không, trước khi cố gắng phân tích thừa số (factor) của $N$, ta phải hỏi một câu rất quan trọng <code>"$\large N$ có phải là số nguyên tố không?"</code>. Nếu có thì việc phân tích thừa số đã xong luôn:
 
 <sub>--đã hết phần giải thích--</sub>
 
