@@ -2982,7 +2982,9 @@ Ta thấy như trong ảnh, khi thực hiện phép tính chia lấy dư nó lu�
 
 </details>
 
-Bước 2 là bước kiểm tra xem $$\large N$$ có phải là số nguyên tố không, trước khi cố gắng phân tích thừa số (factor) của $N$, ta phải hỏi một câu rất quan trọng $\large N$ có phải là số nguyên tố không?. Nếu có thì việc phân tích thừa số đã xong luôn:
+Bước 2 là bước kiểm tra xem $$\large N$$ có phải là số nguyên tố không, trước khi cố gắng phân tích thừa số (factor) của $N$, ta phải hỏi một câu rất quan trọng $\large N$ có phải là số nguyên tố không?. Nếu có thì việc phân tích thừa số đã xong luôn $$\large N=N$$ (chỉ có một thừa số là chính nó). Không cần chạy bất kỳ thuật toán factor nào nữa.
+
+Nếu không (tức là $$\large N$$ là hợp số) thì mới tiếp tục sang bước tìm thừa số (Pollard's Rho…). Việc kiểm tra này rất quan trọng, vì nếu lỡ $$\large N$$ là nguyên tố mà ta vẫn cố chạy thuật toán factor thì vừa lãng phí thời gian, vừa không có kết quả.
 
 <sub>--đã hết phần giải thích--</sub>
 
@@ -2990,7 +2992,9 @@ Bước 2 là bước kiểm tra xem $$\large N$$ có phải là số nguyên t�
 
 </details>
 
-tuy nhiên ta thấy $$\large2.5e+21 \text{ mod } 2 = 0_{10}$$, kết quả chia lấy dư là `0` nó chia hết cho `2`, mà nếu $$\large(2.5e+21) \times 2 = (5e+21) \text{ mod } 2 = 0_{10}$$ thì nó vẫn chia hết cho `2`. Ta thấy `2.5` với riêng lẻ chia cho `2` nó dư `0.5` nhưng với `2.5e+21` thì nhờ vào số mũ làm thay đổi giá trị rất lớn và nó khác hoàn toàn nên chia hết cho `2`. Vậy nên nếu phép giá trị đã phân tích chia hết cho `2` thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
+tuy nhiên ta thấy $$\large2.5e+21 \text{ mod } 2 = 0_{10}$$, kết quả chia lấy dư là `0` nó chia hết cho `2`, mà nếu $$\large(2.5e+21) \times 2 = (5e+21) \text{ mod } 2 = 0_{10}$$ thì nó vẫn chia hết cho `2`. Ta thấy `2.5` với riêng lẻ chia cho `2` nó dư `0.5` nhưng với `2.5e+21` thì nhờ vào số mũ làm thay đổi giá trị rất lớn và nó khác hoàn toàn nên chia hết cho `2`.
+
+Vậy nên nếu phép giá trị đã phân tích chia hết cho `2` thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
 
 <sub>--đã hết phần giải thích--</sub>
 
