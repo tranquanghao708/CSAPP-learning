@@ -2956,7 +2956,7 @@ Logic chuẩn của cách này là :
 <div align="center">
 
 $$\Large
-N \bmod p = 0 \Rightarrow N \leftarror N/p \Rightarrow \text{ kiểm tra lại } N \bmod p
+N \bmod p = 0 \Rightarrow N \leftarrow N/p \Rightarrow \text{ kiểm tra lại } N \bmod p
 $$
 
 </div>
