@@ -2969,7 +2969,7 @@ ta cho số `N = 501349247128579388923`, vậy ta có :
 	<image alt="tính số modulo" src="image/image29.png" width="680"/>
 </p>
 
-Ta thấy như trong ảnh, khi thực hiện phép tính chia lấy dư nó luôn có dư đi từ giá trị lớn dần lên, vậy 30 số nguyên tố nhỏ nhất ko chia hết cho gía trị `N` ở trên. Ta tiến hành đi sang bước tiếp theo
+Ta thấy như trong ảnh, khi thực hiện phép tính chia lấy dư nó luôn có dư , vậy 30 số nguyên tố nhỏ nhất ko chia hết cho gía trị `N` ở trên. Ta tiến hành đi sang bước tiếp theo
 
 <details>
 	<summary><b>[Câu hỏi]</b> Tại sao có thể dùng phép kiểm chứng phép chia thực hiện chính xác để nhân tố số 5e+21 và có thể suy ra là số biễu diễn nhị phân hữu hạn?</summary>
@@ -2982,9 +2982,15 @@ Ta thấy như trong ảnh, khi thực hiện phép tính chia lấy dư nó lu�
 
 </details>
 
-Bước 2 là bước kiểm tra xem $$\large N$$ có phải là số nguyên tố không, trước khi cố gắng phân tích thừa số (factor) của $N$, ta phải hỏi một câu rất quan trọng $\large N$ có phải là số nguyên tố không?. Nếu có thì việc phân tích thừa số đã xong luôn $$\large N=N$$ (chỉ có một thừa số là chính nó). Không cần chạy bất kỳ thuật toán factor nào nữa.
+Bước 2 là bước kiểm tra xem $$\large N$$ có phải là số nguyên tố không, trước khi cố gắng phân tích thừa số (factor) của $\large N$, ta phải hỏi một câu rất quan trọng $\large N$ có phải là số nguyên tố không?. Nếu có thì việc phân tích thừa số đã xong luôn $$\large N=N$$ (chỉ có một thừa số là chính nó). Không cần chạy bất kỳ thuật toán factor nào nữa.
 
-Nếu không (tức là $$\large N$$ là hợp số) thì mới tiếp tục sang bước tìm thừa số (Pollard's Rho…). Việc kiểm tra này rất quan trọng, vì nếu lỡ $$\large N$$ là nguyên tố mà ta vẫn cố chạy thuật toán factor thì vừa lãng phí thời gian, vừa không có kết quả.
+Nếu không (tức là $$\large N$$ là hợp số) thì mới tiếp tục sang bước tìm thừa số (Pollard's Rho…). Việc kiểm tra này rất quan trọng, vì nếu lỡ $$\large N$$ là nguyên tố mà ta vẫn cố chạy thuật toán factor thì vừa lãng phí thời gian, vừa không có kết quả. Với số nhỏ hay đã biết nó là số nguyên tố thì khá đơn giản 
+
+**ví dụ** cho số `11` và số `11` chính là số nguyên tố, vậy nếu biết số nguyên tố đơn giản là lấy chính nó rồi xong. Biết `11` là số nguyên tố, ta nhân tố như sau $$\large11 = 11 \times 1$$, hết vì $$\large N=N$$ nghĩa là nếu $$\large N$$ là số nguyên tố thì nó luôn là chính nó
+
+> Để kiểm tra nhanh bước này, người ta thường dùng thuật toán Miller–Rabin. Một thuật toán kiểm tra nguyên tố kiểu xác suất và chạy rất nhanh, độ tin cậy khá cao
+
+Với trong trường hợp số $$\large N = 501349247128579388923$$, thì đây là hợp số, ko phải là số nguyên tố. Nên ta mới tiếp tục sang bước 3 (dùng Pollard's Rho để tìm thừa số).
 
 <sub>--đã hết phần giải thích--</sub>
 
