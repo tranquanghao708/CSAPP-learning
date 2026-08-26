@@ -2947,7 +2947,11 @@ Nếu N % 7 == 0  ->  7 là factor
 
 **Tại sao phải làm bước này?:** Vì nó cực kỳ rẻ. Chỉ tốn vài chục phép chia (máy tính làm trong tích tắc). Nhiều số trong thực tế có factor nhỏ (đặc biệt là các số không được tạo cẩn thận). Nếu bỏ qua bước này mà nhảy thẳng sang Pollard's Rho thì vẫn chạy được, nhưng hơi lãng phí thời gian nếu số đó may mắn có factor nhỏ.
 
-**Cho ví dụ:** ta cho số `N = 501349247128579388923`, vậy ta có :
+**Cho ví dụ:** ta cho số $$\largeN = 40$$, xét $$\large40 \text{ mod } 2 = 0$$ ta thấy `2` là factor, vậy ta tiếp tục chia nó $$\large40 \div 2 = 20$$ và tiếp tục chia lấy dư $$\large20 \text{ mod } 2 = 0$$ vậy nên ta có $$\large\boxed{40 = 20 \times 2}$$. Tuy nhiên nó vẫn có thể chia lấy dư tiếp với giá trị `20` vậy nên ta xét $$\large20 \div 2 = 10 \text{ mod } 2 = 0$$ và $$\large10 \div 2 = 5 \text{ mod } 2 = 1 (1 \neq 0)$$.
+
+Từ đây ta đếm có bao nhiêu giá trị chia hết cho 2, `40,20,10` có 3 giá trị vậy ta có $$\large2^{3}$$ còn có một giá trị là `5` ko chia hết cho 2, vậy nên ta lấy gía trị ko chia hết này nhân với $$\large2^{3}$$. Vậy ta có, $$\large\boxed{40 = 2^{3} \times 5}$$
+
+ta cho số `N = 501349247128579388923`, vậy ta có :
 
 <p align="center">
 	<image alt="tính số modulo" src="image/image29.png" width="680"/>
@@ -2987,7 +2991,7 @@ tuy nhiên ta thấy $$\large2.5e+21 \text{ mod } 2 = 0_{10}$$, kết quả chia
 
 ### 3.7.Tác dụng và mức biểu diễn độ chính xác của 5 quy tắc làm tròn, khi nào nên dùng quy tắc nào?
 
-từ 4 quy tắc làm tròn trên, trước hết ta có bảng so sánh :
+từ 5 quy tắc làm tròn trên, trước hết ta có bảng so sánh :
 
 | Rounding mode             | Ý nghĩa               |
 | :-------------------------: | :---------------------: |
