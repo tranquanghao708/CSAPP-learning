@@ -3020,9 +3020,15 @@ $$\Large
 x_{0} = 2
 $$ 
 
+$$\large x_{1} = 2^{2} + 1 = 5$$
+
+$$\large x_{2} = 5^{2} + 1 = 26 \bmod 15 = 11$$
+
+$$\large x_{3} = 11^{2} + 1 = 122 \bmod 15 = 2$$. 
+
 </div>
 
-và tính $$\large x_{1} = 2^{2} + 1 = 5$$, $$\large x_{2} = 5^{2} + 1 = 26 \bmod 15 = 11$$, $$\large x_{3} = 11^{2} + 1 = 122 \bmod 15 = 2$$. Từ đây, ta có :
+Từ đây, ta thấy nó lặp lại vô hạn tuần hoàn như sau, nhưng chưa thấy factor nào hết
 
 <div align="center">
 
