@@ -2931,7 +2931,7 @@ Tiếp theo, khi đã biết nó chia hết cho 2 với phép chia lấy dư (su
 
 </details>
 
-bước đầu tiên, là kiểm tra nhanh các factor siêu nhỏ chỉ thử chia cho vài chục số nguyên tố nhỏ nhất `(2, 3, 5, 7, 11…)`. Nếu có thì lấy luôn. Nếu không có thì bỏ qua. Trước khi dùng những thuật toán phức tạp (Pollard's Rho, ECM…), người ta luôn kiểm tra xem số N có chia hết cho các số nguyên tố siêu nhỏ hay không. Các số nguyên tố cực nhỏ thường là `2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37;...` (thường chỉ cần khoảng 20–50 số đầu tiên là đủ). Cách làm khá đơn giản chỉ cần chia nó với số nguyên tố cực nhỏ như :
+**bước đầu tiên:** là kiểm tra nhanh các factor siêu nhỏ chỉ thử chia cho vài chục số nguyên tố nhỏ nhất `(2, 3, 5, 7, 11…)`. Nếu có thì lấy luôn. Nếu không có thì bỏ qua. Trước khi dùng những thuật toán phức tạp (Pollard's Rho, ECM…), người ta luôn kiểm tra xem số N có chia hết cho các số nguyên tố siêu nhỏ hay không. Các số nguyên tố cực nhỏ thường là `2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37;...` (thường chỉ cần khoảng 20–50 số đầu tiên là đủ). Cách làm khá đơn giản chỉ cần chia nó với số nguyên tố cực nhỏ như :
 
 ```
 Nếu N % 2 == 0  ->  2 là factor
@@ -2982,7 +2982,7 @@ Ta thấy như trong ảnh, khi thực hiện phép tính chia lấy dư nó lu�
 
 </details>
 
-Bước 2 là bước kiểm tra xem $$\large N$$ có phải là số nguyên tố không, trước khi cố gắng phân tích thừa số (factor) của $\large N$, ta phải hỏi một câu rất quan trọng $\large N$ có phải là số nguyên tố không?. Nếu có thì việc phân tích thừa số đã xong luôn $$\large N=N$$ (chỉ có một thừa số là chính nó). Không cần chạy bất kỳ thuật toán factor nào nữa.
+**Bước 2:** là bước kiểm tra xem $$\large N$$ có phải là số nguyên tố không, trước khi cố gắng phân tích thừa số (factor) của $\large N$, ta phải hỏi một câu rất quan trọng $\large N$ có phải là số nguyên tố không?. Nếu có thì việc phân tích thừa số đã xong luôn $$\large N=N$$ (chỉ có một thừa số là chính nó). Không cần chạy bất kỳ thuật toán factor nào nữa.
 
 Nếu không (tức là $$\large N$$ là hợp số) thì mới tiếp tục sang bước tìm thừa số (Pollard's Rho…). Việc kiểm tra này rất quan trọng, vì nếu lỡ $$\large N$$ là nguyên tố mà ta vẫn cố chạy thuật toán factor thì vừa lãng phí thời gian, vừa không có kết quả. Với số nhỏ hay đã biết nó là số nguyên tố thì khá đơn giản 
 
@@ -2991,6 +2991,8 @@ Nếu không (tức là $$\large N$$ là hợp số) thì mới tiếp tục san
 > Để kiểm tra nhanh bước này, người ta thường dùng thuật toán Miller–Rabin. Một thuật toán kiểm tra nguyên tố kiểu xác suất và chạy rất nhanh, độ tin cậy khá cao
 
 Với trong trường hợp số $$\large N = 501349247128579388923$$, thì đây là hợp số, ko phải là số nguyên tố. Nên ta mới tiếp tục sang bước 3 (dùng Pollard's Rho để tìm thừa số).
+
+**Bước 3:** Tìm thừa số với thuật toán Pollard's Rho
 
 <sub>--đã hết phần giải thích--</sub>
 
