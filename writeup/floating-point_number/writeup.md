@@ -3007,12 +3007,20 @@ cách ngốc là thử chia lần lượt từ 2 trở đi thì quá chậm. Thu
 <div align="center">
 
 $$\Large
-x_{n+1} = {x^{2}}_{n} + 1 (\bmod 15)
+x_{n+1} = {x^{2}}_{n} + 1 (\bmod N)
 $$
 
 </div>
 
-Bây giờ, **ví dụ với** $$\large N = 15 = 3 \times 5$$, bây giờ giả sử ta ko biết 3 và 5
+Bây giờ, **ví dụ với** $$\large N = 15 = 3 \times 5$$, bây giờ giả sử ta ko biết 3 và 5. Ta có dãy như trên vậy nên ta xét $$\large x_{n+1} = {x^{2}}_{n} + 1 (\bmod 15)$$, ta bắt đầu $$\large x_{0} = 2$$ và tính $$\large x_{1} = 2^{2} + 1 = 5$$, $$\large x_{2} = 5^{2} + 1 = 26 \bmod 15 = 11$$, $$\large x_{3} = 11^{2} + 1 = 122 \bmod 15 = 2$$. Từ đây, ta có :
+
+<div align="center">
+
+$$\Large
+2\rightarrow5\rightarrow11\rightarrow2\rightarrow5\rightarrow11
+$$
+
+</div>
 
 <sub>--đã hết phần giải thích--</sub>
 
