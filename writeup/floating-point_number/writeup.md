@@ -2992,7 +2992,7 @@ Nếu không (tức là $$\large N$$ là hợp số) thì mới tiếp tục san
 
 Với trong trường hợp số $$\large N = 501349247128579388923$$, thì đây là hợp số, ko phải là số nguyên tố. Nên ta mới tiếp tục sang bước 3 (dùng Pollard's Rho để tìm thừa số).
 
-**Bước 3:** Tìm thừa số với thuật toán Pollard's Rho
+**Bước 3:** Tìm thừa số với thuật toán Pollard's Rho đây là một thuật toán xác suất dùng để phân tích một số nguyên thành các thừa số nguyên tố, nổi bật với tốc độ nhanh khi xử lý các số lớn, phù hợp cho trường hợp của chúng ta. Giả sử ,ta có số $$\large N$$ lớn, biết nó không phải nguyên tố, và muốn tìm một số $$\large d$$ sao cho: $$\large1 < d < N \quad \text{và} \quad d \text{ chia hết } N$$
 
 <sub>--đã hết phần giải thích--</sub>
 
