@@ -3044,10 +3044,22 @@ $$\Large
 $$
 
 $$\Large
-\Rightarrow\text{ Đều ra kết quả 2 } : 2 \rightarrow 2 \rightarrow 2 \rightarrow\ldots
+\Rightarrow\text{ Đều ra kết quả } : 2 \rightarrow 2 \rightarrow 2 \rightarrow\ldots
 $$
 
 </div>
+
+Có nghĩa là các giá trị khác nhau khi nhìn modulo 15 lại trùng nhau modulo 3 (dãy số đứng yên khi nhìn theo modulo 3). Điều này có ý nghĩa quan trọng là khi nhìn theo modulo 15 (toàn bộ $\large N$), các số 2, 5, 11 khác nhau. Nhưng khi nhìn theo modulo 3 (một thừa số của $\large N$), chúng giống nhau hết. Điều này có nghĩa là:
+
+<div align="center">
+
+$$\Large
+2\eqiv5\quad(\bmod 3),\quad5\equiv11\quad(\bmod 3),\quad11\equiv2\quad(\bmod3)
+$$
+
+</div>
+
+dù chúng không bằng nhau theo modulo 15.
 
 <sub>--đã hết phần giải thích--</sub>
 
