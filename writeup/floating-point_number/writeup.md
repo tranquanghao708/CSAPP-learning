@@ -3081,6 +3081,8 @@ $$
 
 </div>
 
+**Pollard's Rho lấy thừa số để làm gì?:** Khi Pollard's Rho tìm được một thừa số $\large d$, ta không dừng ở đó. Ta dùng nó để tách số $\large N$ ra thành hai phần nhỏ hơn. **Ví dụ**, nó biết thừa số của 15 là 3 như đã tính modulo ở trên, nó tiến hành lấy hai số này chia lại và ra kết quả $$\large15\div3=5$$, khi có kết quả là 5 nó có hai phần nhỏ là 5 và 3 suy ra nó có $$\large\boxed{15 = 5 \times 3}$$
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
