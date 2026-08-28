@@ -3022,7 +3022,7 @@ Từ đây, ta thấy nó lặp lại vô hạn tuần hoàn như sau, nhưng ch
 <div align="center">
 
 $$\Large
-2\rightarrow5\rightarrow11\rightarrow2\rightarrow5\rightarrow11\rightarror\ldots
+2\rightarrow5\rightarrow11\rightarrow2\rightarrow5\rightarrow11\rightarrow\ldots
 $$
 
 </div>
@@ -3043,7 +3043,9 @@ $$\Large
 11 \bmod 3 = 2
 $$
 
+$$\Large
 \Rightarrow\text{ Đều ra kết quả 2 } : 2 \rightarrow 2 \rightarrow 2 \rightarrow\ldots
+$$
 
 </div>
 
