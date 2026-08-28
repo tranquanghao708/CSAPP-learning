@@ -3049,7 +3049,7 @@ $$
 
 </div>
 
-Có nghĩa là các giá trị khác nhau khi nhìn modulo 15 lại trùng nhau modulo 3 (dãy số đứng yên khi nhìn theo modulo 3). Điều này có ý nghĩa quan trọng là khi nhìn theo modulo 15 (toàn bộ $\large N$), các số 2, 5, 11 khác nhau. Nhưng khi nhìn theo modulo 3 (một thừa số của $\large N$), chúng giống nhau hết. Điều này có nghĩa là:
+Có nghĩa là các giá trị khác nhau khi nhìn modulo 15 lại trùng nhau modulo 3 (dãy số đứng yên khi nhìn theo modulo 3). Điều này có ý nghĩa quan trọng là khi nhìn theo modulo 15 (toàn bộ $\large N$), các số 2, 5, 11 khác nhau. Nhưng khi nhìn theo modulo 3 (một thừa số của $\large N$), chúng giống nhau hết dù chúng không bằng nhau theo modulo 15. Điều này có nghĩa là:
 
 <div align="center">
 
@@ -3059,7 +3059,25 @@ $$
 
 </div>
 
-dù chúng không bằng nhau theo modulo 15.
+**Tại sao cái này quan trọng với Pollard's Rho?:** Vì khi hai số khác nhau theo modulo $\large N$ nhưng bằng nhau theo modulo $\large p$ (ở đây $\large p = 3$), thì hiệu của chúng sẽ chia hết cho $\large p$. **Ví dụ:**
+
+<div align="center">
+
+$$\Large
+|5 - 2| = 3\quad\text{ chia hết cho 3 }
+$$
+
+$$\Large
+|11 - 5| = 6\quad\text{ chia hết cho 3 }
+$$
+
+$$\Large
+|11 - 2| = 9\quad\text{ chia hết cho 3 }
+$$
+
+\Rightarrow\text{ Khi ta tính $$\large gcd$$ của hiệu đó với $$\large N = 15$$ , ta sẽ bắt được thừa số 3. }
+
+</div>
 
 <sub>--đã hết phần giải thích--</sub>
 
