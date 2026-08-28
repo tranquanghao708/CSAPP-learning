@@ -3075,7 +3075,9 @@ $$\Large
 |11 - 2| = 9\quad\text{ chia hết cho 3 }
 $$
 
+$$\Large
 \Rightarrow\text{ Khi ta tính $$\large gcd$$ của hiệu đó với $$\large N = 15$$ , ta sẽ bắt được thừa số 3. }
+$$
 
 </div>
 
