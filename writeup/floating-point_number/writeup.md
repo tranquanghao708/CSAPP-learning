@@ -2971,17 +2971,6 @@ ta cho số `N = 501349247128579388923`, vậy ta có :
 
 Ta thấy như trong ảnh, khi thực hiện phép tính chia lấy dư nó luôn có dư , vậy 30 số nguyên tố nhỏ nhất ko chia hết cho gía trị `N` ở trên. Ta tiến hành đi sang bước tiếp theo
 
-<details>
-	<summary><b>[Câu hỏi]</b> Tại sao có thể dùng phép kiểm chứng phép chia thực hiện chính xác để nhân tố số 5e+21 và có thể suy ra là số biễu diễn nhị phân hữu hạn?</summary>
-
----
-
-<sub>--Đã hết phần giải thích--</sub>
-
----
-
-</details>
-
 **Bước 2:** là bước kiểm tra xem $$\large N$$ có phải là số nguyên tố không, trước khi cố gắng phân tích thừa số (factor) của $\large N$, ta phải hỏi một câu rất quan trọng $\large N$ có phải là số nguyên tố không?. Nếu có thì việc phân tích thừa số đã xong luôn $$\large N=N$$ (chỉ có một thừa số là chính nó). Không cần chạy bất kỳ thuật toán factor nào nữa.
 
 Nếu không (tức là $$\large N$$ là hợp số) thì mới tiếp tục sang bước tìm thừa số (Pollard's Rho…). Việc kiểm tra này rất quan trọng, vì nếu lỡ $$\large N$$ là nguyên tố mà ta vẫn cố chạy thuật toán factor thì vừa lãng phí thời gian, vừa không có kết quả. Với số nhỏ hay đã biết nó là số nguyên tố thì khá đơn giản 
@@ -3007,12 +2996,12 @@ cách ngốc là thử chia lần lượt từ 2 trở đi thì quá chậm. Thu
 <div align="center">
 
 $$\Large
-x_{n+1} = {x^{2}}_{n} + 1 (\bmod N)
+x_{n+1} = x_{n}^{2} + 1 (\bmod N)
 $$
 
 </div>
 
-Bây giờ, **ví dụ với** $$\large N = 15 = 3 \times 5$$, bây giờ giả sử ta ko biết 3 và 5. Ta có dãy như trên vậy nên ta xét $$\large x_{n+1} = {x^{2}}_{n} + 1 (\bmod 15)$$ ,ta bắt đầu :
+Bây giờ, **ví dụ với** $$\large N = 15 = 3 \times 5$$, bây giờ giả sử ta ko biết 3 và 5. Ta có dãy như trên vậy nên ta xét $$\large x_{n+1} = x_{n}^{2} + 1 (\bmod 15)$$ ,ta bắt đầu :
 
 <div align="center">
 
@@ -3033,8 +3022,28 @@ Từ đây, ta thấy nó lặp lại vô hạn tuần hoàn như sau, nhưng ch
 <div align="center">
 
 $$\Large
-2\rightarrow5\rightarrow11\rightarrow2\rightarrow5\rightarrow11
+2\rightarrow5\rightarrow11\rightarrow2\rightarrow5\rightarrow11\rightarror\ldots
 $$
+
+</div>
+
+bây giờ, nhìn riêng modulo 3 đây mới là mấu chốt của phần này cũng là dấu hiệu mà thuật toán cần. Ta lấy dãy trên modulo 3:
+
+<div align="center">
+
+$$\Large
+2 \bmod 3 = 2
+$$
+
+$$\Large
+5 \bmod 3 = 2
+$$
+
+$$\Large
+11 \bmod 3 = 2
+$$
+
+\Rightarrow\text{ Đều ra kết quả 2 } : 2 \rightarrow 2 \rightarrow 2 \rightarrow\ldots
 
 </div>
 
@@ -3047,6 +3056,17 @@ $$
 tuy nhiên ta thấy $$\large2.5e+21 \text{ mod } 2 = 0_{10}$$, kết quả chia lấy dư là `0` nó chia hết cho `2`, mà nếu $$\large(2.5e+21) \times 2 = (5e+21) \text{ mod } 2 = 0_{10}$$ thì nó vẫn chia hết cho `2`. Ta thấy `2.5` với riêng lẻ chia cho `2` nó dư `0.5` nhưng với `2.5e+21` thì nhờ vào số mũ làm thay đổi giá trị rất lớn và nó khác hoàn toàn nên chia hết cho `2`.
 
 Vậy nên nếu phép giá trị đã phân tích chia hết cho `2` thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
+
+<details>
+	<summary><b>[Câu hỏi]</b> Tại sao có thể dùng phép kiểm chứng phép chia thực hiện chính xác để nhân tố số 5e+21 và có thể suy ra là số biễu diễn nhị phân hữu hạn?</summary>
+
+---
+
+<sub>--Đã hết phần giải thích--</sub>
+
+---
+
+</details>
 
 <sub>--đã hết phần giải thích--</sub>
 
