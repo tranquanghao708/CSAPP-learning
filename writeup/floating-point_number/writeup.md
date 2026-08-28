@@ -3081,7 +3081,64 @@ $$
 
 </div>
 
-**Pollard's Rho lấy thừa số để làm gì?:** Khi Pollard's Rho tìm được một thừa số $\large d$, ta không dừng ở đó. Ta dùng nó để tách số $\large N$ ra thành hai phần nhỏ hơn. **Ví dụ**, nó biết thừa số của 15 là 3 như đã tính modulo ở trên, nó tiến hành lấy hai số này chia lại và ra kết quả $$\large15\div3=5$$, khi có kết quả là 5 nó có hai phần nhỏ là 5 và 3 suy ra nó có $$\large\boxed{15 = 5 \times 3}$$
+**Pollard's Rho lấy thừa số để làm gì?:** Khi Pollard's Rho tìm được một thừa số $\large d$, ta không dừng ở đó. Ta dùng nó để tách số $\large N$ ra thành hai phần nhỏ hơn. **Ví dụ**, nó biết thừa số của 15 là 3 như đã tính modulo ở trên, nó tiến hành lấy hai số này chia lại và ra kết quả $$\large15\div3=5$$, khi có kết quả là 5 nó có hai phần nhỏ là 5 và 3 suy ra nó có $$\large\boxed{15 = 5 \times 3}$$. Bây giờ nó lấy hai số này thực hiện như bước hai, biết nó là số nguyên tố vậy 5 và 3 chính là kết quả nhân tố của 15. Lúc này thuật toán đã hoàn thành
+
+> xác nhận số nguyên tố bằng thuật toán kiểm tra nguyên tố Miller–Rabin / kiểm tra ước đến căn bậc hai.
+
+Bây giờ ví dụ với số lớn lúc nãy là $$\large N = 501349247128579388923$$, đầu tiên xác định một thừa số của nó. Ko dùng tay, ta dùng thuật toán cho máy tính làm điều này:
+
+```c
+#include <stdio.h>
+```
+
+<details>
+	<summary>lý do ko tính tay với số lớn như trên</summary>
+
+---
+
+Khi dùng tay tính số lớn như trên, ta có :
+
+<div align="center">
+
+$$\Large
+x_{n+1} = x_{n}^{2} + 1 (\bmod 501349247128579388923)
+$$
+
+$$\Large
+x_{0} = 97 \quad\text{ lấy một số nguyên tố bất kỳ }
+$$
+
+$$\Large
+x_{1} = 97^{2} + 1 = 9410
+$$
+
+$$\Large
+x_{2} = 9410^{2} + 1 = 88548101
+$$
+
+$$\Large
+x_{3} = 88548101^{2} + 1 = 7840766190706202
+$$
+
+$$\Large
+x_{4} = 7840766190706202^{2} + 1 = 61477614457321445630319481264805 \bmod 501349247128579388923 = 48870595701283080795
+$$
+
+$$\Large
+x_{4} = 48870595701283080795^{2} + 1 = 2388335124198268335567405459326497832026 \bmod 501349247128579388923 = 48870595701283080795
+$$
+
+$$\Large\ldots$$
+
+</div>
+
+Và hơn cả trăm lượt như thế, giống như cách ngốc nghếch kia chả khác gì lấy modulo chia từng bước. Nên ko ai tính tay với số như vậy, phải khai thác sức mạnh tính toán của CPU
+
+<sub>--đã hết phần giải thích--</sub>
+
+---
+
+</details>
 
 <sub>--đã hết phần giải thích--</sub>
 
