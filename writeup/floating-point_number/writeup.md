@@ -3076,7 +3076,7 @@ $$\Large
 $$
 
 $$\Large
-\Rightarrow\text{ Khi ta tính $$\large gcd$$ của hiệu đó với $$\large N = 15$$ , ta sẽ bắt được thừa số 3. }
+\Rightarrow\text{ Khi ta tính gcd của hiệu đó với N = 15 , ta sẽ bắt được thừa số 3. }
 $$
 
 </div>
