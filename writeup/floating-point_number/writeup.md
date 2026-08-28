@@ -3054,7 +3054,7 @@ Có nghĩa là các giá trị khác nhau khi nhìn modulo 15 lại trùng nhau 
 <div align="center">
 
 $$\Large
-2\eqiv5\quad(\bmod 3),\quad5\equiv11\quad(\bmod 3),\quad11\equiv2\quad(\bmod3)
+2\equiv5\quad(\bmod 3),\quad5\equiv11\quad(\bmod 3),\quad11\equiv2\quad(\bmod3)
 $$
 
 </div>
