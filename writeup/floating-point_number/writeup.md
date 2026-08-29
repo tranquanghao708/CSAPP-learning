@@ -3104,6 +3104,8 @@ $$
 
 </div>
 
+> Đây là phần giải thích kỹ về ước chung lớn nhất, là phần quan trọng nhất của thuật toán
+
 **Pollard's Rho chọn** $$\large\mathrm{x_{i},x_{j}}$$ **như thế nào?:** Pollard's Rho không lấy mọi cặp $$\large x_{i},x_{j}$$ để so sánh với nhau. Nếu làm như vậy, số lượng cặp sẽ tăng rất nhanh :
 
 <div align="center">
@@ -3116,9 +3118,9 @@ $$
 
 Và bản thân việc tìm collision lại trở thành một bài toán lớn. Thay vào đó, Pollard's Rho sử dụng cycle detection để tìm dấu hiệu hai vị trí trong dãy đã gặp nhau mà không cần lưu và so sánh tất cả các giá trị trước đó. Một cách minh họa đơn giản là thuật toán Floyd's cycle detection, thường được gọi là phương pháp tortoise and hare, ở đây:
 
-- x (rùa) : đi 1 bước mỗi vòng
+- **x (rùa) :** đi 1 bước mỗi vòng
 
-- y (thỏ) : đi 2 bước mỗi vòng , nghĩa là đi gấp đôi x (rùa)
+- **y (thỏ) :** đi 2 bước mỗi vòng , nghĩa là đi gấp đôi x (rùa)
 
 Từ đó ta xét :
 
@@ -3158,6 +3160,31 @@ $$
 
 </div>
 
+**Nhưng tại sao chỉ cần so sánh** $$\large x$$ **và** $$\large y$$ **?** : Đây là điểm chí mạng rất dễ hiểu nhầm, nên ta giải thích kỹ phần này. Pollard's Rho không cần biết trước cặp $$\large i,j$$ nào sẽ tạo ra collision (va chạm). Nó cho hai con trỏ chạy với tốc độ khác nhau như trên là $$\large x = f(x)$$, $$\large y = f(f(y))$$ .Nếu dãy có chu kỳ, cuối cùng hai con trỏ sẽ gặp nhau theo modulo factor $$\large p$$. Khi đó :
+
+<div align="center">
+
+$$\Large
+x \equiv y \quad (\bmod p) \Righarrow p|(x-y)
+$$
+
+$$\Large
+\text{vì đồng thời: } p|N 
+$$
+
+$$\Large
+\text{Nên: } p|gcd(|x-y|,N)
+$$
+
+$$\Large
+\text{Và ta thử: } d = gcd(|x-y|,N)
+$$
+
+$$\Large
+\text{Nếu }1 < d < N \text{ thì }d\text{ chính là một non-trivial factor của }N
+$$
+
+</div>
 
 **Tại sao cái này quan trọng với Pollard's Rho?:** Vì khi hai giá trị $$\large x_{i}$$ ko đồng dư với $$\large x_{j}$$ khi thực hiện chia lấy dư với $$\large N$$ ($$\large x_{i}\not\equiv x_{j} (\bmod N)$$) nhưng lại đồng dư khi chia lấy dư với $$\large p$$ nghĩa là $$\large x_{i} \equiv x_{j} (\bmod p)$$ ở đây trong trường hợp ví dụ hiện tại là $\large p = 3$, thì hiệu của chúng sẽ chia hết cho $\large p$ ,tức là chúng khác nhau khi xét modulo $$\large N$$ nhưng đồng dư khi xét modulo $$\large p$$ và điều quan trọng là $$\large p\mid N$$. **Ví dụ:**
 
