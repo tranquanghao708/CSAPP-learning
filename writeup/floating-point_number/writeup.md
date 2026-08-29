@@ -3064,22 +3064,22 @@ $$
 <div align="center">
 
 $$\Large
-x_{i} \equiv x_{j} (\bmod p) \Rightarrow p | (x_{i} - x_{j})
+x_{i} \equiv x_{j} \quad (\bmod p) \Rightarrow p | (x_{i} - x_{j})
 $$
 
-</div>
-
-Sau đó
-
-<div align="center">
+$$\Large
+\text{Sau đó:}
+$$
 
 $$\Large
 d = gcd(|x_{i} - x_{j}|,N)
 $$
 
-</div>
+$$\Large
+\text{nếu như }1 < d < N \text{ thì } d \text{ là factor}
+$$
 
-nếu như $$\large1 < d < N$$ thì $$\large d$$ là factor
+</div>
 
 **Tại sao cái này quan trọng với Pollard's Rho?:** Vì khi hai số khác nhau theo modulo $\large N$ nhưng bằng nhau theo modulo $\large p$ (ở đây $\large p = 3$), thì hiệu của chúng sẽ chia hết cho $\large p$. **Ví dụ:**
 
