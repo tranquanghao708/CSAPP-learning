@@ -3149,7 +3149,7 @@ x_{n+1} = x_{n}^{2} + 1 (\bmod 501349247128579388923)
 $$
 
 $$\Large
-x_{0} = 97 \quad\text{ chọn một giá trị khởi tạo }$$\large x_{0}$$\text{ , thường là một số nhỏ như 2.}
+x_{0} = 97 \quad\text{ chọn một giá trị khởi tạo }$$\large x_{0}$$\text{ ,thường là một số nhỏ như 2.}
 $$
 
 $$\Large
