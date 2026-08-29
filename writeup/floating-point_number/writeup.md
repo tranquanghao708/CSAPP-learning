@@ -3081,12 +3081,12 @@ $$
 
 </div>
 
-**Tại sao cái này quan trọng với Pollard's Rho?:** Vì khi hai số khác nhau theo modulo $\large N$ nhưng bằng nhau theo modulo $\large p$ (ở đây $\large p = 3$), thì hiệu của chúng sẽ chia hết cho $\large p$. **Ví dụ:**
+**Tại sao cái này quan trọng với Pollard's Rho?:** Vì khi hai giá trị $$\large x_{i}$$ ko đồng dư với $$\large x_{j}$$ ($$\large x_{i}\nequiv x_{j} (\bmod N)$$) nhưng lại đồng dư khi chia lấy dư với $$\large p $$ nghĩa là $$\large x_{i} \equiv x_{j} (\bmod p)$$ (ở đây $\large p = 3$), thì hiệu của chúng sẽ chia hết cho $\large p$ ,tức là chúng khác nhau khi xét modulo $$\large N$$ nhưng đồng dư khi xét modulo $$\large p$$ và điều quan trọng là $$\large p\mid N$$. **Ví dụ:**
 
 <div align="center">
 
 $$\Large
-|5 - 2| = 3\quad\text{ chia hết cho 3 }
+\mid5 - 2\mid = 3\quad\text{ chia hết cho 3 }
 $$
 
 $$\Large
@@ -3111,7 +3111,7 @@ Bây giờ ví dụ với số lớn lúc nãy là $$\large N = 5013492471285793
 
 
 <details>
-	<summary>lý do ko tính tay với số lớn như trên</summary>
+	<summary><b>[Chi tiết]</b> lý do ko tính tay với số lớn như trên</summary>
 
 ---
 
