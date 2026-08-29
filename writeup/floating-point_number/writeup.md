@@ -3104,9 +3104,62 @@ $$
 
 </div>
 
-**Pollard's Rho chọn** $$\large\mathrm{x_{i},x_{j}}$$ **như thế nào?:**
+**Pollard's Rho chọn** $$\large\mathrm{x_{i},x_{j}}$$ **như thế nào?:** Pollard's Rho không lấy mọi cặp $$\large x_{i},x_{j}$$ để so sánh với nhau. Nếu làm như vậy, số lượng cặp sẽ tăng rất nhanh :
 
-**Tại sao cái này quan trọng với Pollard's Rho?:** Vì khi hai giá trị $$\large x_{i}$$ ko đồng dư với $$\large x_{j}$$ khi thực hiện chia lấy dư với $$\large N$$ ($$\large x_{i}\not\equiv x_{j} (\bmod N)$$) nhưng lại đồng dư khi chia lấy dư với $$\large p $$ nghĩa là $$\large x_{i} \equiv x_{j} (\bmod p)$$ ở đây trong trường hợp ví dụ hiện tại là $\large p = 3$, thì hiệu của chúng sẽ chia hết cho $\large p$ ,tức là chúng khác nhau khi xét modulo $$\large N$$ nhưng đồng dư khi xét modulo $$\large p$$ và điều quan trọng là $$\large p\mid N$$. **Ví dụ:**
+<div align="center">
+
+$$\Large
+(x_{1},x_{2}),(x_{1},x_{3}),\ldots,(x_{2},x_{3}),\ldots
+$$
+
+</div>
+
+Và bản thân việc tìm collision lại trở thành một bài toán lớn. Thay vào đó, Pollard's Rho sử dụng cycle detection để tìm dấu hiệu hai vị trí trong dãy đã gặp nhau mà không cần lưu và so sánh tất cả các giá trị trước đó. Một cách minh họa đơn giản là thuật toán Floyd's cycle detection, thường được gọi là phương pháp tortoise and hare, ở đây:
+
+- x (rùa) : đi 1 bước mỗi vòng
+
+- y (thỏ) : đi 2 bước mỗi vòng , nghĩa là đi gấp đôi x (rùa)
+
+Từ đó ta xét :
+
+<div align="center">
+
+$$\Large
+f(x) = (x^{2} + x) \bmod N
+$$
+
+</div>
+
+Ta cập nhật hai biến, nghĩa là khi cái biểu thức trên được thực hiện xong thì nó sẽ gán kết quả vào hai biến liền :
+
+<div align="center">
+
+$$\Large
+x \leftarrow f(x)
+$$
+
+$$\Large
+y \leftarrow f(f(y)) \text{ Chú ý tới phần nhân ngoài ngoặc}
+$$
+
+</div>
+
+Bây giờ, sau mỗi lần cập nhật nghĩa là gán kết quả vào hai biến. Ta tiến hành tính ước chung lớn nhất:
+
+<div align="center">
+
+$$\Large
+d = gcd(|x - y|,N)
+$$
+
+$$\Large
+\text{Nếu }1 < d < N \text{ Thì tìm được factor}
+$$
+
+</div>
+
+
+**Tại sao cái này quan trọng với Pollard's Rho?:** Vì khi hai giá trị $$\large x_{i}$$ ko đồng dư với $$\large x_{j}$$ khi thực hiện chia lấy dư với $$\large N$$ ($$\large x_{i}\not\equiv x_{j} (\bmod N)$$) nhưng lại đồng dư khi chia lấy dư với $$\large p$$ nghĩa là $$\large x_{i} \equiv x_{j} (\bmod p)$$ ở đây trong trường hợp ví dụ hiện tại là $\large p = 3$, thì hiệu của chúng sẽ chia hết cho $\large p$ ,tức là chúng khác nhau khi xét modulo $$\large N$$ nhưng đồng dư khi xét modulo $$\large p$$ và điều quan trọng là $$\large p\mid N$$. **Ví dụ:**
 
 <div align="center">
 
