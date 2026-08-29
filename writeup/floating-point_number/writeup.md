@@ -3165,7 +3165,7 @@ $$
 <div align="center">
 
 $$\Large
-x \equiv y \quad (\bmod p) \Righarrow p|(x-y)
+x \equiv y \quad (\bmod p) \Rightarrow p|(x-y)
 $$
 
 $$\Large
