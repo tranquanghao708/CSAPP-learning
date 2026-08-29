@@ -2472,7 +2472,7 @@ và thấy nếu cùng nhỏ hơn half ULP thì cả hai có kết quả y như 
 
 ### 3.5.Round toward positive infinity (+∞)
 
-hay còn gọi là roundUp hoặc round toward $$\large+\infty$$, là một trong 4 rounding mode (rounding-direction attributes) của IEEE754. Quy tắc của chế độ làm tròn này là chọn giá trị floating-point biểu diễn được nhỏ nhất nhưng vẫn lớn hơn hoặc bằng giá trị chính xác cần làm tròn. Nói đơn giản là nó làm tròn về $$\large+\infty$$.
+hay còn gọi là roundUp hoặc round toward $$\large+\infty$$, là một trong 5 rounding mode (rounding-direction attributes) của IEEE754. Quy tắc của chế độ làm tròn này là chọn giá trị floating-point biểu diễn được nhỏ nhất nhưng vẫn lớn hơn hoặc bằng giá trị chính xác cần làm tròn. Nói đơn giản là nó làm tròn về $$\large+\infty$$.
 
 **Ví dụ** với số dương giả sử precision chỉ cho phép $$\large1.001_{2}$$ nhưng giá trị thực là $$\large1.001101_{2}$$ ta có $$\large1.001_{2} < 1.001101_{2} < 1.010_{2}$$ vậy nên nó sẽ làm tròn thành $$\large\boxed{1.010_{2}}$$ vì round toward $$\large+\infty$$ phải chọn số lớn hơn hoặc bằng giá trị ban đầu tức là số dương bị làm tròn lên.
 
@@ -2488,8 +2488,8 @@ Round toward $$\large+\infty$$ phải chọn giá trị lớn hơn, tức nằm 
 
 | Giá trị chính xác | Round toward +∞ |
 | :----------------: | :--------------: |
-|       `1.001101₂` |        `1.010₂` |
-|      `-1.001101₂` |       `-1.001₂` |
+|       $$\large1.001101_{2}$$ |        $$\large1.010_{2}$$ |
+|      $$\large-1.001101_{2}$$ |       $$\large-1.001_{2}$$ |
 
 vì : $$\large−1.001_{2} > −1.001101_{2} > −1.010_{2}$$ . Nên round toward $$\large+\infty$$ luôn chọn upper bound.
 
@@ -2973,7 +2973,7 @@ Ta thấy như trong ảnh, khi thực hiện phép tính chia lấy dư nó lu�
 
 **Bước 2:** là bước kiểm tra xem $$\large N$$ có phải là số nguyên tố không, trước khi cố gắng phân tích thừa số (factor) của $\large N$, ta phải hỏi một câu rất quan trọng $\large N$ có phải là số nguyên tố không?. Nếu có thì việc phân tích thừa số đã xong luôn $$\large N=N$$ (chỉ có một thừa số là chính nó). Không cần chạy bất kỳ thuật toán factor nào nữa.
 
-Nếu không (tức là $$\large N$$ là hợp số) thì mới tiếp tục sang bước tìm thừa số (Pollard's Rho…). Việc kiểm tra này rất quan trọng, vì nếu lỡ $$\large N$$ là nguyên tố mà ta vẫn cố chạy thuật toán factor thì vừa lãng phí thời gian, vừa không có kết quả. Với số nhỏ hay đã biết nó là số nguyên tố thì khá đơn giản 
+Nếu không (tức là $$\large N$$ là hợp số) thì mới tiếp tục sang bước tìm thừa số (Pollard's Rho…). Việc kiểm tra này rất quan trọng, vì nếu lỡ $$\large N$$ là nguyên tố mà ta vẫn cố chạy thuật toán factor thì vừa lãng phí thời gian, vừa không có kết quả và nếu $$\large N$$ là số nguyên tố thì không tồn tại non-trivial factor $$\large1 < d < N$$, do đó không cần chạy thuật toán factorization để tìm thừa số. Với số nhỏ hay đã biết nó là số nguyên tố thì khá đơn giản 
 
 **ví dụ** cho số `11` và số `11` chính là số nguyên tố, vậy nếu biết số nguyên tố đơn giản là lấy chính nó rồi xong. Biết `11` là số nguyên tố, ta nhân tố như sau $$\large11 = 11 \times 1$$, hết vì $$\large N=N$$ nghĩa là nếu $$\large N$$ là số nguyên tố thì nó luôn là chính nó
 
@@ -2996,7 +2996,7 @@ cách ngốc là thử chia lần lượt từ 2 trở đi thì quá chậm. Thu
 <div align="center">
 
 $$\Large
-x_{n+1} = x_{n}^{2} + 1 (\bmod N)
+x_{n+1} = (x_{n}^{2} + 1) \bmod N
 $$
 
 </div>
@@ -3059,6 +3059,20 @@ $$
 
 </div>
 
+**Có một điểm khá dễ nhầm tại phần nhìn riêng mod với 3 là :** đa số người đọc tưởng rằng Pollard's Rho chỉ cần nhìn thấy các giá trị giống nhau rồi là factor xuất hiện khi xem qua ví dụ trên. Vậy điều này nghĩa là gì, trước hết phải nhấn mạnh là ví dụ trên chỉ minh họa cơ chế collision không phải mô phỏng đầy đủ implementation của Pollard's Rho. Thực tế cơ chế quan trọng là:
+
+$$\Large
+x_{i} \equiv x_{j} (\bmod p) \Rightarrow p | (x_{i} - x_{j})
+$$
+
+Sau đó
+
+$$\Large
+d = gcd(|x_{i} - x_{j}|,N)
+$$
+
+nếu như $$\large1 < d < N$$ thì $$\large d$$ là factor
+
 **Tại sao cái này quan trọng với Pollard's Rho?:** Vì khi hai số khác nhau theo modulo $\large N$ nhưng bằng nhau theo modulo $\large p$ (ở đây $\large p = 3$), thì hiệu của chúng sẽ chia hết cho $\large p$. **Ví dụ:**
 
 <div align="center">
@@ -3085,11 +3099,8 @@ $$
 
 > xác nhận số nguyên tố bằng thuật toán kiểm tra nguyên tố Miller–Rabin / kiểm tra ước đến căn bậc hai.
 
-Bây giờ ví dụ với số lớn lúc nãy là $$\large N = 501349247128579388923$$, đầu tiên xác định một thừa số của nó. Ko dùng tay, ta dùng thuật toán cho máy tính làm điều này:
+Bây giờ ví dụ với số lớn lúc nãy là $$\large N = 501349247128579388923$$, đầu tiên xác định một thừa số của nó. Ko dùng tay, ta dùng thuật toán cho máy tính làm điều này, thuật toán có tại [Dự án caculator]()
 
-```c
-#include <stdio.h>
-```
 
 <details>
 	<summary>lý do ko tính tay với số lớn như trên</summary>
