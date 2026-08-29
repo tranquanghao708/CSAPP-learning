@@ -3050,7 +3050,31 @@ $$
 
 </div>
 
-bây giờ, nhìn riêng modulo 3 đây mới là mấu chốt của phần này cũng là dấu hiệu mà thuật toán cần. Ta lấy dãy trên modulo 3:
+bây giờ, nhìn riêng modulo 3 đây mới là mấu chốt của phần này cũng là dấu hiệu mà thuật toán cần. Ta lấy dãy trên modulo 3, trước tiên ta cần phải tính trước để hiểu vì sao số 3 từ đâu chui qua đây. Bắt đầu khai triển:
+
+<div align="center">
+
+$$\Large
+N = 15, \quad f(x)=x^{2} + 1 \bmod 15
+$$
+
+$$\Large
+\text{Khởi tạo: } x = y = 2
+$$
+
+$$\Large
+\text{Vòng đầu: } x = f(2) = 5\\
+y = f(f(2)) = f(5) = 11
+$$
+
+$$\Large
+\text{Tính: } d = gcd(|5-11|,15) = gcd(6,15) = 3 \\
+\Rightarrow \boxed{d = 3}
+$$
+
+</div>
+
+Từ phép tính trên, ta biết được số 3 từ kết quả của ước chung lớn nhất của hai con trỏ $$\large x, y$$ với $$\large N$$ là 15 từ vòng đầu tiên. Bây giờ biết được sự xuất hiện của số 3 ta tiến hành khai triển biểu thức modulo 3:
 
 <div align="center">
 
