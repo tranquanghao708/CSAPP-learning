@@ -1695,6 +1695,27 @@ $
 
 Bây giờ từ $$\large\frac{3}{10}$$ ta cần phân tích mẫu số với thừa số nguyên tố $$\large2^{N}$$, với `10` ta có $$\large2\times5 = 10_{10}$$ vậy trong đó có `5` mà gía trị số này lại ko chia hết cho 2, nên số thực `0.3` khi biểu diễn dưới dạng nhị phân là vô hạn. Đây chính xác là thứ ta muốn chứng minh mà không cần ngồi nhân 2 hàng chục/hàng trăm bước với trường hợp này
 
+<details>
+	<summary><b>[Câu hỏi]</b> Tại sao ko dùng printf để kiểm chứng, ví dụ printf nó in ra chuẩn xác số là hữu hạn còn có sự sai lệch là vô hạn?</summary>
+
+---
+
+Câu hỏi khá hay, điều này có một số lý do khiến cách này bị phế. Vậy dùng được ko, vốn dĩ cách này khá hiệu quả và dùng được với các số thuần như `1.0`, `0.1` v.v. chuẩn hệ cơ số 10 vào một biến. Nhưng với các số có hệ cơ số 16 như  chuỗi số `0x1.000002p-24f` ở phần [minh họa với C tại round toward infinity](#3.5.Round toward positive infinity (+∞)), nếu dùng cách này với chuỗi số này thì các lập trình viên hay reverse engineer đều bị nó lừa vì sự sai số.
+
+Cách này vốn dĩ ngắm vào sự sai số, hữu hạn thì chính xác còn vô hạn thì sai số vì rounding (cắt bit do giới hạn nhị phân). Nhưng với hệ cơ số 16 như trên thì hiếm hoặc rất khó có thể phân biệt được chúng là số vô hạn hay hữu hạn nếu dùng printf mà đi in ra terminal và soi số thập phân sau nó. Với hệ cơ số 16 như chuỗi `0x1.000002p-24f` ta bắt buộc phải đi dùng định lý phân số mới có thể xác định được, ko thể dùng printf hay đi nhân 2 liên tục vì một cái là bị lừa, một cái là cực hình. Proof để chứng minh printf vô dụng với hệ cơ số 16. Ở đoạn code tại phần [minh họa với C tại round toward infinity](#3.5.Round toward positive infinity (+∞)) ta dùng nó và chạy. Ta thấy :
+
+<p align="center">
+	<img alt="Proof ko thể dùng printf để so sánh số thực hữu hạn vô hạn hệ cơ số 16" src="image/image30.png">
+</p>
+
+Từ trong ảnh, ta thấy dòng số hai là printf ra giá trị của chuỗi `0x1.000002p-24f` ra terminal, ta thấy 3 trường hợp in thấp hơn, vừa đủ, hơn 32bits fraction nó luôn đánh lừa là số đó trông như vô hạn tuần hoàn. Để so sánh hệ cơ số 16 bắt buộc phải dùng định lý phân số là cách khỏe hơn rồi
+
+<sub>--Đã hết phần giải thích--</sub>
+
+---
+
+</details>
+
 ### 3.2.Round to nearest, ties to even
 
 - Đây là chế độ mặc định của việc làm tròn số thực dấu phẩy động của IEEE , nó thực hiện làm tròn về số gần nhất, nếu đúng giữa hai số thì chọn số chẵn. Ý tưởng gồm hai bước, đầu tiên là nó chọn giá trị gần nhất với số cần biểu diễn, thứ hai là phân theo ba trường hợp, trường hợp số nhỏ hơn nữa sẽ giữ nguyên, trường hợp số lớn hơn nữa sẽ làm tròn lên, trường hợp số đúng bằng nữa (tie) thì chọn số bit cuối là 0 (even)
@@ -3081,7 +3102,7 @@ $$
 
 </div>
 
-**Tại sao cái này quan trọng với Pollard's Rho?:** Vì khi hai giá trị $$\large x_{i}$$ ko đồng dư với $$\large x_{j}$$ ($$\large x_{i}\not\equiv x_{j} (\bmod N)$$) nhưng lại đồng dư khi chia lấy dư với $$\large p $$ nghĩa là $$\large x_{i} \equiv x_{j} (\bmod p)$$ (ở đây $\large p = 3$), thì hiệu của chúng sẽ chia hết cho $\large p$ ,tức là chúng khác nhau khi xét modulo $$\large N$$ nhưng đồng dư khi xét modulo $$\large p$$ và điều quan trọng là $$\large p\mid N$$. **Ví dụ:**
+**Tại sao cái này quan trọng với Pollard's Rho?:** Vì khi hai giá trị $$\large x_{i}$$ ko đồng dư với $$\large x_{j}$$ khi thực hiện chia lấy dư với $$\large N$$ ($$\large x_{i}\not\equiv x_{j} (\bmod N)$$) nhưng lại đồng dư khi chia lấy dư với $$\large p $$ nghĩa là $$\large x_{i} \equiv x_{j} (\bmod p)$$ ở đây trong trường hợp ví dụ hiện tại là $\large p = 3$, thì hiệu của chúng sẽ chia hết cho $\large p$ ,tức là chúng khác nhau khi xét modulo $$\large N$$ nhưng đồng dư khi xét modulo $$\large p$$ và điều quan trọng là $$\large p\mid N$$. **Ví dụ:**
 
 <div align="center">
 
@@ -3107,7 +3128,7 @@ $$
 
 > xác nhận số nguyên tố bằng thuật toán kiểm tra nguyên tố Miller–Rabin / kiểm tra ước đến căn bậc hai.
 
-Bây giờ ví dụ với số lớn lúc nãy là $$\large N = 501349247128579388923$$, đầu tiên xác định một thừa số của nó. Ko dùng tay, ta dùng thuật toán cho máy tính làm điều này, thuật toán có tại [Dự án caculator]()
+Bây giờ **ví dụ** với số lớn lúc nãy là $$\large N = 501349247128579388923$$, đầu tiên xác định một thừa số của nó. Ko dùng tay, ta dùng thuật toán cho máy tính làm điều này, thuật toán có tại [Dự án caculator](https://github.com/tranquanghao708/Caculator-Project)
 
 
 <details>
@@ -3124,7 +3145,7 @@ x_{n+1} = x_{n}^{2} + 1 (\bmod 501349247128579388923)
 $$
 
 $$\Large
-x_{0} = 97 \quad\text{ lấy một số nguyên tố bất kỳ }
+x_{0} = 97 \quad\text{ chọn một giá trị khởi tạo }$$\large x_{0}$$\text{ , thường là một số nhỏ như 2.}
 $$
 
 $$\Large
@@ -3144,7 +3165,7 @@ x_{4} = 7840766190706202^{2} + 1 = 61477614457321445630319481264805 \bmod 501349
 $$
 
 $$\Large
-x_{4} = 48870595701283080795^{2} + 1 = 2388335124198268335567405459326497832026 \bmod 501349247128579388923 = 48870595701283080795
+x_{5} = 48870595701283080795^{2} + 1 = 2388335124198268335567405459326497832026 \bmod 501349247128579388923 = 48870595701283080795
 $$
 
 $$\Large\ldots$$
