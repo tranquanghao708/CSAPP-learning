@@ -2618,13 +2618,15 @@ int main(void){
 		return -1;
 	} //chuyển đỏi sang round toward positive infinity
 
-    volatile float a = 1.0f; //sẽ bị can thiệp bởi tie to even
-
+    volatile float a = 1.0f;
     volatile float b = 0x1.000002p-24f;
 
     float result = a + b;
 
-    printf("%.20f\n", result);
+	printf("%.23f\n", a);
+	printf("%.23f\n", b);
+
+    printf("%.23f\n", result);
 
 	return 0;
 }
@@ -3101,6 +3103,8 @@ $$\Large
 $$
 
 </div>
+
+**Pollard's Rho chọn** $$\large\mathrm{x_{i},x_{j}} **như thế nào?:**
 
 **Tại sao cái này quan trọng với Pollard's Rho?:** Vì khi hai giá trị $$\large x_{i}$$ ko đồng dư với $$\large x_{j}$$ khi thực hiện chia lấy dư với $$\large N$$ ($$\large x_{i}\not\equiv x_{j} (\bmod N)$$) nhưng lại đồng dư khi chia lấy dư với $$\large p $$ nghĩa là $$\large x_{i} \equiv x_{j} (\bmod p)$$ ở đây trong trường hợp ví dụ hiện tại là $\large p = 3$, thì hiệu của chúng sẽ chia hết cho $\large p$ ,tức là chúng khác nhau khi xét modulo $$\large N$$ nhưng đồng dư khi xét modulo $$\large p$$ và điều quan trọng là $$\large p\mid N$$. **Ví dụ:**
 
