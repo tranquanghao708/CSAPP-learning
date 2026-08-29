@@ -3061,15 +3061,23 @@ $$
 
 **Có một điểm khá dễ nhầm tại phần nhìn riêng mod với 3 là :** đa số người đọc tưởng rằng Pollard's Rho chỉ cần nhìn thấy các giá trị giống nhau rồi là factor xuất hiện khi xem qua ví dụ trên. Vậy điều này nghĩa là gì, trước hết phải nhấn mạnh là ví dụ trên chỉ minh họa cơ chế collision không phải mô phỏng đầy đủ implementation của Pollard's Rho. Thực tế cơ chế quan trọng là:
 
+<div align="center">
+
 $$\Large
 x_{i} \equiv x_{j} (\bmod p) \Rightarrow p | (x_{i} - x_{j})
 $$
 
+</div>
+
 Sau đó
+
+<div align="center">
 
 $$\Large
 d = gcd(|x_{i} - x_{j}|,N)
 $$
+
+</div>
 
 nếu như $$\large1 < d < N$$ thì $$\large d$$ là factor
 
