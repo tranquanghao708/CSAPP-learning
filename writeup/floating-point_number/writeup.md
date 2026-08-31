@@ -2956,13 +2956,11 @@ $$\Large40\bmod2=0$$
 
 $$\Large\Rightarrow40\div2=20$$
 
-$$\large\text{ và: }40=20\times2$$
+$$\Large\text{ và: }40=20\times2$$
 
 </div>
 
-Việc nhân ngược như : $$\large20\times2=40$$
-
-chỉ nhằm kiểm chứng hoặc minh họa rằng phép chia đã được thực hiện đúng. Trong implementation thực tế, nếu phép chia được thực hiện bằng kiểu dữ liệu và phép toán phù hợp thì không cần thực hiện thêm phép kiểm chứng này sau mỗi lần chia.
+Việc nhân ngược như $$\large20\times2=40$$, chỉ nhằm kiểm chứng hoặc minh họa rằng phép chia đã được thực hiện đúng. Trong implementation thực tế, nếu phép chia được thực hiện bằng kiểu dữ liệu và phép toán phù hợp thì không cần thực hiện thêm phép kiểm chứng này sau mỗi lần chia.
 
 <sub>--Đã hết phần giải thích--</sub>
 
@@ -3249,6 +3247,46 @@ Vậy nên nếu phép giá trị đã phân tích chia hết cho `2` thì suy r
 	<summary><b>[Câu hỏi]</b> Tại sao có thể dùng phép kiểm chứng phép chia thực hiện chính xác để nhân tố số 5e+21 và có thể suy ra là số biễu diễn nhị phân hữu hạn?</summary>
 
 ---
+
+Phép kiểm chứng phép chia và việc xác định một số có biểu diễn nhị phân hữu hạn là hai vấn đề khác nhau. Khi nhân tố một số, nếu ta có $$\large N\div p=q$$ thì ta có thể kiểm chứng lại bằng $$\large q\times p=N$$. Nếu phép nhân cho đúng lại $\Large N$, ta xác nhận rằng phép chia đã cho ra thương chính xác.
+
+Tuy nhiên, điều này không tự nó chứng minh rằng $N$ có biểu diễn nhị phân hữu hạn.Để xác định một số hữu tỉ có biểu diễn nhị phân hữu hạn hay không, ta phải xét mẫu số sau khi rút gọn. Một phân số có biểu diễn nhị phân hữu hạn khi và chỉ khi mẫu số ở dạng tối giản chỉ chứa thừa số nguyên tố 2:
+
+<div align="center">
+
+$$\Large\frac{a}{b},\quad \gcd(a,b)=1\quad\Rightarrow\quad b=2^k$$
+
+</div>
+
+**Ví dụ:**
+
+<div align="center">
+
+$$\Large\frac{5}{8}=\frac{5}{2^3}=0.101_2$$
+
+</div>
+
+là một số có biểu diễn nhị phân hữu hạn. Ngược lại:
+
+<div align="center">
+
+$$\Large\frac{1}{10}=\frac{1}{2\times5}$$
+
+</div>
+
+có thừa số 5 trong mẫu số nên biểu diễn nhị phân là vô hạn tuần hoàn. Đối với một số nguyên như:
+
+<div align="center">
+
+$$\large5\times10^{21}=5\times(2\times5)^{21}$$
+
+$$\Large\text{ ta có: }5\times10^{21}=2^{21}\times5^{22}$$
+
+</div>
+
+Đây là một số nguyên, vì vậy nó luôn có một biểu diễn nhị phân hữu hạn. Mọi số nguyên không âm đều có thể biểu diễn chính xác bằng một số hữu hạn bit trong hệ nhị phân.
+
+Do đó, cần phân biệt $$\large\text{Kiểm chứng phép chia} \neq \text{kiểm tra biểu diễn nhị phân}$$ . Phép nhân ngược chỉ xác nhận rằng phép phân tích số học được thực hiện đúng. Việc xác định tính hữu hạn của biểu diễn nhị phân phải dựa trên cấu trúc của số hoặc mẫu số của số hữu tỉ.
 
 <sub>--Đã hết phần giải thích--</sub>
 
