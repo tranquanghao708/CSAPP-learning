@@ -2994,7 +2994,7 @@ Logic chuẩn của cách này là :
 
 <div align="center">
 
-$$\LargeN \bmod p = 0 \Rightarrow N \leftarrow N/p \Rightarrow \text{ kiểm tra lại } N \bmod p$$
+$$\Large N \bmod p = 0 \Rightarrow N \leftarrow N/p \Rightarrow \text{ kiểm tra lại } N \bmod p$$
 
 </div>
 
@@ -3030,7 +3030,7 @@ cách ngốc là thử chia lần lượt từ 2 trở đi thì quá chậm. Thu
 
 <div align="center">
 
-$$\Largex_{n+1} = (x_{n}^{2} + 1) \bmod N$$
+$$\Large x_{n+1} = (x_{n}^{2} + 1) \bmod N$$
 
 </div>
 
@@ -3038,7 +3038,7 @@ Bây giờ, **ví dụ với** $$\large N = 15 = 3 \times 5$$, bây giờ giả 
 
 <div align="center">
 
-$$\Largex_{0} = 2$$ 
+$$\Large x_{0} = 2$$ 
 
 $$\large x_{1} = 2^{2} + 1 = 5$$
 
@@ -3060,7 +3060,7 @@ bây giờ, nhìn riêng modulo 3 đây mới là mấu chốt của phần này
 
 <div align="center">
 
-$$\LargeN = 15, \quad f(x)=x^{2} + 1 \bmod 15$$
+$$\Large N = 15, \quad f(x)=x^{2} + 1 \bmod 15$$
 
 $$\Large\text{Khởi tạo: } x = y = 2$$
 
@@ -3096,11 +3096,11 @@ $$\Large2\equiv5\quad(\bmod 3),\quad5\equiv11\quad(\bmod 3),\quad11\equiv2\quad(
 
 <div align="center">
 
-$$\Largex_{i} \equiv x_{j} \quad (\bmod p) \Rightarrow p | (x_{i} - x_{j})$$
+$$\Large x_{i} \equiv x_{j} \quad (\bmod p) \Rightarrow p | (x_{i} - x_{j})$$
 
 $$\Large\text{Sau đó:}$$
 
-$$\Larged = gcd(|x_{i} - x_{j}|,N)$$
+$$\Large d = gcd(|x_{i} - x_{j}|,N)$$
 
 $$\Large\text{nếu như }1 < d < N \text{ thì } d \text{ là factor}$$
 
@@ -3126,7 +3126,7 @@ Từ đó ta xét :
 
 <div align="center">
 
-$$\Largef(x) = (x^{2} + x) \bmod N$$
+$$\Large f(x) = (x^{2} + x) \bmod N$$
 
 </div>
 
@@ -3134,9 +3134,9 @@ Ta cập nhật hai biến, nghĩa là khi cái biểu thức trên được th�
 
 <div align="center">
 
-$$\Largex \leftarrow f(x)$$
+$$\Large x \leftarrow f(x)$$
 
-$$\Largey \leftarrow f(f(y)) \text{ Chú ý tới phần nhân ngoài ngoặc}$$
+$$\Large y \leftarrow f(f(y)) \text{ Chú ý tới phần nhân ngoài ngoặc}$$
 
 </div>
 
@@ -3144,7 +3144,7 @@ Bây giờ, sau mỗi lần cập nhật nghĩa là gán kết quả vào hai bi
 
 <div align="center">
 
-$$\Larged = gcd(|x - y|,N)$$
+$$\Large d = gcd(|x - y|,N)$$
 
 $$\Large\text{Nếu }1 < d < N \text{ Thì tìm được factor}$$
 
@@ -3154,7 +3154,7 @@ $$\Large\text{Nếu }1 < d < N \text{ Thì tìm được factor}$$
 
 <div align="center">
 
-$$\Largex \equiv y \quad (\bmod p) \Rightarrow p|(x-y)$$
+$$\Large x \equiv y \quad (\bmod p) \Rightarrow p|(x-y)$$
 
 $$\Large\text{vì đồng thời: } p|N $$
 
