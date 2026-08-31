@@ -2948,6 +2948,22 @@ Tiếp theo, khi đã biết nó chia hết cho 2 với phép chia lấy dư (su
 
 ---
 
+Thực tế, phép kiểm chứng này không phải là bước bắt buộc của thuật toán phân tích thừa số hay các phép toán khác. Khi đã kiểm tra $$\large N\bmod p=0$$ thì ta đã biết chắc rằng $p$ là ước của $N$, và phép chia $$\large N\div p=q$$ cho ta một thương nguyên $\large q$. Do đó, ta có thể trực tiếp kết luận $$\large N=q\times p$$. Ví dụ:
+
+<div align="center">
+
+$$\Large40\bmod2=0$$
+
+$$\Large\Rightarrow40\div2=20$$
+
+$$\large\text{ và: }40=20\times2$$
+
+</div>
+
+Việc nhân ngược như : $$\large20\times2=40$$
+
+chỉ nhằm kiểm chứng hoặc minh họa rằng phép chia đã được thực hiện đúng. Trong implementation thực tế, nếu phép chia được thực hiện bằng kiểu dữ liệu và phép toán phù hợp thì không cần thực hiện thêm phép kiểm chứng này sau mỗi lần chia.
+
 <sub>--Đã hết phần giải thích--</sub>
 
 ---
@@ -2964,9 +2980,9 @@ Nếu N % 7 == 0  ->  7 là factor
 ...
 ```
 
-- Nếu tìm được số nào chia hết : lấy luôn factor đó, rồi chia N cho nó và tiếp tục với phần còn lại.
+- **Nếu tìm được số nào chia hết :** lấy luôn factor đó, rồi chia N cho nó và tiếp tục với phần còn lại.
 
-- Nếu không có số nào chia hết : bỏ qua bước này, chuyển sang bước tiếp theo.
+- **Nếu không có số nào chia hết :** bỏ qua bước này, chuyển sang bước tiếp theo.
 
 **Tại sao phải làm bước này?:** Vì nó cực kỳ rẻ. Chỉ tốn vài chục phép chia (máy tính làm trong tích tắc). Nhiều số trong thực tế có factor nhỏ (đặc biệt là các số không được tạo cẩn thận). Nếu bỏ qua bước này mà nhảy thẳng sang Pollard's Rho thì vẫn chạy được, nhưng hơi lãng phí thời gian nếu số đó may mắn có factor nhỏ.
 
@@ -2978,9 +2994,7 @@ Logic chuẩn của cách này là :
 
 <div align="center">
 
-$$\Large
-N \bmod p = 0 \Rightarrow N \leftarrow N/p \Rightarrow \text{ kiểm tra lại } N \bmod p
-$$
+$$\LargeN \bmod p = 0 \Rightarrow N \leftarrow N/p \Rightarrow \text{ kiểm tra lại } N \bmod p$$
 
 </div>
 
@@ -3004,13 +3018,11 @@ Nếu không (tức là $$\large N$$ là hợp số) thì mới tiếp tục san
 
 Với trong trường hợp số $$\large N = 501349247128579388923$$, thì đây là hợp số, ko phải là số nguyên tố. Nên ta mới tiếp tục sang bước 3 (dùng Pollard's Rho để tìm thừa số).
 
-**Bước 3:** Tìm thừa số với thuật toán Pollard's Rho đây là một thuật toán xác suất dùng để phân tích một số nguyên thành các thừa số nguyên tố, nổi bật với tốc độ nhanh khi xử lý các số lớn, phù hợp cho trường hợp của chúng ta. Giả sử ,ta có số $$\large N$$ lớn, biết nó không phải nguyên tố, và muốn tìm một số $$\large d$$ sao cho: 
+**Bước 3:** Tìm thừa số với thuật toán Pollard's Rho là một thuật toán xác suất dùng để tìm một thừa số không tầm thường của một số hợp $$\large N$$. Sau khi tìm được thừa số, ta có thể tiếp tục đệ quy để phân tích hoàn toàn $$\large N$$ thành các thừa số nguyên tố, nổi bật với tốc độ nhanh khi xử lý các số lớn, phù hợp cho trường hợp của chúng ta. Giả sử ,ta có số $$\large N$$ lớn, biết nó không phải nguyên tố, và muốn tìm một số $$\large d$$ sao cho: 
 
 <div align="center">
 
-$$\Large
-1 < d < N \quad \text{và} \quad d \text{ chia hết } N
-$$
+$$\Large1 < d < N \quad \text{và} \quad d \text{ chia hết } N$$
 
 </div>
 
@@ -3018,9 +3030,7 @@ cách ngốc là thử chia lần lượt từ 2 trở đi thì quá chậm. Thu
 
 <div align="center">
 
-$$\Large
-x_{n+1} = (x_{n}^{2} + 1) \bmod N
-$$
+$$\Largex_{n+1} = (x_{n}^{2} + 1) \bmod N$$
 
 </div>
 
@@ -3028,9 +3038,7 @@ Bây giờ, **ví dụ với** $$\large N = 15 = 3 \times 5$$, bây giờ giả 
 
 <div align="center">
 
-$$\Large
-x_{0} = 2
-$$ 
+$$\Largex_{0} = 2$$ 
 
 $$\large x_{1} = 2^{2} + 1 = 5$$
 
@@ -3044,9 +3052,7 @@ Từ đây, ta thấy nó lặp lại vô hạn tuần hoàn như sau, nhưng ch
 
 <div align="center">
 
-$$\Large
-2\rightarrow5\rightarrow11\rightarrow2\rightarrow5\rightarrow11\rightarrow\ldots
-$$
+$$\Large2\rightarrow5\rightarrow11\rightarrow2\rightarrow5\rightarrow11\rightarrow\ldots$$
 
 </div>
 
@@ -3054,23 +3060,13 @@ bây giờ, nhìn riêng modulo 3 đây mới là mấu chốt của phần này
 
 <div align="center">
 
-$$\Large
-N = 15, \quad f(x)=x^{2} + 1 \bmod 15
-$$
+$$\LargeN = 15, \quad f(x)=x^{2} + 1 \bmod 15$$
 
-$$\Large
-\text{Khởi tạo: } x = y = 2
-$$
+$$\Large\text{Khởi tạo: } x = y = 2$$
 
-$$\Large
-\text{Vòng đầu: } x = f(2) = 5\\
-y = f(f(2)) = f(5) = 11
-$$
+$$\Large\text{Vòng đầu: } x = f(2) = 5 ,\quad y = f(f(2)) = f(5) = 11$$
 
-$$\Large
-\text{Tính: } d = gcd(|5-11|,15) = gcd(6,15) = 3 \\
-\Rightarrow \boxed{d = 3}
-$$
+$$\Large\text{Tính: } d = gcd(|5-11|,15) = gcd(6,15) = 3 \Rightarrow \boxed{d = 3}$$
 
 </div>
 
@@ -3078,21 +3074,13 @@ Từ phép tính trên, ta biết được số 3 từ kết quả của ước 
 
 <div align="center">
 
-$$\Large
-2 \bmod 3 = 2
-$$
+$$\Large2 \bmod 3 = 2$$
 
-$$\Large
-5 \bmod 3 = 2
-$$
+$$\Large5 \bmod 3 = 2$$
 
-$$\Large
-11 \bmod 3 = 2
-$$
+$$\Large11 \bmod 3 = 2$$
 
-$$\Large
-\Rightarrow\text{ Đều ra kết quả } : 2 \rightarrow 2 \rightarrow 2 \rightarrow\ldots
-$$
+$$\Large\Rightarrow\text{ Đều ra kết quả } : 2 \rightarrow 2 \rightarrow 2 \rightarrow\ldots$$
 
 </div>
 
@@ -3100,9 +3088,7 @@ Có nghĩa là các giá trị khác nhau khi nhìn modulo 15 lại trùng nhau 
 
 <div align="center">
 
-$$\Large
-2\equiv5\quad(\bmod 3),\quad5\equiv11\quad(\bmod 3),\quad11\equiv2\quad(\bmod3)
-$$
+$$\Large2\equiv5\quad(\bmod 3),\quad5\equiv11\quad(\bmod 3),\quad11\equiv2\quad(\bmod3)$$
 
 </div>
 
@@ -3110,21 +3096,13 @@ $$
 
 <div align="center">
 
-$$\Large
-x_{i} \equiv x_{j} \quad (\bmod p) \Rightarrow p | (x_{i} - x_{j})
-$$
+$$\Largex_{i} \equiv x_{j} \quad (\bmod p) \Rightarrow p | (x_{i} - x_{j})$$
 
-$$\Large
-\text{Sau đó:}
-$$
+$$\Large\text{Sau đó:}$$
 
-$$\Large
-d = gcd(|x_{i} - x_{j}|,N)
-$$
+$$\Larged = gcd(|x_{i} - x_{j}|,N)$$
 
-$$\Large
-\text{nếu như }1 < d < N \text{ thì } d \text{ là factor}
-$$
+$$\Large\text{nếu như }1 < d < N \text{ thì } d \text{ là factor}$$
 
 </div>
 
@@ -3134,9 +3112,7 @@ $$
 
 <div align="center">
 
-$$\Large
-(x_{1},x_{2}),(x_{1},x_{3}),\ldots,(x_{2},x_{3}),\ldots
-$$
+$$\Large(x_{1},x_{2}),(x_{1},x_{3}),\ldots,(x_{2},x_{3}),\ldots$$
 
 </div>
 
@@ -3150,9 +3126,7 @@ Từ đó ta xét :
 
 <div align="center">
 
-$$\Large
-f(x) = (x^{2} + x) \bmod N
-$$
+$$\Largef(x) = (x^{2} + x) \bmod N$$
 
 </div>
 
@@ -3160,13 +3134,9 @@ Ta cập nhật hai biến, nghĩa là khi cái biểu thức trên được th�
 
 <div align="center">
 
-$$\Large
-x \leftarrow f(x)
-$$
+$$\Largex \leftarrow f(x)$$
 
-$$\Large
-y \leftarrow f(f(y)) \text{ Chú ý tới phần nhân ngoài ngoặc}
-$$
+$$\Largey \leftarrow f(f(y)) \text{ Chú ý tới phần nhân ngoài ngoặc}$$
 
 </div>
 
@@ -3174,13 +3144,9 @@ Bây giờ, sau mỗi lần cập nhật nghĩa là gán kết quả vào hai bi
 
 <div align="center">
 
-$$\Large
-d = gcd(|x - y|,N)
-$$
+$$\Larged = gcd(|x - y|,N)$$
 
-$$\Large
-\text{Nếu }1 < d < N \text{ Thì tìm được factor}
-$$
+$$\Large\text{Nếu }1 < d < N \text{ Thì tìm được factor}$$
 
 </div>
 
@@ -3188,25 +3154,15 @@ $$
 
 <div align="center">
 
-$$\Large
-x \equiv y \quad (\bmod p) \Rightarrow p|(x-y)
-$$
+$$\Largex \equiv y \quad (\bmod p) \Rightarrow p|(x-y)$$
 
-$$\Large
-\text{vì đồng thời: } p|N 
-$$
+$$\Large\text{vì đồng thời: } p|N $$
 
-$$\Large
-\text{Nên: } p|gcd(|x-y|,N)
-$$
+$$\Large\text{Nên: } p|gcd(|x-y|,N)$$
 
-$$\Large
-\text{Và ta thử: } d = gcd(|x-y|,N)
-$$
+$$\Large\text{Và ta thử: } d = gcd(|x-y|,N)$$
 
-$$\Large
-\text{Nếu }1 < d < N \text{ thì }d\text{ chính là một non-trivial factor của }N
-$$
+$$\Large\text{Nếu }1 < d < N \text{ thì }d\text{ chính là một non-trivial factor của }N$$
 
 </div>
 
@@ -3214,21 +3170,13 @@ $$
 
 <div align="center">
 
-$$\Large
-|5 - 2| = 3\quad\text{ chia hết cho 3 }
-$$
+$$\Large|5 - 2| = 3\quad\text{ chia hết cho 3 }$$
 
-$$\Large
-|11 - 5| = 6\quad\text{ chia hết cho 3 }
-$$
+$$\Large|11 - 5| = 6\quad\text{ chia hết cho 3 }$$
 
-$$\Large
-|11 - 2| = 9\quad\text{ chia hết cho 3 }
-$$
+$$\Large|11 - 2| = 9\quad\text{ chia hết cho 3 }$$
 
-$$\Large
-\Rightarrow\text{ Khi ta tính gcd của hiệu đó với N = 15 , ta sẽ bắt được thừa số 3. }
-$$
+$$\Large\Rightarrow\text{ Khi ta tính gcd của hiệu đó với N = 15 , ta sẽ bắt được thừa số 3}$$
 
 </div>
 
@@ -3236,8 +3184,19 @@ $$
 
 > xác nhận số nguyên tố bằng thuật toán kiểm tra nguyên tố Miller–Rabin / kiểm tra ước đến căn bậc hai.
 
-Bây giờ **ví dụ** với số lớn lúc nãy là $$\large N = 501349247128579388923$$, đầu tiên xác định một thừa số của nó. Ko dùng tay, ta dùng thuật toán cho máy tính làm điều này, thuật toán có tại [Dự án caculator](https://github.com/tranquanghao708/Caculator-Project)
+Bây giờ **ví dụ** với số lớn lúc nãy là $$\large N = 501349247128579388923$$, đầu tiên xác định một thừa số của nó. Ko dùng tay, ta dùng thuật toán cho máy tính làm điều này, thuật toán có tại [Dự án caculator](https://github.com/tranquanghao708/Caculator-Project). Sau khi chạy thuật toán ta được :
 
+<p align="center">
+	<img src="image/hinh_anh_sau_nay.img" alt="Kết quả sau khi chạy thuật toán RHO">
+</p>
+
+và kết quả là :
+
+<div align="center">
+
+$$\Large501349247128579388923 = 370522189 \times 1353088322407$$
+
+</div>
 
 <details>
 	<summary><b>[Chi tiết]</b> lý do ko tính tay với số lớn như trên</summary>
@@ -3248,35 +3207,23 @@ Khi dùng tay tính số lớn như trên, ta có :
 
 <div align="center">
 
-$$\Large
-x_{n+1} = x_{n}^{2} + 1 (\bmod 501349247128579388923)
-$$
+$$\Large x_{n+1} = x_{n}^{2} + 1 (\bmod 501349247128579388923)$$
 
-$$\Large
-x_{0} = 97 \quad\text{ chọn một giá trị khởi tạo } x_{0}\text{ ,thường là một số nhỏ như 2}
-$$
+$$\Large x_{0} = 97 \quad\text{ chọn một giá trị khởi tạo } x_{0}\text{ ,thường là một số nhỏ như 2}$$
 
-$$\Large
-x_{1} = 97^{2} + 1 = 9410
-$$
+$$\Large x_{1} = 97^{2} + 1 = 9410$$
 
-$$\Large
-x_{2} = 9410^{2} + 1 = 88548101
-$$
+$$\Large x_{2} = 9410^{2} + 1 = 88548101$$
 
-$$\Large
-x_{3} = 88548101^{2} + 1 = 7840766190706202
-$$
+$$\Large x_{3} = 88548101^{2} + 1 = 7840766190706202$$
 
-$$\Large
-x_{4} = 7840766190706202^{2} + 1 = 61477614457321445630319481264805 \bmod 501349247128579388923 = 48870595701283080795
-$$
+$$\Large x_{4} = 7840766190706202^{2} + 1 = 61477614457321445630319481264805 \bmod 501349247128579388923 = 48870595701283080795$$
 
-$$\Large
-x_{5} = 48870595701283080795^{2} + 1 = 2388335124198268335567405459326497832026 \bmod 501349247128579388923 = 48870595701283080795
-$$
+$$\Large x_{5} = 48870595701283080795^{2} + 1 = 2388335124198268335567405459326497832026 \bmod 501349247128579388923 = 48870595701283080795$$
 
 $$\Large\ldots$$
+
+$$\text{Phải đi qua hàng chục vòng, với cả số lớn và phải tính như thế này rất dễ sai và mệt}$$
 
 </div>
 
