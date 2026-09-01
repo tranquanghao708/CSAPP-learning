@@ -3267,6 +3267,48 @@ Phần này cần phân biệt rõ, đây là phần rất tinh vi dễ gây nh�
 
 Nghĩa là việc dùng định lý phân số để suy ra hữu hạn và vô hạn là khả thi, nhưng việc nhân tố là điều rất quan trọng, tuy nhiên ko phải cứ chia hết cho 2 là biễu diễn hữu hạn. Ở phần important ta có thấy một ví dụ với số 40, ta thấy $$\large40 = 20 \times 2$$ và $$\large40 = 2^{3} \times 5$$ hai cái đều đúng, tuy nhiên $$\large20\times2$$ chỉ là một cách phân tích thành các thừa số, còn $$\large2^{3}\times5$$ là phân tích thành thừa số nguyên tố và hai cái này khác nhau
 
+Việc kiểm tra $$\large40\bmod2=0$$, chỉ cho ta biết rằng (40) chia hết cho (2). Nó không cho biết toàn bộ cấu trúc thừa số của (40). Thực tế $$\large40=2^{3}\times5$$. Nó vẫn chứa thừa số (5), nhưng (40) vẫn có biểu diễn nhị phân hữu hạn $$\large40_{10}=101000_{2}$$. Điều này cho thấy chia hết cho 2 không phải tiêu chuẩn để xác định hữu hạn hay vô hạn
+
+Đặc biệt, số nguyên nào cũng có biểu diễn nhị phân hữu hạn, kể cả số lẻ $$\large5_{10}=101_{2}$$. Mặc dù $$\large5\bmod2=1$$, vậy nếu đang xét một số nguyên, không cần kiểm tra nó có chia hết cho (2) hay không để kết luận biểu diễn nhị phân của nó hữu hạn. Mọi số nguyên đều có thể biểu diễn bằng hữu hạn bit.
+
+Vấn đề trở nên khác khi ta xét một số hữu tỉ, chẳng hạn:
+
+<div align="center">
+
+$$\Large\frac{1}{2},\qquad \frac{1}{4},\qquad \frac{1}{5}$$
+
+</div>
+
+Ta có:
+
+<div align="center">
+
+$$\Large\frac12=0.1_{2} \text{ và } \frac14=0.01_{2}$$
+
+$$\Large\Rightarrow\text{ Đều hữu hạn}
+
+</div>
+
+Nhưng:
+
+<div align="center">
+
+$$\Large\frac15=0.001100110011\ldots_{2}$$
+
+$$\Large\Rightarrow\text{ là vô hạn}$$
+
+</div>
+
+Ở đây mới cần xét mẫu số. Sau khi phân số được rút gọn, nếu mẫu số chỉ có thừa số (2), tức có dạng $$\large2^{N}$$, thì biểu diễn nhị phân là hữu hạn. Cho nên chia hết cho 2 $$\large\neq$$ biểu diễn nhị phân hữu hạn, mà phải là số nguyên thì suy ra mới biễu diễn nhị phân hữu hạn và với số hữu tỉ thì phải :
+
+<div align="center">
+
+$$\Large\frac pq\text{ tối giản, }q=2^n$$
+
+$$\Large\Rightarrow\text{biểu diễn nhị phân hữu hạn}$$
+
+</div>
+
 <sub>--Đã hết phần giải thích--</sub>
 
 ---
