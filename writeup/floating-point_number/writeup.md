@@ -3309,11 +3309,15 @@ $$\Large\Rightarrow\text{biểu diễn nhị phân hữu hạn}$$
 
 </div>
 
+**Vậy giải mã vì sao trường hợp như trên lại dùng phép kiểm chứng phép chia để suy ra 5e+21 biễu diễn nhị phân hữu hạn?:**
+
 <sub>--Đã hết phần giải thích--</sub>
 
 ---
 
 </details>
+
+Tuy nhiên, ta có một vấn đề. Biết nó biễu diễn nhị phân hữu hạn $$\large\neq$$ nó sẽ miễn rounding, vì giới hạn độ rộng của trường fraction theo IEEE số 32bits chỉ có fraction là 21bits, để kết luận nó là hữu hạn nhưng ko rounding thì phải cần biết nó có vượt qua 21bits ko
 
 <sub>--đã hết phần giải thích--</sub>
 
