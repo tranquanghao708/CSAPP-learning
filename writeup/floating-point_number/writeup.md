@@ -3264,7 +3264,7 @@ Bây giờ ta để ý thấy `p-24` nghĩa là số mũ là `-24` và như tron
 
 <div align="center">
 
-$$\Large2^{-24} + 2^{-47} = \frac{2^{23} + 1}{2^{47}}$$
+$$\huge2^{-24} + 2^{-47} = \dfrac{2^{23} + 1}{2^{47}}$$
 
 </div>
 
