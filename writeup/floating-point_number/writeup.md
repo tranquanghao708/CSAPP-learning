@@ -3270,9 +3270,19 @@ $$\huge2^{-24} + 2^{-47} = \dfrac{2^{23} + 1}{2^{47}}$$
 
 Ở đây, ta thấy mẫu số $$\large2^{47}$$ hoàn toàn nằm trong tập hợp $$\large2^{k}$$ ($$\large2^{47}\in2^{k}$$). Vậy nên suy ra nếu phần mẫu đã tối giản thuộc trong tập hợp giá trị $$\large2^{k}$$ thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
 
-**Vậy ý nghĩa khi thực hiện các bước này là gì?:** để phân biệt và nhận biết thế nào là phân tích để chứng minh tại sao phân số thập phân kia không phải là biểu diễn nhị phân hữu hạn và hexadecimal floating-point để chứng minh giá trị binary32 thực sự hữu hạn. là hai khái niệm khác nhau một cách rất tinh vi (decimal representation $$\large\neq$$ exact binary32 value)
+**Vậy ý nghĩa khi thực hiện các bước này là gì?:** để phân biệt và nhận biết thế nào là phân tích để chứng minh tại sao phân số thập phân kia không phải là biểu diễn nhị phân hữu hạn và hexadecimal floating-point để chứng minh giá trị binary32 thực sự hữu hạn. là hai khái niệm khác nhau một cách rất tinh vi (decimal representation $$\large\neq$$ exact binary32 value).
 
-Tuy nhiên, ta có một vấn đề. Biết nó biễu diễn nhị phân hữu hạn $$\large\neq$$ nó sẽ miễn rounding, vì giới hạn độ rộng của trường fraction theo IEEE số 32bits chỉ có fraction là 21bits, để kết luận nó là hữu hạn nhưng ko rounding thì phải cần biết nó có vượt qua 21bits ko
+Các phép phân tích trên thực hiện hai nhiệm vụ khác nhau. Trước tiên, việc phân tích phân số thập phân cho thấy chuỗi `5.960465188081798e-7`, nếu được xem như một giá trị hữu tỉ chính xác, có mẫu số chứa $$\large5^{22}$$, nên không có biểu diễn nhị phân hữu hạn. Sau đó, việc phân tích trực tiếp hexadecimal floating-point `0x1.000002p-24f` cho thấy giá trị nhị phân chính xác của binary floating-point là:
+
+<div align="center">
+
+$$\huge\dfrac{2^{23} + 1}{2^{47}}$$
+
+</div>
+
+có mẫu số đúng bằng $$\large2^{47}$$, nên có biểu diễn nhị phân hữu hạn.Điều này cho thấy chuỗi thập phân được in ra và giá trị floating-point chính xác không nên được xem là cùng một đối tượng biểu diễn. Đây là sự khác biệt quan trọng giữa decimal representation và exact binary floating-point value.
+
+Tuy nhiên, việc một giá trị có biểu diễn nhị phân hữu hạn vẫn chưa đủ để kết luận rằng binary32 lưu được nó mà không rounding. Cần tiếp tục kiểm tra precision của binary32. Binary32 có 23 fraction bits và một implicit leading 1, tương đương 24 significant bits đối với số normalized. Vì significand của `0x1.000002p-24f` có thể biểu diễn trong đúng số bit precision này, giá trị này có thể được lưu chính xác trong binary32 mà không cần rounding.
 
 <sub>--đã hết phần giải thích--</sub>
 
