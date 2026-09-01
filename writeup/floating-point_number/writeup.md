@@ -3252,7 +3252,7 @@ Suy ra ta có $$\large5e+21 = 5 \times 2^{21} \times 5^{21} = 2^{21} \times 5^{2
 
 <div align="center">
 
-$$\Large\frac{2980232594040899}{2^{21} \times 5^{22}}$$
+$$\huge\frac{2980232594040899}{2^{21} \times 5^{22}}$$
 
 </div>
 
