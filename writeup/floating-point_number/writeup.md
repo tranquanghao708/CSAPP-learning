@@ -3268,7 +3268,9 @@ $$\huge2^{-24} + 2^{-47} = \dfrac{2^{23} + 1}{2^{47}}$$
 
 </div>
 
-Ở đây, ta thấy mẫu số $$\large2^{47}$$ hoàn toàn nằm trong tập hợp $$\large2^{k}$$ ($$\large2^{47}\in2^{k}$$). Vậy nên suy ra nếu phép giá trị đã phân tích chia hết cho `2` thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
+Ở đây, ta thấy mẫu số $$\large2^{47}$$ hoàn toàn nằm trong tập hợp $$\large2^{k}$$ ($$\large2^{47}\in2^{k}$$). Vậy nên suy ra nếu phần mẫu đã tối giản thuộc trong tập hợp giá trị $$\large2^{k}$$ thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
+
+**Vậy ý nghĩa khi thực hiện các bước này là gì?:** để phân biệt và nhận biết thế nào là phân tích để chứng minh tại sao phân số thập phân kia không phải là biểu diễn nhị phân hữu hạn và hexadecimal floating-point để chứng minh giá trị binary32 thực sự hữu hạn. là hai khái niệm khác nhau một cách rất tinh vi (decimal representation $$\large\neq$$ exact binary32 value)
 
 Tuy nhiên, ta có một vấn đề. Biết nó biễu diễn nhị phân hữu hạn $$\large\neq$$ nó sẽ miễn rounding, vì giới hạn độ rộng của trường fraction theo IEEE số 32bits chỉ có fraction là 21bits, để kết luận nó là hữu hạn nhưng ko rounding thì phải cần biết nó có vượt qua 21bits ko
 
