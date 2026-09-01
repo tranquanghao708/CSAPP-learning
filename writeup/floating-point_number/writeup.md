@@ -1716,6 +1716,13 @@ Từ trong ảnh, ta thấy dòng số hai là printf ra giá trị của chuỗ
 
 </details>
 
+> [!IMPORTANT]
+> **Lưu ý cực kỳ quan trọng:** Về định lý phân số suy ra biễu diễn nhị phân vô hạn hữu hạn hoàn toàn có thể làm được. Nhưng điều kiện rất nặng về phần nhân tố là phải chính xác, nếu phần nhân tố ko chính xác thì khả năng cao kết quả suy luận nhị phân hữu hạn hay vô hạn đều ko còn đúng nữa. 
+>
+> **Ví dụ** $$\large40 = 20 \times 2$$ ta thấy modulo với hai nhân tố `20` và `2` đều là chia hết nhưng ko có nghĩa nó là biễu diễn nhị phân hữu hạn, thực chất phép tính này chưa nhân tố hết. Nhân tố thực sự của `40` là $$\large40 = 2^{3} \times 5$$ ta thấy có số `5`, vậy suy ra số `40` là biễu diễn nhị phân vô hạn.
+>
+> Từ đó ta thấy, việc ko nhân tố hết giá trị hợp số sẽ rất dễ bị đánh lừa là suy đoán nó hữu hạn nhưng thực chất nó vô hạn. Nên việc nhân tố ở phần này là cực kỳ quan trọng phần nhân tố có chi tiết tại thẻ details ở phần ví dụ với C của chương [3.5.Round toward positive infinity (+∞)](#35round-toward-positive-infinity-)
+
 ### 3.2.Round to nearest, ties to even
 
 - Đây là chế độ mặc định của việc làm tròn số thực dấu phẩy động của IEEE , nó thực hiện làm tròn về số gần nhất, nếu đúng giữa hai số thì chọn số chẵn. Ý tưởng gồm hai bước, đầu tiên là nó chọn giá trị gần nhất với số cần biểu diễn, thứ hai là phân theo ba trường hợp, trường hợp số nhỏ hơn nữa sẽ giữ nguyên, trường hợp số lớn hơn nữa sẽ làm tròn lên, trường hợp số đúng bằng nữa (tie) thì chọn số bit cuối là 0 (even)
@@ -2512,7 +2519,7 @@ Round toward $$\large+\infty$$ phải chọn giá trị lớn hơn, tức nằm 
 |       $$\large1.001101_{2}$$ |        $$\large1.010_{2}$$ |
 |      $$\large-1.001101_{2}$$ |       $$\large-1.001_{2}$$ |
 
-vì : $$\large−1.001_{2} > −1.001101_{2} > −1.010_{2}$$ . Nên round toward $$\large+\infty$$ luôn chọn upper bound.
+**vì:** $$\large−1.001_{2} > −1.001101_{2} > −1.010_{2}$$ . Nên round toward $$\large+\infty$$ luôn chọn upper bound.
 
 **Nếu số đã biểu diễn chính xác được:** ko có bit nào cần thay đổi ví dụ như $$\large1.010_{2}$$ thì vẫn là chính nó ,vì đã nằm đúng trên một giá trị floating-point có thể biểu diễn nên $$\large\boxed{1.010_{2}\rightarrow1.010_{2}}$$
 
@@ -3248,45 +3255,7 @@ Vậy nên nếu phép giá trị đã phân tích chia hết cho `2` thì suy r
 
 ---
 
-Phép kiểm chứng phép chia và việc xác định một số có biểu diễn nhị phân hữu hạn là hai vấn đề khác nhau. Khi nhân tố một số, nếu ta có $$\large N\div p=q$$ thì ta có thể kiểm chứng lại bằng $$\large q\times p=N$$. Nếu phép nhân cho đúng lại $\Large N$, ta xác nhận rằng phép chia đã cho ra thương chính xác.
-
-Tuy nhiên, điều này không tự nó chứng minh rằng $N$ có biểu diễn nhị phân hữu hạn.Để xác định một số hữu tỉ có biểu diễn nhị phân hữu hạn hay không, ta phải xét mẫu số sau khi rút gọn. Một phân số có biểu diễn nhị phân hữu hạn khi và chỉ khi mẫu số ở dạng tối giản chỉ chứa thừa số nguyên tố 2:
-
-<div align="center">
-
-$$\Large\frac{a}{b},\quad \gcd(a,b)=1\quad\Rightarrow\quad b=2^k$$
-
-</div>
-
-**Ví dụ:**
-
-<div align="center">
-
-$$\Large\frac{5}{8}=\frac{5}{2^3}=0.101_2$$
-
-</div>
-
-là một số có biểu diễn nhị phân hữu hạn. Ngược lại:
-
-<div align="center">
-
-$$\Large\frac{1}{10}=\frac{1}{2\times5}$$
-
-</div>
-
-có thừa số 5 trong mẫu số nên biểu diễn nhị phân là vô hạn tuần hoàn. Đối với một số nguyên như:
-
-<div align="center">
-
-$$\large5\times10^{21}=5\times(2\times5)^{21}$$
-
-$$\Large\text{ ta có: }5\times10^{21}=2^{21}\times5^{22}$$
-
-</div>
-
-Đây là một số nguyên, vì vậy nó luôn có một biểu diễn nhị phân hữu hạn. Mọi số nguyên không âm đều có thể biểu diễn chính xác bằng một số hữu hạn bit trong hệ nhị phân.
-
-Do đó, cần phân biệt $$\large\text{Kiểm chứng phép chia} \neq \text{kiểm tra biểu diễn nhị phân}$$ . Phép nhân ngược chỉ xác nhận rằng phép phân tích số học được thực hiện đúng. Việc xác định tính hữu hạn của biểu diễn nhị phân phải dựa trên cấu trúc của số hoặc mẫu số của số hữu tỉ.
+Việc có thể dùng phép kiểm chứng phép chia thực hiện chính xác để nhân tố số như `5e+21` như ví dụ trên là hoàn toàn có thể làm được. Tại vì sao, vì khái niệm nhân tố ở đây khá rộng. Chúng ta giải thích kỹ về điều này, đầu tiên với định lý phân số, với số hễ đã được nhân tố (dù kiểu nào) miễn là nhân tố như $$\large40 = 20 \times 2$$, $$\large40 = 2^{3} \times 5$$
 
 <sub>--Đã hết phần giải thích--</sub>
 
