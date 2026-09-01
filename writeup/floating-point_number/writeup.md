@@ -3285,7 +3285,7 @@ Ta có:
 
 $$\Large\frac12=0.1_{2} \text{ và } \frac14=0.01_{2}$$
 
-$$\Large\Rightarrow\text{ Đều hữu hạn}
+$$\Large\Rightarrow\text{ Đều hữu hạn}$$
 
 </div>
 
