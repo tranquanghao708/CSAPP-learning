@@ -3255,7 +3255,17 @@ Vậy nên nếu phép giá trị đã phân tích chia hết cho `2` thì suy r
 
 ---
 
-Việc có thể dùng phép kiểm chứng phép chia thực hiện chính xác để nhân tố số như `5e+21` như ví dụ trên là hoàn toàn có thể làm được. Tại vì sao, vì khái niệm nhân tố ở đây khá rộng. Chúng ta giải thích kỹ về điều này, đầu tiên với định lý phân số, với số hễ đã được nhân tố (dù kiểu nào) miễn là nhân tố như $$\large40 = 20 \times 2$$, $$\large40 = 2^{3} \times 5$$
+Phần này cần phân biệt rõ, đây là phần rất tinh vi dễ gây nhầm nhất. Chúng ta cần phải phân biệt chia hết cho 2 và biễu diễn nhị phân hữu hạn, vô hạn, cùng với đó ta cần khám phá thêm khái niệm phân tích thành các thừa số và phân tích thành thừa số nguyên tố.
+
+Đâù tiên là phân biệt chia hết cho 2 $$\large\neq$$ biễu diễn nhị phân hữu hạn, như đã nói ở phần important tại chương [3.1.1.Hai phương pháp xử lý biểu diễn nhị phân hữu hạn và vô hạn](#311hai-phương-pháp-xử-lý-biểu-diễn-nhị-phân-hữu-hạn-và-vô-hạn) :
+
+<p align="center">
+<kbd>
+	<img alt="phần important chương 3.1.1" src="image/image31.png">
+</kbd>
+</p>
+
+Nghĩa là việc dùng định lý phân số để suy ra hữu hạn và vô hạn là khả thi, nhưng việc nhân tố là điều rất quan trọng, tuy nhiên ko phải cứ chia hết cho 2 là biễu diễn hữu hạn. Ở phần important ta có thấy một ví dụ với số 40, ta thấy $$\large40 = 20 \times 2$$ và $$\large40 = 2^{3} \times 5$$ hai cái đều đúng, tuy nhiên $$\large20\times2$$ chỉ là một cách phân tích thành các thừa số, còn $$\large2^{3}\times5$$ là phân tích thành thừa số nguyên tố và hai cái này khác nhau
 
 <sub>--Đã hết phần giải thích--</sub>
 
