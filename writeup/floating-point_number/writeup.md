@@ -3246,9 +3246,29 @@ Và hơn cả trăm lượt như thế, giống như cách ngốc nghếch kia c
 
 </details>
 
-...(bổ sung)....
+Dựa vào phân số trên, ta cũng đã biết được `5e+21` bây giờ ta khai triển $$\large5e+21 = 5\times10^{21}$$ mà hãy thử đoán xem, số nguyên tố nào có thể làm nhân tố cho 10? chỉ có thể là `5` và `2` vì hai số này là số nguyên tố về cơ bản nó giữ nguyên, nên suy ra $$\large10 = 2times5$$, do đó ta có lũy thừa như sau $$\large10^{21} = (2\times5)^{21} = 2^{21} \times 5^{21}$$. 
 
-Vậy nên nếu phép giá trị đã phân tích chia hết cho `2` thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
+Suy ra ta có $$\large5e+21 = 5 \times 2^{21} \times 5^{21} = 2^{21} \times 5^{22}$$ (vì nhân 5 nên rút gọn vào cộng một trong lũy thừa) .Đây chính là phân tích thừa số nguyên tố của mẫu số. Khi ta có thừa số, ta có:
+
+<div align="center">
+
+$$\Large\frac{2980232594040899}{2^{21} \times 5^{22}}$$
+
+</div>
+
+Ta thấy tử số 2980232594040899 là số lẻ nên ko thể rút được tiếp nhân tử 2. Nhưng quan trọng mẫu số vẫn chứa $$\large5^{22}$$ và thấy số 5 hoàn toàn ko nằm trong tập hợp giá trị $$\large2^{k}$$ ($$\large5\notin2^{k}$$) vậy phân số này không phải cách biểu diễn hữu hạn trong cơ số 2. Từ đó ta phát hiện giá trị thập phân được làm tròn/in ra với 17 chữ số có thể không có cùng tính chất hữu hạn nhị phân với giá trị float chính xác. Bạn nghĩ nó là số vô hạn?
+
+Chưa xong. Đây mới là chỗ nối sang chuỗi `0x1.000002p-24f`, ta cần phải phân biệt giá trị float chính xác và chuỗi thập phân được in ra. Nếu `5.960465188081798e-7` là giá trị thập phân được in từ float, thì đừng lấy chuỗi thập phân đó rồi coi nó chính xác tuyệt đối như giá trị của binary32.
+
+Bây giờ ta để ý thấy `p-24` nghĩa là số mũ là `-24` và như trong phần tính toán của phàn `[Câu hỏi] chuỗi số 0x1.000002p-24f là gì?` được bọc trong details. Ta tính được là $$\large2^{-24} + 2^{-47}$$. Bây giờ ta khai triển:
+
+<div align="center">
+
+$$\Large2^{-24} + 2^{-47} = \frac{2^{23} + 1}{2^{47}}$$
+
+</div>
+
+Ở đây, ta thấy mẫu số $$\large2^{47}$$ hoàn toàn nằm trong tập hợp $$\large2^{k}$$ ($$\large2^{47}\in2^{k}$$). Vậy nên suy ra nếu phép giá trị đã phân tích chia hết cho `2` thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
 
 Tuy nhiên, ta có một vấn đề. Biết nó biễu diễn nhị phân hữu hạn $$\large\neq$$ nó sẽ miễn rounding, vì giới hạn độ rộng của trường fraction theo IEEE số 32bits chỉ có fraction là 21bits, để kết luận nó là hữu hạn nhưng ko rounding thì phải cần biết nó có vượt qua 21bits ko
 
