@@ -3246,76 +3246,9 @@ Và hơn cả trăm lượt như thế, giống như cách ngốc nghếch kia c
 
 </details>
 
-tuy nhiên ta thấy $$\large2.5e+21 \text{ mod } 2 = 0_{10}$$, kết quả chia lấy dư là `0` nó chia hết cho `2`, mà nếu $$\large(2.5e+21) \times 2 = (5e+21) \text{ mod } 2 = 0_{10}$$ thì nó vẫn chia hết cho `2`. Ta thấy `2.5` với riêng lẻ chia cho `2` nó dư `0.5` nhưng với `2.5e+21` thì nhờ vào số mũ làm thay đổi giá trị rất lớn và nó khác hoàn toàn nên chia hết cho `2`.
+...(bổ sung)....
 
 Vậy nên nếu phép giá trị đã phân tích chia hết cho `2` thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
-
-<details>
-	<summary><b>[Câu hỏi]</b> Tại sao có thể dùng phép kiểm chứng phép chia thực hiện chính xác để nhân tố số 5e+21 và có thể suy ra là số biễu diễn nhị phân hữu hạn?</summary>
-
----
-
-Phần này cần phân biệt rõ, đây là phần rất tinh vi dễ gây nhầm nhất. Chúng ta cần phải phân biệt chia hết cho 2 và biễu diễn nhị phân hữu hạn, vô hạn, cùng với đó ta cần khám phá thêm khái niệm phân tích thành các thừa số và phân tích thành thừa số nguyên tố.
-
-Đâù tiên là phân biệt chia hết cho 2 $$\large\neq$$ biễu diễn nhị phân hữu hạn, như đã nói ở phần important tại chương [3.1.1.Hai phương pháp xử lý biểu diễn nhị phân hữu hạn và vô hạn](#311hai-phương-pháp-xử-lý-biểu-diễn-nhị-phân-hữu-hạn-và-vô-hạn) :
-
-<p align="center">
-<kbd>
-	<img alt="phần important chương 3.1.1" src="image/image31.png">
-</kbd>
-</p>
-
-Nghĩa là việc dùng định lý phân số để suy ra hữu hạn và vô hạn là khả thi, nhưng việc nhân tố là điều rất quan trọng, tuy nhiên ko phải cứ chia hết cho 2 là biễu diễn hữu hạn. Ở phần important ta có thấy một ví dụ với số 40, ta thấy $$\large40 = 20 \times 2$$ và $$\large40 = 2^{3} \times 5$$ hai cái đều đúng, tuy nhiên $$\large20\times2$$ chỉ là một cách phân tích thành các thừa số, còn $$\large2^{3}\times5$$ là phân tích thành thừa số nguyên tố và hai cái này khác nhau
-
-Việc kiểm tra $$\large40\bmod2=0$$, chỉ cho ta biết rằng (40) chia hết cho (2). Nó không cho biết toàn bộ cấu trúc thừa số của (40). Thực tế $$\large40=2^{3}\times5$$. Nó vẫn chứa thừa số (5), nhưng (40) vẫn có biểu diễn nhị phân hữu hạn $$\large40_{10}=101000_{2}$$. Điều này cho thấy chia hết cho 2 không phải tiêu chuẩn để xác định hữu hạn hay vô hạn
-
-Đặc biệt, số nguyên nào cũng có biểu diễn nhị phân hữu hạn, kể cả số lẻ $$\large5_{10}=101_{2}$$. Mặc dù $$\large5\bmod2=1$$, vậy nếu đang xét một số nguyên, không cần kiểm tra nó có chia hết cho (2) hay không để kết luận biểu diễn nhị phân của nó hữu hạn. Mọi số nguyên đều có thể biểu diễn bằng hữu hạn bit.
-
-Vấn đề trở nên khác khi ta xét một số hữu tỉ, chẳng hạn:
-
-<div align="center">
-
-$$\Large\frac{1}{2},\qquad \frac{1}{4},\qquad \frac{1}{5}$$
-
-</div>
-
-Ta có:
-
-<div align="center">
-
-$$\Large\frac12=0.1_{2} \text{ và } \frac14=0.01_{2}$$
-
-$$\Large\Rightarrow\text{ Đều hữu hạn}$$
-
-</div>
-
-Nhưng:
-
-<div align="center">
-
-$$\Large\frac15=0.001100110011\ldots_{2}$$
-
-$$\Large\Rightarrow\text{ là vô hạn}$$
-
-</div>
-
-Ở đây mới cần xét mẫu số. Sau khi phân số được rút gọn, nếu mẫu số chỉ có thừa số (2), tức có dạng $$\large2^{N}$$, thì biểu diễn nhị phân là hữu hạn. Cho nên chia hết cho 2 $$\large\neq$$ biểu diễn nhị phân hữu hạn, mà phải là số nguyên thì suy ra mới biễu diễn nhị phân hữu hạn và với số hữu tỉ thì phải :
-
-<div align="center">
-
-$$\Large\frac pq\text{ tối giản, }q=2^n$$
-
-$$\Large\Rightarrow\text{biểu diễn nhị phân hữu hạn}$$
-
-</div>
-
-**Vậy giải mã vì sao trường hợp như trên lại dùng phép kiểm chứng phép chia để suy ra 5e+21 biễu diễn nhị phân hữu hạn?:**
-
-<sub>--Đã hết phần giải thích--</sub>
-
----
-
-</details>
 
 Tuy nhiên, ta có một vấn đề. Biết nó biễu diễn nhị phân hữu hạn $$\large\neq$$ nó sẽ miễn rounding, vì giới hạn độ rộng của trường fraction theo IEEE số 32bits chỉ có fraction là 21bits, để kết luận nó là hữu hạn nhưng ko rounding thì phải cần biết nó có vượt qua 21bits ko
 
