@@ -3284,6 +3284,8 @@ có mẫu số đúng bằng $$\large2^{47}$$, nên có biểu diễn nhị phâ
 
 Tuy nhiên, việc một giá trị có biểu diễn nhị phân hữu hạn vẫn chưa đủ để kết luận rằng binary32 lưu được nó mà không rounding. Cần tiếp tục kiểm tra precision của binary32. Binary32 có 23 fraction bits và một implicit leading 1, tương đương 24 significant bits đối với số normalized. Vì significand của `0x1.000002p-24f` có thể biểu diễn trong đúng số bit precision này, giá trị này có thể được lưu chính xác trong binary32 mà không cần rounding.
 
+Vậy nên, biết hai giá trị của chuỗi `0x1.000002p-24f` và `1.0` đều ko được rounding, nó là chính xác mà ko cần phải có sự can thiệp của cơ chế round to nearest, tie to even khi gán vào một valriable trước đó. Điều này rất tốt để ta có thể minh họa cơ chế round to positive infinity, bây giờ khi đã biết được gía trị của chuỗi `0x1.000002p-24f` là $$\large2^{-24} + 2^{-47}$$ thì ta tiến hành so sánh nó như đã nhắc ở lý thuyết round to positive infinity ở trên
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
