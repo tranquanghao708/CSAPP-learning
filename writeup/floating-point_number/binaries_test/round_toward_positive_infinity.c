@@ -14,7 +14,10 @@ int main(void){
 
     float result = a + b;
 
-    printf("%.20f\n", result);
+	printf("%.23f\n", a);
+	printf("%.23f\n", b);
+
+    printf("%.23f\n", result);
 
 	return 0;
 }
