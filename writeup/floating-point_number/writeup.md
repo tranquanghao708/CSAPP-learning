@@ -3272,9 +3272,25 @@ $$\huge\dfrac{2^{23} + 1}{2^{47}}$$
 
 có mẫu số đúng bằng $$\large2^{47}$$, nên có biểu diễn nhị phân hữu hạn.Điều này cho thấy chuỗi thập phân được in ra và giá trị floating-point chính xác không nên được xem là cùng một đối tượng biểu diễn. Đây là sự khác biệt quan trọng giữa decimal representation và exact binary floating-point value.
 
-Tuy nhiên, việc một giá trị có biểu diễn nhị phân hữu hạn vẫn chưa đủ để kết luận rằng binary32 lưu được nó mà không rounding. Cần tiếp tục kiểm tra precision của binary32. Binary32 có 23 fraction bits và một implicit leading 1, tương đương 24 significant bits đối với số normalized. Vì significand của `0x1.000002p-24f` có thể biểu diễn trong đúng số bit precision này, giá trị này có thể được lưu chính xác trong binary32 mà không cần rounding.
+Tuy nhiên, việc một giá trị có biểu diễn nhị phân hữu hạn vẫn chưa đủ để kết luận rằng binary32 lưu được nó mà không rounding. Cần tiếp tục kiểm tra precision của binary32. Binary32 có 23 fraction bits và một implicit leading 1, tương đương 24 significant bits đối với số normalized. Vì chuỗi số `0x1.000002p-24f` đã vượt qua 23 fraction bits ta thử dump hết tất cả số của chuỗi `0x1.000002p-24f` ra bằng cách chỉnh sữa phần `printf("%.23f\n", b);` thành `printf("%.60f\n", b);` trong code C , ta có :
 
-Vậy nên, biết hai giá trị của chuỗi `0x1.000002p-24f` và `1.0` đều ko được rounding, nó là chính xác mà ko cần phải có sự can thiệp của cơ chế round to nearest, tie to even khi gán vào một valriable trước đó. Điều này rất tốt để ta có thể minh họa cơ chế round to positive infinity, bây giờ khi đã biết được gía trị của chuỗi `0x1.000002p-24f` là $$\large2^{-24} + 2^{-47}$$ thì ta tiến hành so sánh nó như đã nhắc ở lý thuyết round to positive infinity ở trên
+<p align="center">
+	<img src="image/image32.png">
+</p>
+
+> Ta thấy chuỗi số `0x1.000002p-24f` ko thuộc miền 32bits số thực biễu diễn được
+
+Vậy nên, biết hai giá trị của chuỗi `0x1.000002p-24f` và `1.0` đều được rounding với round to positive infinity, nó là chính xác mà ko cần phải có sự can thiệp của cơ chế round to nearest, tie to even khi gán vào một valriable trước đó.
+
+Điều này rất tốt để ta có thể minh họa cơ chế round to positive infinity, bây giờ khi đã biết được gía trị của chuỗi `0x1.000002p-24f` là $$\large2^{-24} + 2^{-47}$$ sang nhị phân $$\large00110011100000000000000000000001_{2}$$ thì ta tiến hành so sánh nó như đã nhắc ở lý thuyết round to positive infinity ở trên. Ta xét :
+
+<div align="center">
+
+$$\Large R_{+\infty}(large001100111|<22 số 0>|1_{2}) = (001100111 <11 số 0> 0_{2}) < (001100111 <22 số 0> 1_{2}) < \boxed{(001100111 <11 số 0> 1_{2})}$$
+
+</div>
+
+Từ so sánh trên ta thấy phần trong được đánh dấu hộp vuông thỏa mãn điều kiện là lớn hơn nhị phân của chuỗi `0x1.000002p-24f`, vậy nên $$\large(001100111 <11 số 0> 1_{2})$$ là kết quả làm tròn
 
 <sub>--đã hết phần giải thích--</sub>
 
