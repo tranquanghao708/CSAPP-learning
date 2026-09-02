@@ -2886,7 +2886,7 @@ $$
 
 và giá trị nhị phân là $$\large\boxed{00110011100000000000000000000001_{2}}$$
 
-> **câu hỏi mở rộng :** vì sao app máy tính casio trên điện thoại lại tính được $$\large2^{-24} + 2^{-47} = 0.0000000596_{10}$$ nhưng với máy tính terminal linux bên ngành kiến trúc CPU x86-64 lại ko mà nếu đổi má sang quy tắc toán học như $$\large a^{-m} = \frac{1}{a^{m}}$$ lại luôn ra giá trị `0` mà gõ trực tiếp thì bị lỗi cú pháp với $(())?
+> **câu hỏi mở rộng :** vì sao app máy tính casio trên điện thoại lại tính được $$\large2^{-24} + 2^{-47} \approx 0.0000000596_{10}$$ nhưng với máy tính terminal linux bên ngành kiến trúc CPU x86-64 lại ko mà nếu đổi má sang quy tắc toán học như $$\large a^{-m} = \frac{1}{a^{m}}$$ lại luôn ra giá trị `0` mà gõ trực tiếp thì bị lỗi cú pháp với $(())?
 
 <details>
 	<summary>Trả lời</summary>
@@ -2929,13 +2929,13 @@ $$\Large
 
 </div>
 
-giá trị $$\large5e+21$$ là $$\large5 \times 10^{21}$$ nghĩa là thêm 21 số 0 đằng sau ta có $$\large5e+21 = 5000000000000000000000_{10}$$ bây giờ ta tiến hành phân tích nó ra thành $$\large5e+21 \text{ mod } 2 = 0_{10}$$, bây giờ tiến hành chia $$\large5e+21 \div 2 = 2.5e+21_{10}$$ và bây giờ ta tính tiếp $$\large2.5e+21 \text{ mod } 2 = 0_{10}$$ vậy ta thấy cả hai giá trị `2` và `2.5e+21` đều chia hết cho 2, nên ta có :
+giá trị $$\large5e+21$$ là $$\large5 \times 10^{21}$$ nghĩa là thêm 21 số 0 đằng sau ta có $$\large5e+21 = 5000000000000000000000_{10}$$ bây giờ ta khai triển $$\large5e+21 = 5\times10^{21}$$ mà hãy thử đoán xem, số nguyên tố nào có thể làm nhân tố cho 10? chỉ có thể là `5` và `2` vì hai số này là số nguyên tố về cơ bản nó giữ nguyên, nên suy ra $$\large10 = 2\times5$$, do đó ta có lũy thừa như sau $$\large10^{21} = (2\times5)^{21} = 2^{21} \times 5^{21}$$. 
+
+Suy ra ta có $$\large5e+21 = 5 \times 2^{21} \times 5^{21} = 2^{21} \times 5^{22}$$ (vì nhân 5 nên rút gọn vào cộng một trong lũy thừa) .Đây chính là phân tích thừa số nguyên tố của mẫu số. Khi ta có thừa số, ta có:
 
 <div align="center">
 
-$$\Large
-\boxed{5e+21 = (2.5e+21) \times 2}
-$$
+$$\huge\dfrac{2980232594040899}{2^{21} \times 5^{22}}$$
 
 </div>
 
@@ -3245,16 +3245,6 @@ Và hơn cả trăm lượt như thế, giống như cách ngốc nghếch kia c
 ---
 
 </details>
-
-Dựa vào phân số trên, ta cũng đã biết được `5e+21` bây giờ ta khai triển $$\large5e+21 = 5\times10^{21}$$ mà hãy thử đoán xem, số nguyên tố nào có thể làm nhân tố cho 10? chỉ có thể là `5` và `2` vì hai số này là số nguyên tố về cơ bản nó giữ nguyên, nên suy ra $$\large10 = 2times5$$, do đó ta có lũy thừa như sau $$\large10^{21} = (2\times5)^{21} = 2^{21} \times 5^{21}$$. 
-
-Suy ra ta có $$\large5e+21 = 5 \times 2^{21} \times 5^{21} = 2^{21} \times 5^{22}$$ (vì nhân 5 nên rút gọn vào cộng một trong lũy thừa) .Đây chính là phân tích thừa số nguyên tố của mẫu số. Khi ta có thừa số, ta có:
-
-<div align="center">
-
-$$\huge\dfrac{2980232594040899}{2^{21} \times 5^{22}}$$
-
-</div>
 
 Ta thấy tử số 2980232594040899 là số lẻ nên ko thể rút được tiếp nhân tử 2. Nhưng quan trọng mẫu số vẫn chứa $$\large5^{22}$$ và thấy số 5 hoàn toàn ko nằm trong tập hợp giá trị $$\large2^{k}$$ ($$\large5\notin2^{k}$$) vậy phân số này không phải cách biểu diễn hữu hạn trong cơ số 2. Từ đó ta phát hiện giá trị thập phân được làm tròn/in ra với 17 chữ số có thể không có cùng tính chất hữu hạn nhị phân với giá trị float chính xác. Bạn nghĩ nó là số vô hạn?
 
