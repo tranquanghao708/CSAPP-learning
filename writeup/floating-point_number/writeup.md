@@ -3258,7 +3258,7 @@ $$\huge2^{-24} + 2^{-47} = \dfrac{2^{23} + 1}{2^{47}}$$
 
 </div>
 
-Ở đây, ta thấy mẫu số $$\large2^{47}$$ hoàn toàn nằm trong tập hợp $$\large2^{k}$$ ($$\large2^{47}\in2^{k}$$). Vậy nên suy ra nếu phần mẫu đã tối giản thuộc trong tập hợp giá trị $$\large2^{k}$$ thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
+Ở đây, ta thấy mẫu số $$\large2^{47}$$ hoàn toàn nằm trong tập hợp $$\large2^{k}$$ ($$\large2^{47}\in \{2^{k} | k \in \mathbb{N}_{0}\}$$). Vậy nên suy ra nếu phân số tối giản có mẫu $$\large2^{k}$$ thì giá trị đó biễu diễn nhị phân hữu hạn, vậy thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
 
 **Vậy ý nghĩa khi thực hiện các bước này là gì?:** để phân biệt và nhận biết thế nào là phân tích để chứng minh tại sao phân số thập phân kia không phải là biểu diễn nhị phân hữu hạn và hexadecimal floating-point để chứng minh giá trị binary32 thực sự hữu hạn. là hai khái niệm khác nhau một cách rất tinh vi (decimal representation $$\large\neq$$ exact binary32 value).
 
