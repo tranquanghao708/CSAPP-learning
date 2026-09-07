@@ -3306,6 +3306,7 @@ $$\Large1.00000000000000000000001_{2} \times 2^{-24}$$
 và significand này có đúng 23 fraction bits sau hidden bit. Vì vậy giá trị này có thể được biểu diễn chính xác trong binary32.
 
 - **Điểm quan trọng:** output `0.0000000596046518808179826010018587...` không chứng minh `0x1.000002p-24f` vượt 23 fraction bits. Ngược lại, nó cho thấy literal đó được biểu diễn chính xác bằng binary32. Giá trị ở giữa (nghĩa là giá trị của `0x1.000002p-24f`) chính xác là $$\large x = 2^{-24} + 2^{-47}$$. Nhưng hãy nhìn khoảng cách giữa hai binary32 xung quanh nó. Với các số binary32 quanh $$\large 2^{-24}$$ và $$\large 2^{−24}+2^{−23}=1.00000011920928955078125\times10^{−7}$$. Khoảng cách $$\large2^{-47}$$ mà $$\large x = 2^{-24} + 2^{-47}$$ do đó $$\large x = 2^{-24} + 1.2^{-47}$$ (Lưu ý dấu `.` ko phải phép nhân)
+ nó chính xác nằm đúng tại binary32 kế tiếp của \(2^{-24}\) hay nói chính xác hơn, cần cẩn thận với cách quy chiếu exponent/subnormal ở vùng này. Điểm quan trọng là giá trị literal này có một biểu diễn binary32 hợp lệ, và output %.60f của một biến float đang cho thấy giá trị đó đã được lưu dưới dạng float.
 
 <sub>--đã hết phần giải thích--</sub>
 
