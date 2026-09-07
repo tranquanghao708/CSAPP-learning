@@ -3285,6 +3285,26 @@ Tuy nhiên, việc một giá trị có biểu diễn nhị phân hữu hạn v�
 
 ---
 
+Hình ảnh có thể khiến ta tưởng rằng `0x1.000002p-24f` vượt quá 23 fraction bits, nhưng thực tế cần phân biệt **số bit được viết ra** với **số bit có ý nghĩa cần lưu trong significand của binary32**. `0x1.000002` có 6 chữ số hexadecimal sau dấu chấm. Mỗi chữ số hexadecimal tương ứng với 4 bit nhị phân, nên khi chuyển trực tiếp sang binary ta có:
+
+<div align="center">
+
+$$\Large\text{0x1.000002} = 1.000000000000000000000010_{2}$$
+
+</div>
+
+Điều này tạo ra 24 vị trí bit sau dấu chấm nếu tính toàn bộ các vị trí được viết ra. Tuy nhiên, binary32 không lưu toàn bộ chuỗi này một cách máy móc. Với số normalized, binary32 có một hidden leading bit `1` và 23 fraction bits. Ở đây, các bit có ý nghĩa của significand là $$\large1.00000000000000000000001_{2}$$. Trong đó `1` đầu tiên là hidden bit và phần sau dấu chấm chỉ có 23 bit. Vì vậy significand này vừa khít với precision của binary32.
+
+Điểm quan trọng là không được nhìn vào số chữ số decimal mà `printf("%.60f")` in ra để kết luận số đó vượt quá precision của binary32. `printf("%.60f")` chỉ yêu cầu hiển thị giá trị dưới dạng decimal với 60 chữ số sau dấu chấm; nó không có nghĩa binary32 đang lưu 60 chữ số chính xác. Do đó, việc output xuất hiện`0.0000000596046518808179826010018587...` không chứng minh rằng giá trị vượt quá 23 fraction bits. Muốn kiểm tra precision của binary32, phải xét biểu diễn nhị phân của significand, không phải số lượng chữ số decimal được in ra. Với `0x1.000002p-24f`, ta có:
+
+<div align="center">
+
+$$\Large1.00000000000000000000001_{2} \times 2^{-24}$$
+
+</div>
+
+và significand này có đúng 23 fraction bits sau hidden bit. Vì vậy giá trị này có thể được biểu diễn chính xác trong binary32.
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
