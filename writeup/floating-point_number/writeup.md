@@ -1725,11 +1725,11 @@ Từ trong ảnh, ta thấy dòng số hai là printf ra giá trị của chuỗ
 
 ### 3.2.Round to nearest, ties to even
 
-- Đây là chế độ mặc định của việc làm tròn số thực dấu phẩy động của IEEE , nó thực hiện làm tròn về số gần nhất, nếu đúng giữa hai số thì chọn số chẵn. Ý tưởng gồm hai bước, đầu tiên là nó chọn giá trị gần nhất với số cần biểu diễn, thứ hai là phân theo ba trường hợp, trường hợp số nhỏ hơn nữa sẽ giữ nguyên, trường hợp số lớn hơn nữa sẽ làm tròn lên, trường hợp số đúng bằng nữa (tie) thì chọn số bit cuối là 0 (even)
+Đây là chế độ mặc định của việc làm tròn số thực dấu phẩy động của IEEE , nó thực hiện làm tròn về số gần nhất, nếu đúng giữa hai số thì chọn số chẵn. Ý tưởng gồm hai bước, đầu tiên là nó chọn giá trị gần nhất với số cần biểu diễn, thứ hai là phân theo ba trường hợp, trường hợp số nhỏ hơn nữa sẽ giữ nguyên, trường hợp số lớn hơn nữa sẽ làm tròn lên, trường hợp số đúng bằng nữa (tie) thì chọn số bit cuối là 0 (even)
 
-**Đầu tiên :** làm tròn về số gần nhất, **ví dụ** `0.3244` làm tròn thành `0.324`, `0.3246` làm tròn thành `0.325` đơn giản là làm tròn về số gần nhât
+- **Đầu tiên :** làm tròn về số gần nhất, **ví dụ** `0.3244` làm tròn thành `0.324`, `0.3246` làm tròn thành `0.325` đơn giản là làm tròn về số gần nhât
 
-**Thứ hai :** như trên sẽ phân theo ba trường hợp 
+- **Thứ hai :** như trên sẽ phân theo ba trường hợp 
 
 nếu trường hợp số nhỏ hơn nữa sẽ giữ nguyên **ví dụ** Cpu chỉ giữ 2 fraction ở bit, cho bit biểu diễn số thực như sau : $$\large1.010001_{2} = \mathbf{1.265625_{10}}$$ và bây giờ CPU lấy 2 fraction suy ra nó chỉ có thể biểu diễn làm tròn $$\large1.01_{2} = 0100_{2}$$ hoặc $$\large1.10_{2} = 1000_{2}$$ và bit bị cắt là $$\large0001_{2}$$
 
@@ -2294,9 +2294,9 @@ Do đó, về cơ bản chương `round toward zero` này chỉ có vậy. Nếu
 
 Gần giống, nhưng chúng không cùng một khái niệm. Trong nhiều ví dụ thì chế độ `round toward zero` cho kết quả khá tương đương với `(int)x.x` nhưng về bản chất thì `(int)x.x` là chỉ ép kiểu sang phần nguyên bỏ phần lẻ, điều này giống với hành vi của `round toward zero`. Nhưng có hai đặc điểm để chứng minh hai cái này khác: 
 
-**đặc điểm thứ nhất:** là kết quả của `(int)x.x` nó là số nguyên nó bỏ phần số thực đi suy ra `3.3 = 3`, còn `round toward zero` cũng có kết quả giá trị nhưng nó biểu diễn dạng số thực `3.3 = 3.0` và `3.0` cùng giá trị với `3` nhưng khác cách trình bày
+- **đặc điểm thứ nhất:** là kết quả của `(int)x.x` nó là số nguyên nó bỏ phần số thực đi suy ra `3.3 = 3`, còn `round toward zero` cũng có kết quả giá trị nhưng nó biểu diễn dạng số thực `3.3 = 3.0` và `3.0` cùng giá trị với `3` nhưng khác cách trình bày
 
-**đặc điểm thứ hai:** `(int)x.x` là chuyển đổi kiểu dữ liệu từ số thực sang số nguyên theo quy tắc của ngôn ngữ C. `Round toward Zero` là một chế độ làm tròn của IEEE 754 dùng cho các phép toán dấu phẩy động.
+- **đặc điểm thứ hai:** `(int)x.x` là chuyển đổi kiểu dữ liệu từ số thực sang số nguyên theo quy tắc của ngôn ngữ C. `Round toward Zero` là một chế độ làm tròn của IEEE 754 dùng cho các phép toán dấu phẩy động.
 
 Nên nhiều ví dụ thấy chúng gần như tương đồng nhau nhưng chúng không nằm chung một khái niệm
 
@@ -3097,7 +3097,7 @@ $$\Large2\equiv5\quad(\bmod 3),\quad5\equiv11\quad(\bmod 3),\quad11\equiv2\quad(
 
 </div>
 
-**Có một điểm khá dễ nhầm tại phần nhìn riêng mod với 3 là :** đa số người đọc tưởng rằng Pollard's Rho chỉ cần nhìn thấy các giá trị giống nhau rồi là factor xuất hiện khi xem qua ví dụ trên. Vậy điều này nghĩa là gì, trước hết phải nhấn mạnh là ví dụ trên chỉ minh họa cơ chế collision không phải mô phỏng đầy đủ implementation của Pollard's Rho. Thực tế cơ chế quan trọng là:
+- **Có một điểm khá dễ nhầm tại phần nhìn riêng mod với 3 là :** đa số người đọc tưởng rằng Pollard's Rho chỉ cần nhìn thấy các giá trị giống nhau rồi là factor xuất hiện khi xem qua ví dụ trên. Vậy điều này nghĩa là gì, trước hết phải nhấn mạnh là ví dụ trên chỉ minh họa cơ chế collision không phải mô phỏng đầy đủ implementation của Pollard's Rho. Thực tế cơ chế quan trọng là:
 
 <div align="center">
 
@@ -3113,7 +3113,7 @@ $$\Large\text{nếu như }1 < d < N \text{ thì } d \text{ là factor}$$
 
 > Đây là phần giải thích kỹ về ước chung lớn nhất, là phần quan trọng nhất của thuật toán
 
-**Pollard's Rho chọn** $$\large\mathrm{x_{i},x_{j}}$$ **như thế nào?:** Pollard's Rho không lấy mọi cặp $$\large x_{i},x_{j}$$ để so sánh với nhau. Nếu làm như vậy, số lượng cặp sẽ tăng rất nhanh :
+- **Pollard's Rho chọn** $$\large\mathrm{x_{i},x_{j}}$$ **như thế nào?:** Pollard's Rho không lấy mọi cặp $$\large x_{i},x_{j}$$ để so sánh với nhau. Nếu làm như vậy, số lượng cặp sẽ tăng rất nhanh :
 
 <div align="center">
 
@@ -3155,7 +3155,7 @@ $$\Large\text{Nếu }1 < d < N \text{ Thì tìm được factor}$$
 
 </div>
 
-**Nhưng tại sao chỉ cần so sánh** $$\large x$$ **và** $$\large y$$ **?** : Đây là điểm chí mạng rất dễ hiểu nhầm, nên ta giải thích kỹ phần này. Pollard's Rho không cần biết trước cặp $$\large i,j$$ nào sẽ tạo ra collision (va chạm). Nó cho hai con trỏ chạy với tốc độ khác nhau như trên là $$\large x = f(x)$$, $$\large y = f(f(y))$$ .Nếu dãy có chu kỳ, cuối cùng hai con trỏ sẽ gặp nhau theo modulo factor $$\large p$$. Khi đó :
+- **Nhưng tại sao chỉ cần so sánh** $$\large x$$ **và** $$\large y$$ **?** : Đây là điểm chí mạng rất dễ hiểu nhầm, nên ta giải thích kỹ phần này. Pollard's Rho không cần biết trước cặp $$\large i,j$$ nào sẽ tạo ra collision (va chạm). Nó cho hai con trỏ chạy với tốc độ khác nhau như trên là $$\large x = f(x)$$, $$\large y = f(f(y))$$ .Nếu dãy có chu kỳ, cuối cùng hai con trỏ sẽ gặp nhau theo modulo factor $$\large p$$. Khi đó :
 
 <div align="center">
 
@@ -3171,7 +3171,7 @@ $$\Large\text{Nếu }1 < d < N \text{ thì }d\text{ chính là một non-trivial
 
 </div>
 
-**Tại sao cái này quan trọng với Pollard's Rho?:** Vì khi hai giá trị $$\large x_{i}$$ ko đồng dư với $$\large x_{j}$$ khi thực hiện chia lấy dư với $$\large N$$ ($$\large x_{i}\not\equiv x_{j} (\bmod N)$$) nhưng lại đồng dư khi chia lấy dư với $$\large p$$ nghĩa là $$\large x_{i} \equiv x_{j} (\bmod p)$$ ở đây trong trường hợp ví dụ hiện tại là $\large p = 3$, thì hiệu của chúng sẽ chia hết cho $\large p$ ,tức là chúng khác nhau khi xét modulo $$\large N$$ nhưng đồng dư khi xét modulo $$\large p$$ và điều quan trọng là $$\large p\mid N$$. **Ví dụ:**
+- **Tại sao cái này quan trọng với Pollard's Rho?:** Vì khi hai giá trị $$\large x_{i}$$ ko đồng dư với $$\large x_{j}$$ khi thực hiện chia lấy dư với $$\large N$$ ($$\large x_{i}\not\equiv x_{j} (\bmod N)$$) nhưng lại đồng dư khi chia lấy dư với $$\large p$$ nghĩa là $$\large x_{i} \equiv x_{j} (\bmod p)$$ ở đây trong trường hợp ví dụ hiện tại là $\large p = 3$, thì hiệu của chúng sẽ chia hết cho $\large p$ ,tức là chúng khác nhau khi xét modulo $$\large N$$ nhưng đồng dư khi xét modulo $$\large p$$ và điều quan trọng là $$\large p\mid N$$. **Ví dụ:**
 
 <div align="center">
 
@@ -3185,7 +3185,7 @@ $$\Large\Rightarrow\text{ Khi ta tính gcd của hiệu đó với N = 15 , ta s
 
 </div>
 
-**Pollard's Rho lấy thừa số để làm gì?:** Khi Pollard's Rho tìm được một thừa số $\large d$, ta không dừng ở đó. Ta dùng nó để tách số $\large N$ ra thành hai phần nhỏ hơn. **Ví dụ**, nó biết thừa số của 15 là 3 như đã tính modulo ở trên, nó tiến hành lấy hai số này chia lại và ra kết quả $$\large15\div3=5$$, khi có kết quả là 5 nó có hai phần nhỏ là 5 và 3 suy ra nó có $$\large\boxed{15 = 5 \times 3}$$. Bây giờ nó lấy hai số này thực hiện như bước hai, biết nó là số nguyên tố vậy 5 và 3 chính là kết quả nhân tố của 15. Lúc này thuật toán đã hoàn thành
+- **Pollard's Rho lấy thừa số để làm gì?:** Khi Pollard's Rho tìm được một thừa số $\large d$, ta không dừng ở đó. Ta dùng nó để tách số $\large N$ ra thành hai phần nhỏ hơn. **Ví dụ**, nó biết thừa số của 15 là 3 như đã tính modulo ở trên, nó tiến hành lấy hai số này chia lại và ra kết quả $$\large15\div3=5$$, khi có kết quả là 5 nó có hai phần nhỏ là 5 và 3 suy ra nó có $$\large\boxed{15 = 5 \times 3}$$. Bây giờ nó lấy hai số này thực hiện như bước hai, biết nó là số nguyên tố vậy 5 và 3 chính là kết quả nhân tố của 15. Lúc này thuật toán đã hoàn thành
 
 > xác nhận số nguyên tố bằng thuật toán kiểm tra nguyên tố Miller–Rabin / kiểm tra ước đến căn bậc hai.
 
@@ -3260,7 +3260,7 @@ $$\huge2^{-24} + 2^{-47} = \dfrac{2^{23} + 1}{2^{47}}$$
 
 Ở đây, ta thấy mẫu số $$\large2^{47}$$ hoàn toàn nằm trong tập hợp $$\large2^{k}$$ ($$\large2^{47}\in \lbrace2^{k} | k \in \mathbb{N}_{0}\rbrace$$). Vậy nên suy ra nếu phân số tối giản có mẫu $$\large2^{k}$$ thì giá trị đó biễu diễn nhị phân hữu hạn, vậy thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
 
-**Vậy ý nghĩa khi thực hiện các bước này là gì?:** để phân biệt và nhận biết thế nào là phân tích để chứng minh tại sao phân số thập phân kia không phải là biểu diễn nhị phân hữu hạn và hexadecimal floating-point để chứng minh giá trị binary32 thực sự hữu hạn. là hai khái niệm khác nhau một cách rất tinh vi (decimal representation $$\large\neq$$ exact binary32 value).
+- **Vậy ý nghĩa khi thực hiện các bước này là gì?:** để phân biệt và nhận biết thế nào là phân tích để chứng minh tại sao phân số thập phân kia không phải là biểu diễn nhị phân hữu hạn và hexadecimal floating-point để chứng minh giá trị binary32 thực sự hữu hạn. là hai khái niệm khác nhau một cách rất tinh vi (decimal representation $$\large\neq$$ exact binary32 value).
 
 Các phép phân tích trên thực hiện hai nhiệm vụ khác nhau. Trước tiên, việc phân tích phân số thập phân cho thấy chuỗi `5.960465188081798e-7`, nếu được xem như một giá trị hữu tỉ chính xác, có mẫu số chứa $$\large5^{22}$$, nên không có biểu diễn nhị phân hữu hạn. Sau đó, việc phân tích trực tiếp hexadecimal floating-point `0x1.000002p-24f` cho thấy giá trị nhị phân chính xác của binary floating-point là:
 
