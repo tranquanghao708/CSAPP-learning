@@ -2808,7 +2808,7 @@ nên $$\large\frac{2^{1}}{2^{24}} = 2^{1 - 24} = 2^{-23}$$. Rồi bây giờ ta 
 <div align="center">
 
 $$\Large
-0x1.000002_{16} = 1 + \frac{2}{16^{-6}} = (1 + 2^{-23})2^{-24} = \boxed{2^{-24} + 2^{-47}}
+0x1.000002_{16} = 1 + \frac{2}{16^{6}} = (1 + 2^{-23})2^{-24} = \boxed{2^{-24} + 2^{-47}}
 $$
 
 </div>
@@ -2924,7 +2924,7 @@ Tiếp đến, ta cần biết cái số mà của chuỗi `0x1.000002p-24f` có
 <div align="center">
 
 $$\Large
-\boxed{5.960465188081798e-7_{10} = \frac{5960465188081798 \div 2}{10000000000000000000000 \div 2}
+\boxed{5.960465188081798e-8_{10} = \frac{5960465188081798 \div 2}{10000000000000000000000 \div 2}
  = \frac{2980232594040899}{5e+21}}$$
 
 </div>
@@ -3248,7 +3248,7 @@ Và hơn cả trăm lượt như thế, giống như cách ngốc nghếch kia c
 
 Ta thấy tử số 2980232594040899 là số lẻ nên ko thể rút được tiếp nhân tử 2. Nhưng quan trọng mẫu số vẫn chứa $$\large5^{22}$$ và thấy số 5 hoàn toàn ko nằm trong tập hợp giá trị $$\large2^{k}$$ ($$\large5\notin2^{k}$$) vậy phân số này không phải cách biểu diễn hữu hạn trong cơ số 2. Từ đó ta phát hiện giá trị thập phân được làm tròn/in ra với 17 chữ số có thể không có cùng tính chất hữu hạn nhị phân với giá trị float chính xác. Bạn nghĩ nó là số vô hạn?
 
-Chưa xong. Đây mới là chỗ nối sang chuỗi `0x1.000002p-24f`, ta cần phải phân biệt giá trị float chính xác và chuỗi thập phân được in ra. Nếu `5.960465188081798e-7` là giá trị thập phân được in từ float, thì đừng lấy chuỗi thập phân đó rồi coi nó chính xác tuyệt đối như giá trị của binary32.
+Chưa xong. Đây mới là chỗ nối sang chuỗi `0x1.000002p-24f`, ta cần phải phân biệt giá trị float chính xác và chuỗi thập phân được in ra. Nếu `5.960465188081798e-8` là giá trị thập phân được in từ float, thì đừng lấy chuỗi thập phân đó rồi coi nó chính xác tuyệt đối như giá trị của binary32.
 
 Bây giờ ta để ý thấy `p-24` nghĩa là số mũ là `-24` và như trong phần tính toán của phàn `[Câu hỏi] chuỗi số 0x1.000002p-24f là gì?` được bọc trong details. Ta tính được là $$\large2^{-24} + 2^{-47}$$. Bây giờ ta khai triển:
 
@@ -3262,7 +3262,7 @@ $$\huge2^{-24} + 2^{-47} = \dfrac{2^{23} + 1}{2^{47}}$$
 
 - **Vậy ý nghĩa khi thực hiện các bước này là gì?:** để phân biệt và nhận biết thế nào là phân tích để chứng minh tại sao phân số thập phân kia không phải là biểu diễn nhị phân hữu hạn và hexadecimal floating-point để chứng minh giá trị binary32 thực sự hữu hạn. là hai khái niệm khác nhau một cách rất tinh vi (decimal representation $$\large\neq$$ exact binary32 value).
 
-Các phép phân tích trên thực hiện hai nhiệm vụ khác nhau. Trước tiên, việc phân tích phân số thập phân cho thấy chuỗi `5.960465188081798e-7`, nếu được xem như một giá trị hữu tỉ chính xác, có mẫu số chứa $$\large5^{22}$$, nên không có biểu diễn nhị phân hữu hạn. Sau đó, việc phân tích trực tiếp hexadecimal floating-point `0x1.000002p-24f` cho thấy giá trị nhị phân chính xác của binary floating-point là:
+Các phép phân tích trên thực hiện hai nhiệm vụ khác nhau. Trước tiên, việc phân tích phân số thập phân cho thấy chuỗi `5.960465188081798e-8`, nếu được xem như một giá trị hữu tỉ chính xác, có mẫu số chứa $$\large5^{22}$$, nên không có biểu diễn nhị phân hữu hạn. Sau đó, việc phân tích trực tiếp hexadecimal floating-point `0x1.000002p-24f` cho thấy giá trị nhị phân chính xác của binary floating-point là:
 
 <div align="center">
 
@@ -3272,13 +3272,19 @@ $$\huge\dfrac{2^{23} + 1}{2^{47}}$$
 
 có mẫu số đúng bằng $$\large2^{47}$$, nên có biểu diễn nhị phân hữu hạn.Điều này cho thấy chuỗi thập phân được in ra và giá trị floating-point chính xác không nên được xem là cùng một đối tượng biểu diễn. Đây là sự khác biệt quan trọng giữa decimal representation và exact binary floating-point value.
 
-Tuy nhiên, việc một giá trị có biểu diễn nhị phân hữu hạn vẫn chưa đủ để kết luận rằng binary32 lưu được nó mà không rounding. Cần tiếp tục kiểm tra precision của binary32. Binary32 có 23 fraction bits và một implicit leading 1, tương đương 24 significant bits đối với số normalized. Vì chuỗi số `0x1.000002p-24f` đã vượt qua 23 fraction bits ta thử dump hết tất cả số của chuỗi `0x1.000002p-24f` ra bằng cách chỉnh sữa phần `printf("%.23f\n", b);` thành `printf("%.60f\n", b);` trong code C , ta có :
+Tuy nhiên, việc một giá trị có biểu diễn nhị phân hữu hạn vẫn chưa đủ để kết luận rằng binary32 lưu được nó mà không rounding. Cần tiếp tục kiểm tra precision của binary32. Binary32 có 23 fraction bits và một implicit leading 1, tương đương 24 significant bits đối với số normalized. Vì chuỗi số `0x1.000002p-24f` vẫn nằm trong 23 fraction bits ta thử dump hết tất cả số của chuỗi `0x1.000002p-24f` ra bằng cách chỉnh sữa phần `printf("%.23f\n", b);` thành `printf("%.60f\n", b);` trong code C , ta có :
 
 <p align="center">
 	<img src="image/image32.png">
 </p>
 
-> Ta thấy chuỗi số `0x1.000002p-24f` ko thuộc miền 32bits số thực biễu diễn được
+> Ta thấy chuỗi số `0x1.000002p-24f` hiện đang thuộc miền 32bits số thực biễu diễn được
+
+<details>
+	<summary><b>[Câu hỏi]</b> Vì sao trên hình ảnh đã hiện rõ ràng là chuỗi số `0x1.000002p-24f` vượt qua 23bits fraction rồi mà sao lại kết luận nó lại ko vượt và nằm trong miền 32bits số thực?</summary>
+
+
+</details>
 
 Vậy nên, biết hai giá trị của chuỗi `0x1.000002p-24f` và `1.0` đều được rounding với round to positive infinity, nó là chính xác mà ko cần phải có sự can thiệp của cơ chế round to nearest, tie to even khi gán vào một valriable trước đó.
 
