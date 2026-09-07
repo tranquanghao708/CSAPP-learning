@@ -3281,8 +3281,13 @@ Tuy nhiên, việc một giá trị có biểu diễn nhị phân hữu hạn v�
 > Ta thấy chuỗi số `0x1.000002p-24f` hiện đang thuộc miền 32bits số thực biễu diễn được
 
 <details>
-	<summary><b>[Câu hỏi]</b> Vì sao trên hình ảnh đã hiện rõ ràng là chuỗi số `0x1.000002p-24f` vượt qua 23bits fraction rồi mà sao lại kết luận nó lại ko vượt và nằm trong miền 32bits số thực?</summary>
+	<summary><b>[Câu hỏi]</b> Vì sao trên hình ảnh đã hiện rõ ràng là chuỗi số 0x1.000002p-24f vượt qua 23bits fraction rồi mà sao lại kết luận nó lại ko vượt và nằm trong miền 32bits số thực?</summary>
 
+---
+
+<sub>--đã hết phần giải thích--</sub>
+
+---
 
 </details>
 
