@@ -3312,6 +3312,8 @@ và significand này có đúng 23 fraction bits sau hidden bit. Vì vậy giá 
 
 ---
 
+Hmm, nó khá trừu tượng khi nói thẳng ra. Vậy thay vì nói trắng ra thì ta tiến hành tính toán các biểu thức toán học trước và kết luận sau. Bây giờ trước tiên ta bắt đầu với cấu trúc binary32 $$\large1.f\times2^{e}$$ trong đó $$\large f = 32\text{bits fraction}$$
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
