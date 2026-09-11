@@ -3389,7 +3389,7 @@ Nghĩa là mỗi vị trí bit đại diện cho một miếng giá trị khác 
 
 <div align="center">
 
-$$\large1\text{.}\underbrace{0}_{2^{-1}}0000\ldots\underbrace{1}_{2^{-23}}$$
+$$\Large1\underbrace{0}_{2^{-1}}0000\ldots\underbrace{1}_{2^{-23}}$$
 
 </div>
 
