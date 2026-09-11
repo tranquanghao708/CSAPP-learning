@@ -3389,9 +3389,11 @@ Nghĩa là mỗi vị trí bit đại diện cho một miếng giá trị khác 
 
 <div align="center">
 
-$$\Large 1.\underbrace{0}_{2^{-1}}\quad000\ldots\boxed{1}\rightarrow\text{bit cuối} 2^{-23}$$
+$$\Large 1.\underbrace{0}_{2^{-1}}\quad000\ldots\boxed{1}\rightarrow\text{bit cuối } 2^{-23}$$
 
 </div>
+
+Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu giữ nguyên nhưng lật bit cuối từ $$\large1.0000\ldots0000\rightarrow1.0000\ldots0001$$ thì giá trị tăng $$\large2^{-23}$$ (thực chất đã tăng theo hướng số nhỏ nhất, nhỏ tới nỗi mà ta chả thấy sự khác biệt gì rõ rệt bên phía số mũ). Đây là nguồn gốc của spacing.
 
 <sub>--đã hết phần giải thích--</sub>
 
