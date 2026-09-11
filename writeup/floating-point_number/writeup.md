@@ -3312,7 +3312,15 @@ và significand này có đúng 23 fraction bits sau hidden bit. Vì vậy giá 
 
 ---
 
-Hmm, nó khá trừu tượng khi nói thẳng ra. Vậy thay vì nói trắng ra thì ta tiến hành tính toán các biểu thức toán học trước và kết luận sau. Bây giờ trước tiên ta bắt đầu với cấu trúc binary32 $$\large1.f\times2^{e}$$ trong đó $$\large f = 32\text{bits fraction}$$, bây giờ ta cần phải hiểu lý thuyết:
+Hmm, nó khá trừu tượng khi nói thẳng ra. Vậy thay vì nói trắng ra thì ta tiến hành tính toán các biểu thức toán học trước và kết luận sau. Bây giờ trước tiên ta bắt đầu với cấu trúc binary32 :
+
+<div align="center">
+
+$$\large1.f\times2^{e}$$
+
+</div>
+
+trong đó $$\large f = 32\text{bits fraction}$$, bây giờ ta cần phải hiểu lý thuyết:
 
 - Một binary32 thực chất là một điểm trên trục số được tạo ra bằng cách chọn một trong hữu hạn các mẫu bit của significand rồi nhân nó với một scale $$\large2^{e}$$.
 
@@ -3323,6 +3331,27 @@ Vậy bây giờ, ta tạm thời bỏ hết IEEE hiện tại ra giả sử m�
 $$\Large0.xxx_{2} \times 2^{e}$$
 
 </div>
+
+Ta cần phải hỏi `"Nếu như biết nó có cấu trúc thế này, thì những số này nằm trên trục số nào?"`, để biết và trả lời được, ta lấy $$\large e=0$$ cho dễ nhìn. Ta cũng đã biết khi các số đi từ trục sang phần âm, thì số mũ sẽ là âm tại thẻ details `rõ hơn về toán học` đầu tiên của details này (điều này cũng giống như dịch bit trong dạng chuẩn hóa), dựa vào kiến thức đó ta bắt đầu tính từ số $$\large1.000_{2}$$ trướ. Ta xét:
+
+<div align="center">
+
+$$\Large1.000_{2} = 1_{10}$$
+
+$$\Large1.001_{2} = 1 + 2^{-3} = 1.125_{10}$$
+
+$$\Large1.010_{2} = 1 + 2^{-2} = 1.25_{10}$$
+
+$$\Large1.011_{2} = 1 + 2^{-2} + 2^{-3} = 1.375_{10}$$
+
+</div>
+
+Vậy từ đó ta suy ra trục
+
+```
+-------|-------|-------|-------|------->
+       1     1.125   1.25    1.375
+```
 
 <sub>--đã hết phần giải thích--</sub>
 
