@@ -3367,7 +3367,7 @@ $$\Large\Rightarrow\text{ Vậy công sai của trục là : }\boxed{0.125}$$
 
 </div>
 
-- **Vậy tại sao lại xuất hiện cấp số cộng?:** vì ta đang thay đổi bit cuối cùng thuộc một significand có 3 bits fraction, nghĩa là mỗi lần ta thay đổi như ($$\large1.000_{2}\rigntarrow 1.001_{2}\rightarrow 1.010_{2}\rightarrow 1.011_{2}$$) thì ta đều cộng cùng một lường $$\large2^{-3}$$, cho nên nó tự nhiên trở thành cấp số cộng
+- **Vậy tại sao lại xuất hiện cấp số cộng?:** vì ta đang thay đổi bit cuối cùng thuộc một significand có 3 bits fraction, nghĩa là mỗi lần ta thay đổi như ($$\large1.000_{2}\rigtarrow 1.001_{2}\rightarrow 1.010_{2}\rightarrow 1.011_{2}$$) thì ta đều cộng cùng một lường $$\large2^{-3}$$, cho nên nó tự nhiên trở thành cấp số cộng
 
 <sub>--đã hết phần giải thích--</sub>
 
