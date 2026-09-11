@@ -3312,7 +3312,17 @@ và significand này có đúng 23 fraction bits sau hidden bit. Vì vậy giá 
 
 ---
 
-Hmm, nó khá trừu tượng khi nói thẳng ra. Vậy thay vì nói trắng ra thì ta tiến hành tính toán các biểu thức toán học trước và kết luận sau. Bây giờ trước tiên ta bắt đầu với cấu trúc binary32 $$\large1.f\times2^{e}$$ trong đó $$\large f = 32\text{bits fraction}$$
+Hmm, nó khá trừu tượng khi nói thẳng ra. Vậy thay vì nói trắng ra thì ta tiến hành tính toán các biểu thức toán học trước và kết luận sau. Bây giờ trước tiên ta bắt đầu với cấu trúc binary32 $$\large1.f\times2^{e}$$ trong đó $$\large f = 32\text{bits fraction}$$, bây giờ ta cần phải hiểu lý thuyết:
+
+- Một binary32 thực chất là một điểm trên trục số được tạo ra bằng cách chọn một trong hữu hạn các mẫu bit của significand rồi nhân nó với một scale $$\large2^{e}$$.
+
+Vậy bây giờ, ta tạm thời bỏ hết IEEE hiện tại ra giả sử một ngành kiến trúc CPU chỉ chứa được 3 fraction bits như sau:
+
+<div align="center">
+
+$$\Large0.xxx_{2} \times 2^{e}$$
+
+</div>
 
 <sub>--đã hết phần giải thích--</sub>
 
