@@ -3393,7 +3393,11 @@ $$\Large 1.\underbrace{0}_{2^{-1}}\quad000\ldots\boxed{1}\rightarrow\text{bit cu
 
 </div>
 
-Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu giữ nguyên nhưng lật bit cuối từ $$\large1.0000\ldots0000\rightarrow1.0000\ldots0001$$ thì giá trị tăng $$\large2^{-23}$$ (thực chất đã tăng theo hướng số nhỏ nhất, nhỏ tới nỗi mà ta chả thấy sự khác biệt gì rõ rệt bên phía số mũ). Đây là nguồn gốc của spacing.
+Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu giữ nguyên nhưng lật bit cuối từ ($$\large1.0000\ldots0000\rightarrow1.0000\ldots0001$$) thì giá trị tăng $$\large2^{-23}$$ (thực chất đã tăng theo hướng số nhỏ nhất, nhỏ tới nỗi mà ta chả thấy sự khác biệt gì rõ rệt bên phía số mũ). Đây là nguồn gốc của spacing (khoảng cách), nên đây ko phải là công sai được áp dụng vào IEEE, nó tuân theo khái niệm:
+
+- Do representation chỉ cho phép những bước rời rạc có kích thước $$\large2^{-23}$$ trong significand, nên các giá trị đó tự tạo thành một cấp số cộng.
+
+**Nhưng tại sao số hiện tại là** $$\large2^{-47}$$ **, ko phải** $$\large2^{-23}$$ **?:**
 
 <sub>--đã hết phần giải thích--</sub>
 
