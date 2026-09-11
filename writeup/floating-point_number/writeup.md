@@ -3369,6 +3369,22 @@ $$\Large\Rightarrow\text{ Vậy công sai của trục là : }\boxed{0.125}$$
 
 - **Vậy tại sao lại xuất hiện cấp số cộng?:** vì ta đang thay đổi bit cuối cùng thuộc một significand có 3 bits fraction, nghĩa là mỗi lần ta thay đổi như ($$\large1.000_{2}\rightarrow 1.001_{2}\rightarrow 1.010_{2}\rightarrow 1.011_{2}$$) thì ta đều cộng cùng một lường $$\large2^{-3}$$, cho nên nó tự nhiên trở thành cấp số cộng
 
+Tuy nhiên đây cũng là bản chất của fraction. Bây giò, ta bỏ 3bits fraction đi, thực chiến với binary32 là 23bits fraction và một số chuẩn hóa dạng 32bits này thường có dạng :
+
+<div align="center">
+
+$$\Large1.b_{1}b_{2}b_{3}b_{4}\ldots b_{23}$$
+
+</div>
+
+và giá trị của nó là:
+
+<div align="center">
+
+$$\Large1+b_{1}2^{-1} + b_{2}2^{-2} + b_{3}2^{-3} + b_{4}2^{-4}\ldots + b_{23}2^{-23}$$
+
+</div>
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
