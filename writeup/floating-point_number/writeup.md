@@ -3385,6 +3385,14 @@ $$\Large1+b_{1}2^{-1} + b_{2}2^{-2} + b_{3}2^{-3} + b_{4}2^{-4}\ldots + b_{23}2^
 
 </div>
 
+Nghĩa là mỗi vị trí bit đại diện cho một miếng giá trị khác nhau. **Ví dụ** ta có dãy binary như :
+
+<div align="center">
+
+$$\large1.\underbrace{0}_{2^{-1}}0000\ldots\underbrace{1}_{2^{-23}}$$
+
+</div>
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
