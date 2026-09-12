@@ -3395,7 +3395,9 @@ $$\Large 1.\underbrace{0}_{2^{-1}}\quad000\ldots\boxed{1}\rightarrow\text{bit cu
 
 Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu giữ nguyên nhưng lật bit cuối từ ($$\large1.0000\ldots0000_{2}\rightarrow1.0000\ldots0001_{2}$$) thì giá trị tăng $$\large2^{-23}$$ (thực chất đã tăng theo hướng số nhỏ nhất, nhỏ tới nỗi mà ta chả thấy sự khác biệt gì rõ rệt bên phía số mũ). Đây là nguồn gốc của spacing (khoảng cách), nên đây ko phải là công sai được áp dụng vào IEEE, nó tuân theo khái niệm là do representation chỉ cho phép những bước rời rạc có kích thước $$\large2^{-23}$$ trong significand, nên các giá trị đó tự tạo thành một cấp số cộng.
 
-- **Nhưng tại sao số hiện tại là** $$\large2^{-47}$$ **, ko phải** $$\large2^{-23}$$ **?:** Nhìn $$\large1.0000\ldots0001_{2}$$ và ta thấy $$\large d=2^{-23}$$ là đúng, nhưng đây chưa phải là giá trị thực sự cuối cùng
+- **Nhưng tại sao số hiện tại là** $$\large2^{-47}$$ **, ko phải** $$\large2^{-23}$$ **?:** Nhìn $$\large1.0000\ldots0001_{2}$$ và ta thấy $$\large d=2^{-23}$$ là đúng, nhưng đây chưa phải là giá trị thực sự cuối cùng, IEEE nó còn quan tâm tới significand $$\large\times2^{e}$$, số của chúng ta có $$\large e=-24$$ nên ta có $$\large1.00000000000000000000001_{2}\times2^{-24}​$$.
+
+  **Điều này nghĩa là gì?:** hãy tưởng tượng một cái thước
 
 <sub>--đã hết phần giải thích--</sub>
 
