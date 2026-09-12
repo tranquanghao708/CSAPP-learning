@@ -2685,7 +2685,7 @@ Bây giờ ta khai triển biểu thức toán để tính toán giá trị củ
 
 > rõ hơn về toán học trên tại đây
 
-<details>
+<details id="ro-hon-ve-toan-hoc">
 	<summary><b>[Chi tiết]</b> rõ hơn</summary>
 
 ---
@@ -3332,7 +3332,7 @@ $$\Large0.xxx_{2} \times 2^{e}$$
 
 </div>
 
-Ta cần phải hỏi `"Nếu như biết nó có cấu trúc thế này, thì những số này nằm trên trục số nào?"`, để biết và trả lời được, ta lấy $$\large e=0$$ cho dễ nhìn. Ta cũng đã biết khi các số đi từ trục sang phần âm, thì số mũ sẽ là âm tại thẻ details `rõ hơn về toán học` đầu tiên của details này (điều này cũng giống như dịch bit trong dạng chuẩn hóa), dựa vào kiến thức đó ta bắt đầu tính từ số $$\large1.000_{2}$$ trướ. Ta xét:
+Ta cần phải hỏi `"Nếu như biết nó có cấu trúc thế này, thì những số này nằm trên trục số nào?"`, để biết và trả lời được, ta lấy $$\large e=0$$ cho dễ nhìn. Ta cũng đã biết khi các số đi từ trục sang phần âm, thì số mũ sẽ là âm tại thẻ details [rõ hơn về toán học](ro-hon-ve-toan-hoc) (điều này cũng giống như dịch bit trong dạng chuẩn hóa), dựa vào kiến thức đó ta bắt đầu tính từ số $$\large1.000_{2}$$ trướ. Ta xét:
 
 <div align="center">
 
