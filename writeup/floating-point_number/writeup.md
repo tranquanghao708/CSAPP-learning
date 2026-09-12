@@ -3397,7 +3397,15 @@ Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu g
 
 - **Nhưng tại sao số hiện tại là** $$\large2^{-47}$$ **, ko phải** $$\large2^{-23}$$ **?:** Nhìn $$\large1.0000\ldots0001_{2}$$ và ta thấy $$\large d=2^{-23}$$ là đúng, nhưng đây chưa phải là giá trị thực sự cuối cùng, IEEE nó còn quan tâm tới significand $$\large\times2^{e}$$, số của chúng ta có $$\large e=-24$$ nên ta có $$\large1.00000000000000000000001_{2}\times2^{-24}​$$.
 
-  **Điều này nghĩa là gì?:** hãy tưởng tượng một cái thước
+  **Điều này nghĩa là gì?:** hãy tưởng tượng một cái thước, ban đầu các đơn vị như `cm` nó cách đều nhau cho là $$\large2^{-23}$$, nhưng sau đó ta đặt giả thuyết lấy toàn bộ cái thước này và thu nhỏ nó gấp $$\large2^{24}$$ lần, thì khoảng cách giữa các vạch cũng bị thu nhỏ gấp $$\large2^{24}$$ lần. Từ đó ta suy ra :
+
+<div align="center">
+
+$$\large2^{-23}\times\frac{1}{2^{24}} = 2^{-47}$$
+
+</div>
+
+  Đó chính xác là chuyện IEEE đang làm.
 
 <sub>--đã hết phần giải thích--</sub>
 
