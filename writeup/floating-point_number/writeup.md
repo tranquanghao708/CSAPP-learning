@@ -3408,8 +3408,20 @@ Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu g
   Đó chính xác là chuyện IEEE đang làm. Bây giờ chúng ta nhìn vào trục số. xét trục số:
 
   ```
-   ---------------------
+   1.00000       1.00001       1.00010       1.00011
+      |-------------|-------------|-------------|
+
+                 khoảng cách = 2^-23
   ```
+
+  Bây giờ ta nhân tất cả nó với $$\large2^{-47}$$, thì toàn bộ trục bị co lại như sau:
+
+  ```
+   2^-24        2^-24+2^-47       2^-24+2·2^-47
+     |---------------|-------------------|
+  ```
+
+  và khoảng cách mới là $$\large2^{-47}$$, đây chính là (khoảng cách = khoảng cách của significand $$\large\times$$ scale của exponent)
 
 <sub>--đã hết phần giải thích--</sub>
 
