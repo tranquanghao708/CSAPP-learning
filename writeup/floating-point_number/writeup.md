@@ -3399,11 +3399,12 @@ Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu g
 
   **Điều này nghĩa là gì?:** hãy tưởng tượng một cái thước, ban đầu các đơn vị như `cm` nó cách đều nhau cho là $$\large2^{-23}$$, nhưng sau đó ta đặt giả thuyết lấy toàn bộ cái thước này và thu nhỏ nó gấp $$\large2^{24}$$ lần, thì khoảng cách giữa các vạch cũng bị thu nhỏ gấp $$\large2^{24}$$ lần. Từ đó ta suy ra biểu thức :
 
-<div align="center">
+  <div align="center">
 
-$$\Large2^{-23}\times\frac{1}{2^{24}} = 2^{-47}$$
+  $$\Large2^{-23}\times\frac{1}{2^{24}} = 2^{-47}$$
 
-</div>
+  </div>
+
   Đó chính xác là chuyện IEEE đang làm.
 
 <sub>--đã hết phần giải thích--</sub>
