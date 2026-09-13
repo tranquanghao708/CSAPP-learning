@@ -181,7 +181,7 @@ b : là độ lệch, viết tắt bias
 
 > Trích từ CS:APP
 
-- **chuẩn hóa là gì?** : giống toán học, **formula =**$$\large1.xxxxx\times2^{N}$$ **ví dụ** $$\large12345_{10}$$ = $$\large1.2345_{10}\times10^{4}$$ số mũ là 4 vì dịch dot sang trái 4 lần hoặc $$\large0.00123_{10}$$ = $$\large1.23\times10^{-3}$$ số mũ là -3 vì dịch dot sang phải 3 lần. Đó gọi là dạng chuẩn hóa
+- **chuẩn hóa là gì?** : giống toán học, **formula =**$$\large1.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{N}$$ **ví dụ** $$\large12345_{10}$$ = $$\large1.2345_{10}\times10^{4}$$ số mũ là 4 vì dịch dot sang trái 4 lần hoặc $$\large0.00123_{10}$$ = $$\large1.23\times10^{-3}$$ số mũ là -3 vì dịch dot sang phải 3 lần. Đó gọi là dạng chuẩn hóa
 
 IEEE 754 cũng làm thế, cơ mà nó biểu diễn dạng binary và dùng cơ số 2. **Ví dụ**, $$\large13.25_{10} = 1101.01_{2}$$, di chuyển dấu chấm sao cho trước dấu chấm chỉ còn đúng một bit 1 ta có $$\large1.10101_{2}$$ số lần di chuyển là 3 vì :
 
@@ -3328,7 +3328,7 @@ Vậy bây giờ, ta tạm thời bỏ hết IEEE hiện tại ra giả sử m�
 
 <div align="center">
 
-$$\Large0.xxx_{2} \times 2^{e}$$
+$$\Large0.b_{1}b_{2}b_{3} \times 2^{e} \quad b_{i} \in\lbrace0,1\rbrace$$
 
 </div>
 
