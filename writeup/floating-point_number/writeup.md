@@ -3382,7 +3382,7 @@ $$\Large\Rightarrow\text{ Vậy công sai của trục là : }\boxed{0.125}$$
 
   </div>
 
-  Bit fraction cuối cùng có trọng số $$\large2^{−3}$ = 0.125$$. Vì vậy, khi tăng số nguyên mã hóa fraction thêm 1, giá trị significand tăng 0.125. **Cho ví dụ** $$\large1.001_{2}\rightarrow1.010_{2}$$, ta thấy ở đây không phải chỉ bật thêm một bit: bit cuối chuyển từ 1 thành 0, bit kế bên chuyển từ 0 thành 1. Nhưng giá trị vẫn tăng đúng $$\large2{−3}$$ :
+  Bit fraction cuối cùng có trọng số $$\large2^{−3} = 0.125$$. Vì vậy, khi tăng số nguyên mã hóa fraction thêm 1, giá trị significand tăng 0.125. **Cho ví dụ** $$\large1.001_{2}\rightarrow1.010_{2}$$, ta thấy ở đây không phải chỉ bật thêm một bit: bit cuối chuyển từ 1 thành 0, bit kế bên chuyển từ 0 thành 1. Nhưng giá trị vẫn tăng đúng $$\large2{−3}$$ :
 
   <div align="center">
 
