@@ -236,7 +236,7 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 
 > trích từ CS:APP
 
-- Là việc bit đầu tiên là 0 nhưng nó thực hiện phép toán $$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$. **Lúc này** hiddenbit không còn là 1 nữa, nó là 0 và exponent field luôn là 0. Giả sử float (32bits) ta có :
+- Là việc bit đầu tiên là 0 nhưng nó thực hiện phép toán $$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$ với $$\largeb_{i} \in \lbrace0,1\rbrace$$. **Lúc này** hiddenbit không còn là 1 nữa, nó là 0 và exponent field luôn là 0. Giả sử float (32bits) ta có :
 
 ```
 Exponent = 00000000
@@ -3328,7 +3328,7 @@ Vậy bây giờ, ta tạm thời bỏ hết IEEE hiện tại ra giả sử m�
 
 <div align="center">
 
-$$\Large0.b_{1}b_{2}b_{3}_{2} \times 2^{e}$$
+$$\Large0.b_{1}b_{2}b_{3} \times 2^{e} (b_{i} \in \lbrace0,1\rbrace)$$
 
 </div>
 
