@@ -841,7 +841,7 @@ chúng ta đã tách được Sign | Exponent | Fraction, nhưng phần số mũ
 
 #### 2.2.3.Khôi phục Hidden Bit
 
-Sau khi đã tính được Actual Exponent, bước tiếp theo là khôi phục Hidden Bit (hay còn gọi là Implicit Leading Bit). IEEE quy định rằng đối với số chuẩn hóa (normalized) bit `1` đứng trước dấu chấm sẽ không được lưu trong bộ nhớ bởi vì sau khi chuẩn hóa nó sẽ có dạng $$\large1.b_{1}b_{2}b_{3}..._{2}\times2^{N}$$ do bit đứng trước dấu chấm bằng 1, IEEE không cần lưu để tiết kiệm một bit fraction. Vì vậy, khi giải mã (Decode), CPU sẽ tự động thêm lại bit này. ở bước tách sign, exponent, fraction ta đã tách được như sau :
+Sau khi đã tính được Actual Exponent, bước tiếp theo là khôi phục Hidden Bit (hay còn gọi là Implicit Leading Bit). IEEE quy định rằng đối với số chuẩn hóa (normalized) bit `1` đứng trước dấu chấm sẽ không được lưu trong bộ nhớ bởi vì sau khi chuẩn hóa nó sẽ có dạng $$\large1.b_{1}b_{2}b_{3}\ldots\times2^{N}$$ do bit đứng trước dấu chấm bằng 1, IEEE không cần lưu để tiết kiệm một bit fraction. Vì vậy, khi giải mã (Decode), CPU sẽ tự động thêm lại bit này. ở bước tách sign, exponent, fraction ta đã tách được như sau :
 
 | sign | exponent | fraction |
 |------|----------|----------|
