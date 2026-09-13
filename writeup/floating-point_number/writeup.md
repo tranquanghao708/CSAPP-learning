@@ -245,28 +245,6 @@ Fraction = 00000000000000000000001
 
 thì đây không phải là pattern $$\large1.0000000000_{2}\times2^{-127}$$ mà là $$\large0.0000000000000000000001_{2}\times2^{-126}$$ vì hiddenbit đã bằng 0.
 
-$$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$
-
-$$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$
-
-$$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$
-
-$$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$
-
-$$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$
-
-$$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$
-
-$$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$
-
-
-$$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$
-
-
-$$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$
-
-$$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$
-
 > [!NOTE]
 > **Lưu ý:** `actual exponent = -127` của $$\large1.0000000000_{2}\times2^{-127}$$ là do `actual exponent = E - bias` suy ra `0 - 127 = -127` vì E là viết tắt của exponent field vầ trường hợp này với số chuẩn hóa exponent field là 0. Còn với số khử chuẩn hóa luôn dùng `actual exponent = 1 - bias` nên `1 - 127 = -126` nên mới có biểu thức $$\large0.0000000000000000000001_{2}\times2^{-126}$$
 
