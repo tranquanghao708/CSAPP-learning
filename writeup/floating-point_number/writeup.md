@@ -253,7 +253,7 @@ thì đây không phải là pattern $$\large1.0000000000_{2}\times2^{-127}$$ m�
 > [!IMPORTANT]
 > Đối với normalized numbers, IEEE754 dùng $$\large1.xxxxx\times2^{N}$$ nên số đầu tiên luôn là 1 (hiddenbit = 1)
 >
-> Còn với Denormalized numbers, IEEE754 dùng $$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1 - Bias}$$ nên `exponent field = 0` và hiddenbit được xem là 0. Khử chuẩn hóa được thiết kế để biểu diễn với số gần 0 nhất **tránh bị underflow** quá sớm (hiddenbit = 0)
+> Còn với Denormalized numbers, IEEE754 dùng $$\large0.xxxxx\times2^{1 - Bias}$$ nên `exponent field = 0` và hiddenbit được xem là 0. Khử chuẩn hóa được thiết kế để biểu diễn với số gần 0 nhất **tránh bị underflow** quá sớm (hiddenbit = 0)
 
 #### 1.2.1.Khi nào IEEE 754 sử dụng Normalized và Denormalized?
 
