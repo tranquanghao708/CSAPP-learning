@@ -3444,7 +3444,21 @@ Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu g
      |---------------|-------------------|
   ```
 
-  và khoảng cách mới là $$\large2^{-47}$$, đây chính là (khoảng cách = khoảng cách của significand $$\large\times$$ scale của exponent)
+  và khoảng cách mới là $$\large2^{-47}$$, đây chính là (khoảng cách = khoảng cách của significand $$\large\times$$ scale của exponent). Có nghĩa là cái khoảng cách của significand này, ở ví dụ 3bits fraction là đi tính công sai suy ra khoảng cách và cái khoảng cách đó cho ta biết đó là giá trị được cộng vào ở hệ cơ số 10, khi cộng thêm 1 vào hệ cơ số 2, còn khoảng cách mới này gọi là khoảng cách toàn bộ số thực ,có thể gọi là khoảng cách giữa hai số floating-point biểu diễn được liên tiếp hay spacing. Trong ngữ cảnh này, nó cũng chính là ULP độ lớn của một bước giữa các giá trị biểu diễn kề nhau tại vùng đang xét. Ta có thể phân biệt như sau:
+
+  - **Khoảng cách significand :** là kết quả công sai được cộng vào hệ cơ số 10 khi cộng thêm 1 vào hệ cơ số 2
+
+  - **Khoảng cách toàn bộ số thực (spacing) :** là nó chính là ULP độ lớn của một bước giữa các giá trị biểu diễn kề nhau tại vùng đang xét
+
+  thì ở 32bits (float), công sai của khoảng cách significand có kết quả là $$\large2^{-23}$$ và ta biết số mũ (exponent) $$\large e = 2^{-24}$$ theo hệ 32bits (float). Để tính được khoảng cách của toàn bộ số thực (spacing) theo 32bits này, ta lấy công thức như trên là (spacing = khoảng cách significand x exponent), ta xét:
+
+  <div align="center">
+
+  $$\Large2^{-23}\times2^{-24} = \boxed{2^{-47}}$$
+
+  </div>
+
+  nên cũng là câu trả lời cho câu hỏi, nó chọn khoảng cách của toàn bộ số thực (spacing) chứ ko phải đi chọn khoảng cách significand.
 
 <sub>--đã hết phần giải thích--</sub>
 
