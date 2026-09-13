@@ -3450,7 +3450,7 @@ Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu g
 
   - **Khoảng cách toàn bộ số thực (spacing) :** là nó chính là ULP độ lớn của một bước giữa các giá trị biểu diễn kề nhau tại vùng đang xét
 
-  thì ở 32bits (float), công sai của khoảng cách significand có kết quả là $$\large2^{-23}$$ và ta biết số mũ (exponent) $$\large e = 2^{-24}$$ theo hệ 32bits (float). Để tính được khoảng cách của toàn bộ số thực (spacing) theo 32bits này, ta lấy công thức như trên là (spacing = khoảng cách significand x exponent), ta xét:
+  thì ở 32bits (float), công sai của khoảng cách significand có kết quả là $$\large2^{-23}$$ và ta biết số mũ (exponent) $$\large e = -24$$ và hệ số scale là $$\large2^{e} = 2^{-24}$$ theo hệ 32bits (float). Để tính được khoảng cách của toàn bộ số thực (spacing) theo 32bits này, ta lấy công thức như trên là (spacing = khoảng cách significand x exponent), ta xét:
 
   <div align="center">
 
@@ -3459,6 +3459,8 @@ Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu g
   </div>
 
   nên cũng là câu trả lời cho câu hỏi, nó chọn khoảng cách của toàn bộ số thực (spacing) chứ ko phải đi chọn khoảng cách significand.
+
+  - **Vì sao IEEE 754 cần spacing thay đổi theo exponent? :** Nếu mọi số đều phải cách nhau một khoảng cách tuyệt đối cố định, thì muốn biểu diễn được những số rất nhỏ, ta phải chọn bước cực nhỏ; khi đó việc bao phủ các số rất lớn sẽ đòi hỏi quá nhiều giá trị biểu diễn. IEEE 754 dùng significand kết hợp với exponent để thay đổi thang đo: các số nhỏ có spacing nhỏ, còn các số lớn có spacing lớn hơn. Cách này giúp định dạng biểu diễn được miền giá trị rộng với số bit hữu hạn, đồng thời duy trì độ chính xác tương đối khá ổn định trong các vùng chuẩn hóa.
 
 <sub>--đã hết phần giải thích--</sub>
 
