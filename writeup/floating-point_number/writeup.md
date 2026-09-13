@@ -3332,7 +3332,7 @@ $$\Large0.xxx_{2} \times 2^{e}$$
 
 </div>
 
-Ta cần phải hỏi `"Nếu như biết nó có cấu trúc thế này, thì những số này nằm trên trục số nào?"`, để biết và trả lời được, ta lấy $$\large e=0$$ cho dễ nhìn. Ta cũng đã biết khi các số đi từ trục sang phần âm, thì số mũ sẽ là âm tại thẻ details [rõ hơn về toán học](#ro-hon-ve-toan-hoc) trong thẻ details cha [giải thích chuỗi số 0x1.000002p-24f](#chuoi-so-hexc) (điều này cũng giống như dịch bit trong dạng chuẩn hóa), dựa vào kiến thức đó ta bắt đầu tính từ số $$\large1.000_{2}$$ trướ. Ta xét:
+Ta cần phải hỏi `"Nếu như biết nó có cấu trúc thế này, thì những số này nằm trên trục số nào?"`, để biết và trả lời được, ta lấy $$\large e=0$$ cho dễ nhìn. Ta cũng đã biết khi các số đi từ trục sang phần âm, thì số mũ sẽ là âm tại thẻ details [rõ hơn về toán học](#ro-hon-ve-toan-hoc) trong thẻ details cha [giải thích chuỗi số 0x1.000002p-24f](#chuoi-so-hexc) (điều này cũng giống như dịch bit trong dạng chuẩn hóa), dựa vào kiến thức đó ta bắt đầu tính từ số $$\large1.000_{2}$$ trước. Ta xét:
 
 <div align="center">
 
@@ -3368,6 +3368,29 @@ $$\Large\Rightarrow\text{ Vậy công sai của trục là : }\boxed{0.125}$$
 </div>
 
 - **Vậy tại sao lại xuất hiện cấp số cộng?:** vì ta đang thay đổi các significand hợp lệ liên tiếp khác nhau đúng một đơn vị của bit fraction thấp nhất thuộc một significand có 3 bits fraction, nghĩa là mỗi lần ta thay đổi như ($$\large1.000_{2}\rightarrow 1.001_{2}\rightarrow 1.010_{2}\rightarrow 1.011_{2}$$) thì ta đều cộng cùng một lường $$\large2^{-3}$$, cho nên nó tự nhiên trở thành cấp số cộng
+
+  **Điều này nghĩa là:** Nếu đã biết được giá trị công sai là `0.125` rồi, thì hễ mà cộng một bit vào significand tương đương cả chuỗi nhị phân đó có giá trị là tăng thêm `0.125` theo hệ cơ số 10. Rõ hơn với 3 bits fraction thì ta có bảng như sau:
+
+  <div align="center">
+
+  | significand | giá trị |
+  |-|-|
+  | $$\large1.000_{2}$$ | 1 |
+  | $$\large1.001_{2}$$ | 1.125 |
+  | $$\large1.010_{2}$$ | 1.25 |
+  | $$\large1.011_{2}$$ | 1.375 |
+
+  </div>
+
+  Bit fraction cuối cùng có trọng số $$\large2^{−3}$ = 0.125$$. Vì vậy, khi tăng số nguyên mã hóa fraction thêm 1, giá trị significand tăng 0.125. **Cho ví dụ** $$\large1.001_{2}\rightarrow1.010_{2}$$, ta thấy ở đây không phải chỉ bật thêm một bit: bit cuối chuyển từ 1 thành 0, bit kế bên chuyển từ 0 thành 1. Nhưng giá trị vẫn tăng đúng $$\large2{−3}$$ :
+
+  <div align="center">
+
+  $$\Large1.010_{2} - 1.001_{2} = 0.001_{2} = 2^{-3} = 0.125_{10}$$
+
+  </div>
+
+  $$\Large\Rightarrow$$ Đó là lý do các significand liên tiếp tạo thành cấp số cộng. Mỗi bước là tăng mã fraction lên 1
 
 Tuy nhiên đây cũng là bản chất của fraction. Bây giò, ta bỏ 3bits fraction đi, thực chiến với binary32 là 23bits fraction và một số chuẩn hóa dạng 32bits này thường có dạng :
 
