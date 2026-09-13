@@ -236,7 +236,7 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 
 > trích từ CS:APP
 
-- Là việc bit đầu tiên là 0 nhưng nó thực hiện phép toán $$\large0.xxxxx\times2^{1-bias}$$. **Lúc này** hiddenbit không còn là 1 nữa, nó là 0 và exponent field luôn là 0. Giả sử float (32bits) ta có :
+- Là việc bit đầu tiên là 0 nhưng nó thực hiện phép toán $$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$. **Lúc này** hiddenbit không còn là 1 nữa, nó là 0 và exponent field luôn là 0. Giả sử float (32bits) ta có :
 
 ```
 Exponent = 00000000
@@ -253,7 +253,7 @@ thì đây không phải là pattern $$\large1.0000000000_{2}\times2^{-127}$$ m�
 > [!IMPORTANT]
 > Đối với normalized numbers, IEEE754 dùng $$\large1.xxxxx\times2^{N}$$ nên số đầu tiên luôn là 1 (hiddenbit = 1)
 >
-> Còn với Denormalized numbers, IEEE754 dùng $$\large0.xxxxx\times2^{1 - Bias}$$ nên `exponent field = 0` và hiddenbit được xem là 0. Khử chuẩn hóa được thiết kế để biểu diễn với số gần 0 nhất **tránh bị underflow** quá sớm (hiddenbit = 0)
+> Còn với Denormalized numbers, IEEE754 dùng $$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1 - Bias}$$ nên `exponent field = 0` và hiddenbit được xem là 0. Khử chuẩn hóa được thiết kế để biểu diễn với số gần 0 nhất **tránh bị underflow** quá sớm (hiddenbit = 0)
 
 #### 1.2.1.Khi nào IEEE 754 sử dụng Normalized và Denormalized?
 
@@ -262,7 +262,7 @@ thì đây không phải là pattern $$\large1.0000000000_{2}\times2^{-127}$$ m�
 - Nếu `normalized` không biểu diễn được nhưng vẫn còn nằm trong phạm vi **subnormal** mới được chọn tới `denormalized` để biểu diễn các số sát `0` nhất có thể. Tuy nhiên độ chính xác sẽ thấp hơn, dùng cho số rất nhỏ gần sát `0`
 
 > [!IMPORTANT]
-> `Normalized` được IEEE ưu tiên vì độ chính xác cao hơn, tận dụng hiddenbit với dạng $$\large1.xxxxx\times2^{N}$$. Nhưng nếu số quá nhỏ cần phải dùng tới `Denormalized` với dạng $$\large0.xxxxx\times2^{1 - bias}$$ , điều này giúp biễu diễn các số sát `0` nhất có thể, tuy nhiên độ chính xác thấp hơn.
+> `Normalized` được IEEE ưu tiên vì độ chính xác cao hơn, tận dụng hiddenbit với dạng $$\large1.xxxxx\times2^{N}$$. Nhưng nếu số quá nhỏ cần phải dùng tới `Denormalized` với dạng $$\large0.b_{1}b_{2}_{3}b_{4}b_{5}\times2^{1 - bias}$$ , điều này giúp biễu diễn các số sát `0` nhất có thể, tuy nhiên độ chính xác thấp hơn.
 >
 > Nếu `Denormalized` không thể sử dụng được nữa (nhỏ hơn cả subnormal nhỏ nhất) thì gía trị số thực sẽ bị underflow và kết quả sẽ thành `0`
 
@@ -3305,7 +3305,7 @@ $$\Large1.00000000000000000000001_{2} \times 2^{-24}$$
 
 và significand này có đúng 23 fraction bits sau hidden bit. Vì vậy giá trị này có thể được biểu diễn chính xác trong binary32.
 
-- **Điểm quan trọng:** output `0.0000000596046518808179826010018587...` không chứng minh `0x1.000002p-24f` vượt 23 fraction bits. Ngược lại, nó cho thấy literal đó được biểu diễn chính xác bằng binary32. Giá trị ở giữa (nghĩa là giá trị của `0x1.000002p-24f`) chính xác là $$\large x = 2^{-24} + 2^{-47}$$. Nhưng hãy nhìn khoảng cách giữa hai binary32 xung quanh nó. Với các số binary32 quanh $$\large 2^{-24}$$ và $$\large 2^{−24}+2^{−47}=1.00000011920928955078125\times10^{−7}$$. Khoảng cách $$\large2^{-47}$$ mà $$\large x = 2^{-24} + 2^{-47}$$ do đó $$\large x = 2^{-24} + 1.2^{-47}$$ (Lưu ý dấu `.` ko phải phép nhân) nó chính xác nằm đúng tại binary32 kế tiếp của $$\large2^{-24}$$ hay nói chính xác hơn, cần cẩn thận với cách quy chiếu exponent/subnormal ở vùng này. Điểm quan trọng là giá trị literal này có một biểu diễn binary32 hợp lệ, và output `%.60f` của một biến float đang cho thấy giá trị đó đã được lưu dưới dạng float.
+- **Điểm quan trọng:** output `0.0000000596046518808179826010018587...` không chứng minh `0x1.000002p-24f` vượt 23 fraction bits. Ngược lại, nó cho thấy literal đó được biểu diễn chính xác bằng binary32.  Binary32 hợp lệ (cụ thể là số ngay sau $$\large2^{-24}$$ nghĩa là giá trị của `0x1.000002p-24f`) chính xác là $$\large x = 2^{-24} + 2^{-47}$$. Nhưng hãy nhìn khoảng cách giữa hai binary32 xung quanh nó. Với các số binary32 quanh $$\large 2^{-24}$$ và $$\large 2^{−24}+2^{−47}=1.00000011920928955078125\times10^{−7}$$. Khoảng cách $$\large2^{-47}$$ mà $$\large x = 2^{-24} + 2^{-47}$$ do đó $$\large x = 2^{-24} + 2^{-47}$$ nó chính xác nằm đúng tại binary32 kế tiếp của $$\large2^{-24}$$ hay nói chính xác hơn, cần cẩn thận với cách quy chiếu exponent/subnormal ở vùng này. Điểm quan trọng là giá trị literal này có một biểu diễn binary32 hợp lệ, và output `%.60f` của một biến float đang cho thấy giá trị đó đã được lưu dưới dạng float.
 
 <details>
 	<summary><b>[câu hỏi]</b> khoảng cách giữa hai binary32 xung quanh nó là gì ?</summary>
@@ -3328,7 +3328,7 @@ Vậy bây giờ, ta tạm thời bỏ hết IEEE hiện tại ra giả sử m�
 
 <div align="center">
 
-$$\Large0.xxx_{2} \times 2^{e}$$
+$$\Large0.b_{1}b_{2}b_{3}_{2} \times 2^{e}$$
 
 </div>
 
@@ -3446,11 +3446,11 @@ Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu g
 
   và khoảng cách mới là $$\large2^{-47}$$, đây chính là (khoảng cách = khoảng cách của significand $$\large\times$$ scale của exponent). Có nghĩa là cái khoảng cách của significand này, ở ví dụ 3bits fraction là đi tính công sai suy ra khoảng cách và cái khoảng cách đó cho ta biết đó là giá trị được cộng vào ở hệ cơ số 10, khi cộng thêm 1 vào hệ cơ số 2, còn khoảng cách mới này gọi là khoảng cách toàn bộ số thực ,có thể gọi là khoảng cách giữa hai số floating-point biểu diễn được liên tiếp hay spacing. Trong ngữ cảnh này, nó cũng chính là ULP độ lớn của một bước giữa các giá trị biểu diễn kề nhau tại vùng đang xét. Ta có thể phân biệt như sau:
 
-  - **Khoảng cách significand :** là kết quả công sai được cộng vào hệ cơ số 10 khi cộng thêm 1 vào hệ cơ số 2
+  - **Công sai significand :** là kết quả công sai được cộng vào hệ cơ số 10 khi cộng thêm 1 vào hệ cơ số 2
 
-  - **Khoảng cách toàn bộ số thực (spacing) :** là nó chính là ULP độ lớn của một bước giữa các giá trị biểu diễn kề nhau tại vùng đang xét
+  - **Công sai toàn bộ số thực (spacing) :** là nó chính là ULP độ lớn của một bước giữa các giá trị biểu diễn kề nhau tại vùng đang xét
 
-  thì ở 32bits (float), công sai của khoảng cách significand có kết quả là $$\large2^{-23}$$ và ta biết số mũ (exponent) $$\large e = -24$$ và hệ số scale là $$\large2^{e} = 2^{-24}$$ theo hệ 32bits (float). Để tính được khoảng cách của toàn bộ số thực (spacing) theo 32bits này, ta lấy công thức như trên là (spacing = khoảng cách significand x exponent), ta xét:
+  thì ở 32bits (float), công sai của công sai significand có kết quả là $$\large2^{-23}$$ và ta biết số mũ (exponent) $$\large e = -24$$ và hệ số scale là $$\large2^{e} = 2^{-24}$$ theo hệ 32bits (float). Để tính được khoảng cách của toàn bộ số thực (spacing) theo 32bits này, ta lấy công thức như trên là (spacing = công sai significand x scale factor $$\large2^{e}$$), ta xét:
 
   <div align="center">
 
@@ -3458,11 +3458,11 @@ Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu g
 
   </div>
 
-  nên cũng là câu trả lời cho câu hỏi, nó chọn khoảng cách của toàn bộ số thực (spacing) chứ ko phải đi chọn khoảng cách significand.
+  nên cũng là câu trả lời cho câu hỏi, nó chọn khoảng cách của toàn bộ số thực (spacing) chứ ko phải đi chọn công sai significand.
 
   - **Vì sao IEEE 754 cần spacing thay đổi theo exponent? :** Nếu mọi số đều phải cách nhau một khoảng cách tuyệt đối cố định, thì muốn biểu diễn được những số rất nhỏ, ta phải chọn bước cực nhỏ; khi đó việc bao phủ các số rất lớn sẽ đòi hỏi quá nhiều giá trị biểu diễn. IEEE 754 dùng significand kết hợp với exponent để thay đổi thang đo: các số nhỏ có spacing nhỏ, còn các số lớn có spacing lớn hơn. Cách này giúp định dạng biểu diễn được miền giá trị rộng với số bit hữu hạn, đồng thời duy trì độ chính xác tương đối khá ổn định trong các vùng chuẩn hóa.
 
-Vậy nên, ta đã xác định được và hiểu khoảng cách toàn bộ số thực, khoảng cách significand. Bây giờ tới phần trả lời câu hỏi chính là `khoảng cách giữa hai binary32 xung quanh nó là gì?`, phải kể đến hai số kề nó. Ta xét 
+Vậy nên, ta đã xác định được và hiểu khoảng cách toàn bộ số thực, công sai significand. Bây giờ tới phần trả lời câu hỏi chính là `khoảng cách giữa hai binary32 xung quanh nó là gì?`, phải kể đến hai số kề nó. Ta xét 
 
 <div align="center">
 
@@ -3505,6 +3505,8 @@ $$\Large =(001100111 <11 \text{ số } 0> 0_{2}) < (001100111 <22 \text{ số } 
 </div>
 
 Từ so sánh trên ta thấy phần trong được đánh dấu hộp vuông thỏa mãn điều kiện là lớn hơn nhị phân của chuỗi `0x1.000002p-24f`, vậy nên $$\large(001100111 <11 số 0> 1_{2})$$ là kết quả làm tròn
+
+- **vì sao ta lại dùng 0x1.000002p-24f thay vì dùng các số thực đơn giản khác để làm ví dụ cho round to postive infnity?:**
 
 <sub>--đã hết phần giải thích--</sub>
 
