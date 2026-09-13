@@ -3470,7 +3470,7 @@ $$\Large x = 0x1.000002p-24$$
 
 $$\Large x_{\text{trước}} = 0x1.000000p-24$$
 
-$$\Large x_{\text{sau}} = 0x1.000004p-24$4
+$$\Large x_{\text{sau}} = 0x1.000004p-24$$
 
 $$\Large\Rightarrow x - x_{\text{trước}} = x_{\text{sau}} - x = 2^{-47}$$
 
