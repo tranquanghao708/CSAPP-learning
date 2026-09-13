@@ -248,7 +248,7 @@ thì đây không phải là pattern $$\large1.0000000000_{2}\times2^{-127}$$ m�
 > [!NOTE]
 > **Lưu ý:** `actual exponent = -127` của $$\large1.0000000000_{2}\times2^{-127}$$ là do `actual exponent = E - bias` suy ra `0 - 127 = -127` vì E là viết tắt của exponent field vầ trường hợp này với số chuẩn hóa exponent field là 0. Còn với số khử chuẩn hóa luôn dùng `actual exponent = 1 - bias` nên `1 - 127 = -126` nên mới có biểu thức $$\large0.0000000000000000000001_{2}\times2^{-126}$$
 
-**Vậy vì sao phải làm như vậy?**, ta biết normalized nó sẽ có bit đầu luôn là 1, exponent của nó là dương hay âm tùy thuộc vào cách dịch dấu chấm là trái hay phải ,nhưng điều gì sẽ xảy ra nếu số thực cực kỳ nhỏ **ví dụ** $$\large2^{-150}$$ hay $$\large0.000000000000000000000001_{2}$$, nếu vẫn cố chuẩn hóa về $$\large1.xxxxx\times2^{N}$$ thì kết quả sẽ bị underflow tức là bị làm tròn thành 0
+**Vậy vì sao phải làm như vậy?**, ta biết normalized nó sẽ có bit đầu luôn là 1, exponent của nó là dương hay âm tùy thuộc vào cách dịch dấu chấm là trái hay phải ,nhưng điều gì sẽ xảy ra nếu số thực cực kỳ nhỏ **ví dụ** $$\large2^{-150}$$ hay $$\large0.000000000000000000000001_{2}$$, nếu vẫn cố chuẩn hóa về $$\large1.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{N}$$ thì kết quả sẽ bị underflow tức là bị làm tròn thành 0
 
 > [!IMPORTANT]
 > Đối với normalized numbers, IEEE754 dùng $$\large1.xxxxx\times2^{N}$$ nên số đầu tiên luôn là 1 (hiddenbit = 1)
@@ -262,7 +262,7 @@ thì đây không phải là pattern $$\large1.0000000000_{2}\times2^{-127}$$ m�
 - Nếu `normalized` không biểu diễn được nhưng vẫn còn nằm trong phạm vi **subnormal** mới được chọn tới `denormalized` để biểu diễn các số sát `0` nhất có thể. Tuy nhiên độ chính xác sẽ thấp hơn, dùng cho số rất nhỏ gần sát `0`
 
 > [!IMPORTANT]
-> `Normalized` được IEEE ưu tiên vì độ chính xác cao hơn, tận dụng hiddenbit với dạng $$\large1.xxxxx\times2^{N}$$. Nhưng nếu số quá nhỏ cần phải dùng tới `Denormalized` với dạng $$\large0.\,b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1 - bias}$$ , điều này giúp biễu diễn các số sát `0` nhất có thể, tuy nhiên độ chính xác thấp hơn.
+> `Normalized` được IEEE ưu tiên vì độ chính xác cao hơn, tận dụng hiddenbit với dạng $$\large1.xxxxx\times2^{N}$$. Nhưng nếu số quá nhỏ cần phải dùng tới `Denormalized` với dạng $$\large0.xxxxx\times2^{1 - bias}$$ , điều này giúp biễu diễn các số sát `0` nhất có thể, tuy nhiên độ chính xác thấp hơn.
 >
 > Nếu `Denormalized` không thể sử dụng được nữa (nhỏ hơn cả subnormal nhỏ nhất) thì gía trị số thực sẽ bị underflow và kết quả sẽ thành `0`
 
