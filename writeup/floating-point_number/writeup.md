@@ -1708,7 +1708,7 @@ Cách này vốn dĩ ngắm vào sự sai số, hữu hạn thì chính xác cò
 	<img alt="Proof ko thể dùng printf để so sánh số thực hữu hạn vô hạn hệ cơ số 16" src="image/image30.png">
 </p>
 
-Từ trong ảnh, ta thấy dòng số hai là printf ra giá trị của chuỗi `0x1.000002p-24f` ra terminal, ta thấy 3 trường hợp in thấp hơn, vừa đủ, hơn 32bits fraction nó luôn đánh lừa là số đó trông như vô hạn tuần hoàn. Để so sánh hệ cơ số 16 bắt buộc phải dùng định lý phân số là cách khỏe hơn rồi
+Từ trong ảnh, ta thấy dòng số hai là printf ra giá trị của chuỗi `0x1.000002p-24f` ra terminal, ta thấy 3 trường hợp in thấp hơn, vừa đủ, hơn 23bits stored fraction nó luôn đánh lừa là số đó trông như vô hạn tuần hoàn. Để so sánh hệ cơ số 16 bắt buộc phải dùng định lý phân số là cách khỏe hơn rồi
 
 <sub>--Đã hết phần giải thích--</sub>
 
@@ -3305,7 +3305,7 @@ $$\Large1.00000000000000000000001_{2} \times 2^{-24}$$
 
 và significand này có đúng 23 fraction bits sau hidden bit. Vì vậy giá trị này có thể được biểu diễn chính xác trong binary32.
 
-- **Điểm quan trọng:** output `0.0000000596046518808179826010018587...` không chứng minh `0x1.000002p-24f` vượt 23 fraction bits. Ngược lại, nó cho thấy literal đó được biểu diễn chính xác bằng binary32. Giá trị ở giữa (nghĩa là giá trị của `0x1.000002p-24f`) chính xác là $$\large x = 2^{-24} + 2^{-47}$$. Nhưng hãy nhìn khoảng cách giữa hai binary32 xung quanh nó. Với các số binary32 quanh $$\large 2^{-24}$$ và $$\large 2^{−24}+2^{−23}=1.00000011920928955078125\times10^{−7}$$. Khoảng cách $$\large2^{-47}$$ mà $$\large x = 2^{-24} + 2^{-47}$$ do đó $$\large x = 2^{-24} + 1.2^{-47}$$ (Lưu ý dấu `.` ko phải phép nhân) nó chính xác nằm đúng tại binary32 kế tiếp của $$\large2^{-24}$$ hay nói chính xác hơn, cần cẩn thận với cách quy chiếu exponent/subnormal ở vùng này. Điểm quan trọng là giá trị literal này có một biểu diễn binary32 hợp lệ, và output `%.60f` của một biến float đang cho thấy giá trị đó đã được lưu dưới dạng float.
+- **Điểm quan trọng:** output `0.0000000596046518808179826010018587...` không chứng minh `0x1.000002p-24f` vượt 23 fraction bits. Ngược lại, nó cho thấy literal đó được biểu diễn chính xác bằng binary32. Giá trị ở giữa (nghĩa là giá trị của `0x1.000002p-24f`) chính xác là $$\large x = 2^{-24} + 2^{-47}$$. Nhưng hãy nhìn khoảng cách giữa hai binary32 xung quanh nó. Với các số binary32 quanh $$\large 2^{-24}$$ và $$\large 2^{−24}+2^{−47}=1.00000011920928955078125\times10^{−7}$$. Khoảng cách $$\large2^{-47}$$ mà $$\large x = 2^{-24} + 2^{-47}$$ do đó $$\large x = 2^{-24} + 1.2^{-47}$$ (Lưu ý dấu `.` ko phải phép nhân) nó chính xác nằm đúng tại binary32 kế tiếp của $$\large2^{-24}$$ hay nói chính xác hơn, cần cẩn thận với cách quy chiếu exponent/subnormal ở vùng này. Điểm quan trọng là giá trị literal này có một biểu diễn binary32 hợp lệ, và output `%.60f` của một biến float đang cho thấy giá trị đó đã được lưu dưới dạng float.
 
 <details>
 	<summary><b>[câu hỏi]</b> khoảng cách giữa hai binary32 xung quanh nó là gì ?</summary>
@@ -3361,13 +3361,13 @@ $$\Large1.125 - 1 = 0.125$$
 
 $$\Large1.25 - 1.125 = 0.125$$
 
-$$\Large1.1375 - 1.25 = 0.125$$
+$$\Large1.375 - 1.25 = 0.125$$
 
 $$\Large\Rightarrow\text{ Vậy công sai của trục là : }\boxed{0.125}$$
 
 </div>
 
-- **Vậy tại sao lại xuất hiện cấp số cộng?:** vì ta đang thay đổi bit cuối cùng thuộc một significand có 3 bits fraction, nghĩa là mỗi lần ta thay đổi như ($$\large1.000_{2}\rightarrow 1.001_{2}\rightarrow 1.010_{2}\rightarrow 1.011_{2}$$) thì ta đều cộng cùng một lường $$\large2^{-3}$$, cho nên nó tự nhiên trở thành cấp số cộng
+- **Vậy tại sao lại xuất hiện cấp số cộng?:** vì ta đang thay đổi các significand hợp lệ liên tiếp khác nhau đúng một đơn vị của bit fraction thấp nhất thuộc một significand có 3 bits fraction, nghĩa là mỗi lần ta thay đổi như ($$\large1.000_{2}\rightarrow 1.001_{2}\rightarrow 1.010_{2}\rightarrow 1.011_{2}$$) thì ta đều cộng cùng một lường $$\large2^{-3}$$, cho nên nó tự nhiên trở thành cấp số cộng
 
 Tuy nhiên đây cũng là bản chất của fraction. Bây giò, ta bỏ 3bits fraction đi, thực chiến với binary32 là 23bits fraction và một số chuẩn hóa dạng 32bits này thường có dạng :
 
@@ -3381,7 +3381,7 @@ và giá trị của nó là:
 
 <div align="center">
 
-$$\Large1+b_{1}2^{-1} + b_{2}2^{-2} + b_{3}2^{-3} + b_{4}2^{-4}\ldots + b_{23}2^{-23}$$
+$$\Large1+b_{1}2^{-1} + b_{2}2^{-2} + b_{3}2^{-3} + b_{4}2^{-4} + \ldots + b_{23}2^{-23}$$
 
 </div>
 
@@ -3414,7 +3414,7 @@ Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu g
                  khoảng cách = 2^-23
   ```
 
-  Bây giờ ta nhân tất cả nó với $$\large2^{-47}$$, thì toàn bộ trục bị co lại như sau:
+  Bây giờ ta nhân tất cả nó với $$\large2^{-24}$$, thì toàn bộ trục bị co lại như sau:
 
   ```
    2^-24        2^-24+2^-47       2^-24+2·2^-47
