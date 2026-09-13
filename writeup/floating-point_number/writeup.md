@@ -193,7 +193,7 @@ di chuyển dot 3 lần : 1.10101
 Tổng cộng dịch dấu chấm 3 lần để trước dấu chấm chỉ còn đúng một bit 1.
 ```
 
-Vậy nên ta có số mũ là 3, suy ra $$\large1.10101_{2}\times2^{3}$$ và khi tính lại là $$\large1.10101_{2}\times2^{3} = 1101.01_{2}$$ ta thấy nó lại di chuyển về từ đầu. Vậy cho ví dụ khi số mũ âm, cho số $$\large0.1_{2} = 0.5_{10}$$ bây giờ muốn đưa về dạng $$\large1.xxxxx\times2^{N}$$, ta cần phải dịch dấu chấm sang phải một lần, ta có $$\large1.0_{2}$$ lúc này số mũ sẽ là `negative 1 (âm 1)` nên result là $$\large1.0_{2}\times2^{-1}$$
+Vậy nên ta có số mũ là 3, suy ra $$\large1.10101_{2}\times2^{3}$$ và khi tính lại là $$\large1.10101_{2}\times2^{3} = 1101.01_{2}$$ ta thấy nó lại di chuyển về từ đầu. Vậy cho ví dụ khi số mũ âm, cho số $$\large0.1_{2} = 0.5_{10}$$ bây giờ muốn đưa về dạng $$\large1.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{N}$$, ta cần phải dịch dấu chấm sang phải một lần, ta có $$\large1.0_{2}$$ lúc này số mũ sẽ là `negative 1 (âm 1)` nên result là $$\large1.0_{2}\times2^{-1}$$
 
 Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng phép chia, $$\large1.0_{2}\times2^{-1} = 1.0_{2}\div2 = 0.1_{2}$$ và nó đúng với số ban đầu vì sao? Vì $$\large2^{-1}=\frac{1}{2}$$ nên nhân với $$\large2^{-1}$$ tương đương chia cho 2
 
@@ -202,7 +202,7 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 >
 > nếu dịch dot sang trái số mũ là **số dương** và dịch dot sang phải thì số mũ sẽ là **số âm**. Độ lớn tuyệt đối của số mũ (|N|) bằng số lần dịch dấu chấm. Dấu của số mũ phụ thuộc vào hướng dịch, nó lớn theo âm-dương **ví dụ** dương lớn dần sẽ là `1,2,3,4,..` còn âm nhỏ dần sẽ là `-1,-2,-3,-4,..`
 >
-> Trong IEEE 754 (đối với các số normalized), sau khi chuẩn hóa, biểu diễn luôn có dạng: $$\large1.xxxxx\times2^{N}$$ .Nghĩa là trước dấu chấm luôn chỉ có đúng một bit 1. Chính vì bit đầu tiên luôn là 1, IEEE 754 không cần lưu bit này vào bộ nhớ (hidden bit), chỉ lưu phần phía sau dấu chấm trong trường Fraction.
+> Trong IEEE 754 (đối với các số normalized), sau khi chuẩn hóa, biểu diễn luôn có dạng: $$\large1.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{N}$$ .Nghĩa là trước dấu chấm luôn chỉ có đúng một bit 1. Chính vì bit đầu tiên luôn là 1, IEEE 754 không cần lưu bit này vào bộ nhớ (hidden bit), chỉ lưu phần phía sau dấu chấm trong trường Fraction.
 
 <details>
 	<summary><b>[Câu hỏi]</b> tại sao phải chuẩn hóa số thực?</summary>
@@ -2555,7 +2555,7 @@ không nằm trong tập đó, vì format chỉ có 3 bit sau dấu chấm. Ví 
 
 **Tại sao với ví dụ này, cũng tương tự như máy tính chúng ko lưu được số bit vượt ngưỡng format độ rộng fraction hiện tại?**
 
-ko phải nó ko biết số `1.0001` hay các số nhị phân khác. Mà là format của nó có độ rộng hữu hạng, và độ rộng fraction đó ko đủ để mã hóa số nhị phân đó. Với ví dụ trên format của chúng ta có quy định là $$\large1.xxx_{2}$$ chỉ có 3 vị trí :
+ko phải nó ko biết số `1.0001` hay các số nhị phân khác. Mà là format của nó có độ rộng hữu hạng, và độ rộng fraction đó ko đủ để mã hóa số nhị phân đó. Với ví dụ trên format của chúng ta có quy định là $$\large1.b_{1}b_{2}b_{3}$$ chỉ có 3 vị trí :
 
 ```
 1	.	x	x	x
