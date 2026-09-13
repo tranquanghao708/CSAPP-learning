@@ -3462,6 +3462,22 @@ Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu g
 
   - **Vì sao IEEE 754 cần spacing thay đổi theo exponent? :** Nếu mọi số đều phải cách nhau một khoảng cách tuyệt đối cố định, thì muốn biểu diễn được những số rất nhỏ, ta phải chọn bước cực nhỏ; khi đó việc bao phủ các số rất lớn sẽ đòi hỏi quá nhiều giá trị biểu diễn. IEEE 754 dùng significand kết hợp với exponent để thay đổi thang đo: các số nhỏ có spacing nhỏ, còn các số lớn có spacing lớn hơn. Cách này giúp định dạng biểu diễn được miền giá trị rộng với số bit hữu hạn, đồng thời duy trì độ chính xác tương đối khá ổn định trong các vùng chuẩn hóa.
 
+Vậy nên, ta đã xác định được và hiểu khoảng cách toàn bộ số thực, khoảng cách significand. Bây giờ tới phần trả lời câu hỏi chính là `khoảng cách giữa hai binary32 xung quanh nó là gì?`, phải kể đến hai số kề nó. Ta xét 
+
+<div align="center">
+
+$$\Large x = 0x1.000002p-24$$
+
+$$\Large x_{\text{trước}} = 0x1.000000p-24$$
+
+$$\Large x_{\text{sau}} = 0x1.000004p-24$4
+
+$$\Large\Rightarrow x - x_{\text{trước}} = x_{\text{sau}} - x = 2^{-47}$$
+
+</div>
+
+**Vậy câu trả lời đầy đủ là:** hai binary32 kề số `0x1.000002p-24f` cách nó $$\large2^{−47}$$ ở mỗi phía. Điều này đúng vì số đó nằm trong vùng chuẩn hóa có exponent −24, không ở ranh giới binade hay vùng subnormal.
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
