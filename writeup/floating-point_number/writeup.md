@@ -253,7 +253,7 @@ thì đây không phải là pattern $$\large1.0000000000_{2}\times2^{-127}$$ m�
 > [!IMPORTANT]
 > Đối với normalized numbers, IEEE754 dùng $$\large1.xxxxx\times2^{N}$$ nên số đầu tiên luôn là 1 (hiddenbit = 1)
 >
-> Còn với Denormalized numbers, IEEE754 dùng $$\large0.xxxxx\times2^{1 - Bias}$$ nên `exponent field = 0` và hiddenbit được xem là 0. Khử chuẩn hóa được thiết kế để biểu diễn với số gần 0 nhất **tránh bị underflow** quá sớm (hiddenbit = 0)
+> Còn với Denormalized numbers, IEEE754 dùng $$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1 - Bias}$$ nên `exponent field = 0` và hiddenbit được xem là 0. Khử chuẩn hóa được thiết kế để biểu diễn với số gần 0 nhất **tránh bị underflow** quá sớm (hiddenbit = 0)
 
 #### 1.2.1.Khi nào IEEE 754 sử dụng Normalized và Denormalized?
 
@@ -262,7 +262,7 @@ thì đây không phải là pattern $$\large1.0000000000_{2}\times2^{-127}$$ m�
 - Nếu `normalized` không biểu diễn được nhưng vẫn còn nằm trong phạm vi **subnormal** mới được chọn tới `denormalized` để biểu diễn các số sát `0` nhất có thể. Tuy nhiên độ chính xác sẽ thấp hơn, dùng cho số rất nhỏ gần sát `0`
 
 > [!IMPORTANT]
-> `Normalized` được IEEE ưu tiên vì độ chính xác cao hơn, tận dụng hiddenbit với dạng $$\large1.xxxxx\times2^{N}$$. Nhưng nếu số quá nhỏ cần phải dùng tới `Denormalized` với dạng $$\large0.xxxxx\times2^{1 - bias}$$ , điều này giúp biễu diễn các số sát `0` nhất có thể, tuy nhiên độ chính xác thấp hơn.
+> `Normalized` được IEEE ưu tiên vì độ chính xác cao hơn, tận dụng hiddenbit với dạng $$\large1.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{N}$$. Nhưng nếu số quá nhỏ cần phải dùng tới `Denormalized` với dạng $$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1 - bias}$$ , điều này giúp biễu diễn các số sát `0` nhất có thể, tuy nhiên độ chính xác thấp hơn.
 >
 > Nếu `Denormalized` không thể sử dụng được nữa (nhỏ hơn cả subnormal nhỏ nhất) thì gía trị số thực sẽ bị underflow và kết quả sẽ thành `0`
 
@@ -564,7 +564,7 @@ Trong C, các hàm như scanf có thể đọc các chỉ thị nan, infinity kh
 
 ### 1.7.Trường Fraction (phần trị - significand)
 
-- Là trường lưu các bit phía sau dấu chấm của số nhị phân sau khi đã chuẩn hóa số thực theo dạng chuẩn hóa $$\large1.xxxxx\times2^{N}$$:
+- Là trường lưu các bit phía sau dấu chấm của số nhị phân sau khi đã chuẩn hóa số thực theo dạng chuẩn hóa $$\large1.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{N}$$:
 
 <p align="center">
 	<image alt="alt text" src="image/image0.png" width="680"/>
