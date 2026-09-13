@@ -656,7 +656,7 @@ nếu trường hợp độ rộng của chuỗi nhị phân lớn hơn độ r�
 >
 > **điều quan trọng** : Exponent quyết định scale (độ lớn) của số thực thông qua lũy thừa $$\large2^{N}$$ . Chỉ cần thay đổi Exponent một lượng nhỏ, giá trị của số thực có thể thay đổi rất lớn. Fraction thiên hướng về quyết định chữ số có nghĩa (độ chính xác của số thực) nhưng khi thay đổi các bit trong trường Fraction sẽ làm thay đổi giá trị của số thực, nhưng mức thay đổi thường nhỏ hơn nhiều so với việc thay đổi Exponent. **Precision (độ chính xác)** không phụ thuộc vào giá trị của Fraction mà phụ thuộc vào số lượng bit được **IEEE 754** cấp cho trường Fraction. **Ví dụ**, double có 52 bit Fraction nên biểu diễn số thực chính xác hơn float với 23 bit Fraction.
 
-- **Điểm thường bị nhầm :** Trường exponent không lưu trực tiếp actual exponent (số mũ thực) ký hiệu `N` trong dạng chuẩn hóa $$\large1.xxxxx\times2^{N}$$ , giá trị của trường exponent được tính theo công thưc `Exponent Field = Actual exponent + Bias`.
+- **Điểm thường bị nhầm :** Trường exponent không lưu trực tiếp actual exponent (số mũ thực) ký hiệu `N` trong dạng chuẩn hóa $$\large1.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{N}$$ , giá trị của trường exponent được tính theo công thưc `Exponent Field = Actual exponent + Bias`.
 
 #### 1.8.1.Độ lệch (Bias)
 
@@ -841,7 +841,7 @@ chúng ta đã tách được Sign | Exponent | Fraction, nhưng phần số mũ
 
 #### 2.2.3.Khôi phục Hidden Bit
 
-Sau khi đã tính được Actual Exponent, bước tiếp theo là khôi phục Hidden Bit (hay còn gọi là Implicit Leading Bit). IEEE quy định rằng đối với số chuẩn hóa (normalized) bit `1` đứng trước dấu chấm sẽ không được lưu trong bộ nhớ bởi vì sau khi chuẩn hóa nó sẽ có dạng $$\large1.xxx..._{2}\times2^{N}$$ do bit đứng trước dấu chấm bằng 1, IEEE không cần lưu để tiết kiệm một bit fraction. Vì vậy, khi giải mã (Decode), CPU sẽ tự động thêm lại bit này. ở bước tách sign, exponent, fraction ta đã tách được như sau :
+Sau khi đã tính được Actual Exponent, bước tiếp theo là khôi phục Hidden Bit (hay còn gọi là Implicit Leading Bit). IEEE quy định rằng đối với số chuẩn hóa (normalized) bit `1` đứng trước dấu chấm sẽ không được lưu trong bộ nhớ bởi vì sau khi chuẩn hóa nó sẽ có dạng $$\large1.b_{1}b_{2}b_{3}\ldots\times2^{N}$$ do bit đứng trước dấu chấm bằng 1, IEEE không cần lưu để tiết kiệm một bit fraction. Vì vậy, khi giải mã (Decode), CPU sẽ tự động thêm lại bit này. ở bước tách sign, exponent, fraction ta đã tách được như sau :
 
 | sign | exponent | fraction |
 |------|----------|----------|
@@ -864,7 +864,7 @@ vậy kết quả là $$\large\boxed{11101.1100111101011100001_{2}}$$ đây chí
 
 #### 2.2.5.Áp dụng Sign
 
-Đây là bước cuối cùng trong quá trình Decode. Sau khi đã khôi phục lại số nhị phân ban đầu, CPU chỉ cần dựa vào trường Sign để xác định kết quả là số dương hay số âm. Ta có **formula =**$$\large1.xxxxx\times2^{N}$$ **ví dụ** $$\large12345_{10}$$ = $$\large1.2345_{10}\times10^{4}$$, ở các bước trước ta đã khôi phục được `Sign = 0, Actual exponent = 4, Significand = 1.11011100111101011100001` và sau khi thực hiện nhân với $$\large2^{\text{Actual Exponent}}$$ ta có `11101.1100111101011100001`, vì `sign = 0` nên $$\large(-1)^{0} = 1$$ do đó giá trị vẫn giữ nguyên `11101.1100111101011100001`, bây giờ ta chỉ cần chuyển phần nguyên sang thập phân và tính toán fraction (phần dãy bit sau dấu chấm)
+Đây là bước cuối cùng trong quá trình Decode. Sau khi đã khôi phục lại số nhị phân ban đầu, CPU chỉ cần dựa vào trường Sign để xác định kết quả là số dương hay số âm. Ta có **formula =**$$\large1.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{N}$$ **ví dụ** $$\large12345_{10}$$ = $$\large1.2345_{10}\times10^{4}$$, ở các bước trước ta đã khôi phục được `Sign = 0, Actual exponent = 4, Significand = 1.11011100111101011100001` và sau khi thực hiện nhân với $$\large2^{\text{Actual Exponent}}$$ ta có `11101.1100111101011100001`, vì `sign = 0` nên $$\large(-1)^{0} = 1$$ do đó giá trị vẫn giữ nguyên `11101.1100111101011100001`, bây giờ ta chỉ cần chuyển phần nguyên sang thập phân và tính toán fraction (phần dãy bit sau dấu chấm)
 
 Đầu tiên ta có `11101.1100111101011100001` và ta cần chuyển phần nguyên sang thập phân $$\large11101_{2} = 29_{10}$$, bây giờ ta tiến hành tính toán phần fraction sau dấu chấm cách tính là ta lấy số bit nhân với trọng số lũy thừa số nguyên âm **ví dụ** $$\large1\times2^{-1} + 1\times2^{-2} + 0\times2^{-3} +....+ 0\times2^{-N}$$, ở đây ta thấy giá trị bit `0` luôn ra kết quả là `0` vì thế khi tính tổng nó không thay đổi gì, vậy ta chỉ cần đếm lũy thừa giảm dần và tính toán những bit `1` thôi (trong phần tính toán này phải dùng toán học, không phải nhị phân nên các bit khi tính toán kiểu này là nó có hệ cơ số 10 vì sẽ ra giá trị là hệ thập phân) :
 
