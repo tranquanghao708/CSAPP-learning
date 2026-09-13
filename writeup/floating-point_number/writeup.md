@@ -1575,7 +1575,7 @@ Còn các giá trị như $$\large b_{k}$$ là hệ số tại vị trí k ,ch�
 |------------|---|---|---|---|---|---|
 | các bit    | 0 | 1 | 1 | 0 | 1 | 0 |
 
-vì vậy : $$\large b_{0} = 0$$, $$\large b_{1} = 1$$, $$\large b_{2} = 0$$, $$\large b_{3} = 1$$, $$\large b_{4} = 1$$, $$\large b_{5} = 0$$. Nên $$\large b_{k}$$ là bit tại vị trí k, đồng thời đóng vai trò là trọng số của hệ số $$\large2^{k}$$. Vì đây là hệ nhị phân nên $$\large b_{k} \in \{0,1\}$$
+vì vậy : $$\large b_{0} = 0$$, $$\large b_{1} = 1$$, $$\large b_{2} = 0$$, $$\large b_{3} = 1$$, $$\large b_{4} = 1$$, $$\large b_{5} = 0$$. Nên $$\large b_{k}$$ là bit tại vị trí k, đồng thời đóng vai trò là trọng số của hệ số $$\large2^{k}$$. Vì đây là hệ nhị phân nên $$\large b_{k} \in \lbrace0,1\rbrace$$
 
 còn ký hiệu $$\large2^k$$ là trọng số của vị trí bit k trong hệ nhị phân. **Ví dụ:**
 
@@ -3493,18 +3493,6 @@ Cái mọi người thường hay nhầm ở đây là, chỉ cần nhìn output
 </details>
 
 Vậy nên, biết hai giá trị của chuỗi `0x1.000002p-24f` và `1.0` đều được rounding với round to positive infinity, nó là chính xác mà ko cần phải có sự can thiệp của cơ chế round to nearest, tie to even khi gán vào một valriable trước đó.
-
-Điều này rất tốt để ta có thể minh họa cơ chế round to positive infinity, bây giờ khi đã biết được gía trị của chuỗi `0x1.000002p-24f` là $$\large2^{-24} + 2^{-47}$$ sang nhị phân $$\large00110011100000000000000000000001_{2}$$ thì ta tiến hành so sánh nó như đã nhắc ở lý thuyết round to positive infinity ở trên. Ta xét :
-
-<div align="center">
-
-$$\Large R_{+\infty}(large001100111|<22 \text{ số } 0>|1_{2})$$
-
-$$\Large =(001100111 <11 \text{ số } 0> 0_{2}) < (001100111 <22 \text{ số } 0> 1_{2}) < \boxed{(001100111 <11 \text{ số } 0> 1_{2})}$$
-
-</div>
-
-Từ so sánh trên ta thấy phần trong được đánh dấu hộp vuông thỏa mãn điều kiện là lớn hơn nhị phân của chuỗi `0x1.000002p-24f`, vậy nên $$\large(001100111 <11 số 0> 1_{2})$$ là kết quả làm tròn
 
 - **vì sao ta lại dùng 0x1.000002p-24f thay vì dùng các số thực đơn giản khác để làm ví dụ cho round to postive infnity?:**
 
