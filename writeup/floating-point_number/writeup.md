@@ -158,17 +158,25 @@
 
 > không phải CS:APP, tham khảo từ cuốn kiến trúc máy tính vì tính dễ hiểu về formula
 
-- `Số thực IEEE 754` là quy tắc biểu diễn số thực cho thiết bị nhị phân (máy tính) thế giới. **Formula tổng quan là** $$\Large(-1)^{S} \times 1.m \times 2^{e-b}$$, trong đó :
+Số thực IEEE 754 là quy tắc biểu diễn số thực cho thiết bị nhị phân (máy tính) thế giới. Công thức tổng quan với số thực chuẩn hóa là:
 
-S : là bit dấu, viết tắt sign
+<div align="center">
 
-m : hidden bit + fraction là phần trị (trường dãy số sau dấu chấm của số thực sau khi đã chuẩn hóa)
+$$\Large(-1)^{S} \times 1.m \times 2^{e-b}$$
 
-e : là giá trị của trường exponent
+</div>
 
-b : là độ lệch, viết tắt bias
+- trong đó :
 
-- Ta có một structure của cái này như sau:
+  S : là bit dấu, viết tắt sign
+
+  m : hidden bit + fraction là phần trị (trường dãy số sau dấu chấm của số thực sau khi đã chuẩn hóa)
+
+  e : là giá trị của trường exponent
+
+  b : là độ lệch, viết tắt bias
+
+Ta có một structure của cái này như sau:
 
 | S (sign) | E (Exponent) | m (Fraction) |
 |----------|--------------|--------------|
