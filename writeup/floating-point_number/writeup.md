@@ -181,7 +181,15 @@ b : là độ lệch, viết tắt bias
 
 > Trích từ CS:APP
 
-- **chuẩn hóa là gì?** : giống toán học, **formula =**$$\large1.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{N}$$ **ví dụ** $$\large12345_{10}$$ = $$\large1.2345_{10}\times10^{4}$$ số mũ là 4 vì dịch dot sang trái 4 lần hoặc $$\large0.00123_{10}$$ = $$\large1.23\times10^{-3}$$ số mũ là -3 vì dịch dot sang phải 3 lần. Đó gọi là dạng chuẩn hóa
+chuẩn hóa giống toán học, nó có công thức:
+
+<div align="center">
+
+$$\Large1.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{N}$$
+
+</div>
+
+**ví dụ** $$\large12345_{10}$$ = $$\large1.2345_{10}\times10^{4}$$ số mũ là 4 vì dịch dot sang trái 4 lần hoặc $$\large0.00123_{10}$$ = $$\large1.23\times10^{-3}$$ số mũ là -3 vì dịch dot sang phải 3 lần. Đó gọi là dạng chuẩn hóa
 
 IEEE 754 cũng làm thế, cơ mà nó biểu diễn dạng binary và dùng cơ số 2. **Ví dụ**, $$\large13.25_{10} = 1101.01_{2}$$, di chuyển dấu chấm sao cho trước dấu chấm chỉ còn đúng một bit 1 ta có $$\large1.10101_{2}$$ số lần di chuyển là 3 vì :
 
@@ -236,14 +244,20 @@ Bây giờ ta có $$\large1.0_{2}\times2^{-1}$$ tính ngược lại ta dùng ph
 
 > trích từ CS:APP
 
-- Là việc bit đầu tiên là 0 nhưng nó thực hiện phép toán $$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$. **Lúc này** hiddenbit không còn là 1 nữa, nó là 0 và exponent field luôn là 0. Giả sử float (32bits) ta có :
+Là việc bit đầu tiên là 0 nhưng nó thực hiện phép toán $$\large0.b_{1}b_{2}b_{3}b_{4}b_{5}\times2^{1-bias}$$. **Lúc này** hiddenbit không còn là 1 nữa, nó là 0 và exponent field luôn là 0. Giả sử float (32bits) ta có :
 
 ```
 Exponent = 00000000
 Fraction = 00000000000000000000001
 ```
 
-thì đây không phải là pattern $$\large1.0000000000_{2}\times2^{-127}$$ mà là $$\large0.0000000000000000000001_{2}\times2^{-126}$$ vì hiddenbit đã bằng 0.
+thì đây không phải là pattern $$\large1.0000000000_{2}\times2^{-127}$$ mà là $$\large0.0000000000000000000001_{2}\times2^{-126}$$ vì hiddenbit đã bằng 0. Với subnormal này nó có công thức sau:
+
+<div align="center">
+
+$$\Large(-1)^{S}\times0.f\times2^{1-bias}$$
+
+</div>
 
 > [!NOTE]
 > **Lưu ý:** `actual exponent = -127` của $$\large1.0000000000_{2}\times2^{-127}$$ là do `actual exponent = E - bias` suy ra `0 - 127 = -127` vì E là viết tắt của exponent field vầ trường hợp này với số chuẩn hóa exponent field là 0. Còn với số khử chuẩn hóa luôn dùng `actual exponent = 1 - bias` nên `1 - 127 = -126` nên mới có biểu thức $$\large0.0000000000000000000001_{2}\times2^{-126}$$
@@ -3446,7 +3460,7 @@ Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu g
 
   và khoảng cách mới là $$\large2^{-47}$$, đây chính là (khoảng cách = khoảng cách của significand $$\large\times$$ scale của exponent). Có nghĩa là cái khoảng cách của significand này, ở ví dụ 3bits fraction là đi tính công sai suy ra khoảng cách và cái khoảng cách đó cho ta biết đó là giá trị được cộng vào ở hệ cơ số 10, khi mỗi bước tăng giá trị mã hóa fraction thêm 1 với hệ cơ số 2, tương ứng với việc tăng significand thêm $$\large2^{−23}$$, còn khoảng cách mới này gọi là khoảng cách toàn bộ số thực ,có thể gọi là khoảng cách giữa hai số floating-point biểu diễn được liên tiếp hay spacing. Trong ngữ cảnh này, nó cũng chính là ULP độ lớn của một bước giữa các giá trị biểu diễn kề nhau tại vùng đang xét. Ta có thể phân biệt như sau:
 
-  - **Công sai significand :** là kết quả công sai được cộng vào hệ cơ số 10 khi cộng thêm 1 vào hệ cơ số 2
+  - **Công sai significand :** là mỗi bước tăng giá trị mã hóa fraction thêm 1, tương ứng với việc tăng significand thêm $$\large2^{−23}$$. Nói đơn giản thì, khi ta tính được cống sai của ví dụ vừa rồi là 3 bits fraction là `0.125` thì khi cộng một giá trị bit vào, tương đương cộng thêm `0.125` nếu xét theo hệ cơ số 10
 
   - **Công sai toàn bộ số thực (spacing) :** là nó chính là ULP độ lớn của một bước giữa các giá trị biểu diễn kề nhau tại vùng đang xét
 
