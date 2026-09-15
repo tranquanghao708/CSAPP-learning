@@ -3272,7 +3272,7 @@ $$\huge\dfrac{2^{23} + 1}{2^{47}}$$
 
 có mẫu số đúng bằng $$\large2^{47}$$, nên có biểu diễn nhị phân hữu hạn.Điều này cho thấy chuỗi thập phân được in ra và giá trị floating-point chính xác không nên được xem là cùng một đối tượng biểu diễn. Đây là sự khác biệt quan trọng giữa decimal representation và exact binary floating-point value.
 
-Tuy nhiên, việc một giá trị có biểu diễn nhị phân hữu hạn vẫn chưa đủ để kết luận rằng binary32 lưu được nó mà không rounding. Cần tiếp tục kiểm tra precision của binary32. Binary32 có 23 fraction bits và một implicit leading 1, tương đương 24 significant bits đối với số normalized. Vì chuỗi số `0x1.000002p-24f` vẫn nằm trong 23 fraction bits ta thử dump hết tất cả số của chuỗi `0x1.000002p-24f` ra bằng cách chỉnh sữa phần `printf("%.23f\n", b);` thành `printf("%.60f\n", b);` trong code C , ta có :
+Tuy nhiên, việc một giá trị có biểu diễn nhị phân hữu hạn vẫn chưa đủ để kết luận rằng binary32 lưu được nó mà không rounding. Cần tiếp tục kiểm tra precision của binary32. Binary32 có 23 fraction bits và một implicit leading 1, tương đương 24 significant bits đối với số normalized. Vì chuỗi số `0x1.000002p-24f` vẫn nằm trong 23 fraction bits ta thử dump hết tất cả số của chuỗi `0x1.000002p-24f` ra bằng cách chỉnh sửa phần `printf("%.23f\n", b);` thành `printf("%.60f\n", b);` trong code C , ta có :
 
 <p align="center">
 	<img src="image/image32.png">
@@ -3320,7 +3320,7 @@ $$\large1.f\times2^{e}$$
 
 </div>
 
-trong đó $$\large f = 32\text{bits fraction}$$, bây giờ ta cần phải hiểu lý thuyết:
+trong đó $$\large f = 23\text{bits fraction}$$, bây giờ ta cần phải hiểu lý thuyết:
 
 - Một binary32 thực chất là một điểm trên trục số được tạo ra bằng cách chọn một trong hữu hạn các mẫu bit của significand rồi nhân nó với một scale $$\large2^{e}$$.
 
@@ -3444,7 +3444,7 @@ Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu g
      |---------------|-------------------|
   ```
 
-  và khoảng cách mới là $$\large2^{-47}$$, đây chính là (khoảng cách = khoảng cách của significand $$\large\times$$ scale của exponent). Có nghĩa là cái khoảng cách của significand này, ở ví dụ 3bits fraction là đi tính công sai suy ra khoảng cách và cái khoảng cách đó cho ta biết đó là giá trị được cộng vào ở hệ cơ số 10, khi cộng thêm 1 vào hệ cơ số 2, còn khoảng cách mới này gọi là khoảng cách toàn bộ số thực ,có thể gọi là khoảng cách giữa hai số floating-point biểu diễn được liên tiếp hay spacing. Trong ngữ cảnh này, nó cũng chính là ULP độ lớn của một bước giữa các giá trị biểu diễn kề nhau tại vùng đang xét. Ta có thể phân biệt như sau:
+  và khoảng cách mới là $$\large2^{-47}$$, đây chính là (khoảng cách = khoảng cách của significand $$\large\times$$ scale của exponent). Có nghĩa là cái khoảng cách của significand này, ở ví dụ 3bits fraction là đi tính công sai suy ra khoảng cách và cái khoảng cách đó cho ta biết đó là giá trị được cộng vào ở hệ cơ số 10, khi mỗi bước tăng giá trị mã hóa fraction thêm 1 với hệ cơ số 2, tương ứng với việc tăng significand thêm $$\large2^{−23}$$, còn khoảng cách mới này gọi là khoảng cách toàn bộ số thực ,có thể gọi là khoảng cách giữa hai số floating-point biểu diễn được liên tiếp hay spacing. Trong ngữ cảnh này, nó cũng chính là ULP độ lớn của một bước giữa các giá trị biểu diễn kề nhau tại vùng đang xét. Ta có thể phân biệt như sau:
 
   - **Công sai significand :** là kết quả công sai được cộng vào hệ cơ số 10 khi cộng thêm 1 vào hệ cơ số 2
 
@@ -3492,19 +3492,7 @@ Cái mọi người thường hay nhầm ở đây là, chỉ cần nhìn output
 
 </details>
 
-Vậy nên, biết hai giá trị của chuỗi `0x1.000002p-24f` và `1.0` đều được rounding với round to positive infinity, nó là chính xác mà ko cần phải có sự can thiệp của cơ chế round to nearest, tie to even khi gán vào một valriable trước đó.
-
-Điều này rất tốt để ta có thể minh họa cơ chế round to positive infinity, bây giờ khi đã biết được gía trị của chuỗi `0x1.000002p-24f` là $$\large2^{-24} + 2^{-47}$$ sang nhị phân $$\large00110011100000000000000000000001_{2}$$ thì ta tiến hành so sánh nó như đã nhắc ở lý thuyết round to positive infinity ở trên. Ta xét :
-
-<div align="center">
-
-$$\Large R_{+\infty}(large001100111|<22 \text{ số } 0>|1_{2})$$
-
-$$\Large =(001100111 <11 \text{ số } 0> 0_{2}) < (001100111 <22 \text{ số } 0> 1_{2}) < \boxed{(001100111 <11 \text{ số } 0> 1_{2})}$$
-
-</div>
-
-Từ so sánh trên ta thấy phần trong được đánh dấu hộp vuông thỏa mãn điều kiện là lớn hơn nhị phân của chuỗi `0x1.000002p-24f`, vậy nên $$\large(001100111 <11 số 0> 1_{2})$$ là kết quả làm tròn
+Vậy nên, biết hai giá trị của chuỗi `0x1.000002p-24f` và `1.0` là số hữu hạn, nó là chính xác giá trị của bản thân nó mà ko cần phải có sự can thiệp của cơ chế round to nearest, tie to even khi gán vào một biến trước đó. Điều này rất tốt để ta có thể minh họa cơ chế round to positive infinity, bây giờ khi đã biết được gía trị của chuỗi `0x1.000002p-24f` là $$\large2^{-24} + 2^{-47}$$ sang nhị phân $$\large00110011100000000000000000000001_{2}$$ thì ta tiến hành so sánh nó như đã nhắc ở lý thuyết round to positive infinity ở trên.
 
 - **vì sao ta lại dùng 0x1.000002p-24f thay vì dùng các số thực đơn giản khác để làm ví dụ cho round to postive infnity?:**
 
