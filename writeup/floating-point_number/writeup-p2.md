@@ -137,17 +137,25 @@ Các chế độ của Rounding (làm tròn)
 
 **Bằng chứng nào để chứng minh nó hữu hạn?:** Là khi số hữu hạn luôn thực hiện phép nhân và fraction có giá trị là 0, chúng ta dùng số gốc để nhân 2 và nếu có phần dư thì lấy phần dư nhân tiếp cho 2 **ví dụ** với số thực $$\large1.25_{10}$$ ta xét bit fraction là $$\large0.25_{10}$$ :
 
+<div align="center">
+
 | Bước | Giá trị x2  | Bit | Phần dư |
 | :----: | :-----------: | :---: | :-------: |
 | 1    | 0.25×2=0.50 | 0   | 0.50    |
 | 2    | 0.50×2=1.00 | 1   | 0       |
 
+</div>
+
 Dừng ở bước 2 do phần dư là 0, ta có $$\large0.25_{10} = 0.01_{2}$$ vì bit ở bước 1 và 2 lần lượt là 0 và 1, nên ta có $$\large1.25_{10} = \boxed{1.01_{2}}$$ . Đây là hữu hạn do phần dư là 0 ở bước hai, ta cho thêm **ví dụ** là $$\large0.75_{10}$$ tính fraction trước y nhưu trên :
+
+<div align="center">
 
 | Bước | x2          | Bit | Dư   |
 | :----: | :-----------: | :---: | :----: |
 | 1    | 0.75×2=1.50 | 1   | 0.50 |
 | 2    | 0.50×2=1.00 | 1   | 0    |
+
+</div>
 
 ta cũng dừng ở bước 2, ta có $$\large0.75_{10} = \boxed{0.11_{2}}$$, nó là hữu hạn vì số dư là 0 ở bước 2
 
@@ -208,6 +216,8 @@ Ta thấy nó vẫn là kết quả chính xấc, không có rounding nào ở �
 
 **Biểu diễn nhị phân vô hạn:** là việc biểu diễn nhị phân có độ rộng độ rộng không được giới hạn tới khi bị cắt bởi phần cứng do giới hạn độ rộng độ rộng bên phía phần cứng **ví dụ** $$\large0.1_{2}$$ tính fraction nó với 2:
 
+<div align="center">
+
 | Bước | x2      | Bit | Dư  |
 | :----: | :-------: | :---: | :---: |
 | 1    | $$\large0.1\rightarrow0.2$$ | 0   | 0.2 |
@@ -218,6 +228,8 @@ Ta thấy nó vẫn là kết quả chính xấc, không có rounding nào ở �
 | 6    | $$\large0.2\rightarrow0.4$$ | 0   | 0.4 |
 | 7    | $$\large0.4\rightarrow0.8$$ | 0   | 0.8 |
 | 8    | $$\large0.8\rightarrow1.6$$ | 1   | 0.6 |
+
+</div>
 
 Ta thấy nó cứ lặp lại từ `0.2 -> 0.6` giống kim đồng hồ và số dư không có điểm dừng. Đây gọi là biểu diễn nhị phân vô hạn, và đây cũng là điều kiện để hệ thống rounding (làm tròn) dãy này
 
@@ -289,6 +301,8 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 
 **trường hợp 1:** Nếu muốn tính số thực lấy nhị phân của significand hay được gọi đơn giản là phần thập phân, mục đích là lấy phần nguyên `0 hoặc 1` để phục vụ cho việc encode thì ta xét bảng, ví dụ :
 
+<div align="center">
+
 <table>
 <tr>
 <td>
@@ -327,6 +341,7 @@ Phần này loại bỏ những yếu tố dư thừa để tối ưu thời gia
 </td>
 </tr>
 </table>
+</div>
 
 > số thực nhị phân vô hạn
 
@@ -400,13 +415,19 @@ $$
 
 Còn các giá trị như $$\large b_{k}$$ là hệ số tại vị trí k ,chỉ nhận 0 hoặc 1. Nghĩa là xét các vị trí của bit, **ví dụ** cho :
 
+<div align="center">
+
 | vị trí bit | 5 | 4 | 3 | 2 | 1 | 0 |
 |------------|---|---|---|---|---|---|
 | các bit    | 0 | 1 | 1 | 0 | 1 | 0 |
 
+</div>
+
 vì vậy : $$\large b_{0} = 0$$, $$\large b_{1} = 1$$, $$\large b_{2} = 0$$, $$\large b_{3} = 1$$, $$\large b_{4} = 1$$, $$\large b_{5} = 0$$. Nên $$\large b_{k}$$ là bit tại vị trí k, đồng thời đóng vai trò là trọng số của hệ số $$\large2^{k}$$. Vì đây là hệ nhị phân nên $$\large b_{k} \in \{0,1\}$$
 
 còn ký hiệu $$\large2^k$$ là trọng số của vị trí bit k trong hệ nhị phân. **Ví dụ:**
+
+<div align="center">
 
 | $$\large k$$ | $$\large b_k$$ |    $$\large2^{k}$$ | $$\large b_k2^{k}$$ |
 | :--: | :----: | :-------: | :-------: |
@@ -416,6 +437,8 @@ còn ký hiệu $$\large2^k$$ là trọng số của vị trí bit k trong hệ 
 |   2 |     0 | $$\large2^{2}=4$$ |      0 |
 |   1 |     1 | $$\large2^{1}=2$$ |      2 |
 |   0 |     0 | $$\large2^{0}=1$$ |      0 |
+
+</div>
 
 nó thuộc danh mục là tính trọng số và là giá trị hệ cơ số 10 của toàn chuỗi nhị phân sau khi cộng lại, nên nếu vị trí bit là 0 nó là 0 và 1 nó là chính giá trị trọng số của hệ số $$\large2^{k}$$. Điều này cũng đã được đề cập tới ở phần [two-complement-code](https://github.com/tranquanghao708/CSAPP-learning/blob/main/writeup/two-complement-code/two-complement-code.md).
 
@@ -581,11 +604,15 @@ bây giờ so sánh **phần bị cắt với đúng một ngưỡng là một n
 
 Đây là khái niệm dùng để giải thích vì sao CPU làm tròn bằng cách này, không phải cấu trúc chính của IEEE. Về nghĩa đen là giá trị của 1 đơn vị ở bit cuối cùng ở fraction, đơn giản hơn nó là khoảng cách giữa hai số IEEE 754 có thể biểu diễn được **ví dụ** sau chuẩn hóa ta có tập hợp $$\large(1.00_{2},1.01_{2},1.10_{2},1.11_{2})$$ và các số này lần lượt tương ứng với tập hợp $$\large(1.00_{10},1.25_{10},1.50_{10},1.75_{10})$$ và bây giờ khoảng cách giữa chúng là :
 
+<div align="center">
+
 | phép tính | kết quả |
 |:-----------:|:---------:|
 | 1.25 - 1.00 | 0.25 |
 | 1.50 - 1.25 | 0.25 |
 | 1.75 - 1.50 | 0.25 |
+
+</div>
 
 Vậy ULP = 0.25, nếu gặp trường hợp như `một nữa của ULP` thì lấy đó chia hai lên thôi, ví dụ $$\large\frac{0.25}{2} = 0.125$$ thì con số `0.125` này chính là con số ở ngưỡng mà IEEE quyết định làm tròn 
 
@@ -640,9 +667,13 @@ $\large\mathrm{ULP} = \boxed{0.25}$ vậy bây giờ ta biết $$\large0.25_{10}
 
 nếu trường hợp số lớn hơn nữa sẽ làm tròn, **ví dụ** $$\large1.010011_{2}$$ và như cũ CPU giữ lại 2 fraction là $$\large1.01_{2}$$ và $$\large1.10_{2}$$ và số bit bị cắt là $$\large0011_{2}$$ bây giờ ta tính ULP:
 
+<div align="center">
+
 | phép tính | kết quả |
 |:-----------:|:---------:|
 | 1.50 - 1.25 | 0.25 |
+
+</div>
 
 vẫn như cũ, $$\large\mathrm{ULP} = \boxed{0.25}$$ và ta biết half ULP của này là $$\large0.125_{10} = 0.001_{2}$$ tròn 4bit là $$\large0.0010_{2}$$ vì đó có sẵn ở ví dụ trước. Bây giờ so sánh phần sai số (round error) và nữa khoảng cách giữa hai số biểu diễn được (half ULP) suy ra $$\large0011_{2} > 0.0010_{2}$$ suy ra nó sẽ làm tròn thành $$\large\boxed{1.10}$$
 
@@ -712,9 +743,13 @@ Ta phân tích hai số này, $$\large0.10_{2}$$ có `LSB = 0` và $$\large0.01_
 
 Guard bit là bit đầu tiên bị cắt bỏ ngay sau bit fraction cuối cùng mà CPU quyết định giữ lại. **Ví dụ** như các ví dụ trên thì CPU giữ 2fraction, ở đây lấy ví dụ với bit $$\large1.0101101_{2}$$ bây giờ fraction là $$\large1.01_{2}$$ còn bit bị cắt là $$\large01101_{2}$$ bây giờ CPU sẽ chia số bit bị cắt này ra 4 phần trong đó có fraction, guard bit (G) , round bit (R) và sticky bit (S), nó sẽ chia như sau :
 
+<div align="center">
+
 | Fraction | G | R | S |
 |----------|---|---|---|
 | 1.01	   | 0 | 1 | 101 |
+
+</div>
 
 Ta thấy, `G = 0` suy ra `guard bit = 0`, `R = 1` suy ra `round bit = 1`, `S = 1` suy ra `sticky bit = 1 (vì ít nhất nó cũng có bit 1)`
 
@@ -724,15 +759,23 @@ Ta thấy, `G = 0` suy ra `guard bit = 0`, `R = 1` suy ra `round bit = 1`, `S = 
 
 Round bit là bit thứ hai bị cắt, nó nằm phía sau Guard bit. Nó có ý nghĩa nếu guardbit là 1, nếu guardbit (G) là 0 thì biết chắc chắn là `x < half ULP` rồi không cần phải soi round và sticky, nhưng nếu guard là 1 thì bây giờ mới soi round. Ở đây, cũng như ví dụ trên ta có :
 
+<div align="center">
+
 | Fraction | G | R | S |
 |:----------:|:---:|:---:|:---:|
 | 1.01	   | 0 | 1 | 101 |
 
+</div>
+
 Cái này chắc chắn là `x < half ULP` vì `G = 0` nên round sẽ không có ý nghĩa, nhưng giả sử ta cho `G = 1` như :
+
+<div align="center">
 
 | Fraction | G | R | S |
 |:----------:|:---:|:---:|:---:|
 | 1.01	   | 1 | 1 | 101 |
+
+</div>
 
 thì lúc này `G = 1` nó sẽ soi thêm R vì lúc này round mới thực sự có ý nghĩa, nếu `G = 1 và R = 1` thì nó chắc chắn sẽ lớn hơn half ULP `x > half ULP` lúc này sẽ làm tròn lên
 
@@ -907,12 +950,16 @@ nhưng vấn đề khiến nó gần như trùng khớp với bit quyết địn
 
 Ở đây, chúng ta sẽ thao tác chính xác bit thô trên `uint32_t`. Trước hêt, cần phải hiểu rõ thao tác số thực với FPU và `uint32_t` khác nhau thế nào :
 
+<div align="center">
+
 | Tiêu chí | FPU | uint32_t |
 |----------|-----|----------|
 | **Bản chất** | Mạch phần cứng đại số số thực | Thao tác trên dãy 32 ô nhớ nhị phân |
 | **Đơn vị xử lý** | Giá trị số thực | Mẫu bit thuần túy |
 | **Xử lý số vô hạn** | Tự động làm tròn (GRS) theo chuẩn IEEE 754 | Không quan tâm giá trị, chỉ đọc/dịch/đảo bit |
 | **Ngôn ngữ C** | Thực hiện qua các toán tử +, -, *, / trên float | Thực hiện qua memcpy, toán tử &, |, ^, <<, >> |
+
+</div>
 
 vậy thao tác bitwise raw manipulation trên `uint32_t` là dùng các toán tử bitwise như &, | , ^, << , >> và thực hiện với memcpy để thao tác với tầng bit thô của số thực, sau khi sao chép bit sang `uint32_t`, các phép toán tiếp theo (&, |, ^, <<, >>) chỉ thao tác trên mẫu bit, không kích hoạt các phép toán số thực của FPU, điều này tránh đụng chạm tới phần FPU vì các phép toán trên `uint32_t` không sử dụng pipeline số thực và chúng được thực hiện bởi ALU, không phải FPU do đó chúng ta có thể xử lý và đọc lượng bit đó một cách chính xác trong bộ nhớ
 
@@ -1000,12 +1047,16 @@ Thực tế, FPU không đi tìm Guard, Round, Sticky trong dữ liệu đã lư
 
 `Round toward Zero (làm tròn về 0 hay còn gọi là truncation)` là chế độ làm tròn trong đó phần lẻ bị loại bỏ, khiến kết quả luôn tiến gần về giá trị 0. Chế độ này không xét khoảng cách giữa hai số biểu diễn được như Round to Nearest, Ties to Even, mà chỉ đơn giản cắt bỏ phần không thể biểu diễn. **Ví dụ** :
 
+<div align="center">
+
 | Giá trị | Kết quả |
 |:---------:|:---------:|
 | 3.9     | 3       |
 | 3.1     | 3       |
 | -3.9    | -3      |
 | -3.1    | -3      |
+
+</div>
 
 Điểm hay bị nhầm `round toward zero` $$\large\neq$$ ceil và floor
 
@@ -1026,6 +1077,8 @@ Thực tế, FPU không đi tìm Guard, Round, Sticky trong dữ liệu đã lư
 
 Floor (hàm sàn) luôn làm tròn về phía âm vô cực ($$\large-\infty$$) và có ký hiệu ($$\large\lfloor x \rfloor$$) định nghĩa của nó là số nguyên lớn nhất nhỏ hơn hoặc bằng x. **Ví dụ:** 
 
+<div align="center">
+
 |  (x) | $$\large\lfloor x \rfloor$$ |
 | :---: | :-------: |
 |  3.8 |        3 |
@@ -1034,9 +1087,13 @@ Floor (hàm sàn) luôn làm tròn về phía âm vô cực ($$\large-\infty$$) 
 | -3.1 |       -4 |
 | -3.8 |       -4 |
 
+</div>
+
 Ở đây, $$\large3 \leq 3.8$$ nên kết quả là 3, và $$\large-4 \leq -3.8$$ kết quả là -4 vì -4 là số nguyên lớn nhất thỏa điều kiện
 
 Ceil (hàm trần) luôn làm tròn về phía dương vô cực ($$\large+\infty$$) và có ký hiệu $$\large\lceil x \rceil$$ định nghĩa của nó là số nguyên nhỏ nhất lớn hơn hoặc bằng x. **ví dụ:**
+
+<div align="center">
 
 |  (x) | Ceil(x) |
 | :---: | :------: |
@@ -1045,6 +1102,8 @@ Ceil (hàm trần) luôn làm tròn về phía dương vô cực ($$\large+\inft
 |  3.0 |       3 |
 | -3.1 |      -3 |
 | -3.8 |      -3 |
+
+</div>
 
 Ở đây, $$\large4 \geq 3.1$$ nên kết quả là 4 và $$\large-3 \geq -3.1$$ nên kết quả là -3. Có thể mở rộng lý thuyết của hai hàm làm tròn này [tại đây](https://en-wikipedia-org.translate.goog/wiki/Floor_and_ceiling_functions?_x_tr_sl=en&_x_tr_tl=vi&_x_tr_hl=vi&_x_tr_pto=tc)
 
@@ -1108,18 +1167,26 @@ int main (void){
 
 Ta cho bảng so sánh như sau:
 
+<div align="center">
+
 | Giá trị | Toward Zero | Floor | Ceil |
 | :-------: | :----------: | :----: | :---: |
 | 3.9     |           3 |     3 |    4 |
 | -3.9    |          -3 |    -4 |   -3 |
 
+</div>
+
 đối với số âm thì sự khác biệt khá rõ, floor luôn đi về phía âm vô cực ($$\large-\infty$$) còn `round toward zero` luôn đi về 0. **Ví dụ** ta cho `-3.8` thì :
+
+<div align="center">
 
 | Chế độ            | Kết quả |
 | :-----------------: | :------: |
 | Floor             |      -4 |
 | Ceil              |      -3 |
 | Round toward Zero |      -3 |
+
+</div>
 
 ta thấy floor luôn làm tròn về $$\large-\infty$$ và ceil luôn làm tròn về $$\large+\infty$$ và `round toward zero` luôn tiến về số 0
 
@@ -1263,6 +1330,8 @@ Còn về trường hợp dùng định dạng chuỗi chuyển sang số thực
 
 biết sign và phần nguyên có bit là `0` vậy nên ta chỉ cần nhân đôi thôi 
 
+<div align="center">
+
 | phần số thực | nhân 2 | dư | giá trị bit |
 |:-----:|:--------:|:----:|:-------------:|
 | 0.09..167 | 0.2 | 0.2 | 0 |
@@ -1270,6 +1339,8 @@ biết sign và phần nguyên có bit là `0` vậy nên ta chỉ cần nhân �
 | 0.4 | 0.8 | 0.8 | 0 |
 | 0.8 | 1.6 | 0.6 | 1 |
 | 0.6 | 1.2 | 0.2 | 1 |
+
+</div>
 
 ta có : `0.0001100011...000110 (4 phần kia bị cắt nên chỉ có bit 0)` và phần bị cắt là `0011` ta chuẩn hóa số thực này suy ra ta có `1.100011...000110` :
 
@@ -1280,6 +1351,11 @@ $$
 suy ra `actual exponent = -4` tính trường exponent là `exponent field = -4 + 1023 = 1019` và ta có $$\large1019_{10} = 01111111011_{2}$$ ráp lại ta có $$\large\boxed{001111111011100011...000110_{2}}$$ vậy ta thấy quá trình chuyển sang nhị phân xuất hiện chuỗi tuần hoàn `000110011...`, điều đó chứng tỏ giá trị toán học `0.09999999999999999167` không thể biểu diễn chính xác bằng khai triển nhị phân vô hạn. Khi encode sang IEEE 754, FPU sẽ cắt chuỗi này theo giới hạn 52 bit fraction (double) rồi làm tròn theo chế độ làm tròn hiện hành để tạo ra một mẫu bit hữu hạn.
 
 Còn giá trị `7.47999999999999953814`, đầu tiên ta có `sign = 0` và $$\large7_{10} = 111_{2}$$ và tính fraction :
+
+<div align="center">
+<table>
+
+<td>
 
 | phần số thực | nhân 2 | dư | giá trị bit |
 |:-----:|:--------:|:----:|:-------------:|
@@ -1294,6 +1370,13 @@ Còn giá trị `7.47999999999999953814`, đầu tiên ta có `sign = 0` và $$\
 | 0.88 | 1.76 | 0.76 | 0 |
 | 0.76 | 1.52 | 0.52 | 1 |
 | 0.52 | 1.04 | 0.04 | 1 |
+
+</td>
+
+<td>
+
+| phần số thực | nhân 2 | dư | giá trị bit |
+|:-----:|:--------:|:----:|:-------------:|
 | 0.04 | 0.08 | 0.08 | 0 |
 | 0.08 | 0.16 | 0.16 | 0 |
 | 0.16 | 0.32 | 0.32 | 0 |
@@ -1305,6 +1388,11 @@ Còn giá trị `7.47999999999999953814`, đầu tiên ta có `sign = 0` và $$\
 | 0.24 | 0.48 | 0.48 | 0 |
 | 0.48 | 0.96 | 0.96 | 0 |
 | 0.96 | 1.92 | 0.92 | 1 |
+
+</td>
+
+</table>
+</div>
 
 ta có : `fraction = 0.111101001100001010001..010011 (11 bit bị cắt)` ta chuẩn hóa số thực thành `1.11101001100001010001..010011`:
 
@@ -1361,10 +1449,14 @@ Nhưng với số âm điều này rất dễ bị nhầm trong quy tắc làm t
 
 Round toward $$\large+\infty$$ phải chọn giá trị lớn hơn, tức nằm về phía bên phải $$\large\boxed{-1.001_{2}}$$. Nó không phải là làm cho trị tuyệt đối lớn hơn. Ta có bảng so sánh và phép so sánh trực quan như : 
 
+<div align="center">
+
 | Giá trị chính xác | Round toward +∞ |
 | :----------------: | :--------------: |
 |       $$\large1.001101_{2}$$ |        $$\large1.010_{2}$$ |
 |      $$\large-1.001101_{2}$$ |       $$\large-1.001_{2}$$ |
+
+</div>
 
 **vì:** $$\large−1.001_{2} > −1.001101_{2} > −1.010_{2}$$ . Nên round toward $$\large+\infty$$ luôn chọn upper bound.
 
@@ -1690,9 +1782,13 @@ Ta xét $$\large1+2^{-23}$$ và ta đã biết $$\large2^{-1} = \frac{1}{2^{1}} 
 
 **Vì sao nó lại liên quan tới 32bit?:** với 32bit (Float) biểu diễn cấu trúc nhị phân của số thực có dạng:
 
+<div align="center">
+
 | sign | exponent | fraction |
 |:-----:|:----------:|:----------:|
 |  1  |    8     |    23    |
+
+</div>
 
 Điều quan trọng là `fraction = 23 bit` , Với một số normalized binary32, significand được hiểu là `1.fraction` nghĩa là theo chuẩn hóa thì `hiddenbit = 1` và có 23bit fraction ví dụ binary32 có `fraction = 00000000000000000000001` thì nó sẽ là $$\large\boxed{\mathrm{1}.00000000000000000000001_{2}}$$ và giá trị này đúng y hệt cái ta đang có ở biểu thức $$\large1+2^{-23}$$
 
@@ -1709,9 +1805,13 @@ Bây giờ tới phần ghép thêm $$\large2^{-24}$$, như đã nói phần gí
 
 Bây giờ ta chuyển chuỗi `0x1.000002p-24f` sang binary, ta vừa chuyển nó thành giá trị ở hệ cơ số 10 bây giờ là hệ cơ số 2. Bây giờ ta biết hiddenbit là 1, fraction là $$\large00000000000000000000001_{2}$$ và số mũ là `-24` ở phần `p-24` kiểu float (32bit). Cách tính chuỗi `0x1.000002p-24f` có ở phần details trên. Bây giờ tính trường số mũ (exponent field) bằng cách lấy `-24` cộng với bias, ta biết `bias = 127` trong hệ 32bits và `-24 + 127 = 103` và chuyển $$\large103_{10} = 01100111_{2}$$ ta có:
 
+<div align="center">
+
 | sign | exponent | fraction |
 |:-----:|:----------:|:----------:|
 |  0  |    01100111     |    00000000000000000000001    |
+
+</div>
 
 ghép lại thành $$\large\boxed{00110011100000000000000000000001_{2}}$$. Đây là nhị phân của chuỗi `0x1.000002p-24f`
 
