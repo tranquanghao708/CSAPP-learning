@@ -2087,7 +2087,9 @@ $$\huge2^{-24} + 2^{-47} = \dfrac{2^{23} + 1}{2^{47}}$$
 
 </div>
 
-Ở đây, ta thấy mẫu số $$\large2^{47}$$ hoàn toàn nằm trong tập hợp $$\large2^{k}$$ ($$\large2^{47}\in \lbrace2^{k} | k \in \mathbb{N}_{0}\rbrace$$). Vậy nên suy ra nếu phân số tối giản có mẫu $$\large2^{k}$$ thì giá trị đó biễu diễn nhị phân hữu hạn, vậy thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn
+Ở đây, ta thấy mẫu số $$\large2^{47}$$ hoàn toàn nằm trong tập hợp $$\large2^{k}$$ ($$\large2^{47}\in \lbrace2^{k} | k \in \mathbb{N}_{0}\rbrace$$). Vậy nên suy ra nếu phân số tối giản có mẫu $$\large2^{k}$$ thì giá trị đó biễu diễn nhị phân hữu hạn, vậy thì suy ra chuỗi `0x1.000002p-24f` là biểu diễn nhị phân hữu hạn. Tuy nhiên, cần rõ đây là điều kiện cần và đủ đối với một số hữu tỉ. Một số hữu tỉ có biểu diễn nhị phân hữu hạn khi và chỉ khi mẫu số của phân số tối giản là lũy thừa của 2.
+
+**Lưu ý:** điều đó chỉ chứng minh tính hữu hạn của biểu diễn nhị phân. Nó chưa chứng minh rằng giá trị có thể được lưu chính xác trong binary32
 
 - **Vậy ý nghĩa khi thực hiện các bước này là gì?:** để phân biệt và nhận biết thế nào là phân tích để chứng minh tại sao phân số thập phân kia không phải là biểu diễn nhị phân hữu hạn và hexadecimal floating-point để chứng minh giá trị binary32 thực sự hữu hạn. là hai khái niệm khác nhau một cách rất tinh vi (decimal representation $$\large\neq$$ exact binary32 value).
 
@@ -2122,7 +2124,7 @@ $$\Large\text{0x1.000002} = 1.000000000000000000000010_{2}$$
 
 </div>
 
-Điều này tạo ra 24 vị trí bit sau dấu chấm nếu tính toàn bộ các vị trí được viết ra. Tuy nhiên, binary32 không lưu toàn bộ chuỗi này một cách máy móc. Với số normalized, binary32 có một hidden leading bit `1` và 23 fraction bits. Ở đây, các bit có ý nghĩa của significand là $$\large1.00000000000000000000001_{2}$$. Trong đó `1` đầu tiên là hidden bit và phần sau dấu chấm chỉ có 23 bit. Vì vậy significand này vừa khít với precision của binary32.
+Khi chuyển trực tiếp 6 chữ số hexadecimal sau dấu chấm sang binary, ta thu được 24 vị trí bit. Tuy nhiên, bit cuối cùng bằng 0 nên có thể bỏ đi mà không thay đổi giá trị. Significand sau khi rút gọn là $$\large1.00000000000000000000001_{2}$$, gồm một hidden leading bit và đúng 23 fraction bits. Vì vậy, significand này vừa khít với precision của binary32.
 
 Điểm quan trọng là không được nhìn vào số chữ số decimal mà `printf("%.60f")` in ra để kết luận số đó vượt quá precision của binary32. `printf("%.60f")` chỉ yêu cầu hiển thị giá trị dưới dạng decimal với 60 chữ số sau dấu chấm; nó không có nghĩa binary32 đang lưu 60 chữ số chính xác. Do đó, việc output xuất hiện `0.0000000596046518808179826010018587...` không chứng minh rằng giá trị vượt quá 23 fraction bits. Muốn kiểm tra precision của binary32, phải xét biểu diễn nhị phân của significand, không phải số lượng chữ số decimal được in ra. Với `0x1.000002p-24f`, ta có:
 
@@ -2279,7 +2281,7 @@ Ta thấy bit cuối cùng có giá trị là $$\large2^{-23}$$, do đó nếu g
 
   - **Công sai toàn bộ số thực (spacing) :** là nó chính là ULP độ lớn của một bước giữa các giá trị biểu diễn kề nhau tại vùng đang xét
 
-  thì ở 32bits (float), công sai của công sai significand có kết quả là $$\large2^{-23}$$ và ta biết số mũ (exponent) $$\large e = -24$$ và hệ số scale là $$\large2^{e} = 2^{-24}$$ theo hệ 32bits (float). Để tính được khoảng cách của toàn bộ số thực (spacing) theo 32bits này, ta lấy công thức như trên là (spacing = công sai significand x scale factor $$\large2^{e}$$), ta xét:
+  thì ở 32bits (float), công sai của significand có kết quả là $$\large2^{-23}$$ và ta biết số mũ (exponent) $$\large e = -24$$ và hệ số scale là $$\large2^{e} = 2^{-24}$$ theo hệ 32bits (float). Để tính được khoảng cách của toàn bộ số thực (spacing) theo 32bits này, ta lấy công thức như trên là (spacing = công sai significand x scale factor $$\large2^{e}$$), ta xét:
 
   <div align="center">
 
