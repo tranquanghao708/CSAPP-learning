@@ -743,23 +743,35 @@ thì lúc này `G = 1` nó sẽ soi thêm R vì lúc này round mới thực s�
 
 #### 3.2.3.sticky bit
 
-Sticky bit là bit thứ 3, nó đứng ngay sau round bit cái đặc biệt của sticky bit này không phải là một bit cụ thể bị cắt, mà là kết quả OR với tất cả các bit còn lại phía sau roundbit, nó luôn soi là sau roundbit còn bit nào nữa không, nếu không còn bit nào nữa thì `S = 0` còn nếu có thì `S = 1`. Đó là lý do mà sticky bit (S) là bit 0 hoặc bit 1 dù sau nó là hàng chục hay hàng trăm bit. Ví dụ ở trên là ;
+Sticky bit là bit thứ 3, nó đứng ngay sau round bit, cái đặc biệt của sticky bit này không phải là một bit cụ thể bị cắt, mà là kết quả OR với tất cả các bit còn lại phía sau roundbit, nó luôn soi là sau roundbit còn bit nào nữa không, nếu không còn bit nào nữa thì `S = 0` còn nếu có thì `S = 1`. Đó là lý do mà sticky bit (S) là bit 0 hoặc bit 1 dù sau nó là hàng chục hay hàng trăm bit. Ví dụ ở trên là ;
+
+<div align="center">
 
 | Fraction | G | R | S |
 |:----------:|:---:|:---:|:---:|
 | 1.01	   | 1 | 1 | 101 |
 
+</div>
+
 Ở đây ta thấy trường sticky bit có chuỗi nhị phân là `101` vậy nên sticky sẽ có bit 1 `S = 1`. Ví dụ khác :
+
+<div align="center">
 
 | Fraction | G | R | S |
 |:----------:|:---:|:---:|:---:|
 | 1.01	   | 1 | 1 | 000 |
 
+</div>
+
 Ở đây ta thấy trường sticky bit có chuỗi nhị phân là `000` vậy nên sticky sẽ có bit 1 `S = 0` (do không có bit nào là 1). Ví dụ khác :
+
+<div align="center">
 
 | Fraction | G | R | S |
 |:----------:|:---:|:---:|:---:|
 | 1.01	   | 1 | 1 | 010 |
+
+</div>
 
 Ở đây ta thấy trường sticky bit có chuỗi nhị phân là `010` vậy nên sticky sẽ có bit 1 `S = 1` (do có bit giữa là 1). Từ 3 ví dụ, ta thấy hễ một binary strings sau trường roundbit có một bit 1 thì `S = 1` còn nếu không có bit 1 nào thì `S = 0`
 
@@ -769,12 +781,16 @@ Sticky bit là bit thứ 3, nó đứng ngay sau round bit cái đặc biệt c�
 
 Theo 3 chương về guard bit, round bit, sticky bit (GRS) ta có bảng :
 
+<div align="center">
+
 | G | R | S | Kết luận         |
 | - | - | - | ---------------- |
 | 0 | x | x | < half ULP       |
 | 1 | 0 | 0 | = half ULP (tie) |
 | 1 | 0 | 1 | > half ULP       |
 | 1 | 1 | x | > half ULP       |
+
+</div>
 
 các important trên cho thấy, nếu `G = 0` chắc chắn `x < half ULP` nếu `R = 1, G = 1` chắc chắn `x > half ULP`. Nên phần cứng không thể soi riêng biệt một bit trừ khi bit đó có quy luật khi là 0 thì chắc chắn có giá trị này ví dụ như guard bit. Bảng trên thì đó là cách phần cứng dùng GRS để biết khi nào giữ nguyên, khi nào làm tròn và khi nào lấy LSB = 0.
 
