@@ -677,7 +677,9 @@ khi làm tròn, CPU chỉ thực hiện cộng một đơn vị bit vào bit cu�
  1.1000 (kết quả làm tròn)
 ```
 
-đó chính là cách CPU làm tròn bit khi số bit bị cắt lớn hơn half ULP
+đó chính là cách CPU làm tròn bit khi số bit bị cắt lớn hơn half ULP.
+
+- **Tuy nhiên:** Phần cứng thực sự (FPU) ko làm cách mà đi tính half ULP, phần này chỉ là minh họa cho việc tính thủ công. Thực chất phần cứng thường đi xét 3 bit GRS để suy ra việc rounding nó như thế nào
 
 <br>
 
@@ -1474,7 +1476,7 @@ int main(void){
 	<image alt="alt text" src="image/image24.png" width="780"/>
 </p>
 
-Ta có chuỗi số `1.00000011920928955079` ta thấy rõ ràng nó đã được làm tròn nhưng vẫn có sự can thiệp của `tie to even` trước khi tới `caculating`, ở phần transmit số thực hữu hạn `1.0f` vào biến a rồi và `0x1.000002p-24f` vào biến b. Ta vẫn chưa biết là sẽ xảy ra rounding hay chưa, nên việc ta cần làm đầu tiên là phân tích và xem gía trị cả hai chuỗi xem nó biễu diễn hữu hạn hay vô hạn bây giờ ta biết `1.0f` là hữu hạn tiếp theo là tính toán giá trị chuỗi số `0x1.000002p-24f`
+Ta có chuỗi số `1.00000011920928955079` tuy nhiên ta vẫn chưa biết là sẽ xảy ra rounding (round to nearest tie to even) sau khi gán số thưc đó vào biến cục bộ hay chưa, nên việc ta cần làm đầu tiên là phân tích và xem gía trị cả hai chuỗi xem nó biễu diễn hữu hạn hay vô hạn bây giờ ta biết `1.0f` là hữu hạn tiếp theo là tính toán giá trị chuỗi số `0x1.000002p-24f`
 
 > giải thích chuỗi số 0x1.000002p-24f
 
