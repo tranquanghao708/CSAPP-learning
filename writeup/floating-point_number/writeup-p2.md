@@ -2473,13 +2473,17 @@ Bây giờ, mấu chốt là phần làm tròn round toward positive infinity. C
 
 <div align="center">
 
-$$\Large R_{+\infty}(1 + 2^{-24} + 2^{-47}) = 1 + 2^{-23}$$
+$$\Large R_{+\infty}(1 + 2^{-24} + 2^{-47}) = \boxed{1 + 2^{-23}}$$
 
 </div>
 
-từ đó ta có : $\large1 + 2^{-23} \approx 1.00000011920928955078125$. Bản in 1.00000011920928955079 chính là bản xấp xỉ thập phân của đúng giá trị này (sai số chỉ do cách printf làm tròn khi in). Giá trị $\large1 + 2^{-23}$ biểu diễn chính xác trong binary32 (finite, fraction chỉ có 1 bit cuối bật).
+**từ đó ta có :** $\large1 + 2^{-23} \approx 1.00000011920928955078125$. Bản in 1.00000011920928955079 chính là bản xấp xỉ thập phân của đúng giá trị này (sai số chỉ do cách printf làm tròn khi in). Giá trị $\large1 + 2^{-23}$ biểu diễn chính xác trong binary32 (finite, fraction chỉ có 1 bit cuối bật).
 
-- **vì sao ta lại dùng 0x1.000002p-24f thay vì dùng các số thực đơn giản khác để làm ví dụ cho round to positive infnity?:**
+- **vì sao ta lại dùng 0x1.000002p-24f thay vì dùng các số thực đơn giản khác để làm ví dụ cho round to positive infnity?:** Mục tiêu của ví dụ không phải là cộng hai số bất kỳ rồi xem kết quả, mà là chứng minh rõ ràng hành vi của Round toward $$\large+\infty$$ khi giá trị chính xác nằm vừa vượt qua điểm giữa giữa hai số biểu diễn được.
+
+  Cả hai toán hạng phải biểu diễn chính xác (exact) trong binary32. Trong đó 1.0f exact. 0x1.000002p-24f = $\large2^{-24} + 2^{-47}$ cũng exact (significand chỉ dùng đúng 23 bit fraction + hidden 1). Nếu dùng số thập phân thông thường (0.00000006, 1e-7…) thì ngay từ lúc gán vào biến float đã bị làm tròn theo mode mặc định (ties-to-even). Khi đó ta không còn kiểm soát được giá trị thật sự đang cộng là gì từ đó gây nên ví dụ mất tính chặt chẽ.
+
+  Tổng toán học phải nằm vừa vượt điểm giữa. Xung quanh 1.0, ULP $\large= 2^{-23}$. Điểm giữa giữa 1 và $\large1+2^{-23}$ chính là $\large1 + 2^{-24}$. Cộng thêm $\large2^{-47}$ khiến $$\large1 + 2^{-24} + 2^{-47} > 1 + 2^{-24}$$ và nó vừa lớn hơn điểm giữa một chút rất nhỏ. Điều này cực kỳ quan trọng vì cơ chế round to nearest, ties to even sẽ xử lý theo quy tắc tie (hoặc round up tùy GRS). Round toward $$\large+\infty$$ bắt buộc phải chọn số lớn hơn ($\large1 + 2^{-23}$). Nếu dùng số quá lớn (vượt xa điểm giữa) hoặc quá nhỏ (nằm dưới điểm giữa) thì hành vi của các mode trở nên giống nhau hoặc không thể hiện rõ sự khác biệt của toward $$\large+\infty$$.
 
 <sub>--đã hết phần giải thích--</sub>
 
