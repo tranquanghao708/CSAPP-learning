@@ -175,7 +175,7 @@ ta cũng dừng ở bước 2, ta có $$\large0.75_{10} = \boxed{0.11_{2}}$$, n�
 
 int main(void){
 	float x = 1.50; //binary = 1.10
-	printf("dump fration 23bit : %.23f\n",x);
+	printf("dump fraction 23bit : %.23f\n",x);
 }
 ```
 
@@ -193,7 +193,7 @@ Ta thấy khi gán vào x là 1.50, và ta dump ra nó vẫn đúng số 1.5 nh�
 int main(void){
 	float x = 1.50; //binary = 1.10
 	float y = 1.25; //binary = 1.01
-	printf("dump fration 23bit : %.23f\n",x + y); //phần này sẽ biểu diễn số hữu hạn
+	printf("dump fraction 23bit : %.23f\n",x + y); //phần này sẽ biểu diễn số hữu hạn
 }
 ```
 
@@ -249,7 +249,7 @@ Ta thấy nó cứ lặp lại từ `0.2 -> 0.6` giống kim đồng hồ và s�
 
 int main(void){
 	float x = 0.1;
-	printf("dump fration 23bit : %.23f\n",x);
+	printf("dump fraction 23bit : %.23f\n",x);
 }
 ```
 
@@ -267,7 +267,7 @@ Ta thấy khi gán vào x là 0.1, và ta dump ra nó đã bị rounding ở fra
 int main(void){
 	float x = 0.1;
 	float y = 0.2;
-	printf("dump fration 23bit : %.23f\n",x + y); //xấp xỉ 0.3 chứ không phải tuyệt đối do rounding
+	printf("dump fraction 23bit : %.23f\n",x + y); //xấp xỉ 0.3 chứ không phải tuyệt đối do rounding
 }
 ```
 
@@ -692,7 +692,7 @@ vẫn như cũ, $$\large\mathrm{ULP} = \boxed{0.25}$$ và ta biết half ULP c�
 
 - IEEE 754 không làm tròn từng bit bị cắt, cũng không làm tròn cả dãy bit theo kiểu toán học. Nó chỉ thay đổi đúng một đơn vị ở bit fraction cuối cùng được giữ lại (1 ULP của kết quả), rồi để phép cộng nhị phân tự lan carry nếu cần. **Ví dụ** giả sử CPU chỉ lưu 4 fraction `1.0111 100...` trong đó `100...` sau cùng này là số bit bị cắt, sau khi xét GRS (G = 1, R = 0, S = 0) nếu G = 1 rồi thì chắc chắn nó lớn hơn half ULP nên điều này quyết định làm tròn, bây giờ mới tới phần làm tròn CPU nó không biến `100...` thành `000...` hay xử lý từng bit phía sau nó chỉ thực hiện cộng thêm đúng một bit ở fraction cuối cùng được giữ.
 
-**Ví dụ** $$\large1.0111_{2}$$ CPU giữ 4 fration trong đó là $$\large0111_{2}$$, bit cuối cùng của fraction là `1`, còn bit đầu tiên của fraction là `0`
+**Ví dụ** $$\large1.0111_{2}$$ CPU giữ 4 fraction trong đó là $$\large0111_{2}$$, bit cuối cùng của fraction là `1`, còn bit đầu tiên của fraction là `0`
 
 <p align="center">
 	<image alt="alt text" src="image/image19.png" width="680"/>
@@ -927,7 +927,7 @@ vì nó là số vô hạn? hay vì nó không ở đầu bit bị cắt như l�
 
 Nên mới nói, dù ta có xét GRS, tính và so sánh bao nhiêu half ULP nếu không hiểu điều này rất dễ sinh nhầm lẫn là nhỏ hơn half ULP là giữ nguyên sao nó vẫn làm tròn, mà nó làm tròn bằng cách cộng 1 vào phần tử cuối fraction sao lại ra kết quả này (vì đó là số đã được tính và làm tròn trước khi gán vào float bởi phần cứng, GRS đã bị bại bỏ và chúng ta không thể tính gì thêm nữa)
 
-Muốn biết GRS của quá trình encode ban đầu thì phải quan sát chuỗi bit trước khi làm tròn, dù có thể tự động hóa nào đó như dùng casio hay các phép tính nhân chia v.v. nhưng việc encode thì phải thủ công để suy ra xét GRS chính xác nhất. **Ví dụ** đoạn code trên cho binary gần sát như binary đã caculated thủ công nhưng việc xét GRS về cơ bản thì hòan toàn sai vì chúng ta không thể đảm bảo nó đúng
+Muốn biết GRS của quá trình encode ban đầu thì phải quan sát chuỗi bit trước khi làm tròn, dù có thể tự động hóa nào đó như dùng casio hay các phép tính nhân chia v.v. nhưng việc encode thì phải thủ công để suy ra xét GRS chính xác nhất. **Ví dụ** đoạn code trên cho binary gần sát như binary đã calculated thủ công nhưng việc xét GRS về cơ bản thì hòan toàn sai vì chúng ta không thể đảm bảo nó đúng
 
 **Khác biệt giữa bit dùng để quyết định rounding và bit của kết quả sau khi rounding**
 
@@ -963,7 +963,7 @@ nhưng vấn đề khiến nó gần như trùng khớp với bit quyết địn
 
 vậy thao tác bitwise raw manipulation trên `uint32_t` là dùng các toán tử bitwise như &, | , ^, << , >> và thực hiện với memcpy để thao tác với tầng bit thô của số thực, sau khi sao chép bit sang `uint32_t`, các phép toán tiếp theo (&, |, ^, <<, >>) chỉ thao tác trên mẫu bit, không kích hoạt các phép toán số thực của FPU, điều này tránh đụng chạm tới phần FPU vì các phép toán trên `uint32_t` không sử dụng pipeline số thực và chúng được thực hiện bởi ALU, không phải FPU do đó chúng ta có thể xử lý và đọc lượng bit đó một cách chính xác trong bộ nhớ
 
-**Lưu ý** FPU vẫn có thể được sử dụng cho việc làm tròn, xử lý số thực sang phần nguyên hay nhi phân trước đó phổ biến khi gán `0.1f` vào một valriable, chương này chỉ thao tác nghĩa là dịch bit, dùng các phép toán nhị phân để thao tác với số thực thay cho cú pháp bình thường sẽ lỗi nếu thao tác trực tiếp với biến số thực
+**Lưu ý** FPU vẫn có thể được sử dụng cho việc làm tròn, xử lý số thực sang phần nguyên hay nhi phân trước đó phổ biến khi gán `0.1f` vào một variable, chương này chỉ thao tác nghĩa là dịch bit, dùng các phép toán nhị phân để thao tác với số thực thay cho cú pháp bình thường sẽ lỗi nếu thao tác trực tiếp với biến số thực
 
 <details>
 	<summary><b>[Chi tiết]</b> ví dụ với C</summary>
@@ -1311,7 +1311,7 @@ Còn về trường hợp các phép tính sau này về số thực đó thì �
 
 Còn về trường hợp dùng định dạng chuỗi chuyển sang số thực nghĩa là từ `"2.2"` thành `2.2` lúc này các thư viện C sẽ chuyển thành số thực, và việc chuyển đổi này có thể chịu ảnh hưởng của rounding mode, tùy cách hiện thực của libc và chuẩn mà thư viện tuân theo.
 
-**Tóm lại là vậy:** khi gán số thực vào valriable, số thực đã được compiler mã hóa sẵn trong quá trình biên dịch rồi. Và các phép toán như `a * b` thì lúc này mới tuân theo rounding mode hiện tại (rounding mode mà đã được thiết lập trong mã)
+**Tóm lại là vậy:** khi gán số thực vào variable, số thực đã được compiler mã hóa sẵn trong quá trình biên dịch rồi. Và các phép toán như `a * b` thì lúc này mới tuân theo rounding mode hiện tại (rounding mode mà đã được thiết lập trong mã)
 
 **Lưu ý:** `fesetround()` chỉ ảnh hưởng đến các phép toán dấu phẩy động được FPU thực hiện trong lúc chương trình chạy (runtime). Các hằng số dấu phẩy động như `2.2`, `3.14` hay `0.1` thường đã được compiler chuyển sang định dạng IEEE 754 trong quá trình biên dịch, nên không chịu ảnh hưởng của `fesetround()` được gọi sau đó.
 
@@ -2443,7 +2443,9 @@ Cái mọi người thường hay nhầm ở đây là, chỉ cần nhìn output
 
 Vậy nên, biết hai giá trị của chuỗi `0x1.000002p-24f` và `1.0` là số hữu hạn, nó là chính xác giá trị của bản thân nó mà ko cần phải có sự can thiệp của cơ chế round to nearest, tie to even khi gán vào một biến trước đó. Điều này rất tốt để ta có thể minh họa cơ chế round to positive infinity, bây giờ khi đã biết được gía trị của chuỗi `0x1.000002p-24f` là $$\large2^{-24} + 2^{-47}$$ sang nhị phân $$\large00110011100000000000000000000001_{2}$$ thì ta tiến hành so sánh nó như đã nhắc ở lý thuyết round to positive infinity ở trên.
 
-- **vì sao ta lại dùng 0x1.000002p-24f thay vì dùng các số thực đơn giản khác để làm ví dụ cho round to postive infnity?:**
+Ta có số kết quả của phép tính là `1.00000011920928955079`, bây giờ ta cần phải hiểu rõ, số này có được làm tròn được ko, nghĩa là có xảy ra hiện tượng làm tròn ko, hay là một kết quả toán học bình thường mà ko có hiện tượng làm tròn gì. Ta cần phải hiểu rõ, số này là hữu hạn hay vô hạn (vì hữu hạn + hữu hạn $$\large\neq$$ hữu hạn), và ta cần phải hiểu rõ, điều kiện làm tròn của round toward positive infinity là gì, phải hiểu rõ số này dịch sang nhị phân là gì đó là các vấn đề mà ta cần phải giải quyết trước khi tiến hành tới bước chứng minh làm tròn thủ công cuối cùng
+
+- **vì sao ta lại dùng 0x1.000002p-24f thay vì dùng các số thực đơn giản khác để làm ví dụ cho round to positive infnity?:**
 
 <sub>--đã hết phần giải thích--</sub>
 
