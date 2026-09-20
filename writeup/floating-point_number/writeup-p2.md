@@ -2443,7 +2443,9 @@ Cái mọi người thường hay nhầm ở đây là, chỉ cần nhìn output
 
 Vậy nên, biết hai giá trị của chuỗi `0x1.000002p-24f` và `1.0` là số hữu hạn, nó là chính xác giá trị của bản thân nó mà ko cần phải có sự can thiệp của cơ chế round to nearest, tie to even khi gán vào một biến trước đó. Điều này rất tốt để ta có thể minh họa cơ chế round to positive infinity, bây giờ khi đã biết được gía trị của chuỗi `0x1.000002p-24f` là $$\large2^{-24} + 2^{-47}$$ sang nhị phân $$\large00110011100000000000000000000001_{2}$$ thì ta tiến hành so sánh nó như đã nhắc ở lý thuyết round to positive infinity ở trên.
 
-Ta có số kết quả của phép tính là `1.00000011920928955079`, bây giờ ta cần phải hiểu rõ, số này có được làm tròn được ko, nghĩa là có xảy ra hiện tượng làm tròn ko, hay là một kết quả toán học bình thường mà ko có hiện tượng làm tròn gì. Ta cần phải hiểu rõ, số này là hữu hạn hay vô hạn (vì hữu hạn + hữu hạn $$\large\neq$$ hữu hạn), và ta cần phải hiểu rõ, điều kiện làm tròn của round toward positive infinity là gì, phải hiểu rõ số này dịch sang nhị phân là gì đó là các vấn đề mà ta cần phải giải quyết trước khi tiến hành tới bước chứng minh làm tròn thủ công cuối cùng
+Ta có số kết quả của phép tính là `1.00000011920928955079`, bây giờ ta cần phải hiểu rõ, số này có được làm tròn được ko, nghĩa là có xảy ra hiện tượng làm tròn ko, hay là một kết quả toán học bình thường mà ko có hiện tượng làm tròn gì.
+
+Bây giờ, việc vấn đề điều kiện thì như lý thuyết nói, nếu nó thuộc representable thì giữ nguyên, còn nếu ko thuộc representable thì mới tiến hành rounding. Bây giờ theo các kiến thức toán học, ta biết $$\large1.0_{10} = 1_{10}$$ và $$\large b = 0\text{x}1.000002\text{p-}24\text{f} = 2^{-24} + 2^{-47}$$, nên thực hiện tổng phép cộng chính xác là $$\large a + b = 1 + 2^{-24} + 2^{-47}$$
 
 - **vì sao ta lại dùng 0x1.000002p-24f thay vì dùng các số thực đơn giản khác để làm ví dụ cho round to positive infnity?:**
 
