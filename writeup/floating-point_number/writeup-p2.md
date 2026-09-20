@@ -2447,6 +2447,38 @@ Ta có số kết quả của phép tính là `1.00000011920928955079`, bây gi�
 
 Bây giờ, việc vấn đề điều kiện thì như lý thuyết nói, nếu nó thuộc representable thì giữ nguyên, còn nếu ko thuộc representable thì mới tiến hành rounding. Bây giờ theo các kiến thức toán học, ta biết $$\large1.0_{10} = 1_{10}$$ và $$\large b = 0\text{x}1.000002\text{p-}24\text{f} = 2^{-24} + 2^{-47}$$, nên thực hiện tổng phép cộng chính xác là $$\large a + b = 1 + 2^{-24} + 2^{-47}$$
 
+Tiếp đến, ta biết xung quanh 1.0, ULP = $$\large2^{-23}$$. Các số binary32 liên tiếp:
+
+<div align="center">
+
+| Số | Giá trị |
+|:-:|:-:|
+| $\large1.0$ | $\large1$ |
+| số kế tiếp | $\large1 + 2^{-23}$ |
+| ... | ... |
+
+</div>
+
+Điểm giữa, giữa 1 và $\large1+2^{-23}$ chính là $$\large1 + 2^{-24}$$. Bây giờ, ta so sánh: 
+
+<div align="center">
+
+$$\Large1 + 2^{-24} + 2^{-47} > 1 + 2^{-24}$$
+
+$$\Large\Rightarrow\text{ Tổng toán học lớn hơn điểm giữa.}$$
+
+</div>
+
+Bây giờ, mấu chốt là phần làm tròn round toward positive infinity. Chế độ này chọn số biểu diễn được nhỏ nhất mà vẫn $\ge$ giá trị chính xác. Vì $\large1 + 2^{-24} + 2^{-47}$ nằm giữa 1 và $\large1+2^{-23}$, và lớn hơn điểm giữa nên nó không thuộc tập representable nên phải làm tròn lên:
+
+<div align="center">
+
+$$\Large R_{+\infty}(1 + 2^{-24} + 2^{-47}) = 1 + 2^{-23}$$
+
+</div>
+
+từ đó ta có : $\large1 + 2^{-23} \approx 1.00000011920928955078125$. Bản in 1.00000011920928955079 chính là bản xấp xỉ thập phân của đúng giá trị này (sai số chỉ do cách printf làm tròn khi in). Giá trị $\large1 + 2^{-23}$ biểu diễn chính xác trong binary32 (finite, fraction chỉ có 1 bit cuối bật).
+
 - **vì sao ta lại dùng 0x1.000002p-24f thay vì dùng các số thực đơn giản khác để làm ví dụ cho round to positive infnity?:**
 
 <sub>--đã hết phần giải thích--</sub>
