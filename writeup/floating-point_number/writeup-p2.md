@@ -2685,3 +2685,31 @@ Vấn đề chính là khi nào nên dùng chế độ nào?
 > Chỉ chuyển sang các mode khác khi có yêu cầu cụ thể về hướng sai số (interval arithmetic, bound, truncation…). Không nên thay đổi rounding mode lung tung trong cùng một chương trình trừ khi thực sự hiểu rõ hậu quả về sai số tích lũy.
 
 ## 4.Các phép toán trong số thực dấu phẩy động IEEE754
+
+Khái niệm chung của các phép toán số thực dấu phẩy động (floating-point arithmetic) trong IEEE 754 là không thực hiện đúng như toán học số thực thông thường. Chúng được định nghĩa theo nguyên tắc:
+
+> Kết quả của mọi phép toán phải là số biểu diễn được gần nhất (theo rounding mode hiện tại) với kết quả toán học chính xác, hoặc là giá trị đặc biệt ($$\large\infry$$, NaN) khi kết quả vượt quá miền biểu diễn.
+
+Cụ thể hơn, quy trình của hầu hết các phép toán gồm 4 bước chính:
+
+- 1.**Giải mã (Unpack):** Tách sign, exponent, significand (bao gồm hidden bit) của các toán hạng.
+
+- 2.Thực hiện phép toán trên significand và exponent :
+   - **Cộng/trừ:** căn chỉnh exponent (shift significand), rồi cộng/trừ significand.
+   - **Nhân:** cộng exponent, nhân significand.
+   - **Chia:** trừ exponent, chia significand.
+
+- 3.**Chuẩn hóa (Normalize):** Đưa kết quả về dạng $\large1.m \times 2^{e}$ (hoặc xử lý trường hợp subnormal / zero / infinity).
+
+- 4.**Làm tròn (Round):** Cắt significand về đúng số bit cho phép (23 bit với binary32, 52 bit với binary64) theo rounding mode hiện hành, đồng thời điều chỉnh exponent nếu có carry.
+
+> [!IMPORTANT]
+> Kết quả không phải lúc nào cũng chính xác bằng kết quả toán học (do làm tròn).
+> Phép toán được thực hiện như thể có độ chính xác vô hạn, sau đó mới làm tròn một lần duy nhất về định dạng đích (đây là yêu cầu correctly rounded của IEEE 754).
+> Các trường hợp đặc biệt được quy định rõ ràng:
+> - $\large x + (+\infty) = +\infty$
+> - $\large x \times 0 = 0$ (cùng dấu)
+> - $\large0 / 0 = \text{NaN}$
+> - $\large\infty / \infty = \text{NaN}$
+> - $\large\sqrt{-1} = \text{NaN}$
+> - v.v.
