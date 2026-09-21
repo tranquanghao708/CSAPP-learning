@@ -2640,9 +2640,9 @@ Dựa vào đó, chúng ta thường rất dễ nhầm lẫn rằng giữa hai c
 
 Chế độ này không cần xét Guard / Round / Sticky bit theo cách Round to nearest. Nó chỉ cần biết số đang xét nằm ở phía nào của các mốc biểu diễn được và luôn chọn phía $$\large-\infty$$.
 
-### 3.7. Tác dụng và mức biểu diễn độ chính xác của 5 quy tắc làm tròn, khi nào nên dùng quy tắc nào?
+### 3.7.Tác dụng và mức biểu diễn độ chính xác của 5 quy tắc làm tròn, khi nào nên dùng quy tắc nào?
 
-Năm chế độ làm tròn của IEEE 754 không chỉ khác nhau về hướng, mà còn ảnh hưởng đến **sai số tích lũy**, **tính đối xứng** và **tính ổn định số học** của chương trình.
+Năm chế độ làm tròn của IEEE 754 không chỉ khác nhau về hướng, mà còn ảnh hưởng đến sai số tích lũy, tính đối xứng và tính ổn định số học của chương trình.
 
 #### Bảng so sánh tổng quan
 
@@ -2683,3 +2683,5 @@ Vấn đề chính là khi nào nên dùng chế độ nào?
 
 > [!WARNING]
 > Chỉ chuyển sang các mode khác khi có yêu cầu cụ thể về hướng sai số (interval arithmetic, bound, truncation…). Không nên thay đổi rounding mode lung tung trong cùng một chương trình trừ khi thực sự hiểu rõ hậu quả về sai số tích lũy.
+
+## 4.Các phép toán trong số thực dấu phẩy động IEEE754
