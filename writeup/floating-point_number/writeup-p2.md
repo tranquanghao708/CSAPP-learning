@@ -1543,6 +1543,11 @@ $$
 
 Trong đó $$\large F$$ là tập các giá trị floating-point có thể biểu diễn. Biểu thức này có nghĩa là `trong tất cả các giá trị floating-point có thể biểu diễn mà lớn hơn hoặc bằng x, chọn giá trị nhỏ nhất.`
 
+> [!NOTE]
+> **Bản chất:** Ở chế độ Round toward $\large+\infty$, nếu giá trị chính xác đã là một số biểu diễn được thì giữ nguyên. Nếu không, kết quả là số biểu diễn được nhỏ nhất vẫn $\large\ge$ giá trị chính xác.
+>
+> Trên dãy các số floating-point (cấp số cộng với công sai = ULP), điều này tương đương với việc lấy số biểu diễn được lớn nhất $\large\le$ giá trị chính xác, rồi cộng thêm đúng một ULP.
+
 <details>
 	<summary><b>[Chi tiết]</b> minh họa với C</summary>
 
@@ -2495,6 +2500,8 @@ $$\Large R_{+\infty}(1 + 2^{-24} + 2^{-47}) = \boxed{1 + 2^{-23}}$$
 </details>
 
 ### 3.6.Round toward negative infinity (−∞)
+
+Cơ chế nhìn sơ thì cũng giống như round toward positive infinity, nhưng về phần này thì nó khác ở chỗ là làm tròn về phía âm vô cực, Lý thuyết y chang như của round toward positive infinity kể cả điều kiện làm tròn, khác ở chỗ là hành vi của nó thay vì làm tròn phía dương vô cực thì nó làm tròn về phía âm vô cực
 
 ### 3.7.Tác dụng và mức biểu diễn độ chính xác của 5 quy tắc làm tròn, khi nào nên dùng quy tắc nào?
 
