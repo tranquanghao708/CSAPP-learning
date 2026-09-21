@@ -34,9 +34,9 @@
 
     - [3.7.Tác dụng và mức biểu diễn độ chính xác của 5 quy tắc làm tròn, khi nào nên dùng quy tắc nào?](#37tác-dụng-và-mức-biểu-diễn-độ-chính-xác-của-5-quy-tắc-làm-tròn-khi-nào-nên-dùng-quy-tắc-nào)
 
-- 4.Các phép toán trong số thực dấu phẩy động IEEE754
+- [4.Các phép toán trong số thực dấu phẩy động IEEE754](#4các-phép-toán-trong-số-thực-dấu-phẩy-động-ieee754)
 
-    - 4.1.Phép cộng
+    - [4.1.Phép cộng](#41phép-cộng)
 
     - 4.2.Phép trừ
 
@@ -2688,7 +2688,7 @@ Vấn đề chính là khi nào nên dùng chế độ nào?
 
 Khái niệm chung của các phép toán số thực dấu phẩy động (floating-point arithmetic) trong IEEE 754 là không thực hiện đúng như toán học số thực thông thường. Chúng được định nghĩa theo nguyên tắc:
 
-> Kết quả của mọi phép toán phải là số biểu diễn được gần nhất (theo rounding mode hiện tại) với kết quả toán học chính xác, hoặc là giá trị đặc biệt ($$\large\infry$$, NaN) khi kết quả vượt quá miền biểu diễn.
+> Kết quả của mọi phép toán phải là số biểu diễn được gần nhất (theo rounding mode hiện tại) với kết quả toán học chính xác, hoặc là giá trị đặc biệt ($$\large\infty$$, NaN) khi kết quả vượt quá miền biểu diễn.
 
 Cụ thể hơn, quy trình của hầu hết các phép toán gồm 4 bước chính:
 
@@ -2713,3 +2713,32 @@ Cụ thể hơn, quy trình của hầu hết các phép toán gồm 4 bước c
 > - $\large\infty / \infty = \text{NaN}$
 > - $\large\sqrt{-1} = \text{NaN}$
 > - v.v.
+
+### 4.1.Phép cộng
+
+Phép cộng số thực dấu phẩy động trong IEEE 754 được thực hiện theo nguyên tắc correctly rounded: kết quả cuối cùng phải là số biểu diễn được gần nhất (theo rounding mode hiện tại) với tổng toán học chính xác của hai toán hạng. Dựa vào quy trình thực hiện của mọi phép toán 4 bước đã được nêu ở chương vừa rồi, ta chú ý tới bước 2 là thực hiện phép toán trên significand và exponent. Ở đây, cộng significand:
+
+- **Nếu cùng dấu:**  cộng hai significand.
+- **Nếu khác dấu:** trừ significand (thực chất là phép trừ).
+
+Kết quả có thể cần xử lý dấu và phần vượt (carry). **Ví dụ minh họa** (binary32, đơn giản hóa), cộng $\large1.5 + 0.75$:
+
+<div align="center">
+
+$$\Large
+1.5  &= 1.10_2 \times 2^{0} 
+$$
+
+$$\Large
+0.75 &= 1.10_2 \times 2^{-1}
+$$
+
+</div>
+
+**Trong đó :**
+- **Căn chỉnh:** dịch $\large0.75$ sang phải 1 bit thì $\large0.110_2 \times 2^{0}$
+- **Cộng significand:** $\large1.10 + 0.11 = 10.01_2$
+- **Chuẩn hóa:** $1.001_2 \times 2^{1}$
+
+**Suy ra:** kết quả = $2.25$ (exact, không cần làm tròn)
+
