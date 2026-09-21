@@ -2725,13 +2725,9 @@ Kết quả có thể cần xử lý dấu và phần vượt (carry). **Ví d�
 
 <div align="center">
 
-$$\Large
-1.5  &= 1.10_2 \times 2^{0} 
-$$
+$$\Large1.5  &= 1.10_2 \times 2^{0} $$
 
-$$\Large
-0.75 &= 1.10_2 \times 2^{-1}
-$$
+$$\Large0.75 &= 1.10_2 \times 2^{-1}$$
 
 </div>
 
