@@ -630,11 +630,15 @@ Vậy ULP = 0.25, nếu gặp trường hợp như `một nữa của ULP` thì 
 </table>
 </details>
 
-Ở đây ta tiến hành tính ULP trước tiên phải biết $$\large1.01 = \mathbf{1.25_{10}}$$ và $$\large1.10 = \mathbf{1.50_{10}}$$ :
+Ở đây ta tiến hành tính ULP trước tiên phải biết $$\large1.01_{2} = \mathbf{1.25_{10}}$$ và $$\large1.10_{2} = \mathbf{1.50_{10}}$$ :
+
+<div align="center">
 
 | phép tính | kết quả |
 |:-----------:|:---------:|
 | 1.50 - 1.25 | 0.25 |
+
+</div>
 
 $\large\mathrm{ULP} = \boxed{0.25}$ vậy bây giờ ta biết $$\large0.25_{10} = \mathbf{0.01_{2}}$$ bây giờ ta lấy nó chia cho hai vì half ULP mà $$\large\frac{0.25}{2} = \mathbf{0.125_{10}}$$ bây giờ ta biết $$\large0.125_{10} = 0.001_{2}$$ bây giờ viết đầy đủ 4bit ta có $$\large0.0010_{2}$$ và nó chính là ngưỡng làm tròn, tiến hành so sánh phần bị cắt với half ULP $$\large0001_{2} < 0010_{2}$$ ta thấy nó nhỏ hơn vậy nó sẽ giữ nguyên $$\large\boxed{1.01_{2}}$$
 
@@ -1042,6 +1046,55 @@ Thực tế, FPU không đi tìm Guard, Round, Sticky trong dữ liệu đã lư
 > GRS được tạo ra từ kết quả trung gian trước khi làm tròn, rồi được dùng để quyết định cách làm tròn, sau khi làm tròn 3bit này bị bác bỏ và nếu có thể thấy 3bit cuối khi thực hiện dump nhị phân của số thực đó thực chất chỉ là sự trùng hợp
 
 ### 3.3.Round to nearest, ties away from zero (Ties to away)
+
+Đây là một trong các chế độ làm tròn về số gần nhất. Quy tắc gồm hai phần:
+
+- 1. Luôn chọn số biểu diễn được gần nhất với giá trị chính xác.
+
+- 2. Khi giá trị chính xác nằm đúng giữa hai số biểu diễn được (tie – khoảng cách đến hai bên đều bằng $$\large\frac{1}{2}$$ ULP), thì chọn số có trị tuyệt đối lớn hơn (hướng ra xa số 0).
+
+Điều kiện để có thể xảy ra hiện tượng làm tròn là :
+
+<div align="center">
+
+$$\Large
+R_{\text{away}}(x) =
+\begin{cases}
+\text{số gần nhất với } x & \text{,nếu không bị tie} \\
+\text{số có } |f| \text{ lớn hơn} & \text{,nếu bị tie}
+\end{cases}
+$$
+
+</div>
+
+Nghĩa là nếu số đó đúng giữa hai số ở phần tie even thường là làm tròn về tie, nhưng với phép này thì nó sẽ làm tròn về số có trị tuyệt đối lớn hơn và điều này hướng ra xa số 0. So sánh với Round to nearest, ties to even:
+
+<div align="center">
+
+| Tình huống              | Ties to even                  | Ties away from zero              |
+|-------------------------|-------------------------------|----------------------------------|
+| Gần một phía hơn        | Chọn phía gần hơn             | Chọn phía gần hơn                |
+| Đúng giữa (tie)         | Chọn số có LSB = 0 (even)     | Chọn số có trị tuyệt đối lớn hơn |
+| Số dương bị tie         | Tùy parity                    | Luôn làm tròn lên            |
+| Số âm bị tie            | Tùy parity                    | Luôn làm tròn xuống (trị tuyệt đối của x ($$\large|x|$$) tăng) |
+
+</div>
+
+**cho ví dụ:** Giả sử chỉ giữ 2 bit fraction. Hai số liên tiếp là $\large1.01_{2} = 1.25_{10}$ và $\large1.10_{2} = 1.50_{10}$ và ta biết điểm giữa (tie) = $\large1.375$ bây giờ tới hành vi làm tròn của ties away from zero:
+
+- nếu $\large x = 1.375$ (dương) thì Ties away from zero chọn $\large1.50$ (xa 0 hơn).
+- nếu $\large x = -1.375$ (âm) thì Ties away from zero chọn $\large-1.50$ (trị tuyệt đối lớn hơn).
+
+ta thấy bản chất trên dãy số biểu diễn được trên cấp số cộng với công sai = ULP :
+
+- Nếu $\large x$ gần $\large L$ hơn thì chọn $\large L$
+- Nếu $\large x$ gần $\large U$ hơn thì chọn $\large U$
+- Nếu $\large x$ đúng giữa $\large L$ và $\large U$ thì chọn số có trị tuyệt đối lớn hơn.
+
+Thực tế, IEEE 754-2008 vẫn hỗ trợ chế độ này (`roundTiesToAway`), nhưng không phải mode mặc định. Mode mặc định vẫn là `roundTiesToEven`. Một số lĩnh vực (tài chính, thống kê cũ) từng ưa dùng chế độ này vì hành vi luôn đẩy ra xa 0 khi bị tie khá trực quan.
+
+> [!NOTE]
+> **Bản chất:** Làm tròn về số gần nhất. Khi gặp tie thì luôn chọn số có trị tuyệt đối lớn hơn (away from zero), bất kể dấu.
 
 ### 3.4.Round toward zero
 
@@ -2506,8 +2559,8 @@ Round toward −∞ (còn gọi là round down hoặc floor theo hướng dấu 
 <div align="center">
 
 $$\Large
-R_{-\infty}(x) =\begin{cases}x & \text{nếu } x \text{ là số biểu diễn được} \\
-\text{số biểu diễn được lớn nhất } \le x & \text{nếu } x \text{ không biểu diễn được}
+R_{-\infty}(x) =\begin{cases}x & \text{,nếu } x \text{ là số biểu diễn được} \\
+\text{số biểu diễn được lớn nhất } \le x & \text{,nếu } x \text{ không biểu diễn được}
 \end{cases}
 $$
 
@@ -2571,10 +2624,14 @@ dựa vào đó suy ra round toward $$\large-\infty$$ chọn số nhỏ hơn (v�
 
 Dựa vào đó, chúng ta thường rất dễ nhầm lẫn rằng giữa hai chế độ làm tròn về phía âm và dương vô cực, nên ta so sánh nhanh với Round toward $$\large+\infty$$
 
+<div align="center">
+
 | Giá trị chính xác | Round toward +∞ | Round toward −∞ |
-|-------------------|------------------|------------------|
+|:-------------------:|:------------------|:------------------:|
 | $\large1.0101_{2}$        | $\large1.011_{2}$        | $\large1.010_{2}$        |
 | $\large-1.0101_{2}$       | $\large-1.010_{2}$       | $\large-1.011_{2}$       |
+
+</div>
 
 > [!NOTE]
 > **Bản chất:** Ở chế độ Round toward $$\large-\infty$$, nếu giá trị chính xác đã là một số biểu diễn được thì giữ nguyên. Nếu không, kết quả là số biểu diễn được lớn nhất vẫn $\large\le$ giá trị chính xác.
