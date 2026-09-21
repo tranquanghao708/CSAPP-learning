@@ -2518,7 +2518,7 @@ Và cũng có thể như thế này:
 <div align="center">
 
 $$\Large
-R_{-\infty}(x) = \max\{ f \in F \mid f \le x \}
+R_{-\infty}(x) = \max\lbrace f \in F \mid f \le x \rbrace
 $$
 
 </div>
