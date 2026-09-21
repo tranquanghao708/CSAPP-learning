@@ -2640,13 +2640,46 @@ Dựa vào đó, chúng ta thường rất dễ nhầm lẫn rằng giữa hai c
 
 Chế độ này không cần xét Guard / Round / Sticky bit theo cách Round to nearest. Nó chỉ cần biết số đang xét nằm ở phía nào của các mốc biểu diễn được và luôn chọn phía $$\large-\infty$$.
 
-### 3.7.Tác dụng và mức biểu diễn độ chính xác của 5 quy tắc làm tròn, khi nào nên dùng quy tắc nào?
+### 3.7. Tác dụng và mức biểu diễn độ chính xác của 5 quy tắc làm tròn, khi nào nên dùng quy tắc nào?
 
-từ 5 quy tắc làm tròn trên, trước hết ta có bảng so sánh :
+Năm chế độ làm tròn của IEEE 754 không chỉ khác nhau về hướng, mà còn ảnh hưởng đến **sai số tích lũy**, **tính đối xứng** và **tính ổn định số học** của chương trình.
 
-| Rounding mode             | Ý nghĩa               |
-| :-------------------------: | :---------------------: |
-| **toward +∞**             | đi về `+∞`            |
-| **toward −∞**             | đi về `−∞`            |
-| **toward 0**              | đi về `0`             |
-| **nearest, ties to even** | chọn giá trị gần nhất |
+#### Bảng so sánh tổng quan
+
+| Rounding mode | Hành vi chính | Khi gặp tie (đúng giữa) | Hướng sai số ưu tiên | Tính đối xứng |
+|-|-|-|-|-|
+| **Round to nearest, ties to even**  | Chọn số gần nhất | Chọn số chẵn (LSB = 0) | Cân bằng (không thiên) | Rất cao       |
+| **Round to nearest, ties away** | Chọn số gần nhất | Chọn số xa 0 hơn | Đẩy ra xa 0 | Trung bình | 
+| **Round toward +∞** | Chọn số lớn nhất ≤ hoặc ≥ x (hướng +∞) | | Luôn ≥ giá trị đúng | Không |
+| **Round toward −∞** | Chọn số nhỏ nhất ≤ x (hướng −∞) | | Luôn ≤ giá trị đúng | Không |
+| **Round toward 0**  | Cắt phần dư, tiến về 0 | | Luôn về phía 0 | Có (theo dấu) |
+
+Và phần này, ta cần phải hiểu rõ mức độ chính xác và đặc điểm sai số :
+
+- **Round to nearest, ties to even** (mặc định)
+  Sai số trung bình gần như bằng 0 sau nhiều phép toán. Đây là mode có độ chính xác thống kê tốt nhất và được khuyến nghị dùng hầu hết mọi trường hợp thông thường.
+
+- **Round to nearest, ties away from zero**
+  Vẫn là gần nhất, nhưng khi bị tie thì luôn làm tăng trị tuyệt đối. Sai số có xu hướng dương về phía độ lớn. Ít được dùng hơn ties-to-even.
+
+- **Round toward +∞ / −∞**
+  Sai số có hướng rõ ràng. Rất hữu ích khi cần bao (bound) kết quả:
+  - toward +∞ thì kết quả luôn ≥ giá trị đúng (upper bound)
+  - toward −∞ thì kết quả luôn ≤ giá trị đúng (lower bound)
+  Dùng nhiều trong interval arithmetic và phân tích sai số.
+
+- **Round toward 0**
+  Đơn giản nhất về mặt phần cứng (chỉ cần cắt bit). Sai số luôn hướng về 0. Thường gặp khi ép kiểu float sang int hoặc khi muốn hành vi giống truncation.
+
+Vấn đề chính là khi nào nên dùng chế độ nào?
+
+| Nhu cầu thực tế | Chế độ nên chọn | Lý do |
+|-|-|-|
+| Tính toán thông thường, muốn sai số nhỏ nhất và ổn định | **ties to even** (mặc định) | Cân bằng sai số, tránh thiên lệch tích lũy |
+| Cần upper bound (kết quả không được nhỏ hơn giá trị thật) | **toward +∞** | Đảm bảo kết quả ≥ giá trị đúng |
+| Cần lower bound (kết quả không được lớn hơn giá trị thật) | **toward −∞** | Đảm bảo kết quả ≤ giá trị đúng |
+| Muốn hành vi giống cắt phần thập phân (truncation) | **toward 0** | Giống ép kiểu sang số nguyên |
+| Muốn khi bị tie thì luôn tăng trị tuyệt đối | **ties away from zero** | Một số ứng dụng tài chính / thống kê cũ |
+
+> [!WARNING]
+> Chỉ chuyển sang các mode khác khi có yêu cầu cụ thể về hướng sai số (interval arithmetic, bound, truncation…). Không nên thay đổi rounding mode lung tung trong cùng một chương trình trừ khi thực sự hiểu rõ hậu quả về sai số tích lũy.
