@@ -2501,7 +2501,87 @@ $$\Large R_{+\infty}(1 + 2^{-24} + 2^{-47}) = \boxed{1 + 2^{-23}}$$
 
 ### 3.6.Round toward negative infinity (−∞)
 
-Cơ chế nhìn sơ thì cũng giống như round toward positive infinity, nhưng về phần này thì nó khác ở chỗ là làm tròn về phía âm vô cực, Lý thuyết y chang như của round toward positive infinity kể cả điều kiện làm tròn, khác ở chỗ là hành vi của nó thay vì làm tròn phía dương vô cực thì nó làm tròn về phía âm vô cực
+Round toward −∞ (còn gọi là round down hoặc floor theo hướng dấu phẩy động) là chế độ làm tròn luôn chọn số biểu diễn được **lớn nhất** mà vẫn $\le$ giá trị chính xác. Nói cách khác, nó luôn đi về phía −∞ trên trục số. Điều kiện để thực hiện quy tắc làm tròn là :
+
+<div align="center">
+
+$$\Large
+R_{-\infty}(x) =\begin{cases}x & \text{nếu } x \text{ là số biểu diễn được} \\
+\text{số biểu diễn được lớn nhất } \le x & \text{nếu } x \text{ không biểu diễn được}
+\end{cases}
+$$
+
+</div>
+
+Và cũng có thể như thế này:
+
+<div align="center">
+
+$$\Large
+R_{-\infty}(x) = \max\{ f \in F \mid f \le x \}
+$$
+
+</div>
+
+trong đó $\large F$ là tập các số floating-point biểu diễn được. Xét về hành vi trên dãy số biểu diễn được (cấp số cộng) Trong một binade, các số floating-point tạo thành cấp số cộng với công sai = ULP. Giả sử giá trị chính xác $x$ nằm giữa hai số liên tiếp:
+
+<div align="center">
+
+$$\Large
+L < x < U
+$$
+
+</div>
+
+- Round toward $$\large-\infty$$ luôn chọn $\large L$ (số nhỏ hơn, nằm về phía $$\large-\infty$$).
+- Nếu $x$ đúng bằng một số biểu diễn được thì giữ nguyên.
+
+**Tương đương:** lấy số biểu diễn được nhỏ nhất $\large\ge x$, rồi trừ đi đúng một ULP (hoặc giữ nguyên nếu đã exact). Cho **ví dụ**, số dương giả sử chỉ giữ được 3 bit fraction và $\large x = 1.0101_{2}$.
+
+<div align="center">
+
+$$\Large
+1.010_2 < 1.0101_2 < 1.011_2
+$$
+
+</div>
+
+theo lý thuyết chế độ về âm vô cực chọn về hướng âm gần nhất, ở đây round toward $$\large-\infty$$ sẽ chọn $\large1.010_{2}$. Còn về ví dụ số âm:
+
+<div align="center">
+
+$$\Large
+x = -1.0101_{2}
+$$
+
+</div>
+
+Trên trục số:
+
+```
+-1.011          exact         -1.010
+   |---------------|--------------|
+                 ← −∞
+```
+
+dựa vào đó suy ra round toward $$\large-\infty$$ chọn số nhỏ hơn (về phía $$\large-\infty$$), tức $\large-1.011_{2}$.
+
+> [!IMPORTANT]
+> **Lưu ý quan trọng:** với số âm, làm tròn về $$\large-\infty$$ làm trị tuyệt đối tăng lên, khác với Round toward $$\large+\infty$$.
+
+Dựa vào đó, chúng ta thường rất dễ nhầm lẫn rằng giữa hai chế độ làm tròn về phía âm và dương vô cực, nên ta so sánh nhanh với Round toward $$\large+\infty$$
+
+| Giá trị chính xác | Round toward +∞ | Round toward −∞ |
+|-------------------|------------------|------------------|
+| $\large1.0101_{2}$        | $\large1.011_{2}$        | $\large1.010_{2}$        |
+| $\large-1.0101_{2}$       | $\large-1.010_{2}$       | $\large-1.011_{2}$       |
+
+> [!NOTE]
+> **Bản chất:** Ở chế độ Round toward $$\large-\infty$$, nếu giá trị chính xác đã là một số biểu diễn được thì giữ nguyên. Nếu không, kết quả là số biểu diễn được lớn nhất vẫn $\large\le$ giá trị chính xác.
+>
+> Trên dãy các số floating-point (cấp số cộng với công sai = ULP), điều này tương đương với việc lấy số biểu diễn được nhỏ nhất $\large\ge$ giá trị chính xác, rồi trừ đi đúng một ULP.
+
+Chế độ này không cần xét Guard / Round / Sticky bit theo cách Round to nearest. Nó chỉ cần biết số đang xét nằm ở phía nào của các mốc biểu diễn được và luôn chọn phía $$\large-\infty$$.
 
 ### 3.7.Tác dụng và mức biểu diễn độ chính xác của 5 quy tắc làm tròn, khi nào nên dùng quy tắc nào?
 
