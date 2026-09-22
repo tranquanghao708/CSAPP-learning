@@ -2734,7 +2734,72 @@ $$\Large0.75 = 1.10_2 \times 2^{-1}$$
 **Trong đó :**
 - **Căn chỉnh:** dịch $\large0.75$ sang phải 1 bit thì $\large0.110_2 \times 2^{0}$
 - **Cộng significand:** $\large1.10 + 0.11 = 10.01_2$
-- **Chuẩn hóa:** $1.001_2 \times 2^{1}$
+- **Chuẩn hóa:** $\large1.001_2 \times 2^{1}$
 
-**Suy ra:** kết quả = $2.25$ (exact, không cần làm tròn)
+**Suy ra:** kết quả = $\large2.25$ (exact, không cần làm tròn)
 
+### 4.2.Phép trừ
+
+Phép trừ số thực dấu phẩy động trong IEEE 754 được thực hiện **gần như giống hệt phép cộng**, vì:
+
+<div align="center">
+
+$$\Large a - b = a + (-b)$$
+
+</div>
+
+Chỉ cần đảo dấu của số bị trừ, sau đó thực hiện đúng quy trình phép cộng. Quy trình thực hiện của phép trừ dấu phẩy động gồm hai bước :
+
+- 1.**Đảo dấu :** số bị trừ ($b \leftarrow -b$).
+- 2. Thực hiện đầy đủ 4 bước của phép cộng:
+   - Giải mã (Unpack)
+   - Căn chỉnh exponent (Alignment)
+   - Cộng significand (thực chất lúc này là trừ nếu dấu khác nhau)
+   - Chuẩn hóa + Làm tròn
+
+Điểm khác biệt quan trọng so với phép cộng, mặc dù về mặt thuật toán gần như giống nhau, phép trừ có hai hiện tượng đặc trưng:
+
+- **Cancellation (hủy chữ số):** Khi hai số gần bằng nhau và khác dấu, phần cao của significand bị triệt tiêu, để lại các bit thấp (ít ý nghĩa hơn). Đây là nguyên nhân chính gây catastrophic cancellation.
+
+- **Exactness:** Trong một số trường hợp đặc biệt (ví dụ trừ hai số có cùng exponent và significand gần nhau), kết quả có thể chính xác hoàn toàn (không cần làm tròn), vì các bit bị triệt tiêu không tạo ra phần dư.
+
+Cho ví dụ minh họa:
+
+<div align="center">
+
+$$\Large
+1.5 - 1.25 = 0.25
+$$
+
+$$\Large1.5 = 1.10_2 \times 2^{0}$$
+
+$$\Large1.25 = 1.01_2 \times 2^{0}$$
+
+</div>
+
+**Trong đó:**
+- Cùng exponent → không cần dịch
+- Trừ significand: $\large1.10 - 1.01 = 0.01_2$
+- Chuẩn hóa: $\large1.00_2 \times 2^{-2}$
+
+**Suy ra:** kết quả = $\large0.25$ (exact)
+
+Với phép trừ cũng có các trường hợp đặc biệt, liệt kê với bảng tóm tắt như sau:
+
+<div align="center">
+
+| Trường hợp             | Kết quả          |
+|------------------------|------------------|
+| $x - x$                | $+0$ (theo chuẩn) |
+| $x - (+0)$             | $x$              |
+| $x - (-0)$             | $x$              |
+| $(+∞) - (+∞)$          | NaN              |
+| $(+∞) - (-∞)$          | $+∞$             |
+| $x - \text{NaN}$       | NaN              |
+
+</div>
+
+> [!WARING]
+> Phép trừ và phép cộng dùng chung phần lớn mạch phần cứng trong FPU (chỉ khác ở bước đảo dấu).
+> Rounding mode vẫn ảnh hưởng đến kết quả cuối cùng giống như phép cộng.
+> Hiện tượng cancellation là lý do quan trọng khiến việc so sánh hai số thực bằng `==` rất nguy hiểm sau các phép trừ.
