@@ -42,11 +42,11 @@
 
     - [4.3.Phép nhân](#43phép-nhân)
 
-    - 4.4.Phép chia
+    - [4.4.Phép chia](#44phép-chia)
 
-       - 4.4.1.Chia lấy dư
+       - [4.4.1.Chia lấy dư](#441chia-lấy-dư)
 
-       - 4.4.2.Chia ko lấy dư
+       - [4.4.2.Chia ko lấy dư](#442chia-ko-lấy-dư)
 
 - 5.kết luận
 
@@ -2851,3 +2851,86 @@ Nó cũng có các trường hợp đặc biệt như sau:
 > Exponent cộng lại dễ gây overflow hoặc underflow hơn so với cộng/trừ.
 >
 > Phần cứng FPU thường có mạch nhân riêng (multiplier array) rất nhanh.
+
+### 4.4.Phép chia
+
+Phép chia số thực dấu phẩy động trong IEEE 754 phức tạp hơn nhân vì phải thực hiện phép chia significand (thường dùng thuật toán khôi phục hoặc SRT division trong phần cứng). Nó có quy trình thực hiện :
+
+- 1.**Giải mã (Unpack):** Tách sign, exponent (đã trừ bias), significand (thêm hidden bit) của cả hai toán hạng.
+
+- 2.**Tính sign và exponent :**
+   - Sign kết quả = XOR hai sign.  
+   - Exponent kết quả = exponent₁ − exponent₂.
+
+- 3.**Chia significand:** Thực hiện phép chia $\large significand_1 \div significand_2$. Kết quả thường nằm trong khoảng $\large[1, 2)$ hoặc $\large[0.5, 1)$ tùy cách triển khai, sau đó sẽ được chuẩn hóa.
+
+- 4.**Chuẩn hóa + Làm tròn:**
+   - Đưa kết quả về dạng $\large1.m$.
+   - Làm tròn theo rounding mode (các bit dư sau khi chia được dùng làm GRS).
+   - Cộng bias vào exponent và kiểm tra overflow / underflow / chia cho 0.
+
+**Cho ví dụ minh họa:**
+
+<div align="center">
+
+$$\Large1.5 \div 0.75 = 2.0$$
+
+$$\Large1.5 = 1.10_2 \times 2^{0}$$
+
+$$\Large0.75 &= 1.10_2 \times 2^{-1}$$
+
+</div>
+
+**Trong đó:**
+
+- Sign = 0
+- Exponent = 0 − (−1) = 1
+- Chia significand: $\large1.10 \div 1.10 = 1.00_2$
+- Kết quả = $\large1.00_2 \times 2^{1} = 2.0$ (exact)
+
+Tuy nhiên cũng có các trường hợp đặc biệt quan trọng như sau:
+
+<div align="center">
+
+| Trường hợp              | Kết quả          |
+|-------------------------|------------------|
+| $\large x \div (+0)$           | ±∞ (theo dấu)    |
+| $\large x \div (-0)$           | ±∞ (theo dấu)    |
+| $\large(\pm 0) \div (\pm 0)$  | NaN              |
+| $\large(\pm ∞) \div (\pm ∞)$  | NaN              |
+| $\large x \div (\pm ∞)$        | ±0 (theo dấu)    |
+| $\large(\pm ∞) \div x$        | ±∞ (theo dấu)    |
+| $\large x \div \text{NaN}$     | NaN              |
+
+</div>
+
+#### 4.4.1.Chia lấy dư
+
+IEEE 754 định nghĩa phép `remainder(x, y)` theo công thức:
+
+<div align="center">
+
+$$\Large\text{remainder}(x, y) = x - y \times n$$
+
+</div>
+
+trong đó $\large n$ là số nguyên gần nhất với $\large x/y$ (ties to even).
+
+Kết quả luôn thỏa:
+
+<div align="center">
+
+$$\Large|\text{remainder}(x, y)| \le \frac{|y|}{2}$$
+
+</div>
+
+và có cùng dấu với $x$ khi kết quả khác 0.
+
+#### 4.4.2.Chia ko lấy dư
+
+Đây là phép `/` thông thường trong hầu hết ngôn ngữ lập trình. Kết quả là thương được làm tròn theo rounding mode hiện hành. Các đặc điểm quan trọng :
+
+- Phép chia chậm hơn nhiều so với nhân (trong phần cứng).
+- Dễ gây overflow hoặc underflow hơn nhân vì exponent bị trừ.
+- Chia cho số rất nhỏ có thể tạo ra số rất lớn (dễ overflow).
+- Rounding mode ảnh hưởng trực tiếp đến bit cuối của thương.
