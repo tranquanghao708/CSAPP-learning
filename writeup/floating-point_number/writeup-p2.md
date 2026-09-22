@@ -38,9 +38,9 @@
 
     - [4.1.Phép cộng](#41phép-cộng)
 
-    - 4.2.Phép trừ
+    - [4.2.Phép trừ](#42phép-trừ)
 
-    - 4.3.Phép nhân
+    - [4.3.Phép nhân](#43phép-nhân)
 
     - 4.4.Phép chia
 
@@ -2751,7 +2751,7 @@ $$\Large a - b = a + (-b)$$
 Chỉ cần đảo dấu của số bị trừ, sau đó thực hiện đúng quy trình phép cộng. Quy trình thực hiện của phép trừ dấu phẩy động gồm hai bước :
 
 - 1.**Đảo dấu :** số bị trừ ($b \leftarrow -b$).
-- 2. Thực hiện đầy đủ 4 bước của phép cộng:
+- 2.Thực hiện đầy đủ 4 bước của phép cộng:
    - Giải mã (Unpack)
    - Căn chỉnh exponent (Alignment)
    - Cộng significand (thực chất lúc này là trừ nếu dấu khác nhau)
@@ -2790,12 +2790,12 @@ Với phép trừ cũng có các trường hợp đặc biệt, liệt kê với
 
 | Trường hợp             | Kết quả          |
 |------------------------|------------------|
-| $x - x$                | $+0$ (theo chuẩn) |
-| $x - (+0)$             | $x$              |
-| $x - (-0)$             | $x$              |
-| $(+∞) - (+∞)$          | NaN              |
-| $(+∞) - (-∞)$          | $+∞$             |
-| $x - \text{NaN}$       | NaN              |
+| $\large x - x$                | $\large+0$ (theo chuẩn) |
+| $\large x - (+0)$             | $\large x$              |
+| $\large x - (-0)$             | $\large x$              |
+| $\large (+∞) - (+∞)$          | NaN              |
+| $\large (+∞) - (-∞)$          | $\large+∞$             |
+| $\large x - \text{NaN}$       | NaN              |
 
 </div>
 
@@ -2805,3 +2805,49 @@ Với phép trừ cũng có các trường hợp đặc biệt, liệt kê với
 > Rounding mode vẫn ảnh hưởng đến kết quả cuối cùng giống như phép cộng.
 >
 > Hiện tượng cancellation là lý do quan trọng khiến việc so sánh hai số thực bằng `==` rất nguy hiểm sau các phép trừ.
+
+### 4.3.Phép nhân**
+
+Phép nhân số thực dấu phẩy động trong IEEE 754 tương đối đơn giản hơn cộng/trừ vì không cần căn chỉnh exponent. Hành vi của nó là nhân hai significand (kể cả hidden bit). Kết quả có thể dài gấp đôi (ví dụ 24 bit × 24 bit = 48 bit với binary32). **Ví dụ minh họa:**
+
+<div align="center">
+
+$$\Large1.5 \times 1.25$$
+
+$$\Large1.5 = 1.10_2 \times 2^{0}$$
+
+$$\Large1.25 = 1.01_2 \times 2^{0}$$
+
+</div>
+
+**Trong đó:**
+
+- Sign = 0 (cùng dấu)
+- Exponent = 0 + 0 = 0
+- Nhân significand: $\large1.10 \times 1.01 = 1.1110_2$
+- Đã ở dạng chuẩn thì không cần dịch
+- Kết quả = $\large1.1110_2 \times 2^{0} = 1.875$ (exact)
+
+Nó cũng có các trường hợp đặc biệt như sau:
+
+<div align="center">
+
+| Trường hợp              | Kết quả          |
+|-------------------------|------------------|
+| $x \times (+0)$         | ±0 (theo dấu)    |
+| $x \times (+∞)$         | ±∞ (theo dấu)    |
+| $(+0) \times (+∞)$      | NaN              |
+| $(+∞) \times (+∞)$      | +∞               |
+| $x \times \text{NaN}$   | NaN              |
+| Số rất nhỏ × số rất nhỏ | Có thể underflow về 0 hoặc subnormal |
+
+</div>
+
+> [!IMPORTANT]
+> Phép nhân không bị cancellation như phép trừ.
+>
+> Sai số chủ yếu đến từ việc làm tròn phần significand thừa (rất nhiều bit bị cắt).
+>
+> Exponent cộng lại dễ gây overflow hoặc underflow hơn so với cộng/trừ.
+>
+> Phần cứng FPU thường có mạch nhân riêng (multiplier array) rất nhanh.
