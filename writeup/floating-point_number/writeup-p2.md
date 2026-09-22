@@ -2801,5 +2801,7 @@ Với phép trừ cũng có các trường hợp đặc biệt, liệt kê với
 
 > [!WARNING]
 > Phép trừ và phép cộng dùng chung phần lớn mạch phần cứng trong FPU (chỉ khác ở bước đảo dấu).
+>
 > Rounding mode vẫn ảnh hưởng đến kết quả cuối cùng giống như phép cộng.
+>
 > Hiện tượng cancellation là lý do quan trọng khiến việc so sánh hai số thực bằng `==` rất nguy hiểm sau các phép trừ.
