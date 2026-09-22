@@ -2778,7 +2778,7 @@ $$\Large1.25 = 1.01_2 \times 2^{0}$$
 </div>
 
 **Trong đó:**
-- Cùng exponent → không cần dịch
+- Cùng exponent thì không cần dịch
 - Trừ significand: $\large1.10 - 1.01 = 0.01_2$
 - Chuẩn hóa: $\large1.00_2 \times 2^{-2}$
 
@@ -2806,7 +2806,7 @@ Với phép trừ cũng có các trường hợp đặc biệt, liệt kê với
 >
 > Hiện tượng cancellation là lý do quan trọng khiến việc so sánh hai số thực bằng `==` rất nguy hiểm sau các phép trừ.
 
-### 4.3.Phép nhân**
+### 4.3.Phép nhân
 
 Phép nhân số thực dấu phẩy động trong IEEE 754 tương đối đơn giản hơn cộng/trừ vì không cần căn chỉnh exponent. Hành vi của nó là nhân hai significand (kể cả hidden bit). Kết quả có thể dài gấp đôi (ví dụ 24 bit × 24 bit = 48 bit với binary32). **Ví dụ minh họa:**
 
