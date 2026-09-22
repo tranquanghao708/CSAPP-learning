@@ -2834,11 +2834,11 @@ Nó cũng có các trường hợp đặc biệt như sau:
 
 | Trường hợp              | Kết quả          |
 |-------------------------|------------------|
-| $x \times (+0)$         | ±0 (theo dấu)    |
-| $x \times (+∞)$         | ±∞ (theo dấu)    |
-| $(+0) \times (+∞)$      | NaN              |
-| $(+∞) \times (+∞)$      | +∞               |
-| $x \times \text{NaN}$   | NaN              |
+| $\large x \times (+0)$         | ±0 (theo dấu)    |
+| $\large x \times (+∞)$         | ±∞ (theo dấu)    |
+| $\large(+0) \times (+∞)$      | NaN              |
+| $\large(+∞) \times (+∞)$      | +∞               |
+| $\large x \times \text{NaN}$   | NaN              |
 | Số rất nhỏ × số rất nhỏ | Có thể underflow về 0 hoặc subnormal |
 
 </div>
