@@ -710,9 +710,10 @@ IEEE 754 quy định các pattern phổ biến như bảng
 
 - Ở đây sẽ chuyển phân thập phân sang nhị phân, ví dụ vừa rồi là $$\large29.81_{10}$$ ta đã chuyển thành $$\large11101_{2}.81_{10}$$ bây giờ còn phần thập phân là $$\large0.81_{10}$$ ta tiến hành chuyển đổi đổi nó, cách chuyển phần thập phân sang nhị phân phức tạp hơn phần nguyên. Thay vì liên tục chia cho 2 như phần nguyên, ta sẽ **liên tục nhân phần thập phân với 2**, sau mỗi lần nhân lấy phần nguyên của kết quả làm bit tiếp theo, rồi tiếp tục lặp với phần thập phân còn lại. Theo sơ đồ :
 
+<div align="center">
+
 <table>
 <tr>
-<div align="center">
 <td>
 
 | Bước | Giá trị | x2   | Bit lấy |
@@ -747,9 +748,9 @@ IEEE 754 quy định các pattern phổ biến như bảng
 | 22 | 0.12 | 0.24 | 0 |
 
 </td>
-</div>
 </tr>
 </table>
+</div>
 
 > số thực nhị phân vô hạn
 
