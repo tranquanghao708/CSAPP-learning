@@ -712,6 +712,7 @@ IEEE 754 quy định các pattern phổ biến như bảng
 
 <table>
 <tr>
+<div align="center">
 <td>
 
 | Bước | Giá trị | x2   | Bit lấy |
@@ -746,6 +747,7 @@ IEEE 754 quy định các pattern phổ biến như bảng
 | 22 | 0.12 | 0.24 | 0 |
 
 </td>
+</div>
 </tr>
 </table>
 
@@ -850,6 +852,8 @@ vậy kết quả là $$\large\boxed{11101.1100111101011100001_{2}}$$ đây chí
 
 Đầu tiên ta có `11101.1100111101011100001` và ta cần chuyển phần nguyên sang thập phân $$\large11101_{2} = 29_{10}$$, bây giờ ta tiến hành tính toán phần fraction sau dấu chấm cách tính là ta lấy số bit nhân với trọng số lũy thừa số nguyên âm **ví dụ** $$\large1\times2^{-1} + 1\times2^{-2} + 0\times2^{-3} +....+ 0\times2^{-N}$$, ở đây ta thấy giá trị bit `0` luôn ra kết quả là `0` vì thế khi tính tổng nó không thay đổi gì, vậy ta chỉ cần đếm lũy thừa giảm dần và tính toán những bit `1` thôi (trong phần tính toán này phải dùng toán học, không phải nhị phân nên các bit khi tính toán kiểu này là nó có hệ cơ số 10 vì sẽ ra giá trị là hệ thập phân) :
 
+<div align="center">
+
 | bit | trọng số | giá trị |
 |:-----:|:----------:|:---------:|
 | 1 | $$\large2^{-1}$$ | 0.5 |
@@ -863,6 +867,8 @@ vậy kết quả là $$\large\boxed{11101.1100111101011100001_{2}}$$ đây chí
 | 1 | $$\large2^{-13}$$ |  0.00012207031 |
 | 1 | $$\large2^{-14}$$ | 0.00006103516 |
 | 1 | $$\large2^{-19}$$ | 0.00000190735 |
+
+</div>
 
 ta tiến hành tính tổng giá trị lại $$\large2^{-1} + 2^{-2} + 2^{-5} + 2^{-6} + 2^{-7} + 2^{-8} + 2^{-10} + 2^{-12} + 2^{-13} + 2^{-14} + 2^{-19} = 0.80999946594_{10}$$ bây giờ ghép lại ta có kết quả $$\large\boxed{29.80999946594_{10}}$$ . Chúng ta vẫn có thể ráp vào công thức như ở phần [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754) là $$\large(-1)^{S} \times 1.m \times 2^{e-b}$$ ta có $$\large(-1)^{0} \times (1.863124966621399) \times 2^{4}$$ và vẫn ra kết quả khớp là $$\large29.80999946594_{10}$$. Giá trị `1.863124966621399` trong biểu thức là phần trị `Significand = 1.11011100111101011100001` cái phần được tách ở trường fraction lúc đầu, chúng ta quy đổi cả phần này về hệ cơ số 10 bằng cách nhân với trọng số âm như trên bảng vừa rồi
 
@@ -983,12 +989,16 @@ Subnormal không có hidden bit 1. Vì vậy bit đầu tiên của fraction có
 
 Với binary32 thì `1 - bias = 1 - 127 = -126` (nó y chang kết quả với cái số thực chuẩn hóa phía trên), do khử chuẩn hóa (denormalized/subnormal) không có hiddenbit và nó là 0 nên ta được $$\large0.1011_{2}\times2^{-126}$$, khai triển ra ta có $$\large(2^{-1} + 2^{-3} + 2^{-4}) \times 2^{-126}$$ và các `bit-weight exponents` của nó là $$\large\boxed{2^{-127} , 2^{-129} , 2^{-130}}$$ . Có thể nhìn trực tiếp với bảng sau:
 
+<div align="center">
+
 | Bit | Vị trí trong `0.f` | Trọng số trước nhân $$\large2^{-126}$$ | Bit-weight exponent sau nhân |
 | :---: | :-----------------: | :-----------------------------: | :---------------------------: |
 | `1` |                  1 |                       $$\large(2^{-1})$$ |                   $$\large(2^{-127})$$ |
 | `0` |                  2 |                       $$\large(2^{-2})$$ |                   $$\large(2^{-128})$$ |
 | `1` |                  3 |                       $$\large(2^{-3})$$ |                   $$\large(2^{-129})$$ |
 | `1` |                  4 |                       $$\large(2^{-4})$$ |                   $$\large(2^{-130})$$ |
+
+</div>
 
 **Điều quan trọng nhất là tại sao actual exponent ở khử chuẩn hóa lại có kết quả giống với số chuẩn hóa?** : vì đơn giản nó là actual exponent của significand đối với normalized nhỏ nhất, và cũng là exponent cố định `1−bias` dùng trong công thức subnormal. và điều đó chỉ có ở phần số chuẩn hóa còn khử chuẩn hóa luôn là `hidden bit = 0` nên trường hợp này `-126` chính là exponent chung của toàn significand $$\large0.f\times2^{-126}$$ còn bản thân $$\large0.f$$ đã có các bit-weight $$\large2^{-1} , 2^{-2} , 2^{-3} ,...$$ và khi nhân toàn bộ với $$\large2^{-126}$$ ta cộng các số mũ `-1 + -126 = -127`, `-2 + -126 = -128`, `-3 + -126 = -129`,....
 
@@ -1018,11 +1028,15 @@ hay còn gọi là số thực hữu hạn lớn nhất, đối với float 32 b
 
 đầu tiên như trong chương decode, ta tách các bit ra ở đây chúng ta đã có và tách bit ở bảng trên rồi. Tiếp theo ta tính actual exponent bằng cách chuyển chuỗi nhị phân ở trường exponent sang hệ cơ số 10 $$\large11111110_{2} = 254_{10}$$ bây giờ ta lấy nó đi trừ với bias $$\large254 - 127 = 127$$ vậy actual exponent = $$\large\boxed{127}$$, tiếp theo chúng ta tiến hành tính toán phần trị, đầu tiên là khôi phục hiddenbit ta dịch dấu chấm theo actual exponent nhưng ta thấy nó lớn hơn độ rộng được có ở phần fraction nên chúng ta sẽ thêm padding là 0 để thỏa mãn actual exponent ta có $$\large11111111111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.0_{2}$$ tuy hơi dài nhưng nó đã thỏa mãn actual exponent do đây là số chuẩn hóa nên bit ẩn sẽ thêm 1 là bit ở phần có trọng số cao nhất. Bây giờ chúng ta tiến hành tính toán phần fraction với phép mũ âm ta có:
 
+<div align="center">
+
 | bit | trọng số | gía trị |
 |:-----:|:----------:|:---------:|
 | 1 | $$\large2^{-1}$$ | 0.5 |
 | 1 | $$\large2^{-2}$$ | 0.25 |
 | .. | .. | .. |
+
+</div>
 
 như thế tính lần lượt cho hết bit 1 trong trường fraction. Dựa vào công thức có ở [1.Tổng quan về IEEE 754](#1Tổng-quan-về-ieee-754) là $$\large(-1)^{S} \times 1.m \times 2^{e-b}$$, ta tiến hành ráp vào bây giờ sign = 0, actual exponent = 127, bias = 127, tổng cấp số nhân gía trị fraction là $$\large2-2^{-23}$$ khi ráp ta được $$\large(-1)^{0} \times (2-2^{-23}) \times 2^{127}$$ bây giờ ta lấy casio tính cái biểu thức này ra ta được $$\large\boxed{3.40282346638528859811704183484516925440\times10^{38}}$$ đây chính là giá trị chính xác của số thực hữu hạn lớn nhất 32bit float
 
