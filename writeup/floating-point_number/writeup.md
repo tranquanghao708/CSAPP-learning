@@ -556,12 +556,16 @@ mục đích chính là không lãng phí một bit luôn luôn bằng 1, vì kh
 
 Nhưng hidden bit không phải lúc nào cũng bằng 1, nó chỉ đúng với số khi chuẩn hóa (normalized) nhưng đối với số khử chuẩn hóa (denormalized) hidden bit là 0 còn với giá trị đặc biệt như nan hay infinity thì chúng không có hiddenbit đối với `hiddenbit = 0`, cho **ví dụ** số thực có dạng $$\large0.fraction\times2^{1-bias}$$ và `fraction = 100100... , exponent = 00000000` thì lúc này các kết quả số thực sẽ có dạng `0.100100...` chứ không phải `1.100100...`. Đây gọi là [khử chuẩn hóa số thực (Denormalized)](#12khử-chuẩn-hóa-số-thực-denormalized) là cơ chế giúp IEEE 754 biểu diễn được các số rất nhỏ gần bằng 0 mà không bị nhảy đột ngột từ số chuẩn hóa nhỏ nhất xuống 0.
 
+<div align="center">
+
 | Loại số                  | Hidden Bit    |
 | ------------------------ | ------------- |
 | Normalized               | 1 (Implicit)  |
 | Denormalized (Subnormal) | 0             |
 | Infinity                 | Không sử dụng |
 | NaN                      | Không sử dụng |
+
+</div>
 
 #### 1.7.2.Trường hợp nếu actual exponent lớn hơn độ rộng trường fraction để dịch dấu chấm
 
@@ -659,11 +663,15 @@ nếu trường hợp độ rộng của chuỗi nhị phân lớn hơn độ r�
 
 - dạng có độ chính xác đơn tương ứng 32bit và dạng có độ chính xác kép tương ứng 64bit và kép mở rộng tương đương 80bit :
 
+<div align="center">
+
 | name                 | Tổng số bit | Exponent | Fraction |  Bias |
 | ------------------- | :----------: | :-------: | :-------: | :----: |
 | Single precision    |          32 |        8 |       23 |   127 |
 | Double precision    |          64 |       11 |       52 |  1023 |
 | Quadruple precision |         128 |       15 |      112 | 16383 |
+
+</div>
 
 IEEE 754 quy định các pattern phổ biến như bảng
 
@@ -895,6 +903,8 @@ $$
 
 Sau khi có actual exponent ở trên rồi, thì chúng ta mới tính exponent của trọng số bit và mỗi bit trong significand sẽ có trọng số riêng với $$\large1.1011_{2}​\times2^{-126}$$ ta có :
 
+<div align="center">
+
 | Bit              | Vị trí |   Trọng số |
 | ---------------- | :-----: | :---------: |
 | hidden bit `1`   |      0 | $$\large2^{-126}$$ |
@@ -902,6 +912,8 @@ Sau khi có actual exponent ở trên rồi, thì chúng ta mới tính exponent
 | fraction bit `0` |      2 | $$\large2^{-128}$$ |
 | fraction bit `1` |      3 | $$\large2^{-129}$$ |
 | fraction bit `1` |      4 | $$\large2^{-130}$$ |
+
+</div>
 
 Do đó dựa trên bảng ta được với biểu thức sau :
 
@@ -1043,9 +1055,13 @@ Số thực khử chuẩn hóa nhỏ nhất (Smallest subnormal) là số thực
 
 Đối với số khử chuẩn hóa, trường exponent luôn bằng toàn bit 0 và Hidden Bit không còn bằng 1 mà bằng 0. Để tạo ra giá trị nhỏ nhất khác 0 thì trường fraction chỉ được phép có đúng một bit 1 ở vị trí cuối cùng. **Ví dụ** với kiểu `float` ta có :
 
+<div align="center">
+
 | sign | exponent | fraction                |
 | ---- | -------- | ----------------------- |
 | 0    | 00000000 | 00000000000000000000001 |
+
+</div>
 
 > để ý là với số thực khử chuẩn hóa nhỏ nhất luôn có LSB trường fraction là bit 1
 
@@ -1066,6 +1082,8 @@ do `exponent field = 0` nên `hidden bit = 0` (yes sir, vì vốn dĩ khử chu�
 
 không có gì cao siêu, chỉ là phép tính decode bit fraction ở chương [2.2.5.Áp dụng Sign](#225áp-dụng-sign) . Ở đây, lý dó `-23` là số âm vì do dịch vị trí của bit. Cho bảng sau :
 
+<div align="center">
+
 | Vị trí     | Giá trị   |
 | ---------- | :---------: |
 | bit thứ 1  | $$\large2^{-1}$$  |
@@ -1073,6 +1091,8 @@ không có gì cao siêu, chỉ là phép tính decode bit fraction ở chương
 | bit thứ 3  | $$\large2^{-3}$$  |
 | ...        | ...       |
 | bit thứ 23 | $$\large2^{-23}$$ |
+
+</div>
 
 Bit 1 duy nhất nằm ở vị trí thứ 23 sau dấu chấm, nên giá trị của significand là $$\large2^{-23}$$
 
@@ -1123,10 +1143,14 @@ Mục đích là để miền subnormal nối liên tục với miền normalize
 
 Nếu IEEE dùng `actual exponent = 0 - 127 = -127` đối với khử chuẩn hóa thì số lớn nhất sẽ là $$\large0.11111_{2} \times 2^{-127}$$ nó nhỏ hơn đúng một nữa .Lúc đó sẽ xuất hiện một khoảng trống lớn giữa normalized và subnormal. IEEE 754 được thiết kế để không có khoảng trống này
 
+<div align="center">
+
 | Loại số    | Điều kiện           | Actual exponent |
 | ---------- | ------------------- | --------------- |
 | Normalized | `Exponent = 1..254` | `E - Bias`      |
 | Subnormal  | `Exponent = 0`      | `1 - Bias`      |
+
+</div>
 
 **Quan trọng :**
 
