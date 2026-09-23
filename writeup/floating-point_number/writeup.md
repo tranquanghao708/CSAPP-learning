@@ -110,8 +110,12 @@ $$\Large(-1)^{S} \times 1.m \times 2^{e-b}$$
 
 Ta có một structure của cái này như sau:
 
+<div align="center">
+
 | S (sign) | E (Exponent) | m (Fraction) |
 |----------|--------------|--------------|
+
+</div>
 
 ### 1.1.Chuẩn hóa số thực (normalized)
 
@@ -232,9 +236,13 @@ $$\Large(-1)^{S}\times0.f\times2^{1-bias}$$
 
 - IEEE 754 quy định Infinity có dạng:
 
+<div align="center">
+
 | Sign | Exponent | Fraction |
 |------|----------|----------|
 | 0 hoặc 1 | Toàn bộ bit = 1 | Toàn bộ bit = 0 |
+
+</div>
 
 nếu `sign = 0` : dương vô cực $$\large+\infty$$
 
@@ -305,9 +313,13 @@ ta thấy hiện `inf` nghĩa là dương vô cực $$\large+\infty$$
 
 - là một giá trị đặc biệt, chỉ thị cho không xác định hoặc số đó không phải là số thực $$\large\frac{0}{0} = \text{NaN}$$, $$\large\infty-\infty=\text{NaN}$$, $$\large\sqrt{-1}=\text{NaN}$$ (đối với số thực). IEEE 754 quy định NaN có dạng như :
 
+<div align="center">
+
 | Sign | Exponent | Fraction |
 |------|----------|----------|
 | 0 hoặc 1 | Toàn bộ bit = 1 | Khác 0 |
+
+</div>
 
 Nghĩa là Exponent phải là tòan bộ bit là một và Fraction phải có ít nhất một bit khác 0 cấu trúc như trong image trên từ CS:APP
 
@@ -775,9 +787,13 @@ IEEE754 quy định là phần này chỉ được lấy những bit sau dấu c
 
 Phần này chỉ ghép lại thôi, bây giờ ta có sign = $$\large0_{2}$$ vì `29.81` là số dương, exponent field = $$\large131_{10} = 10000011_{2}\text{Chuẩn 8bit thỏa mãn trường số mũ}$$, Fraction field = $$\large11011100111101011100001_{2}$$ (sau khi cắt/rounding) :
 
+<div align="center">
+
 | sign | Exponent | fraction |
 |------|----------|----------|
 | 0 | 10000011 | 11011100111101011100001 |
+
+</div>
 
 **từ trên bảng ta có :** `0 10000011 11011100111101011100001`, bỏ dấu cách đi ta có `01000001111011100111101011100001`, suy ra $$\large29.81_{10} = \boxed{01000001111011100111101011100001_{2}}$$
 
@@ -797,9 +813,13 @@ chúng ta đã tách được Sign | Exponent | Fraction, nhưng phần số mũ
 
 Sau khi đã tính được Actual Exponent, bước tiếp theo là khôi phục Hidden Bit (hay còn gọi là Implicit Leading Bit). IEEE quy định rằng đối với số chuẩn hóa (normalized) bit `1` đứng trước dấu chấm sẽ không được lưu trong bộ nhớ bởi vì sau khi chuẩn hóa nó sẽ có dạng $$\large1.b_{1}b_{2}b_{3}\ldots\times2^{N}$$ do bit đứng trước dấu chấm bằng 1, IEEE không cần lưu để tiết kiệm một bit fraction. Vì vậy, khi giải mã (Decode), CPU sẽ tự động thêm lại bit này. ở bước tách sign, exponent, fraction ta đã tách được như sau :
 
+<div align="center">
+
 | sign | exponent | fraction |
 |------|----------|----------|
 | 0 | 10000011 | 11011100111101011100001 |
+
+</div>
 
 Và ta đã tính được `Actual exponent = 4` đồng thời nhận thấy $$\large\text{Exponent}\neq00000000$$ và $$\large\text{Exponent}\neq11111111$$ , nên đây là normalized number, CPU sẽ tự động thêm `hiddenbit = 1`. Vậy ta có fraction ban đầu là `11011100111101011100001` nhưng sau khi khôi phục hiddenbit ta có `1.11011100111101011100001` vậy suy ra kết quả là $$\large\boxed{1.11011100111101011100001_{2}}$$
 
@@ -974,9 +994,13 @@ Cho nên `bit-weight exponent = -126 - i` (giá trị `-126` là kết quả c�
 
 hay còn gọi là số thực hữu hạn lớn nhất, đối với float 32 bit chúng thường có dạng :
 
+<div align="center">
+
 | sign | exponent | fraction |
 |------|----------|----------|
 | 0 | 11111110 | 11111111111111111111111 |
+
+</div>
 
 **Lưu ý:** đối với exponent field để biểu diễn số thực lớn nhất tuyệt đối không đươc là `11111111` vì tất cả bit số 1 này được dùng riêng trong việc biểu diễn infinity và NaN. Như thế đối với 32bit ta có chuỗi bit của số thực hữu hạn lớn nhất như sau `01111111011111111111111111111111` việc decode ra sang số thực hệ cơ số 10 thì chúng ta làm tương tự như [2.2.Decode](#22decode) bây giờ chúng ta tiến hành tính toán số thực lớn nhất của ngành kiến trúc 32bit (float)
 
@@ -997,9 +1021,13 @@ lý do giá trị phần trị lại là $$\large2-2^{-23}$$ vì đó chỉ là 
 
 Số thực chuẩn hóa nhỏ nhất (Smallest Normalized) là số thực dương nhỏ nhất vẫn còn thuộc miền Normalized, nghĩa là trường Exponent không bằng toàn bit 0. **Ví dụ** với `float` có `exponent = 8, fraction = 23, bias = 127` bây giờ số thực chuẩn hóa nhỏ nhất của `float` là :
 
+<div align="center">
+
 | sign | exponent | fraction |
 |------|----------|----------|
 | 0 | 00000001 | 000000000000000000000000 |
+
+</div>
 
 do `exponent field = 1` nên ta có `actual exponent = 1 - 127 = -126` đồng thời fraction toàn bit 0 nên phần trị (significand) là `1.0` vậy ta có $$\large1.0_{2}\times2^{-126}$$ vậy kết quả là $$\large\boxed{1.17549435082\times10^{-38}}$$
 
@@ -1127,9 +1155,13 @@ Nếu IEEE dùng `actual exponent = 0 - 127 = -127` đối với khử chuẩn h
 
 Là một giá trị khá quan trọng vì nó nằm ngay tại biên trên của miền subnormal, sát với biên dưới của miền normalized, là giá trị lớn nhất vẫn còn thuộc miền subnormal, ngay trước khi chuyển sang số normalized. Nó có dạng như sau :
 
+<div align="center">
+
 | sign | exponent | fraction |
 |------|----------|----------|
 | 0 | 00000000 | 11111111111111111111111 |
+
+</div>
 
 > ví dụ bảng là của float 32bit
 
@@ -1139,9 +1171,13 @@ Vậy $$\large0.11111111111111111111111_{2}\times2^{-126}$$ phần significand b
 
 **chi tiết quan trọng:** Giá trị này nằm sát số chuẩn hóa nhỏ nhất (smallest normalized). Ta thấy ở chương [2.4.Số thực chuẩn hóa nhỏ nhất và tính toán số thực chuẩn hóa nhỏ nhất (Smallest normalized)](#24số-thực-chuẩn-hóa-nhỏ-nhất-và-tính-toán-số-thực-chuẩn-hóa-nhỏ-nhất-smallest-normalized) có một bảng số thực chuẩn hóa nhỏ nhất như sau :
 
+<div align="center">
+
 | sign | exponent | fraction |
 |------|----------|----------|
 | 0 | 00000001 | 000000000000000000000000 |
+
+</div>
 
 nghĩa là theo nhị phân, số thực khử chuẩn hóa lớn nhất và số thực chuẩn hóa nhỏ nhất nằm sát nhau. Ở đây, ta biết số thực khử chuẩn hóa lớn nhất có $$\large1 - 2^{-23}2^{-126}$$ và số chuẩn hóa nhỏ nhất có $$\large1.0_{2} \times 2^{-126}$$ vậy hiệu của chúng là $$\large2^{-126} - (1 - 2^{-23}2^{-126}) = \boxed{2^{-149}}$$ mà $$\large2^{-149}$$ lại là ULP/subnormal spacing ở vùng này. Do đó ta thấy :
 
