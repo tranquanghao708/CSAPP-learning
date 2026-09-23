@@ -2862,7 +2862,7 @@ Phép chia số thực dấu phẩy động trong IEEE 754 phức tạp hơn nh�
    - Sign kết quả = XOR hai sign.  
    - Exponent kết quả = exponent₁ − exponent₂.
 
-- 3.**Chia significand:** Thực hiện phép chia $\large significand_1 \div significand_2$. Kết quả thường nằm trong khoảng $\large[1, 2)$ hoặc $\large[0.5, 1)$ tùy cách triển khai, sau đó sẽ được chuẩn hóa.
+- 3.**Chia significand:** Thực hiện phép chia $\large \text{significand}_1 \div \text{significand}_2$. Kết quả thường nằm trong khoảng $\large[1, 2)$ hoặc $\large[0.5, 1)$ tùy cách triển khai, sau đó sẽ được chuẩn hóa.
 
 - 4.**Chuẩn hóa + Làm tròn:**
    - Đưa kết quả về dạng $\large1.m$.
