@@ -15,6 +15,11 @@
     - [1.2.4. Linking](#124-linking)
     - [1.2.5. CPU thực thi Machine Code](#125-cpu-thực-thi-machine-code)
   - [1.3. Assembly và Machine Code](#13-assembly-và-machine-code)
+    - [1.3.1. Assembly không phải Machine Code](#131-assembly-không-phải-machine-code)
+    - [1.3.2. Assembly là dạng biểu diễn gần với Machine Code](#132-assembly-là-dạng-biểu-diễn-gần-với-machine-code)
+    - [1.3.3. Một Assembly instruction có thể có độ dài khác nhau](#133-một-assembly-instruction-có-thể-có-độ-dài-khác-nhau)
+    - [1.3.4. Disassembler: đi từ Machine Code về Assembly](#134-disassembler-đi-từ-machine-codevề-assembly)
+    - [1.3.5. Vì sao Reverse Engineering cần hiểu cả hai?](#135-vì-sao-reverse-engineering-cần-hiểu-cả-hai)
   - [1.4. Instruction Encoding](#14-instruction-encoding)
   - [1.5. Cấu trúc tổng quát của một Instruction](#15-cấu-trúc-tổng-quát-của-một-instruction)
 
@@ -251,7 +256,7 @@ Có thể quan sát kết quả bằng:
 gcc -E main.c -o main.i
 ```
 
-File `main.i` vẫn là mã nguồn C, nhưng các chỉ thị tiền xử lý đã được xử lý.
+File `main.i` vẫn là mã nguồn C, nhưng các chỉ thị tiền xử lý đã được xử lý. Cái cách nó xử lý là nó bê nguyên cả mã nguồn header chèn vào luôn
 
 #### 1.2.2. Compilation
 
@@ -394,3 +399,241 @@ Control Flow / Data Flow
       ↓
 Hiểu chương trình
 ```
+
+### 1.3. Assembly và Machine Code
+
+Ở phần trước, ta đã thấy quá trình:
+
+```text
+C → Assembly → Machine Code
+```
+
+Trong đó, Assembly và Machine Code có quan hệ rất gần nhau nhưng không phải là cùng một thứ. Assembly là dạng biểu diễn bằng các mnemonic và operand để con người có thể đọc và viết instruction của CPU. Machine Code là dạng mã hóa nhị phân/byte của những instruction đó theo quy tắc của kiến trúc CPU. **Ví dụ**, với x86-64:
+
+```asm
+mov rdi, 1
+```
+
+Đây là Assembly instruction. Sau khi được assembler mã hóa, nó trở thành một chuỗi byte machine code tương ứng:
+
+```text
+BF 01 00 00 00
+```
+
+CPU không đọc chuỗi:
+
+```text
+mov rdi, 1
+```
+
+mà đọc các byte:
+
+```text
+BF 01 00 00 00
+```
+
+sau đó giải mã chúng thành instruction mà CPU có thể thực thi. Có thể hình dung:
+
+```text
+┌─────────────────────┐
+│ Assembly            │
+│ mov rdi, 1          │
+└──────────┬──────────┘
+           │
+           │ Assembler
+           v
+┌─────────────────────┐
+│ Machine Code        │
+│ BF 01 00 00 00      │
+└──────────┬──────────┘
+           │
+           │ CPU Decode
+           v
+┌─────────────────────┐
+│ Instruction         │
+│ MOV rDI, 1          │
+└──────────┬──────────┘
+           │
+           v
+        Execute
+```
+
+#### 1.3.1. Assembly không phải Machine Code
+
+Một lỗi dễ mắc phải là coi:
+
+```asm
+mov rdi, 1
+```
+
+và:
+
+```text
+BF 01 00 00 00
+```
+
+là cùng một thứ. Chúng biểu diễn cùng một instruction, nhưng ở hai dạng khác nhau. Assembly:
+
+```asm
+mov rdi, 1
+```
+
+là textual representation. Machine code:
+
+```text
+BF 01 00 00 00
+```
+
+là encoded representation. Assembly tồn tại để con người có thể làm việc với instruction dễ dàng hơn. Machine code là dạng mà CPU thực sự fetch từ memory và decode.
+
+#### 1.3.2. Assembly là dạng biểu diễn gần với Machine Code
+
+Assembly không phải là một ngôn ngữ hoàn toàn độc lập với CPU. Nó phụ thuộc rất mạnh vào instruction set architecture (ISA). **Ví dụ**, instruction:
+
+```asm
+mov rdi, 1
+```
+
+là instruction của x86-64. Một kiến trúc khác như ARM64 có instruction set và encoding hoàn toàn khác. Điều này có nghĩa:
+
+```text
+C
+│
+├──→ x86-64 Assembly
+│        ↓
+│    x86-64 Machine Code
+│
+└──→ ARM64 Assembly
+         ↓
+     ARM64 Machine Code
+```
+
+Cùng một chương trình C có thể được compiler dịch thành các instruction khác nhau tùy thuộc vào kiến trúc CPU mục tiêu.
+
+#### 1.3.3. Một Assembly instruction có thể có độ dài khác nhau
+
+Đây là một đặc điểm quan trọng của x86-64. Machine code của x86-64 sử dụng instruction có độ dài biến đổi. **Ví dụ**, các instruction khác nhau có thể chiếm số byte khác nhau:
+
+```text
+Instruction              Machine Code
+
+ret                      C3
+
+nop                      90
+
+mov edi, 1               BF 01 00 00 00
+
+mov eax, 0x12345678      B8 78 56 34 12
+```
+
+Vì vậy CPU không thể đơn giản giả định:
+
+```text
+1 instruction = 4 bytes
+```
+
+Thay vào đó, CPU phải xác định ranh giới của từng instruction dựa trên encoding của nó. Đây cũng là một trong những lý do việc phân tích machine code x86-64 có thể phức tạp.
+
+**Tuy nhiên :** Machine Code không chỉ là một chuỗi số nhị phân ngẫu nhiên. Ví dụ:
+
+```text
+BF 01 00 00 00
+```
+
+không phải năm byte độc lập. Chúng cùng nhau tạo thành một encoding của instruction:
+
+```asm
+mov edi, 1
+```
+
+Trong encoding này:
+
+```text
+BF
+```
+
+đóng vai trò xác định opcode/encoding form, còn:
+
+```text
+01 00 00 00
+```
+
+biểu diễn immediate value `1` theo little-endian. Do đó, machine code có cấu trúc và quy tắc. Việc học Program Encodings chính là học những quy tắc đó.
+
+#### 1.3.4. Disassembler: đi từ Machine Code về Assembly
+
+Quá trình assembler thực hiện:
+
+```text
+Assembly
+    ↓
+Machine Code
+```
+
+thì disassembler thực hiện chiều ngược lại:
+
+```text
+Machine Code
+    ↓
+Assembly
+```
+
+Ví dụ:
+
+```bash
+objdump -d -Mintel ./asm
+```
+
+có thể hiển thị:
+
+```text
+40100c:    bf 01 00 00 00    mov edi,0x1
+```
+
+Ở đây ta có thể thấy trực tiếp mối quan hệ:
+
+```text
+Address
+   │
+   ▼
+40100c:  bf 01 00 00 00  mov edi,0x1
+          └──────┬──────┘
+             Machine Code
+                    │
+                    ▼
+              Assembly
+```
+
+Ghidra, GDB và nhiều công cụ reverse engineering cũng thực hiện quá trình tương tự ở mức độ phức tạp hơn.
+
+#### 1.3.5. Vì sao Reverse Engineering cần hiểu cả hai?
+
+Nếu chỉ biết Assembly:
+
+```asm
+mov rdi, 1
+syscall
+```
+
+ta có thể hiểu chương trình đang làm gì. Nhưng nếu hiểu Machine Code:
+
+```text
+BF 01 00 00 00
+48 BE ...
+48 C7 C2 0B 00 00 00
+B8 01 00 00 00
+0F 05
+```
+
+ta có thể bắt đầu đặt những câu hỏi sâu hơn:
+
+* Byte nào là opcode?
+* Operand được encode ở đâu?
+* Tại sao instruction này dài 5 byte?
+* Vì sao instruction khác lại dài 10 byte?
+* Immediate được lưu theo thứ tự byte nào?
+* Register được biểu diễn bằng những bit nào?
+* Khi nào xuất hiện REX prefix?
+* ModR/M và SIB được sử dụng như thế nào?
+
+Đó chính là bước chuyển từ việc đọc Assembly sang việc hiểu instruction encoding. Và đó cũng là mục tiêu chính của phần **Program Encodings**.
