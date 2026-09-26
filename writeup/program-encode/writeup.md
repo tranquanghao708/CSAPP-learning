@@ -74,3 +74,99 @@
   - [10.1. Instruction được encode như thế nào?](#101-instruction-được-encode-như-thế-nào)
   - [10.2. Quy trình Decode một Instruction](#102-quy-trình-decode-một-instruction)
   - [10.3. Những gì cần nhớ](#103-những-gì-cần-nhớ)
+
+---
+
+## 1. Program Encodings
+### 1.1. Program Encodings là gì?
+
+**Program Encodings** có thể hiểu đơn giản là cách một chương trình được biểu diễn dưới dạng **machine code** — những instruction được CPU giải mã và thực thi.
+
+Ví dụ, ở mức ngôn ngữ C:
+
+```c
+#include <stdio.h>
+
+int main(void){
+    printf("Hello World\n");
+    return 0;
+}
+```
+
+hoặc ở mức Assembly x86-64:
+
+```asm
+section .data
+    msg db "hello world", 10
+
+section .text
+    global _start
+
+_start:
+    mov rax, 1      
+    mov rdi, 1      
+    mov rsi, msg    
+    mov rdx, 11     
+    syscall
+
+    mov rax, 60    
+    mov rdi, 0 
+    syscall
+```
+
+CPU không hiểu `stdio.h`, `printf()`, `return`, hay `mov` theo nghĩa mà con người hiểu chúng. CPU thực thi các **machine instructions**, được biểu diễn bằng các byte trong bộ nhớ.
+
+Ví dụ, một instruction Assembly như:
+
+```asm
+mov rdi, 1
+```
+
+sẽ được assembler mã hóa thành một chuỗi byte machine code tương ứng. CPU sau đó đọc những byte này, giải mã chúng theo kiến trúc x86-64 và thực hiện thao tác tương ứng.Có thể hình dung quá trình tổng quát:
+
+```text
+Source Code
+    |
+    | Compiler
+    v
+Assembly
+    |
+    | Assembler
+    v
+Machine Code
+    |
+    v
+   CPU
+    |
+    v
+Instruction Decode -> Execute
+```
+
+Vì vậy, Program Encoding không đơn giản là dịch C sang binary. Nó tập trung vào cách các instruction của chương trình được mã hóa thành những byte cụ thể mà kiến trúc CPU quy định. **Ví dụ:**
+
+```
+Assembly instruction
+        |
+        v
+    mov rdi, 1
+        |
+        v
+ Instruction Encoding
+        |
+        v
+    Machine Code
+        |
+        v
+    CPU Decode
+        |
+        v
+      Execute
+```
+
+Đây chính là vấn đề cốt lõi của phần Program Encodings:
+
+> **Tại sao một instruction Assembly cụ thể lại được biểu diễn bởi đúng những byte machine code đó?**
+
+Và theo chiều ngược lại:
+
+> **Nếu nhìn vào một chuỗi machine code, làm thế nào để xác định nó biểu diễn instruction Assembly nào?**
