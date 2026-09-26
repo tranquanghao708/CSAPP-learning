@@ -9,11 +9,11 @@
 - [1. Program Encodings](#1-program-encodings)
   - [1.1. Program Encodings là gì?](#11-program-encodings-là-gì)
   - [1.2. Từ mã nguồn C đến Machine Code](#12-từ-mã-nguồn-c-đến-machine-code)
-   - 1.2.1. Preprocessing
-   - 1.2.2. Compilation
-   - 1.2.3. Assembling
-   - 1.2.4. Linking
-   - 1.2.5. CPU thực thi Machine Code
+    - [1.2.1. Preprocessing](#121-preprocessing)
+    - [1.2.2. Compilation](#122-compilation)
+    - [1.2.3. Assembling](#123-assembling)
+    - [1.2.4. Linking](#124-linking)
+    - [1.2.5. CPU thực thi Machine Code](#125-cpu-thực-thi-machine-code)
   - [1.3. Assembly và Machine Code](#13-assembly-và-machine-code)
   - [1.4. Instruction Encoding](#14-instruction-encoding)
   - [1.5. Cấu trúc tổng quát của một Instruction](#15-cấu-trúc-tổng-quát-của-một-instruction)
