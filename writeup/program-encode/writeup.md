@@ -1,10 +1,19 @@
 # CSAPP : Program Encodings
 
+> Ngày viết : 26/9/2026
+
+> Ngày hoàn thành :
+
 **Mục lục**
 
 - [1. Program Encodings](#1-program-encodings)
   - [1.1. Program Encodings là gì?](#11-program-encodings-là-gì)
   - [1.2. Từ mã nguồn C đến Machine Code](#12-từ-mã-nguồn-c-đến-machine-code)
+   - 1.2.1. Preprocessing
+   - 1.2.2. Compilation
+   - 1.2.3. Assembling
+   - 1.2.4. Linking
+   - 1.2.5. CPU thực thi Machine Code
   - [1.3. Assembly và Machine Code](#13-assembly-và-machine-code)
   - [1.4. Instruction Encoding](#14-instruction-encoding)
   - [1.5. Cấu trúc tổng quát của một Instruction](#15-cấu-trúc-tổng-quát-của-một-instruction)
@@ -80,7 +89,7 @@
 ## 1. Program Encodings
 ### 1.1. Program Encodings là gì?
 
-**Program Encodings** có thể hiểu đơn giản là cách một chương trình được biểu diễn dưới dạng **machine code** — những instruction được CPU giải mã và thực thi.
+Program Encodings có thể hiểu đơn giản là cách một chương trình được biểu diễn dưới dạng machine code, những instruction được CPU giải mã và thực thi.
 
 Ví dụ, ở mức ngôn ngữ C:
 
@@ -114,7 +123,7 @@ _start:
     syscall
 ```
 
-CPU không hiểu `stdio.h`, `printf()`, `return`, hay `mov` theo nghĩa mà con người hiểu chúng. CPU thực thi các **machine instructions**, được biểu diễn bằng các byte trong bộ nhớ.
+CPU không hiểu `stdio.h`, `printf()`, `return`, hay `mov` theo nghĩa mà con người hiểu chúng. CPU thực thi các machine instructions, được biểu diễn bằng các byte trong bộ nhớ.
 
 Ví dụ, một instruction Assembly như:
 
@@ -170,3 +179,218 @@ Assembly instruction
 Và theo chiều ngược lại:
 
 > **Nếu nhìn vào một chuỗi machine code, làm thế nào để xác định nó biểu diễn instruction Assembly nào?**
+
+### 1.2. Từ mã nguồn C đến Machine Code
+
+Khi viết một chương trình bằng C, CPU không thể trực tiếp thực thi mã nguồn C. Mã nguồn phải trải qua nhiều bước chuyển đổi trước khi trở thành machine code mà CPU có thể thực thi.
+
+Ví dụ, xét chương trình đơn giản:
+
+```c
+#include <stdio.h>
+
+int main(void){
+    int a = 10;
+    int b = 20;
+    return a + b;
+}
+```
+
+Có thể hình dung quá trình chuyển đổi như sau:
+
+```
+|--------------|
+|   Source C   |
+|    main.c    |
+|--------------|
+       │
+       │ Preprocessor
+       v
+|--------------|
+│ Expanded C   │
+|--------------|
+       │
+       │ Compiler
+       v
+|--------------|
+│   Assembly   │
+│    main.s    │
+|--------------|
+       │
+       │ Assembler
+       v
+|--------------|
+│ Object File  │
+│    main.o    │
+|--------------|
+       │
+       │ Linker
+       v
+|--------------|
+│  Executable  │
+│     main     │
+|--------------|
+       │
+       v
+      CPU
+```
+
+#### 1.2.1. Preprocessing
+
+Đầu tiên, source code được đưa qua preprocessor.**Ví dụ:**
+
+```c
+#include <stdio.h>
+```
+
+sẽ được xử lý trước khi compiler thực hiện quá trình biên dịch chính. Các macro, `#include`, `#define`, conditional compilation,... được xử lý ở bước này.
+
+Có thể quan sát kết quả bằng:
+
+```bash
+gcc -E main.c -o main.i
+```
+
+File `main.i` vẫn là mã nguồn C, nhưng các chỉ thị tiền xử lý đã được xử lý.
+
+#### 1.2.2. Compilation
+
+Compiler chuyển mã C thành Assembly phù hợp với kiến trúc đích. Ví dụ có thể yêu cầu GCC dừng ở bước Assembly:
+
+```bash
+gcc -S main.c -o main.s
+```
+
+Kết quả có thể có dạng:
+
+```asm
+main:
+    pushq   %rbp
+    movq    %rsp, %rbp
+    movl    $10, -4(%rbp)
+    movl    $20, -8(%rbp)
+    movl    -4(%rbp), %eax
+    addl    -8(%rbp), %eax
+    popq    %rbp
+    ret
+```
+
+Lúc này chương trình vẫn chưa phải machine code. Đây vẫn là Assembly, tức một dạng biểu diễn có thể đọc được bởi con người.
+
+#### 1.2.3. Assembling
+
+Assembler chuyển Assembly thành machine code và đặt nó vào một object file. Với GCC:
+
+```bash
+gcc -c main.c -o main.o
+```
+
+Hoặc nếu đã có file Assembly:
+
+```bash
+as main.s -o main.o
+```
+
+Object file `main.o` thường là một ELF relocatable object trên Linux x86-64. Có thể kiểm tra:
+
+```bash
+file main.o
+```
+
+và xem machine code:
+
+```bash
+objdump -d main.o
+```
+
+Ví dụ:
+
+```text
+48 89 e5
+48 83 ec 10
+c7 45 fc 0a 00 00 00
+```
+
+Đây mới là những byte machine code tương ứng với các instruction.
+
+#### 1.2.4. Linking
+
+Một chương trình thực tế thường không chỉ chứa code của chính file `main.c`. **Ví dụ:**
+
+```c
+printf("Hello\n");
+```
+
+sử dụng code nằm trong các thư viện khác. Linker có nhiệm vụ kết hợp các object file và thư viện cần thiết thành executable cuối cùng. **Ví dụ:**
+
+```bash
+gcc main.o -o main
+```
+
+Sau bước này:
+
+```text
+main.o
+  +
+libraries
+  +
+other object files
+  ↓
+linker
+  ↓
+main
+```
+
+Executable `main` vẫn chứa machine code, nhưng đồng thời còn có nhiều thành phần khác của ELF như section, symbol, relocation information, dynamic linking information,...
+
+#### 1.2.5. CPU thực thi Machine Code
+
+Khi executable được OS nạp vào bộ nhớ, CPU bắt đầu thực thi các instruction tại entry point thích hợp. Ở mức khái quát:
+
+```text
+C source
+   ↓
+Preprocessor
+   ↓
+C source đã được mở rộng
+   ↓
+Compiler
+   ↓
+Assembly
+   ↓
+Assembler
+   ↓
+Machine code
+   ↓
+Object file
+   ↓
+Linker
+   ↓
+Executable ELF
+   ↓
+OS loader
+   ↓
+Virtual Memory
+   ↓
+CPU
+   ↓
+Fetch → Decode → Execute
+```
+
+- **Điểm quan trọng :** là machine code không phải toàn bộ executable. Một ELF executable chứa machine code cùng với metadata và các cấu trúc cần thiết để hệ điều hành có thể load và chạy chương trình.
+
+Vì vậy, khi reverse engineering một binary, ta thường đi theo hướng ngược lại:
+
+```text
+Executable ELF
+      ↓
+Machine Code
+      ↓
+Disassembler
+      ↓
+Assembly
+      ↓
+Control Flow / Data Flow
+      ↓
+Hiểu chương trình
+```
