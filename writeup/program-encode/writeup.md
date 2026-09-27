@@ -21,6 +21,7 @@
     - [1.3.4. Disassembler: đi từ Machine Code về Assembly](#134-disassembler-đi-từ-machine-codevề-assembly)
 	- [1.3.5. Phân biệt giữa byte opcode và các byte rác](#135-phân-biệt-giữa-byte-opcode-và-các-byte-rác)
     - [1.3.6. Vì sao Reverse Engineering cần hiểu cả hai?](#136-vì-sao-reverse-engineering-cần-hiểu-cả-hai)
+    - [1.3.7. Phân biệt giữa instruction, vaddr instrution, offset và assembly representation của instruction trong gdb](#137-phân-biệt-giữa-instrution-vaddr-instruction-offset-và-assembly-representation-của-instruction-trong-gdb)
   - [1.4. Instruction Encoding](#14-instruction-encoding)
   - [1.5. Cấu trúc tổng quát của một Instruction](#15-cấu-trúc-tổng-quát-của-một-instruction)
 
@@ -836,3 +837,33 @@ ta có thể bắt đầu đặt những câu hỏi sâu hơn:
 * ModR/M và SIB được sử dụng như thế nào?
 
 Đó chính là bước chuyển từ việc đọc Assembly sang việc hiểu instruction encoding. Và đó cũng là mục tiêu chính của phần Program Encodings.
+
+#### 1.3.7. Phân biệt giữa instruction, vaddr instrution, offset và assembly representation của instruction trong gdb
+
+Rất nhiều người nhầm giữ instrution, offset và assembly representation của một instrution ở gdb khi disas nó ra ví dụ một đoạn như sau :
+
+```asm
+0x0000555555555151 <+8>:  64 48 8b 04 25 28 00 00 00    mov rax,QWORD PTR fs:0x28
+```
+
+Họ khá dễ nhầm `0x0000555555555151` là instrution, thực chất nó là vaddr của instrution đó. Ta có thể biểu diễn nó như sau:
+
+```
+0x0000555555555151
+        │
+        └── địa chỉ ảo (virtual address) của instruction
+
+<+8>
+ │
+ └── offset của instruction so với đầu hàm main
+
+64 48 8b 04 25 28 00 00 00
+│
+└── machine-code bytes của instruction
+
+mov rax,QWORD PTR fs:0x28
+│
+└── assembly representation của instruction đó
+```
+
+Trong đó `0x0000555555555151` nó ko phải instrution, mà nó là địa chỉ ảo (vaddr) trỏ tới instruction. `<+8>` nó ko phải con số vô nghĩa, nó là khoảng cách offset từ mốc có thể là (main, _start) đến địa chỉ trỏ tới instruction. Còn dãy `64 48 8b 04 25 28 00 00 00` là byte obcode, machine code của instruction, đây mới gọi là instruction tổng thể, còn `mov rax,QWORD PTR fs:0x28` chính là assembly representation của instruction đây là sản phẩm sau khi qua biên dịch lại thành hợp ngữ mà con người có thể đọc được
