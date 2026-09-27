@@ -19,7 +19,8 @@
     - [1.3.2. Assembly là dạng biểu diễn gần với Machine Code](#132-assembly-là-dạng-biểu-diễn-gần-với-machine-code)
     - [1.3.3. Một Assembly instruction có thể có độ dài khác nhau](#133-một-assembly-instruction-có-thể-có-độ-dài-khác-nhau)
     - [1.3.4. Disassembler: đi từ Machine Code về Assembly](#134-disassembler-đi-từ-machine-codevề-assembly)
-    - [1.3.5. Vì sao Reverse Engineering cần hiểu cả hai?](#135-vì-sao-reverse-engineering-cần-hiểu-cả-hai)
+	- [1.3.5. Phân biệt giữa byte opcode và các byte rác](#135-phân-biệt-giữa-byte-opcode-và-các-byte-rác)
+    - [1.3.6. Vì sao Reverse Engineering cần hiểu cả hai?](#136-vì-sao-reverse-engineering-cần-hiểu-cả-hai)
   - [1.4. Instruction Encoding](#14-instruction-encoding)
   - [1.5. Cấu trúc tổng quát của một Instruction](#15-cấu-trúc-tổng-quát-của-một-instruction)
 
@@ -606,7 +607,205 @@ Address
 
 Ghidra, GDB và nhiều công cụ reverse engineering cũng thực hiện quá trình tương tự ở mức độ phức tạp hơn.
 
-#### 1.3.5. Vì sao Reverse Engineering cần hiểu cả hai?
+### 1.3.5. Phân biệt giữa byte opcode và các byte rác
+
+Khi quan sát một chương trình dưới dạng hexadecimal, ta có thể thấy một chuỗi byte liên tiếp, ví dụ:
+
+```text
+bf 01 00 00 00
+```
+
+Một cách nhìn sai thường gặp là cho rằng mỗi byte tương ứng với một instruction, hoặc chỉ `bf` mới là mã máy còn `01 00 00 00` là các byte rác. Thực tế toàn bộ chuỗi trên đều là machine code của một instruction:
+
+```asm
+mov edi, 1
+```
+
+Trong đó:
+
+```text
+bf          -> opcode / instruction encoding
+01 00 00 00 -> immediate value = 1
+```
+
+CPU không nhìn `01 00 00 00` như những byte vô nghĩa. Nó dựa vào encoding của instruction để biết rằng sau opcode `BF` còn phải đọc thêm 4 byte làm giá trị immediate.
+
+Vì vậy, cần phân biệt ba khái niệm:
+
+| Thành phần                                | Ý nghĩa                                                                                        |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Opcode**                                | Phần encoding xác định operation mà CPU phải thực hiện                                         |
+| **Operand bytes**                         | Các byte biểu diễn register, immediate, displacement, địa chỉ... tùy instruction               |
+| **Padding / dữ liệu không được thực thi** | Các byte tồn tại trong file hoặc vùng nhớ nhưng không thuộc instruction đang được CPU thực thi |
+
+Ví dụ:
+
+```asm
+mov edi, 1
+```
+
+có thể được encode thành:
+
+```text
+BF 01 00 00 00
+```
+
+Ta có:
+
+```text
+BF
+│
+└── opcode / opcode form
+
+01 00 00 00
+│  │  │  │
+└──┴──┴──┴── immediate = 1
+```
+
+Ở đây `01 00 00 00` được lưu theo little-endian:
+
+```text
+0x00000001
+↓
+01 00 00 00
+```
+
+Tuy nhiên không phải mọi byte trong vùng `.text` đều là opcode. Một file ELF có thể chứa nhiều loại dữ liệu khác nhau. Ví dụ:
+
+```text
+.text
+    machine code
+
+.rodata
+    string, constant...
+
+.data
+    biến toàn cục đã khởi tạo
+
+.bss
+    dữ liệu chưa khởi tạo
+
+.padding
+    các byte dùng để căn chỉnh
+```
+
+Ngay cả trong `.text`, không phải cứ nhìn thấy một byte riêng lẻ là có thể kết luận nó là opcode. Ví dụ một instruction có thể dài nhiều byte:
+
+```text
+48 89 e5
+```
+
+được disassemble thành:
+
+```asm
+mov rbp, rsp
+```
+
+Ở đây:
+
+```text
+48 -> REX prefix
+89 -> opcode
+e5 -> ModR/M
+```
+
+Do đó, gọi `48` hoặc `e5` là byte rác là sai. Chúng đều cần thiết để CPU giải mã instruction.
+
+- **Vậy byte rác thực sự là gì?:** nó là một byte chỉ có thể được gọi là không thuộc code đang xét khi ta có bằng chứng rằng nó không được CPU sử dụng như một phần của instruction tại control flow đó. Ví dụ compiler/linker có thể thêm padding:
+
+  ```text
+  90 90 90 90
+  ```
+
+  `90` là encoding của:
+
+  ```asm
+  nop
+  ```
+
+  Các byte này có thể được dùng để căn chỉnh địa chỉ hoặc lấp khoảng trống. Chúng không phải “rác” theo nghĩa dữ liệu vô nghĩa; chúng vẫn có encoding hợp lệ và CPU vẫn có thể thực thi chúng nếu control flow nhảy tới đó. Một trường hợp khác là dữ liệu nằm cạnh code:
+
+  ```text
+  .text:
+      ... instructions ...
+
+  .rodata:
+      "Hello World\n"
+  ```
+
+  Chuỗi:
+
+  ```text
+  48 65 6c 6c 6f 20 57 6f 72 6c 64
+  ```
+
+  không phải opcode chỉ vì nó cũng được biểu diễn dưới dạng hexadecimal. Nó là data.
+
+- **Vì sao disassembler có thể biết byte nào thuộc instruction?:** Disassembler không đơn giản chỉ đọc từng byte rồi gọi byte đó là opcode. Nó đọc instruction theo **instruction encoding của ISA** và xác định instruction có độ dài bao nhiêu. Ví dụ:
+
+  ```text
+  BF 01 00 00 00
+  ```
+
+  Disassembler đọc:
+
+  ```text
+  BF
+  ```
+
+  và biết encoding này yêu cầu thêm một immediate 32-bit:
+
+  ```text
+  01 00 00 00
+  ```
+
+  Sau đó instruction kết thúc tại đây. Byte tiếp theo sẽ được giải mã như instruction tiếp theo:
+
+  ```text
+  BF 01 00 00 00 | ...
+  └──── instruction ────┘
+  ```
+
+  Đây là lý do x86-64 có thể chứa các instruction có độ dài khác nhau:
+
+  ```text
+  90                   nop
+  bf 01 00 00 00       mov edi, 1
+  48 89 e5             mov rbp, rsp
+  ```
+
+  Instruction boundary không thể xác định chỉ bằng cách chia chuỗi byte thành từng nhóm có kích thước cố định.
+
+> [!IMPORTANT]
+> **Lưu ý quan trọng:** Có những byte có thể được giải mã thành instruction hợp lệ nhưng trong context hiện tại lại không phải code.
+
+Ví dụ dữ liệu:
+
+```text
+48 65 6c 6c 6f
+```
+
+hoàn toàn có thể khiến một disassembler tạo ra các instruction hợp lệ nếu ta cố tình bảo nó disassemble vùng dữ liệu đó. Vì vậy:
+
+```text
+hexadecimal bytes
+        ↓
+  disassembler
+        ↓
+possible instructions
+```
+
+không đồng nghĩa với:
+
+```text
+mọi instruction được disassemble
+        =
+code thực sự được chương trình thực thi
+```
+
+Reverse engineer phải kết hợp `instruction decoding + control flow + section information + references + memory permissions` để xác định byte nào thực sự là code. Đây cũng là lý do việc hiểu Program Encodings quan trọng: ta không chỉ học cách đọc `BF 01 00 00 00` thành `mov edi, 1`, mà còn phải hiểu tại sao CPU biết phải đọc bao nhiêu byte và những byte đó đóng vai trò gì trong encoding của instruction.
+
+#### 1.3.6. Vì sao Reverse Engineering cần hiểu cả hai?
 
 Nếu chỉ biết Assembly:
 
@@ -636,4 +835,4 @@ ta có thể bắt đầu đặt những câu hỏi sâu hơn:
 * Khi nào xuất hiện REX prefix?
 * ModR/M và SIB được sử dụng như thế nào?
 
-Đó chính là bước chuyển từ việc đọc Assembly sang việc hiểu instruction encoding. Và đó cũng là mục tiêu chính của phần **Program Encodings**.
+Đó chính là bước chuyển từ việc đọc Assembly sang việc hiểu instruction encoding. Và đó cũng là mục tiêu chính của phần Program Encodings.
