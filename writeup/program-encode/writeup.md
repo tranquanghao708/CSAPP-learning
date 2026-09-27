@@ -764,7 +764,7 @@ Do đó, gọi `48` hoặc `e5` là byte rác là sai. Chúng đều cần thi�
 
   ```text
   BF 01 00 00 00 | ...
-  └──── instruction ────┘
+  └-instruction ─┘
   ```
 
   Đây là lý do x86-64 có thể chứa các instruction có độ dài khác nhau:
@@ -867,3 +867,568 @@ mov rax,QWORD PTR fs:0x28
 ```
 
 Trong đó `0x0000555555555151` nó ko phải instrution, mà nó là địa chỉ ảo (vaddr) trỏ tới instruction. `<+8>` nó ko phải con số vô nghĩa, nó là khoảng cách offset từ mốc có thể là (main, _start) đến địa chỉ trỏ tới instruction. Còn dãy `64 48 8b 04 25 28 00 00 00` là byte obcode, machine code của instruction, đây mới gọi là instruction tổng thể, còn `mov rax,QWORD PTR fs:0x28` chính là assembly representation của instruction đây là sản phẩm sau khi qua biên dịch lại thành hợp ngữ mà con người có thể đọc được
+
+Nói chung, instruction thực sự nó có hai cách biểu diễn, một là opcode như `64 48 8b 04 25 28 00 00 00`, hai là assembly representation như `mov rax,QWORD PTR fs:0x28` còn `0x0000555555555151` là địa chỉ ảo (vaddr) trỏ tới instruction
+
+## 1.4. Instruction Encoding
+
+**Instruction Encoding** là quá trình biểu diễn một instruction dưới dạng một chuỗi byte theo quy tắc encoding của một Instruction Set Architecture (ISA). Nói đơn giản:
+
+```text
+Assembly instruction
+        │
+        │ Instruction Encoding
+        ▼
+Machine-code bytes
+        │
+        │ CPU decode
+        ▼
+Operation + operands
+```
+
+Ví dụ:
+
+```asm
+mov edi, 1
+```
+
+có thể được encode thành:
+
+```text
+BF 01 00 00 00
+```
+
+Ở đây, `BF 01 00 00 00` không phải là năm instruction khác nhau. Toàn bộ **5 byte này tạo thành một instruction duy nhất**.
+
+```text
+BF          01 00 00 00
+│           │
+│           └── immediate value = 1
+│
+└── opcode / opcode form
+```
+
+### 1.4.1. Instruction Encoding không chỉ gồm Opcode
+
+Một hiểu lầm phổ biến khi mới học machine code là:
+
+> Opcode chính là toàn bộ machine code của instruction.
+
+Điều này không đúng.
+
+**Opcode** chỉ là một thành phần trong encoding của instruction. Tùy instruction và ISA, một instruction có thể chứa nhiều thành phần khác nhau.
+
+Đối với x86-64, một instruction có thể có dạng tổng quát:
+
+```text
+┌──────────┬────────┬────────┬────────┬────────────-┬───────────┐
+│ Prefixes │ Opcode │ ModR/M │  SIB   │ Displacement│ Immediate │
+└──────────┴────────┴────────┴────────┴────────────-┴───────────┘
+```
+
+Không phải instruction nào cũng chứa tất cả các thành phần trên.
+
+Ví dụ:
+
+```asm
+push rbp
+```
+
+có thể được encode thành:
+
+```text
+55
+```
+
+Chỉ cần một byte.
+
+Trong khi:
+
+```asm
+mov rax, QWORD PTR fs:0x28
+```
+
+có encoding:
+
+```text
+64 48 8b 04 25 28 00 00 00
+```
+
+với tổng cộng:
+
+```text
+9 bytes
+```
+
+Do đó, x86-64 là một **variable-length instruction set**: độ dài instruction không cố định.
+
+### 1.4.2. Ví dụ thực tế từ Pwndbg
+
+Khi sử dụng:
+
+```gdb
+disas /r main
+```
+
+ta có thể nhận được:
+
+```text
+0x0000555555555151 <+8>:
+    64 48 8b 04 25 28 00 00 00
+    mov rax,QWORD PTR fs:0x28
+```
+
+Dòng này chứa nhiều thông tin khác nhau:
+
+```text
+0x0000555555555151
+        │
+        └── virtual address của instruction
+
+<+8>
+ │
+ └── offset 8 byte tính từ đầu function main
+
+ 64 48 8b 04 25 28 00 00 00
+└──────────────────────────┘
+       machine code
+
+ mov rax,QWORD PTR fs:0x28
+└─────────────────────────┘
+       assembly
+```
+
+Điều quan trọng là:
+
+```text
+0x0000555555555151
+```
+
+**không phải instruction**. Nó là địa chỉ của instruction. Còn:
+
+```text
+64 48 8b 04 25 28 00 00 00
+```
+
+là machine-code encoding của instruction đó. Và:
+
+```asm
+mov rax,QWORD PTR fs:0x28
+```
+
+là cách biểu diễn instruction ở dạng Assembly. Có thể hình dung:
+
+```text
+Virtual Address
+      │
+      ▼
+0x555555555151
+      │
+      │ points to
+      ▼
+64 48 8b 04 25 28 00 00 00
+      │
+      │ decoded as
+      ▼
+mov rax,QWORD PTR fs:0x28
+```
+
+### 1.4.3. CPU không thực thi Assembly
+
+CPU không đọc trực tiếp:
+
+```asm
+mov rax, QWORD PTR fs:0x28
+```
+
+Assembly là một dạng **textual representation** dành cho con người và assembler. CPU nhận các byte machine code trong memory:
+
+```text
+64 48 8b 04 25 28 00 00 00
+```
+
+Sau đó bộ phận instruction decoder của CPU phân tích chuỗi byte này dựa trên ISA để xác định:
+
+* instruction đang thực hiện operation gì;
+* các operand nằm ở đâu;
+* operand có kích thước bao nhiêu;
+* có register nào được sử dụng;
+* có immediate hay displacement hay không;
+* có prefix nào thay đổi cách giải mã instruction hay không.
+
+Sau khi decode, CPU mới có thể thực hiện operation tương ứng.
+
+Có thể mô hình hóa đơn giản:
+
+```text
+Memory
+  │
+  │ 64 48 8b 04 25 28 00 00 00
+  ▼
+┌──────────────────────┐
+│ Instruction Decoder  │
+└──────────┬───────────┘
+           │
+           ▼
+┌─────────────────────────────┐
+│ MOV                         │
+│ destination: RAX           │
+│ source: FS:[0x28]          │
+│ operand size: 64-bit       │
+└─────────────────────────────┘
+           │
+           ▼
+       Execute
+```
+
+### 1.4.4. Các thành phần thường gặp trong x86-64 Encoding
+
+#### Prefix
+
+Prefix nằm trước opcode và có thể thay đổi cách CPU giải mã hoặc thực hiện instruction.
+
+Ví dụ:
+
+```text
+64 48 8b 04 25 28 00 00 00
+^^
+│
+└── FS segment override
+```
+
+`64` là **FS segment override prefix**.
+
+Nó khiến memory operand sử dụng segment `FS`.
+
+---
+
+#### REX Prefix
+
+Trong x86-64, REX prefix được sử dụng để mở rộng khả năng biểu diễn register và xác định operand 64-bit.
+
+Ví dụ:
+
+```text
+48 8b ...
+^^
+│
+└── REX prefix
+```
+
+`48` có dạng:
+
+```text
+0100WRXB
+```
+
+Trong trường hợp này:
+
+```text
+01001000
+    │
+    └── W = 1
+```
+
+`REX.W = 1` cho biết operation sử dụng operand size 64-bit.
+
+---
+
+#### Opcode
+
+Opcode xác định operation hoặc opcode form mà CPU phải thực hiện.
+
+Ví dụ:
+
+```text
+8B
+```
+
+là opcode thuộc nhóm `MOV`:
+
+```text
+MOV r64, r/m64
+```
+
+Tuy nhiên, chỉ nhìn `8B` chưa đủ để biết chính xác instruction hoàn chỉnh, vì các byte tiếp theo có thể cung cấp thông tin về operand.
+
+---
+
+#### ModR/M
+
+ModR/M là một byte encoding được x86 sử dụng để mô tả quan hệ giữa register và memory operand.
+
+Nó có cấu trúc:
+
+```text
+┌───────┬─────┬─────┐
+│  MOD  │ REG │ R/M │
+└───────┴─────┴─────┘
+  2 bit   3 bit  3 bit
+```
+
+Ví dụ instruction:
+
+```text
+64 48 8b 04 25 28 00 00 00
+         ^^
+         │
+         └── ModR/M
+```
+
+`04` được CPU phân tích thành các trường `MOD`, `REG` và `R/M`.
+
+---
+
+#### SIB
+
+SIB là viết tắt của:
+
+> **Scale-Index-Base**
+
+Nó cho phép x86 biểu diễn các dạng địa chỉ memory phức tạp hơn.
+
+Cấu trúc:
+
+```text
+┌───────┬────────┬───────┐
+│ SCALE │ INDEX  │ BASE  │
+└───────┴────────┴───────┘
+  2 bit    3 bit    3 bit
+```
+
+Trong instruction trên:
+
+```text
+64 48 8b 04 25 28 00 00 00
+            ^^
+            │
+            └── SIB
+```
+
+`25` là SIB byte.
+
+---
+
+#### Displacement
+
+Displacement là một giá trị được encoding trong instruction để tham gia tính địa chỉ memory.
+
+Trong ví dụ:
+
+```text
+64 48 8b 04 25 28 00 00 00
+                  └─────────┘
+                  0x28
+```
+
+nó tạo thành offset:
+
+```text
+FS:0x28
+```
+
+Đây chính là offset mà compiler thường sử dụng để truy cập các dữ liệu đặc biệt trong thread-local storage. Trong trường hợp stack canary, `fs:0x28` thường chứa giá trị canary được runtime đặt vào TLS.
+
+---
+
+### 1.4.5. Immediate và Displacement không giống nhau
+
+Hai khái niệm này rất dễ nhầm.
+
+**Immediate** là giá trị nằm trực tiếp trong instruction và được sử dụng như một operand.
+
+Ví dụ:
+
+```asm
+mov edi, 1
+```
+
+```text
+BF 01 00 00 00
+   └─────────┘
+    immediate
+```
+
+`1` chính là immediate.
+
+Trong khi **displacement** thường là một thành phần dùng trong việc xác định địa chỉ memory.
+
+Ví dụ:
+
+```asm
+mov rax, [rbp-0x8]
+```
+
+có thể có displacement:
+
+```text
+F8
+```
+
+đại diện cho `-8` trong encoding thích hợp.
+
+Do đó:
+
+```text
+Immediate
+    ↓
+giá trị operand
+
+Displacement
+    ↓
+thành phần của địa chỉ memory
+```
+
+### 1.4.6. Instruction Boundary
+
+Một đặc điểm rất quan trọng của x86-64 là instruction có độ dài thay đổi.
+
+Ví dụ:
+
+```text
+55
+48 89 e5
+48 83 ec 10
+64 48 8b 04 25 28 00 00 00
+31 c0
+```
+
+Có độ dài lần lượt:
+
+```text
+1 byte
+3 bytes
+4 bytes
+9 bytes
+2 bytes
+```
+
+CPU phải decode instruction hiện tại để biết **instruction tiếp theo bắt đầu ở byte nào**.
+
+Trong output của Pwndbg:
+
+```text
+0x555555555151 <+8>:
+    64 48 8b 04 25 28 00 00 00
+
+0x55555555515a <+17>:
+    48 89 45 f8
+```
+
+Ta có:
+
+```text
+0x555555555151 + 9
+= 0x55555555515a
+```
+
+Do đó instruction đầu tiên chiếm chính xác 9 byte:
+
+```text
+0x5151
+│
+├── 64
+├── 48
+├── 8b
+├── 04
+├── 25
+├── 28
+├── 00
+├── 00
+└── 00
+    │
+    ▼
+0x515a
+instruction tiếp theo
+```
+
+Đây là lý do không thể giả định:
+
+```text
+1 instruction = 1 byte
+```
+
+hoặc:
+
+```text
+1 instruction = 4 bytes
+```
+
+đối với x86-64.
+
+### 1.4.7. Instruction Encoding và Reverse Engineering
+
+Instruction Encoding là một trong những nền tảng quan trọng của reverse engineering.
+
+Khi nhìn thấy:
+
+```text
+48 89 45 f8
+```
+
+reverse engineer không chỉ cần biết nó tương ứng với:
+
+```asm
+mov QWORD PTR [rbp-0x8],rax
+```
+
+mà còn có thể đặt câu hỏi:
+
+```text
+48 → prefix gì?
+89 → opcode gì?
+45 → ModR/M biểu diễn operand nào?
+f8 → displacement là bao nhiêu?
+```
+
+Từ đó có thể đi ngược từ:
+
+```text
+Machine Code
+     ↓
+Instruction Encoding
+     ↓
+Assembly
+     ↓
+Control Flow / Data Flow
+     ↓
+Program Behavior
+```
+
+Đây chính là một trong những bước chuyển từ việc **“đọc Assembly”** sang **“hiểu binary”**. Có thể phân biệt ba tầng:
+
+```text
+0x555555555151
+        │
+        │ địa chỉ
+        ▼
+64 48 8b 04 25 28 00 00 00
+        │
+        │ instruction encoding
+        ▼
+mov rax,QWORD PTR fs:0x28
+        │
+        │ semantic meaning
+        ▼
+RAX ← QWORD PTR FS:[0x28]
+```
+
+Trong đó:
+
+* **Virtual address** cho biết instruction nằm ở đâu trong address space.
+* **Machine-code bytes** là encoding mà CPU decode.
+* **Instruction encoding** mô tả cấu trúc của các byte đó.
+* **Assembly** là biểu diễn dễ đọc của instruction.
+* **Instruction semantics** mô tả instruction thực sự làm gì.
+
+Hiểu được mối quan hệ này là nền tảng để chuyển từ việc nhìn một đoạn hex như:
+
+```text
+64 48 8b 04 25 28 00 00 00
+```
+
+sang việc hiểu rằng đó là **một instruction 9 byte**, nằm tại một **virtual address cụ thể**, có **prefix, REX, opcode, ModR/M, SIB và displacement**, và cuối cùng biểu diễn operation:
+
+```asm
+mov rax, QWORD PTR fs:0x28
+```
