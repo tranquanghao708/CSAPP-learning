@@ -194,7 +194,7 @@ RAM / virtual address space
 
 Nghĩa là, khi dùng lệnh `./main`, các lệnh trong file ELF vốn đã được cấu trúc `.text, .data, .rodata v.v..` trước đó, nó là sản phẩm compiled, khi dùng lệnh khởi chạy các cấu trúc đó được nạp vào vùng nhớ ảo (Vmem), với kernel thì vùng nhớ này được sắp xếp thứ tự theo VPN và nó được tham chiếu với PFN thông qua bảng trang (page table). Sau khi nạp xong vào vmem, CPU sẽ tiến hành xuất phát tại entry point (_start), theo sơ đồ minh họa entry point ở vaddr là `0x401000` và CPU tiến hành tại đây.
 
-Tiếp đến là fetch. Fetch nghĩa là lấy các instrution được lưu trong Vmem đã được load trước khi chạy lệnh `./main` về phiá CPU, có thể hình dung thế này :
+Tiếp đến là fetch. Fetch là quá trình CPU lấy các byte của instruction từ memory dựa trên địa chỉ hiện tại trong RIP, đưa chúng vào các thành phần bên trong CPU để tiếp tục xử lý, có thể hình dung thế này :
 
 ```
 RAM / Virtual Memory
@@ -215,7 +215,7 @@ RAM / Virtual Memory
                CPU
 ```
 
-Trong reverse, ta cũng đã quen thuộc với thanh ghi RIP (instruction pointer) cũng là thanh ghi quan trọng nhất của CPU, ở đây như đã nói ở trên thì thanh ghi RIP hiện tại là đang ở vaddr `0x401000`, lúc này CPU biết instruction tiếp theo bắt đầu tại địa chỉ `0x401000`. Nếu `RIP = 0x401000` thì CPU sẽ cần phải fetch để lấy instruction trong vmem về phía mình. Có thể hình dung :
+Trong reverse, ta cũng đã quen thuộc với RIP là một thanh ghi đặc biệt giữ địa chỉ của instruction tiếp theo mà CPU sẽ thực thi, ở đây như đã nói ở trên thì thanh ghi RIP hiện tại là đang ở vaddr `0x401000`, lúc này CPU biết instruction tiếp theo bắt đầu tại địa chỉ `0x401000`. Nếu `RIP=0x401000` thì CPU sẽ cần phải fetch để lấy instruction trong vmem về phía mình. Có thể hình dung :
 
 ```
 RIP
@@ -230,7 +230,14 @@ Memory
 0x401004: 00
 ```
 
+> Để đơn giản hóa mô hình, ta giả sử CPU fetch đủ 5 byte cần thiết cho instruction này.
+
 Nó sẽ đọc các byte trong bộ nhớ ảo (vmem) vào hệ thống CPU, kết quả sẽ là `b8 3c 00 00 00` đó là fetch. Chưa cần phải biết nó biên dịch ra hợp ngữ là sao
+
+> [!IMPORTANT]
+> **Điều quan trọng:** `RIP=0x401000` không có nghĩa CPU đọc đúng 5 byte ngay lập tức vì hardware thực tế không nhất thiết thực hiện một memory read đúng 5 byte vì nó biết trước instruction dài 5 byte.
+>
+> CPU hiện đại thường fetch instruction bytes theo cache lines / fetch blocks lớn hơn nhiều, sau đó instruction decoder xác định boundary của từng instruction.
 
 <details>
 	<summary><b>[Câu hỏi]</b> Vì sao CPU cần phải fetch?</summary>
@@ -276,3 +283,6 @@ DECODE        │ phân tích       │
 EXECUTE       │ EAX ← 0x3c      │
               └─────────────────┘
 ```
+
+> [!IMPORTANT]
+> **Điểm quan trọng:** Về tổng quát thì ko phải là instruction kế tiếp CPU luôn là `RIP = RIP + instruction_length` mà còn có thể có các lệnh như `jmp`, `je`, `jz` v.v..
