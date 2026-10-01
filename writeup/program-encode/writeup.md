@@ -1,274 +1,75 @@
-# CSAPP : Program Encodings
-
-> Ngày viết : 26/9/2026
-
-> Ngày hoàn thành :
+# CSAPP : Program Encoding
 
 **Mục lục**
 
-- [1. Program Encodings](#1-program-encodings)
-  - [1.1. Program Encodings là gì?](#11-program-encodings-là-gì)
-  - [1.2. Từ mã nguồn C đến Machine Code](#12-từ-mã-nguồn-c-đến-machine-code)
-    - [1.2.1. Preprocessing](#121-preprocessing)
-    - [1.2.2. Compilation](#122-compilation)
-    - [1.2.3. Assembling](#123-assembling)
-    - [1.2.4. Linking](#124-linking)
-    - [1.2.5. CPU thực thi Machine Code](#125-cpu-thực-thi-machine-code)
-  - [1.3. Assembly và Machine Code](#13-assembly-và-machine-code)
-    - [1.3.1. Assembly không phải Machine Code](#131-assembly-không-phải-machine-code)
-    - [1.3.2. Assembly là dạng biểu diễn gần với Machine Code](#132-assembly-là-dạng-biểu-diễn-gần-với-machine-code)
-    - [1.3.3. Một Assembly instruction có thể có độ dài khác nhau](#133-một-assembly-instruction-có-thể-có-độ-dài-khác-nhau)
-    - [1.3.4. Disassembler: đi từ Machine Code về Assembly](#134-disassembler-đi-từ-machine-codevề-assembly)
-	- [1.3.5. Phân biệt giữa byte opcode và các byte rác](#135-phân-biệt-giữa-byte-opcode-và-các-byte-rác)
-    - [1.3.6. Vì sao Reverse Engineering cần hiểu cả hai?](#136-vì-sao-reverse-engineering-cần-hiểu-cả-hai)
-    - [1.3.7. Phân biệt giữa instruction, vaddr instruction, offset và assembly representation của instruction trong gdb](#137-phân-biệt-giữa-instruction-vaddr-instruction-offset-và-assembly-representation-của-instruction-trong-gdb)
-  - [1.4. Instruction Encoding](#14-instruction-encoding)
-  - [1.5. Cấu trúc tổng quát của một Instruction](#15-cấu-trúc-tổng-quát-của-một-instruction)
-
-- [2. x86-64 Instruction Encoding](#2-x86-64-instruction-encoding)
-  - [2.1. Opcode](#21-opcode)
-  - [2.2. Operand](#22-operand)
-  - [2.3. Register Encoding](#23-register-encoding)
-  - [2.4. Immediate Value](#24-immediate-value)
-  - [2.5. Displacement](#25-displacement)
-  - [2.6. Instruction Length](#26-instruction-length)
-
-- [3. REX Prefix](#3-rex-prefix)
-  - [3.1. REX Prefix là gì?](#31-rex-prefix-là-gì)
-  - [3.2. Cấu trúc byte REX](#32-cấu-trúc-byte-rex)
-  - [3.3. W, R, X và B](#33-w-r-x-và-b)
-  - [3.4. Ví dụ giải mã REX](#34-ví-dụ-giải-mã-rex)
-
-- [4. ModR/M Byte](#4-modrm-byte)
-  - [4.1. ModR/M là gì?](#41-modrm-là-gì)
-  - [4.2. Cấu trúc ModR/M](#42-cấu-trúc-modrm)
-  - [4.3. Mod Field](#43-mod-field)
-  - [4.4. Reg Field](#44-reg-field)
-  - [4.5. R/M Field](#45-rm-field)
-  - [4.6. Giải mã ModR/M bằng tay](#46-giải-mã-modrm-bằng-tay)
-
-- [5. SIB Byte](#5-sib-byte)
-  - [5.1. SIB là gì?](#51-sib-là-gì)
-  - [5.2. Cấu trúc SIB](#52-cấu-trúc-sib)
-  - [5.3. Scale](#53-scale)
-  - [5.4. Index](#54-index)
-  - [5.5. Base](#55-base)
-  - [5.6. Công thức địa chỉ của SIB](#56-công-thức-địa-chỉ-của-sib)
-  - [5.7. Giải mã SIB bằng tay](#57-giải-mã-sib-bằng-tay)
-
-- [6. Ví dụ hoàn chỉnh](#6-ví-dụ-hoàn-chỉnh)
-  - [6.1. Register → Register](#61-register--register)
-  - [6.2. Register → Memory](#62-register--memory)
-  - [6.3. Memory Addressing](#63-memory-addressing)
-  - [6.4. Immediate Operand](#64-immediate-operand)
-  - [6.5. Instruction có Displacement](#65-instruction-có-displacement)
-  - [6.6. Instruction có SIB](#66-instruction-có-sib)
-  - [6.7. Tự decode một Instruction hoàn chỉnh](#67-tự-decode-một-instruction-hoàn-chỉnh)
-
-- [7. Từ Machine Code trở lại Assembly](#7-từ-machine-code-trở-lại-assembly)
-  - [7.1. Disassembler hoạt động như thế nào?](#71-disassembler-hoạt-động-như-thế-nào)
-  - [7.2. objdump](#72-objdump)
-  - [7.3. GDB](#73-gdb)
-  - [7.4. Ghidra](#74-ghidra)
-  - [7.5. Đối chiếu Byte ↔ Assembly](#75-đối-chiếu-byte--assembly)
-
-- [8. Object Code và ELF](#8-object-code-và-elf)
-  - [8.1. Object File là gì?](#81-object-file-là-gì)
-  - [8.2. Code Section](#82-code-section)
-  - [8.3. Relocation](#83-relocation)
-  - [8.4. Symbol và Symbol Table](#84-symbol-và-symbol-table)
-  - [8.5. Từ Object File đến Executable](#85-từ-object-file-đến-executable)
-
-- [9. Thực hành với Compiler](#9-thực-hành-với-compiler)
-  - [9.1. gcc -S](#91-gcc--s)
-  - [9.2. gcc -c](#92-gcc--c)
-  - [9.3. objdump -d](#93-objdump--d)
-  - [9.4. readelf](#94-readelf)
-  - [9.5. So sánh Source → Assembly → Machine Code](#95-so-sánh-source--assembly--machine-code)
-
-- [10. Tổng kết](#10-tổng-kết)
-  - [10.1. Instruction được encode như thế nào?](#101-instruction-được-encode-như-thế-nào)
-  - [10.2. Quy trình Decode một Instruction](#102-quy-trình-decode-một-instruction)
-  - [10.3. Những gì cần nhớ](#103-những-gì-cần-nhớ)
+- [1.Tổng quan về Program Encoding](#1tổng-quan-về-program-encoding)
+	- [1.1 Program Encoding là gì?](#11-program-encoding-là-gì)
+	- [1.2 Quá trình từ mã nguồn C tới machine code](#12-quá-trình-từ-mã-nguồn-c-tới-machine-code)
+	   - [1.2.1 Preprocessing](#121-preprocessing)
+	   - [1.2.2 Compilation](#122-compilation)
+	   - [1.2.3 Assembling](#123-assembling)
+	   - [1.2.4 Linking](#124-linking)
+	   - [1.2.5 CPU thực thi machine code](#125-cpu-thực-thi-machine-code)
 
 ---
 
-## 1. Program Encodings
-### 1.1. Program Encodings là gì?
+## 1.Tổng quan về Program Encoding
+### 1.1 Program Encoding là gì?
 
-Program Encodings có thể hiểu đơn giản là cách một chương trình được biểu diễn dưới dạng machine code, những instruction được CPU giải mã và thực thi.
+Khái niệm program encoding ko chỉ là một sản phẩm sau khi thông qua quá trình biên dịch từ ngôn ngữ lập trình sang mã máy mà CPU có thể hiểu được mà là cách chương trình được biểu diễn ở các mức khác nhau, đặc biệt trong ngữ cảnh CSAPP là cách mã nguồn được chuyển thành machine-level representation mà CPU thực thi, nói đơn giản program encoding là mã hóa các ngôn ngữ cho con người có thể đọc được dễ dàng thành ngôn ngữ máy cho máy tính làm việc thông qua các trình biên dịch
 
-Ví dụ, ở mức ngôn ngữ C:
+### 1.2 Quá trình từ mã nguồn C tới machine code
+#### 1.2.1 Preprocessing
 
-```c
-#include <stdio.h>
-
-int main(void){
-    printf("Hello World\n");
-    return 0;
-}
-```
-
-hoặc ở mức Assembly x86-64:
-
-```asm
-section .data
-    msg db "hello world", 10
-
-section .text
-    global _start
-
-_start:
-    mov rax, 1      
-    mov rdi, 1      
-    mov rsi, msg    
-    mov rdx, 11     
-    syscall
-
-    mov rax, 60    
-    mov rdi, 0 
-    syscall
-```
-
-CPU không hiểu `stdio.h`, `printf()`, `return`, hay `mov` theo nghĩa mà con người hiểu chúng. CPU thực thi các machine instructions, được biểu diễn bằng các byte trong bộ nhớ.
-
-Ví dụ, một instruction Assembly như:
-
-```asm
-mov rdi, 1
-```
-
-sẽ được assembler mã hóa thành một chuỗi byte machine code tương ứng. CPU sau đó đọc những byte này, giải mã chúng theo kiến trúc x86-64 và thực hiện thao tác tương ứng.Có thể hình dung quá trình tổng quát:
-
-```text
-Source Code
-    |
-    | Compiler
-    v
-Assembly
-    |
-    | Assembler
-    v
-Machine Code
-    |
-    v
-   CPU
-    |
-    v
-Instruction Decode -> Execute
-```
-
-Vì vậy, Program Encoding không đơn giản là dịch C sang binary. Nó tập trung vào cách các instruction của chương trình được mã hóa thành những byte cụ thể mà kiến trúc CPU quy định. **Ví dụ:**
-
-```
-Assembly instruction
-        |
-        v
-    mov rdi, 1
-        |
-        v
- Instruction Encoding
-        |
-        v
-    Machine Code
-        |
-        v
-    CPU Decode
-        |
-        v
-      Execute
-```
-
-Đây chính là vấn đề cốt lõi của phần Program Encodings:
-
-> **Tại sao một instruction Assembly cụ thể lại được biểu diễn bởi đúng những byte machine code đó?**
-
-Và theo chiều ngược lại:
-
-> **Nếu nhìn vào một chuỗi machine code, làm thế nào để xác định nó biểu diễn instruction Assembly nào?**
-
-### 1.2. Từ mã nguồn C đến Machine Code
-
-Khi viết một chương trình bằng C, CPU không thể trực tiếp thực thi mã nguồn C. Mã nguồn phải trải qua nhiều bước chuyển đổi trước khi trở thành machine code mà CPU có thể thực thi.
-
-Ví dụ, xét chương trình đơn giản:
+Quá trình này là quá trình đầu tiên, khi tiến hành biên dịch từ mã C tới mã máy mà máy tính có thể hiểu được compiler chèn in nguyên cái mã nguồn của các file tiêu đề ví dụ như (stdio.h, string.h v.v.) ở trên đầu logic C. Ví dụ :
 
 ```c
 #include <stdio.h>
 
 int main(void){
-    int a = 10;
-    int b = 20;
-    return a + b;
+	printf("hello world\n");
+	return 0;
 }
 ```
 
-Có thể hình dung quá trình chuyển đổi như sau:
+trong khi tiêu đề (stdio.h) có khai báo `printf()`. Giả sử header có khai báo minh họa của `printf()` là :
 
-```
-|--------------|
-|   Source C   |
-|    main.c    |
-|--------------|
-       │
-       │ Preprocessor
-       v
-|--------------|
-│ Expanded C   │
-|--------------|
-       │
-       │ Compiler
-       v
-|--------------|
-│   Assembly   │
-│    main.s    │
-|--------------|
-       │
-       │ Assembler
-       v
-|--------------|
-│ Object File  │
-│    main.o    │
-|--------------|
-       │
-       │ Linker
-       v
-|--------------|
-│  Executable  │
-│     main     │
-|--------------|
-       │
-       v
-      CPU
+```header
+void printf(int a, int b, int c); //ví dụ minh họa
+/*
+Các hàm khác
+*/
 ```
 
-#### 1.2.1. Preprocessing
-
-Đầu tiên, source code được đưa qua preprocessor.**Ví dụ:**
+thì khi compiler làm việc thực hiện quá trình đầu tiên thì kết quả sẽ như này:
 
 ```c
-#include <stdio.h>
+void printf(int a, int b, int c); //ví dụ minh họa
+/*
+Các hàm khác
+*/
+
+int main(void){
+	printf("hello world\n");
+	return 0;
+}
 ```
 
-sẽ được xử lý trước khi compiler thực hiện quá trình biên dịch chính. Các macro, `#include`, `#define`, conditional compilation,... được xử lý ở bước này.
+Ta thấy, nó chèn in nguyên cái mã nguồn của file tiêu đề vào cái phần `include`, cái ta `import` các thư viện vào để dùng các hàm như `printf()` hay `scanf()`. Ở quy trình đầu tiên preprocessing này nó có thể xử lý các thẻ như :
 
-Có thể quan sát kết quả bằng:
-
-```bash
-gcc -E main.c -o main.i
+```c
+#include
+#define
+#if
+#ifdef
+...
 ```
 
-File `main.i` vẫn là mã nguồn C, nhưng các chỉ thị tiền xử lý đã được xử lý. Cái cách nó xử lý là nó bê nguyên cả mã nguồn header chèn vào luôn
+preprocessor thực hiện việc include nội dung header theo cơ chế của preprocessor, sau đó tạo ra translation unit đã được xử lý. Để có thể dừng ở phần đầu tiên và dump ra một file có thể cho ta xem toàn bộ quy trình kết quả sau khi preprocessing thực hiện hoàn tất, ta dùng lệnh `gcc -E main.c -o main.i` lệnh này ra lệnh cho compiler là khi thực hiện xong quy trình đầu tiên, thay vì biên dịch ra hay tới các quy trình khác thì hãy lưu kết quả của quy trình preprocessing vào file `main.i`, khi đó `main.i` là nơi chứa sản phẩm sau khi quy trình đầu tiên hoàn tất. Ta có thể truy cập vào file `main.i` để xem sản phẩm
 
-#### 1.2.2. Compilation
+#### 1.2.2 Compilation
 
-Compiler chuyển mã C thành Assembly phù hợp với kiến trúc đích. Ví dụ có thể yêu cầu GCC dừng ở bước Assembly:
-
-```bash
-gcc -S main.c -o main.s
-```
-
-Kết quả có thể có dạng:
+Quá trình thứu 2 kế tiếp sau khi thực hiện qua quá trình preprocessing, quá trình này Compiler dịch mã C thành assembly, với cú pháp phụ thuộc vào compiler/option; GCC có thể xuất assembly theo AT&T hoặc Intel syntax. Ví dụ với at&t :
 
 ```asm
 main:
@@ -282,37 +83,15 @@ main:
     ret
 ```
 
-Lúc này chương trình vẫn chưa phải machine code. Đây vẫn là Assembly, tức một dạng biểu diễn có thể đọc được bởi con người.
+lúc này nó vẫn chưa phải mã thực thi, nó vẫn là hợp ngữ cho con người đọc được. Tác dụng nếu ta có thể hiểu sâu về phần này thì chúng ta cũng có thể ra lệnh compiler dump ra dạng mã ở quy trình bước 2 này để debug cũng là một ý tưởng khá hay ta có thể dùng lệnh `gcc -S main.c -o main.s`, lệnh này sẽ cho compiler biên dịch tới quá trình bước 2 ra một file, khi đó ta sẽ thấy được mã hợp ngữ được biên dịch từ C đầu vào qua
 
-#### 1.2.3. Assembling
+#### 1.2.3 Assembling
 
-Assembler chuyển Assembly thành machine code và đặt nó vào một object file. Với GCC:
+Quá tình này là quá trình số 3, ở đây Assembler sẽ dịch assembly thành machine-code bytes và tạo object file ở quy tình vừa rồi ở bước 2 sang mã máy vào một file object `(assembly -> .o files)`, file có đuôi `.o` này là một file chưa các mã máy được biên dịch từ hợp ngữ nên, thường là một ELF relocatable object trên Linux x86-64. Ta có thể kiểm tra qua lệnh `file` trên linux
 
-```bash
-gcc -c main.c -o main.o
+Chúng ta có thể xem file dạng này với lệnh chẳng hạn như `gcc -c main.c -o main.o`, lệnh này ra lệnh cho compiler là thực hiện xong quy trình 3 là biên dịch hợp ngữ ra một file đuôi `.o` chẳng hạn `main.o`, hoặc chúng ta đã có file hợp ngữ như đã dùng lệnh `gcc -S main.c -o main.s` ở bước vừa rồi thì ta dùng lệnh `as main.s -o main.o` để biên dịch chúng ra, khi có file `.o` chẳng hạn `main.o` thì ta có thể dùng `objdump -d main.o` để xem machine code chẳng hạn như :
+
 ```
-
-Hoặc nếu đã có file Assembly:
-
-```bash
-as main.s -o main.o
-```
-
-Object file `main.o` thường là một ELF relocatable object trên Linux x86-64. Có thể kiểm tra:
-
-```bash
-file main.o
-```
-
-và xem machine code:
-
-```bash
-objdump -d main.o
-```
-
-Ví dụ:
-
-```text
 48 89 e5
 48 83 ec 10
 c7 45 fc 0a 00 00 00
@@ -320,1115 +99,180 @@ c7 45 fc 0a 00 00 00
 
 Đây mới là những byte machine code tương ứng với các instruction.
 
-#### 1.2.4. Linking
+#### 1.2.4 Linking
 
-Một chương trình thực tế thường không chỉ chứa code của chính file `main.c`. **Ví dụ:**
+Khi đã biên dịch ra một file `.o` rồi, thì đây là bước 4 kế tiếp, một chương trình thực tế thường ko chỉ chứa code của `main.c` mà nó còn liên kết nhiều thư viện bên ngoài. Nên phần này góp phần để liên kết các nguồn logic bên ngoài ở các thư viện đã được import ở nguồn vào file nhị phân. Sau bước này, chương trình ko chỉ chứa code của `main.c` mà còn liên kết nhiều nguồn code khác như
 
-```c
-printf("Hello\n");
 ```
-
-sử dụng code nằm trong các thư viện khác. Linker có nhiệm vụ kết hợp các object file và thư viện cần thiết thành executable cuối cùng. **Ví dụ:**
-
-```bash
-gcc main.o -o main
-```
-
-Sau bước này:
-
-```text
 main.o
-  +
-libraries
-  +
-other object files
-  ↓
-linker
-  ↓
-main
-```
-
-Executable `main` vẫn chứa machine code, nhưng đồng thời còn có nhiều thành phần khác của ELF như section, symbol, relocation information, dynamic linking information,...
-
-#### 1.2.5. CPU thực thi Machine Code
-
-Khi executable được OS nạp vào bộ nhớ, CPU bắt đầu thực thi các instruction tại entry point thích hợp. Ở mức khái quát:
-
-```text
-C source
-   ↓
-Preprocessor
-   ↓
-C source đã được mở rộng
-   ↓
-Compiler
-   ↓
-Assembly
-   ↓
-Assembler
-   ↓
-Machine code
-   ↓
-Object file
-   ↓
-Linker
-   ↓
-Executable ELF
-   ↓
-OS loader
-   ↓
-Virtual Memory
-   ↓
-CPU
-   ↓
-Fetch → Decode → Execute
-```
-
-- **Điểm quan trọng :** là machine code không phải toàn bộ executable. Một ELF executable chứa machine code cùng với metadata và các cấu trúc cần thiết để hệ điều hành có thể load và chạy chương trình.
-
-Vì vậy, khi reverse engineering một binary, ta thường đi theo hướng ngược lại:
-
-```text
-Executable ELF
-      ↓
-Machine Code
-      ↓
-Disassembler
-      ↓
-Assembly
-      ↓
-Control Flow / Data Flow
-      ↓
-Hiểu chương trình
-```
-
-### 1.3. Assembly và Machine Code
-
-Ở phần trước, ta đã thấy quá trình:
-
-```text
-C → Assembly → Machine Code
-```
-
-Trong đó, Assembly và Machine Code có quan hệ rất gần nhau nhưng không phải là cùng một thứ. Assembly là dạng biểu diễn bằng các mnemonic và operand để con người có thể đọc và viết instruction của CPU. Machine Code là dạng mã hóa nhị phân/byte của những instruction đó theo quy tắc của kiến trúc CPU. **Ví dụ**, với x86-64:
-
-```asm
-mov rdi, 1
-```
-
-Đây là Assembly instruction. Sau khi được assembler mã hóa, nó trở thành một chuỗi byte machine code tương ứng:
-
-```text
-BF 01 00 00 00
-```
-
-CPU không đọc chuỗi:
-
-```text
-mov rdi, 1
-```
-
-mà đọc các byte:
-
-```text
-BF 01 00 00 00
-```
-
-sau đó giải mã chúng thành instruction mà CPU có thể thực thi. Có thể hình dung:
-
-```text
-┌─────────────────────┐
-│ Assembly            │
-│ mov rdi, 1          │
-└──────────┬──────────┘
-           │
-           │ Assembler
-           v
-┌─────────────────────┐
-│ Machine Code        │
-│ BF 01 00 00 00      │
-└──────────┬──────────┘
-           │
-           │ CPU Decode
-           v
-┌─────────────────────┐
-│ Instruction         │
-│ MOV rDI, 1          │
-└──────────┬──────────┘
-           │
-           v
-        Execute
-```
-
-#### 1.3.1. Assembly không phải Machine Code
-
-Một lỗi dễ mắc phải là coi:
-
-```asm
-mov rdi, 1
-```
-
-và:
-
-```text
-BF 01 00 00 00
-```
-
-là cùng một thứ. Chúng biểu diễn cùng một instruction, nhưng ở hai dạng khác nhau. Assembly:
-
-```asm
-mov rdi, 1
-```
-
-là textual representation. Machine code:
-
-```text
-BF 01 00 00 00
-```
-
-là encoded representation. Assembly tồn tại để con người có thể làm việc với instruction dễ dàng hơn. Machine code là dạng mà CPU thực sự fetch từ memory và decode.
-
-#### 1.3.2. Assembly là dạng biểu diễn gần với Machine Code
-
-Assembly không phải là một ngôn ngữ hoàn toàn độc lập với CPU. Nó phụ thuộc rất mạnh vào instruction set architecture (ISA). **Ví dụ**, instruction:
-
-```asm
-mov rdi, 1
-```
-
-là instruction của x86-64. Một kiến trúc khác như ARM64 có instruction set và encoding hoàn toàn khác. Điều này có nghĩa:
-
-```text
-C
-│
-├──→ x86-64 Assembly
-│        ↓
-│    x86-64 Machine Code
-│
-└──→ ARM64 Assembly
-         ↓
-     ARM64 Machine Code
-```
-
-Cùng một chương trình C có thể được compiler dịch thành các instruction khác nhau tùy thuộc vào kiến trúc CPU mục tiêu.
-
-#### 1.3.3. Một Assembly instruction có thể có độ dài khác nhau
-
-Đây là một đặc điểm quan trọng của x86-64. Machine code của x86-64 sử dụng instruction có độ dài biến đổi. **Ví dụ**, các instruction khác nhau có thể chiếm số byte khác nhau:
-
-```text
-Instruction              Machine Code
-
-ret                      C3
-
-nop                      90
-
-mov edi, 1               BF 01 00 00 00
-
-mov eax, 0x12345678      B8 78 56 34 12
-```
-
-Vì vậy CPU không thể đơn giản giả định:
-
-```text
-1 instruction = 4 bytes
-```
-
-Thay vào đó, CPU phải xác định ranh giới của từng instruction dựa trên encoding của nó. Đây cũng là một trong những lý do việc phân tích machine code x86-64 có thể phức tạp.
-
-**Tuy nhiên :** Machine Code không chỉ là một chuỗi số nhị phân ngẫu nhiên. Ví dụ:
-
-```text
-BF 01 00 00 00
-```
-
-không phải năm byte độc lập. Chúng cùng nhau tạo thành một encoding của instruction:
-
-```asm
-mov edi, 1
-```
-
-Trong encoding này:
-
-```text
-BF
-```
-
-đóng vai trò xác định opcode/encoding form, còn:
-
-```text
-01 00 00 00
-```
-
-biểu diễn immediate value `1` theo little-endian. Do đó, machine code có cấu trúc và quy tắc. Việc học Program Encodings chính là học những quy tắc đó.
-
-#### 1.3.4. Disassembler: đi từ Machine Code về Assembly
-
-Quá trình assembler thực hiện:
-
-```text
-Assembly
-    ↓
-Machine Code
-```
-
-thì disassembler thực hiện chiều ngược lại:
-
-```text
-Machine Code
-    ↓
-Assembly
-```
-
-Ví dụ:
-
-```bash
-objdump -d -Mintel ./asm
-```
-
-có thể hiển thị:
-
-```text
-40100c:    bf 01 00 00 00    mov edi,0x1
-```
-
-Ở đây ta có thể thấy trực tiếp mối quan hệ:
-
-```text
-Address
+   │
+   ├── reference: printf
    │
    ▼
-40100c:  bf 01 00 00 00  mov edi,0x1
-          └──────┬──────┘
-             Machine Code
-                    │
-                    ▼
-              Assembly
+linker
+   │
+   ▼
+ELF executable
+   │
+   └── printf@plt
+           │
+           ▼
+      dynamic linker
+           │
+           ▼
+      libc.so
+		   │
+           ▼
+          main (file thực thi hoàn chỉnh)
 ```
 
-Ghidra, GDB và nhiều công cụ reverse engineering cũng thực hiện quá trình tương tự ở mức độ phức tạp hơn.
+> Với dynamically linked executable
 
-### 1.3.5. Phân biệt giữa byte opcode và các byte rác
+Executable main vẫn chứa machine code, nhưng đồng thời còn có nhiều thành phần khác của ELF như section, symbol, relocation information, dynamic linking information,...
 
-Khi quan sát một chương trình dưới dạng hexadecimal, ta có thể thấy một chuỗi byte liên tiếp, ví dụ:
+#### 1.2.5 CPU thực thi machine code
 
-```text
-bf 01 00 00 00
+Sau khi hoàn tất quy trình bước 4 là linking, thực tế file output là Executable ELF thực thi hoàn chỉnh có thể thực thi được, tuy nhiên ko phải cứ nhập lệnh `./main` là hệ điều hành chọi nguyên dàn mã trong file vô cho CPU xử lý, còn vài bước mà hệ điều hành cần làm để có thể thực thi một file hoàn chỉnh thế này đó là
+
 ```
-
-Một cách nhìn sai thường gặp là cho rằng mỗi byte tương ứng với một instruction, hoặc chỉ `bf` mới là mã máy còn `01 00 00 00` là các byte rác. Thực tế toàn bộ chuỗi trên đều là machine code của một instruction:
-
-```asm
-mov edi, 1
+ELF executable
+      │
+      ▼
+OS loader
+      |
+      |── đọc ELF headers
+      |── tạo process address space
+      |── map các loadable segments
+      |── thiết lập permissions
+      |── thiết lập entry point
+      │
+      ▼
+Virtual Address Space
+      │
+      │   page tables
+      │   VPN → PFN
+      ▼
+CPU bắt đầu tại entry point
+      │
+      ▼
+   Fetch
+      ↓
+   Decode
+      ↓
+   Execute
+      ↓
+	 ...
 ```
-
-Trong đó:
-
-```text
-bf          -> opcode / instruction encoding
-01 00 00 00 -> immediate value = 1
-```
-
-CPU không nhìn `01 00 00 00` như những byte vô nghĩa. Nó dựa vào encoding của instruction để biết rằng sau opcode `BF` còn phải đọc thêm 4 byte làm giá trị immediate.
-
-Vì vậy, cần phân biệt ba khái niệm:
-
-| Thành phần                                | Ý nghĩa                                                                                        |
-| ----------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| **Opcode**                                | Phần encoding xác định operation mà CPU phải thực hiện                                         |
-| **Operand bytes**                         | Các byte biểu diễn register, immediate, displacement, địa chỉ... tùy instruction               |
-| **Padding / dữ liệu không được thực thi** | Các byte tồn tại trong file hoặc vùng nhớ nhưng không thuộc instruction đang được CPU thực thi |
-
-Ví dụ:
-
-```asm
-mov edi, 1
-```
-
-có thể được encode thành:
-
-```text
-BF 01 00 00 00
-```
-
-Ta có:
-
-```text
-BF
-│
-└── opcode / opcode form
-
-01 00 00 00
-│  │  │  │
-└──┴──┴──┴── immediate = 1
-```
-
-Ở đây `01 00 00 00` được lưu theo little-endian:
-
-```text
-0x00000001
-↓
-01 00 00 00
-```
-
-Tuy nhiên không phải mọi byte trong vùng `.text` đều là opcode. Một file ELF có thể chứa nhiều loại dữ liệu khác nhau. Ví dụ:
-
-```text
-.text
-    machine code
-
-.rodata
-    string, constant...
-
-.data
-    biến toàn cục đã khởi tạo
-
-.bss
-    dữ liệu chưa khởi tạo
-
-.padding
-    các byte dùng để căn chỉnh
-```
-
-Ngay cả trong `.text`, không phải cứ nhìn thấy một byte riêng lẻ là có thể kết luận nó là opcode. Ví dụ một instruction có thể dài nhiều byte:
-
-```text
-48 89 e5
-```
-
-được disassemble thành:
-
-```asm
-mov rbp, rsp
-```
-
-Ở đây:
-
-```text
-48 -> REX prefix
-89 -> opcode
-e5 -> ModR/M
-```
-
-Do đó, gọi `48` hoặc `e5` là byte rác là sai. Chúng đều cần thiết để CPU giải mã instruction.
-
-- **Vậy byte rác thực sự là gì?:** nó là một byte chỉ có thể được gọi là không thuộc code đang xét khi ta có bằng chứng rằng nó không được CPU sử dụng như một phần của instruction tại control flow đó. Ví dụ compiler/linker có thể thêm padding:
-
-  ```text
-  90 90 90 90
-  ```
-
-  `90` là encoding của:
-
-  ```asm
-  nop
-  ```
-
-  Các byte này có thể được dùng để căn chỉnh địa chỉ hoặc lấp khoảng trống. Chúng không phải “rác” theo nghĩa dữ liệu vô nghĩa; chúng vẫn có encoding hợp lệ và CPU vẫn có thể thực thi chúng nếu control flow nhảy tới đó. Một trường hợp khác là dữ liệu nằm cạnh code:
-
-  ```text
-  .text:
-      ... instructions ...
-
-  .rodata:
-      "Hello World\n"
-  ```
-
-  Chuỗi:
-
-  ```text
-  48 65 6c 6c 6f 20 57 6f 72 6c 64
-  ```
-
-  không phải opcode chỉ vì nó cũng được biểu diễn dưới dạng hexadecimal. Nó là data.
-
-- **Vì sao disassembler có thể biết byte nào thuộc instruction?:** Disassembler không đơn giản chỉ đọc từng byte rồi gọi byte đó là opcode. Nó đọc instruction theo **instruction encoding của ISA** và xác định instruction có độ dài bao nhiêu. Ví dụ:
-
-  ```text
-  BF 01 00 00 00
-  ```
-
-  Disassembler đọc:
-
-  ```text
-  BF
-  ```
-
-  và biết encoding này yêu cầu thêm một immediate 32-bit:
-
-  ```text
-  01 00 00 00
-  ```
-
-  Sau đó instruction kết thúc tại đây. Byte tiếp theo sẽ được giải mã như instruction tiếp theo:
-
-  ```text
-  BF 01 00 00 00 | ...
-  └-instruction ─┘
-  ```
-
-  Đây là lý do x86-64 có thể chứa các instruction có độ dài khác nhau:
-
-  ```text
-  90                   nop
-  bf 01 00 00 00       mov edi, 1
-  48 89 e5             mov rbp, rsp
-  ```
-
-  Instruction boundary không thể xác định chỉ bằng cách chia chuỗi byte thành từng nhóm có kích thước cố định.
 
 > [!IMPORTANT]
-> **Lưu ý quan trọng:** Có những byte có thể được giải mã thành instruction hợp lệ nhưng trong context hiện tại lại không phải code.
+> **Điều quan trọng:** Ở đây, CPU nó ko đọc từng byte,bit trực tiếp trong file nó chỉ thực thi instruction bytes nằm trong memory.
 
-Ví dụ dữ liệu:
-
-```text
-48 65 6c 6c 6f
-```
-
-hoàn toàn có thể khiến một disassembler tạo ra các instruction hợp lệ nếu ta cố tình bảo nó disassemble vùng dữ liệu đó. Vì vậy:
-
-```text
-hexadecimal bytes
-        ↓
-  disassembler
-        ↓
-possible instructions
-```
-
-không đồng nghĩa với:
-
-```text
-mọi instruction được disassemble
-        =
-code thực sự được chương trình thực thi
-```
-
-Reverse engineer phải kết hợp `instruction decoding + control flow + section information + references + memory permissions` để xác định byte nào thực sự là code. Đây cũng là lý do việc hiểu Program Encodings quan trọng: ta không chỉ học cách đọc `BF 01 00 00 00` thành `mov edi, 1`, mà còn phải hiểu tại sao CPU biết phải đọc bao nhiêu byte và những byte đó đóng vai trò gì trong encoding của instruction.
-
-#### 1.3.6. Vì sao Reverse Engineering cần hiểu cả hai?
-
-Nếu chỉ biết Assembly:
-
-```asm
-mov rdi, 1
-syscall
-```
-
-ta có thể hiểu chương trình đang làm gì. Nhưng nếu hiểu Machine Code:
-
-```text
-BF 01 00 00 00
-48 BE ...
-48 C7 C2 0B 00 00 00
-B8 01 00 00 00
-0F 05
-```
-
-ta có thể bắt đầu đặt những câu hỏi sâu hơn:
-
-* Byte nào là opcode?
-* Operand được encode ở đâu?
-* Tại sao instruction này dài 5 byte?
-* Vì sao instruction khác lại dài 10 byte?
-* Immediate được lưu theo thứ tự byte nào?
-* Register được biểu diễn bằng những bit nào?
-* Khi nào xuất hiện REX prefix?
-* ModR/M và SIB được sử dụng như thế nào?
-
-Đó chính là bước chuyển từ việc đọc Assembly sang việc hiểu instruction encoding. Và đó cũng là mục tiêu chính của phần Program Encodings.
-
-#### 1.3.7. Phân biệt giữa instruction, vaddr instruction, offset và assembly representation của instruction trong gdb
-
-Rất nhiều người nhầm giữ instrution, offset và assembly representation của một instrution ở gdb khi disas nó ra ví dụ một đoạn như sau :
-
-```asm
-0x0000555555555151 <+8>:  64 48 8b 04 25 28 00 00 00    mov rax,QWORD PTR fs:0x28
-```
-
-Họ khá dễ nhầm `0x0000555555555151` là instrution, thực chất nó là vaddr của instrution đó. Ta có thể biểu diễn nó như sau:
+Cho một ví dụ như sau :
 
 ```
-0x0000555555555151
-        │
-        └── địa chỉ ảo (virtual address) của instruction
+ELF file:
 
-<+8>
+.text
+--------------------------------
+b8 3c 00 00 00
+bf 01 00 00 00
+0f 05
+--------------------------------
+          ↓ loader
+RAM / virtual address space
+          ↓
+   RIP = 0x401000
+          ↓
+     CPU fetch:
+   b8 3c 00 00 00
+          ↓
+       decode:
+     mov eax, 0x3c
+          ↓
+       execute
+```
+
+Nghĩa là, khi dùng lệnh `./main`, các lệnh trong file ELF vốn đã được cấu trúc `.text, .data, .rodata v.v..` trước đó, nó là sản phẩm compiled, khi dùng lệnh khởi chạy các cấu trúc đó được nạp vào vùng nhớ ảo (Vmem), với kernel thì vùng nhớ này được sắp xếp thứ tự theo VPN và nó được tham chiếu với PFN thông qua bảng trang (page table). Sau khi nạp xong vào vmem, CPU sẽ tiến hành xuất phát tại entry point (_start), theo sơ đồ minh họa entry point ở vaddr là `0x401000` và CPU tiến hành tại đây.
+
+Tiếp đến là fetch. Fetch nghĩa là lấy các instrution được lưu trong Vmem đã được load trước khi chạy lệnh `./main` về phiá CPU, có thể hình dung thế này :
+
+```
+RAM / Virtual Memory
+────────────────────────────────
+0x401000:  b8
+0x401001:  3c
+0x401002:  00
+0x401003:  00
+0x401004:  00
+0x401005:  bf
+...
+────────────────────────────────
+                ▲
+                │
+             Fetch
+                │
+                │
+               CPU
+```
+
+Trong reverse, ta cũng đã quen thuộc với thanh ghi RIP (instruction pointer) cũng là thanh ghi quan trọng nhất của CPU, ở đây như đã nói ở trên thì thanh ghi RIP hiện tại là đang ở vaddr `0x401000`, lúc này CPU biết instruction tiếp theo bắt đầu tại địa chỉ `0x401000`. Nếu `RIP = 0x401000` thì CPU sẽ cần phải fetch để lấy instruction trong vmem về phía mình. Có thể hình dung :
+
+```
+RIP
  │
- └── offset của instruction so với đầu hàm main
-
-64 48 8b 04 25 28 00 00 00
-│
-└── machine-code bytes của instruction
-
-mov rax,QWORD PTR fs:0x28
-│
-└── assembly representation của instruction đó
-```
-
-Trong đó `0x0000555555555151` nó ko phải instrution, mà nó là địa chỉ ảo (vaddr) trỏ tới instruction. `<+8>` nó ko phải con số vô nghĩa, nó là khoảng cách offset từ mốc có thể là (main, _start) đến địa chỉ trỏ tới instruction. Còn dãy `64 48 8b 04 25 28 00 00 00` là byte obcode, machine code của instruction, đây mới gọi là instruction tổng thể, còn `mov rax,QWORD PTR fs:0x28` chính là assembly representation của instruction đây là sản phẩm sau khi qua biên dịch lại thành hợp ngữ mà con người có thể đọc được
-
-Nói chung, instruction thực sự nó có hai cách biểu diễn, một là opcode như `64 48 8b 04 25 28 00 00 00`, hai là assembly representation như `mov rax,QWORD PTR fs:0x28` còn `0x0000555555555151` là địa chỉ ảo (vaddr) trỏ tới instruction
-
-## 1.4. Instruction Encoding
-
-**Instruction Encoding** là quá trình biểu diễn một instruction dưới dạng một chuỗi byte theo quy tắc encoding của một Instruction Set Architecture (ISA). Nói đơn giản:
-
-```text
-Assembly instruction
-        │
-        │ Instruction Encoding
-        ▼
-Machine-code bytes
-        │
-        │ CPU decode
-        ▼
-Operation + operands
-```
-
-Ví dụ:
-
-```asm
-mov edi, 1
-```
-
-có thể được encode thành:
-
-```text
-BF 01 00 00 00
-```
-
-Ở đây, `BF 01 00 00 00` không phải là năm instruction khác nhau. Toàn bộ **5 byte này tạo thành một instruction duy nhất**.
-
-```text
-BF          01 00 00 00
-│           │
-│           └── immediate value = 1
-│
-└── opcode / opcode form
-```
-
-### 1.4.1. Instruction Encoding không chỉ gồm Opcode
-
-Một hiểu lầm phổ biến khi mới học machine code là:
-
-> Opcode chính là toàn bộ machine code của instruction.
-
-Điều này không đúng.
-
-**Opcode** chỉ là một thành phần trong encoding của instruction. Tùy instruction và ISA, một instruction có thể chứa nhiều thành phần khác nhau.
-
-Đối với x86-64, một instruction có thể có dạng tổng quát:
-
-```text
-┌──────────┬────────┬────────┬────────┬────────────-┬───────────┐
-│ Prefixes │ Opcode │ ModR/M │  SIB   │ Displacement│ Immediate │
-└──────────┴────────┴────────┴────────┴────────────-┴───────────┘
-```
-
-Không phải instruction nào cũng chứa tất cả các thành phần trên.
-
-Ví dụ:
-
-```asm
-push rbp
-```
-
-có thể được encode thành:
-
-```text
-55
-```
-
-Chỉ cần một byte.
-
-Trong khi:
-
-```asm
-mov rax, QWORD PTR fs:0x28
-```
-
-có encoding:
-
-```text
-64 48 8b 04 25 28 00 00 00
-```
-
-với tổng cộng:
-
-```text
-9 bytes
-```
-
-Do đó, x86-64 là một **variable-length instruction set**: độ dài instruction không cố định.
-
-### 1.4.2. Ví dụ thực tế từ Pwndbg
-
-Khi sử dụng:
-
-```gdb
-disas /r main
-```
-
-ta có thể nhận được:
-
-```text
-0x0000555555555151 <+8>:
-    64 48 8b 04 25 28 00 00 00
-    mov rax,QWORD PTR fs:0x28
-```
-
-Dòng này chứa nhiều thông tin khác nhau:
-
-```text
-0x0000555555555151
-        │
-        └── virtual address của instruction
-
-<+8>
- │
- └── offset 8 byte tính từ đầu function main
-
- 64 48 8b 04 25 28 00 00 00
-└──────────────────────────┘
-       machine code
-
- mov rax,QWORD PTR fs:0x28
-└─────────────────────────┘
-       assembly
-```
-
-Điều quan trọng là:
-
-```text
-0x0000555555555151
-```
-
-**không phải instruction**. Nó là địa chỉ của instruction. Còn:
-
-```text
-64 48 8b 04 25 28 00 00 00
-```
-
-là machine-code encoding của instruction đó. Và:
-
-```asm
-mov rax,QWORD PTR fs:0x28
-```
-
-là cách biểu diễn instruction ở dạng Assembly. Có thể hình dung:
-
-```text
-Virtual Address
-      │
-      ▼
-0x555555555151
-      │
-      │ points to
-      ▼
-64 48 8b 04 25 28 00 00 00
-      │
-      │ decoded as
-      ▼
-mov rax,QWORD PTR fs:0x28
-```
-
-### 1.4.3. CPU không thực thi Assembly
-
-CPU không đọc trực tiếp:
-
-```asm
-mov rax, QWORD PTR fs:0x28
-```
-
-Assembly là một dạng **textual representation** dành cho con người và assembler. CPU nhận các byte machine code trong memory:
-
-```text
-64 48 8b 04 25 28 00 00 00
-```
-
-Sau đó bộ phận instruction decoder của CPU phân tích chuỗi byte này dựa trên ISA để xác định:
-
-* instruction đang thực hiện operation gì;
-* các operand nằm ở đâu;
-* operand có kích thước bao nhiêu;
-* có register nào được sử dụng;
-* có immediate hay displacement hay không;
-* có prefix nào thay đổi cách giải mã instruction hay không.
-
-Sau khi decode, CPU mới có thể thực hiện operation tương ứng.
-
-Có thể mô hình hóa đơn giản:
-
-```text
+ │ 0x401000
+ ▼
 Memory
-  │
-  │ 64 48 8b 04 25 28 00 00 00
-  ▼
-┌──────────────────────┐
-│ Instruction Decoder  │
-└──────────┬───────────┘
-           │
-           ▼
-┌─────────────────────────────┐
-│ MOV                         │
-│ destination: RAX           │
-│ source: FS:[0x28]          │
-│ operand size: 64-bit       │
-└─────────────────────────────┘
-           │
-           ▼
-       Execute
+0x401000: b8
+0x401001: 3c
+0x401002: 00
+0x401003: 00
+0x401004: 00
 ```
 
-### 1.4.4. Các thành phần thường gặp trong x86-64 Encoding
+Nó sẽ đọc các byte trong bộ nhớ ảo (vmem) vào hệ thống CPU, kết quả sẽ là `b8 3c 00 00 00` đó là fetch. Chưa cần phải biết nó biên dịch ra hợp ngữ là sao
 
-#### Prefix
-
-Prefix nằm trước opcode và có thể thay đổi cách CPU giải mã hoặc thực hiện instruction.
-
-Ví dụ:
-
-```text
-64 48 8b 04 25 28 00 00 00
-^^
-│
-└── FS segment override
-```
-
-`64` là **FS segment override prefix**.
-
-Nó khiến memory operand sử dụng segment `FS`.
+<details>
+	<summary><b>[Câu hỏi]</b> Vì sao CPU cần phải fetch?</summary>
+<table>
+<tr>
+<td>
 
 ---
 
-#### REX Prefix
 
-Trong x86-64, REX prefix được sử dụng để mở rộng khả năng biểu diễn register và xác định operand 64-bit.
-
-Ví dụ:
-
-```text
-48 8b ...
-^^
-│
-└── REX prefix
-```
-
-`48` có dạng:
-
-```text
-0100WRXB
-```
-
-Trong trường hợp này:
-
-```text
-01001000
-    │
-    └── W = 1
-```
-
-`REX.W = 1` cho biết operation sử dụng operand size 64-bit.
+<sub>--đã hết phần giải thích--</sub>
 
 ---
 
-#### Opcode
+</td>
+</tr>
+</table>
+</details>
 
-Opcode xác định operation hoặc opcode form mà CPU phải thực hiện.
+bước tiếp theo là decode, bước này là bước CPU phân tích chuỗi byte sau khi fetch từ vmem sang với chuỗi `b8 3c 00 00 00` thì CPU decode nó thành đại ý chẳng hạn như `MOV EAX, 0x3c`. Sau quá trình decode là tới quá trình execute, CPU sẽ thực hiện ngữ nghĩa (semantics) của instruction như `EAX <- 0x3c`, sau đó `RAX = 60` và CPU mới tới instruction kế tiếp là `0x401005`, vậy nên tổng quát toàn bộ quá trình là :
 
-Ví dụ:
-
-```text
-8B
 ```
-
-là opcode thuộc nhóm `MOV`:
-
-```text
-MOV r64, r/m64
-```
-
-Tuy nhiên, chỉ nhìn `8B` chưa đủ để biết chính xác instruction hoàn chỉnh, vì các byte tiếp theo có thể cung cấp thông tin về operand.
-
----
-
-#### ModR/M
-
-ModR/M là một byte encoding được x86 sử dụng để mô tả quan hệ giữa register và memory operand.
-
-Nó có cấu trúc:
-
-```text
-┌───────┬─────┬─────┐
-│  MOD  │ REG │ R/M │
-└───────┴─────┴─────┘
-  2 bit   3 bit  3 bit
-```
-
-Ví dụ instruction:
-
-```text
-64 48 8b 04 25 28 00 00 00
-         ^^
-         │
-         └── ModR/M
-```
-
-`04` được CPU phân tích thành các trường `MOD`, `REG` và `R/M`.
-
----
-
-#### SIB
-
-SIB là viết tắt của:
-
-> **Scale-Index-Base**
-
-Nó cho phép x86 biểu diễn các dạng địa chỉ memory phức tạp hơn.
-
-Cấu trúc:
-
-```text
-┌───────┬────────┬───────┐
-│ SCALE │ INDEX  │ BASE  │
-└───────┴────────┴───────┘
-  2 bit    3 bit    3 bit
-```
-
-Trong instruction trên:
-
-```text
-64 48 8b 04 25 28 00 00 00
-            ^^
-            │
-            └── SIB
-```
-
-`25` là SIB byte.
-
----
-
-#### Displacement
-
-Displacement là một giá trị được encoding trong instruction để tham gia tính địa chỉ memory.
-
-Trong ví dụ:
-
-```text
-64 48 8b 04 25 28 00 00 00
-                  └─────────┘
-                  0x28
-```
-
-nó tạo thành offset:
-
-```text
-FS:0x28
-```
-
-Đây chính là offset mà compiler thường sử dụng để truy cập các dữ liệu đặc biệt trong thread-local storage. Trong trường hợp stack canary, `fs:0x28` thường chứa giá trị canary được runtime đặt vào TLS.
-
----
-
-### 1.4.5. Immediate và Displacement không giống nhau
-
-Hai khái niệm này rất dễ nhầm.
-
-**Immediate** là giá trị nằm trực tiếp trong instruction và được sử dụng như một operand.
-
-Ví dụ:
-
-```asm
-mov edi, 1
-```
-
-```text
-BF 01 00 00 00
-   └─────────┘
-    immediate
-```
-
-`1` chính là immediate.
-
-Trong khi **displacement** thường là một thành phần dùng trong việc xác định địa chỉ memory.
-
-Ví dụ:
-
-```asm
-mov rax, [rbp-0x8]
-```
-
-có thể có displacement:
-
-```text
-F8
-```
-
-đại diện cho `-8` trong encoding thích hợp.
-
-Do đó:
-
-```text
-Immediate
-    ↓
-giá trị operand
-
-Displacement
-    ↓
-thành phần của địa chỉ memory
-```
-
-### 1.4.6. Instruction Boundary
-
-Một đặc điểm rất quan trọng của x86-64 là instruction có độ dài thay đổi.
-
-Ví dụ:
-
-```text
-55
-48 89 e5
-48 83 ec 10
-64 48 8b 04 25 28 00 00 00
-31 c0
-```
-
-Có độ dài lần lượt:
-
-```text
-1 byte
-3 bytes
-4 bytes
-9 bytes
-2 bytes
-```
-
-CPU phải decode instruction hiện tại để biết **instruction tiếp theo bắt đầu ở byte nào**.
-
-Trong output của Pwndbg:
-
-```text
-0x555555555151 <+8>:
-    64 48 8b 04 25 28 00 00 00
-
-0x55555555515a <+17>:
-    48 89 45 f8
-```
-
-Ta có:
-
-```text
-0x555555555151 + 9
-= 0x55555555515a
-```
-
-Do đó instruction đầu tiên chiếm chính xác 9 byte:
-
-```text
-0x5151
-│
-├── 64
-├── 48
-├── 8b
-├── 04
-├── 25
-├── 28
-├── 00
-├── 00
-└── 00
-    │
-    ▼
-0x515a
-instruction tiếp theo
-```
-
-Đây là lý do không thể giả định:
-
-```text
-1 instruction = 1 byte
-```
-
-hoặc:
-
-```text
-1 instruction = 4 bytes
-```
-
-đối với x86-64.
-
-### 1.4.7. Instruction Encoding và Reverse Engineering
-
-Instruction Encoding là một trong những nền tảng quan trọng của reverse engineering.
-
-Khi nhìn thấy:
-
-```text
-48 89 45 f8
-```
-
-reverse engineer không chỉ cần biết nó tương ứng với:
-
-```asm
-mov QWORD PTR [rbp-0x8],rax
-```
-
-mà còn có thể đặt câu hỏi:
-
-```text
-48 → prefix gì?
-89 → opcode gì?
-45 → ModR/M biểu diễn operand nào?
-f8 → displacement là bao nhiêu?
-```
-
-Từ đó có thể đi ngược từ:
-
-```text
-Machine Code
-     ↓
-Instruction Encoding
-     ↓
-Assembly
-     ↓
-Control Flow / Data Flow
-     ↓
-Program Behavior
-```
-
-Đây chính là một trong những bước chuyển từ việc **“đọc Assembly”** sang **“hiểu binary”**. Có thể phân biệt ba tầng:
-
-```text
-0x555555555151
-        │
-        │ địa chỉ
-        ▼
-64 48 8b 04 25 28 00 00 00
-        │
-        │ instruction encoding
-        ▼
-mov rax,QWORD PTR fs:0x28
-        │
-        │ semantic meaning
-        ▼
-RAX ← QWORD PTR FS:[0x28]
-```
-
-Trong đó:
-
-* **Virtual address** cho biết instruction nằm ở đâu trong address space.
-* **Machine-code bytes** là encoding mà CPU decode.
-* **Instruction encoding** mô tả cấu trúc của các byte đó.
-* **Assembly** là biểu diễn dễ đọc của instruction.
-* **Instruction semantics** mô tả instruction thực sự làm gì.
-
-Hiểu được mối quan hệ này là nền tảng để chuyển từ việc nhìn một đoạn hex như:
-
-```text
-64 48 8b 04 25 28 00 00 00
-```
-
-sang việc hiểu rằng đó là **một instruction 9 byte**, nằm tại một **virtual address cụ thể**, có **prefix, REX, opcode, ModR/M, SIB và displacement**, và cuối cùng biểu diễn operation:
-
-```asm
-mov rax, QWORD PTR fs:0x28
+                  Virtual Memory
+                       │
+                       │
+                 RIP = 0x401000
+                       │
+                       ▼
+              ┌─────────────────┐
+FETCH         │ đọc bytes       │
+              │ b8 3c 00 00 00  │
+              └────────┬────────┘
+                       │
+                       ▼
+              ┌─────────────────┐
+DECODE        │ phân tích       │
+              │ b8 → MOV        │
+              │ 3c → immediate  │
+              └────────┬────────┘
+                       │
+                       ▼
+              ┌─────────────────┐
+EXECUTE       │ EAX ← 0x3c      │
+              └─────────────────┘
 ```
