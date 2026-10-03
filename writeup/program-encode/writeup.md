@@ -372,6 +372,8 @@ Nhiều người thường rất hay nhầm và thường hợp machine code và
 <tr>
 <td>
 
+---
+
 Machine code là tập hợp các byte biểu diễn các instruction dưới dạng encoding mà CPU của một kiến trúc/ISA cụ thể có thể fetch, decode và thực thi. Ở mức thấp nhất, các byte này được cấu thành từ các bit 0 và 1. Vậy nên việc gọi machine code là mã nhị phân là có thể, vì machine code được biểu diễn dưới dạng bit `0/1`.
 
 
@@ -397,9 +399,52 @@ b8 3c 00 00 00
 
 suy ra cùng là các byte `0/1`, nhưng cách phân chia và diễn giải chúng theo ISA mới quyết định chúng biểu diễn instruction nào.
 
+<sub>--đã hết phần giải thích--</sub>
+
+---
+
 </td>
 </tr>
 </table>
 </details>
 
 #### 1.3.2. Assembly là dạng biểu diễn gần với Machine Code
+
+Hợp ngữ ko phải là ngôn ngữ hoàn toàn độc lập với CPU, với chip `core i3` này hay chip `core i5` khác chẳng hạn, nếu như cùng một loại mã hợp ngữ may mắn chạy được và ổn định trên hai con chip `i3` và `i5` thì ko có nghĩa nó sẽ chạy được trên các con chip điện thoại thường có ngành kiến trúc như `arm` thay vì `amd` , vì thế hợp ngữ nó phụ thuộc rất mạnh vào instruction set architecture (ISA). **Ví dụ**, instruction:
+
+```asm
+mov rdi, 1
+```
+
+là instruction của x86-64. Một kiến trúc khác như ARM64 có instruction set và encoding hoàn toàn khác. Điều này có nghĩa:
+
+```text
+C
+│
+├──→ x86-64 Assembly
+│        ↓
+│    x86-64 Machine Code
+│
+└──→ ARM64 Assembly
+         ↓
+     ARM64 Machine Code
+```
+
+Cùng một chương trình C có thể được compiler dịch thành các instruction khác nhau tùy thuộc vào kiến trúc CPU mục tiêu. Điều này giúp ta cũng mang máng rằng `gcc` code dài ko chỉ riêng là xử lý các `optimiziter, compiler, assembler v.v..` mà còn phải làm thế nào để hỗ trợ đa nền tảng sao cho chương trình có thể thực hiện hành vi như ý đồ của C chỉ định
+
+#### 1.3.3. Một Assembly instruction có thể có độ dài khác nhau
+
+Điều rất quan trọng ở phần này rằng, ta ko nên nghĩ `"à, cứ một lệnh thế này sẽ là một length giống nhau"`, sai. Một lệnh instruction ko có nghĩa là một độ dài cùng giống nhau, chúng khác nhau vì nhiều thứ **ví dụ** các instruction khác nhau có thể chiếm số byte khác nhau:
+
+<div align="center">
+
+|Instruction | Machine Code |
+|:-|:-:|
+| ret                     | C3 |
+| nop                     | 90 |
+| mov edi, 1               | BF 01 00 00 00 |
+| mov eax, 0x12345678     | B8 78 56 34 12 |
+
+</div>
+
+Vì thế CPU nó ko đơn giản là giả định số byte cố định vào một instruction, thay vào đó nó phải xác định ranh giới của từng instruction dựa trên encoding của nó. Đây cũng là một trong những lý do việc phân tích machine code x86-64 có thể phức tạp.
