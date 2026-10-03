@@ -372,6 +372,31 @@ Nhiều người thường rất hay nhầm và thường hợp machine code và
 <tr>
 <td>
 
+Machine code là tập hợp các byte biểu diễn các instruction dưới dạng encoding mà CPU của một kiến trúc/ISA cụ thể có thể fetch, decode và thực thi. Ở mức thấp nhất, các byte này được cấu thành từ các bit 0 và 1. Vậy nên việc gọi machine code là mã nhị phân là có thể, vì machine code được biểu diễn dưới dạng bit `0/1`.
+
+
+Tuy nhiên CPU không hiểu một chuỗi 0 và 1 theo nghĩa trừu tượng. Vì CPU có một ISA và các quy tắc instruction encoding. **Ví dụ** với x86-64:
+
+```
+10111000 00111100 00000000 00000000 00000000
+    │             │
+    │             └── immediate = 0x3c
+    │
+    └── encoding của MOV EAX, imm32
+```
+
+CPU dựa vào quy tắc encoding của x86-64 để phân tích chuỗi bit đó thành:
+
+```
+b8 3c 00 00 00
+       ↓
+   MOV EAX, 0x3c
+       ↓
+   EAX ← 60
+```
+
+suy ra cùng là các byte `0/1`, nhưng cách phân chia và diễn giải chúng theo ISA mới quyết định chúng biểu diễn instruction nào.
+
 </td>
 </tr>
 </table>
