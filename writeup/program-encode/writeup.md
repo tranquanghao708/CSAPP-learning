@@ -10,6 +10,80 @@
 	   - [1.2.3 Assembling](#123-assembling)
 	   - [1.2.4 Linking](#124-linking)
 	   - [1.2.5 CPU thực thi machine code](#125-cpu-thực-thi-machine-code)
+	- [1.3. Assembly và Machine Code](#13-assembly-và-machine-code)
+       - [1.3.1. Assembly không phải Machine Code](#131-assembly-không-phải-machine-code)
+       - [1.3.2. Assembly là dạng biểu diễn gần với Machine Code](#132-assembly-là-dạng-biểu-diễn-gần-với-machine-code)
+       - [1.3.3. Một Assembly instruction có thể có độ dài khác nhau](#133-một-assembly-instruction-có-thể-có-độ-dài-khác-nhau)
+       - [1.3.4. Disassembler: đi từ Machine Code về Assembly](#134-disassembler-đi-từ-machine-codevề-assembly)
+	   - [1.3.5. Phân biệt giữa byte opcode và các byte rác](#135-phân-biệt-giữa-byte-opcode-và-các-byte-rác)
+       - [1.3.6. Vì sao Reverse Engineering cần hiểu cả hai?](#136-vì-sao-reverse-engineering-cần-hiểu-cả-hai)
+       - [1.3.7. Phân biệt giữa instruction, vaddr instruction, offset và assembly representation của instruction trong gdb](#137-phân-biệt-giữa-instruction-vaddr-instruction-offset-và-assembly-representation-của-instruction-trong-gdb)
+
+- [2.Cấu trúc tổng quát của một Instruction](#2cấu-trúc-tổng-quát-của-một-instruction)
+  - [2.1. Opcode](#21-opcode)
+  - [2.2. Operand](#22-operand)
+  - [2.3. Register Encoding](#23-register-encoding)
+  - [2.4. Immediate Value](#24-immediate-value)
+  - [2.5. Displacement](#25-displacement)
+  - [2.6. Instruction Length](#26-instruction-length)
+
+- [3. REX Prefix](#3-rex-prefix)
+  - [3.1. REX Prefix là gì?](#31-rex-prefix-là-gì)
+  - [3.2. Cấu trúc byte REX](#32-cấu-trúc-byte-rex)
+  - [3.3. W, R, X và B](#33-w-r-x-và-b)
+  - [3.4. Ví dụ giải mã REX](#34-ví-dụ-giải-mã-rex)
+
+- [4. ModR/M Byte](#4-modrm-byte)
+  - [4.1. ModR/M là gì?](#41-modrm-là-gì)
+  - [4.2. Cấu trúc ModR/M](#42-cấu-trúc-modrm)
+  - [4.3. Mod Field](#43-mod-field)
+  - [4.4. Reg Field](#44-reg-field)
+  - [4.5. R/M Field](#45-rm-field)
+  - [4.6. Giải mã ModR/M bằng tay](#46-giải-mã-modrm-bằng-tay)
+
+- [5. SIB Byte](#5-sib-byte)
+  - [5.1. SIB là gì?](#51-sib-là-gì)
+  - [5.2. Cấu trúc SIB](#52-cấu-trúc-sib)
+  - [5.3. Scale](#53-scale)
+  - [5.4. Index](#54-index)
+  - [5.5. Base](#55-base)
+  - [5.6. Công thức địa chỉ của SIB](#56-công-thức-địa-chỉ-của-sib)
+  - [5.7. Giải mã SIB bằng tay](#57-giải-mã-sib-bằng-tay)
+
+- [6. Ví dụ hoàn chỉnh](#6-ví-dụ-hoàn-chỉnh)
+  - [6.1. Register → Register](#61-register--register)
+  - [6.2. Register → Memory](#62-register--memory)
+  - [6.3. Memory Addressing](#63-memory-addressing)
+  - [6.4. Immediate Operand](#64-immediate-operand)
+  - [6.5. Instruction có Displacement](#65-instruction-có-displacement)
+  - [6.6. Instruction có SIB](#66-instruction-có-sib)
+  - [6.7. Tự decode một Instruction hoàn chỉnh](#67-tự-decode-một-instruction-hoàn-chỉnh)
+
+- [7. Từ Machine Code trở lại Assembly](#7-từ-machine-code-trở-lại-assembly)
+  - [7.1. Disassembler hoạt động như thế nào?](#71-disassembler-hoạt-động-như-thế-nào)
+  - [7.2. objdump](#72-objdump)
+  - [7.3. GDB](#73-gdb)
+  - [7.4. Ghidra](#74-ghidra)
+  - [7.5. Đối chiếu Byte ↔ Assembly](#75-đối-chiếu-byte--assembly)
+
+- [8. Object Code và ELF](#8-object-code-và-elf)
+  - [8.1. Object File là gì?](#81-object-file-là-gì)
+  - [8.2. Code Section](#82-code-section)
+  - [8.3. Relocation](#83-relocation)
+  - [8.4. Symbol và Symbol Table](#84-symbol-và-symbol-table)
+  - [8.5. Từ Object File đến Executable](#85-từ-object-file-đến-executable)
+
+- [9. Thực hành với Compiler](#9-thực-hành-với-compiler)
+  - [9.1. gcc -S](#91-gcc--s)
+  - [9.2. gcc -c](#92-gcc--c)
+  - [9.3. objdump -d](#93-objdump--d)
+  - [9.4. readelf](#94-readelf)
+  - [9.5. So sánh Source → Assembly → Machine Code](#95-so-sánh-source--assembly--machine-code)
+
+- [10. Tổng kết](#10-tổng-kết)
+  - [10.1. Instruction được encode như thế nào?](#101-instruction-được-encode-như-thế-nào)
+  - [10.2. Quy trình Decode một Instruction](#102-quy-trình-decode-một-instruction)
+  - [10.3. Những gì cần nhớ](#103-những-gì-cần-nhớ)
 
 ---
 
@@ -286,3 +360,21 @@ EXECUTE       │ EAX ← 0x3c      │
 
 > [!IMPORTANT]
 > **Điểm quan trọng:** Về tổng quát thì ko phải là instruction kế tiếp CPU luôn là `RIP = RIP + instruction_length` mà còn có thể có các lệnh như `jmp`, `je`, `jz` v.v..
+
+### 1.3. Assembly và Machine Code
+#### 1.3.1. Assembly không phải Machine Code
+
+Nhiều người thường rất hay nhầm và thường hợp machine code và hợp ngữ lại thành một. Nhưng đó là sai lầm nhầm lẫn tai hại nhất, ta cần phân biệt hợp ngữ `mov rdi, 1` là textual representation và `BF 01 00 00 00` là encode representation, ta phải hiểu hợp ngữ sinh ra là cho con người có thể lập trình, đọc hiểu dễ dàng hơn còn machine code là dành cho CPU để thực hiện các quy trình `fetch -> decode -> execute` sau khi chạy lệnh thực thi `./main`
+
+<details>
+	<summary><b>[Câu hỏi]</b> Machine code liệu có phải mã nhị phân 0,1 cho máy tính có thể hiểu được?</summary>
+<table>
+<tr>
+<td>
+
+</td>
+</tr>
+</table>
+</details>
+
+#### 1.3.2. Assembly là dạng biểu diễn gần với Machine Code
