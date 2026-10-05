@@ -522,4 +522,40 @@ Trong đó `0x0000555555555151` nó ko phải instrution, mà nó là địa ch�
 
 Nói chung, instruction thực sự nó có hai cách biểu diễn, một là opcode như `64 48 8b 04 25 28 00 00 00`, hai là assembly representation như `mov rax,QWORD PTR fs:0x28` còn `0x0000555555555151` là địa chỉ ảo (vaddr) trỏ tới instruction
 
+---
+
 ## 2.Cấu trúc tổng quát của một Instruction
+
+Một instruction ở cấp machine code không nhất thiết chỉ gồm một byte opcode. Đặc biệt với x86-64, một instruction có thể được tạo thành từ nhiều thành phần khác nhau, trong đó mỗi thành phần đảm nhiệm một vai trò nhất định trong việc mô tả instruction.
+
+Một mô hình tổng quát thường được biểu diễn như sau:
+
+```
+┌──────────┬────────┬────────┬──────┬──────────────┬──────────────┐
+│ Prefixes │ Opcode │ ModR/M │ SIB  │ Displacement │ Immediate    │
+└──────────┴────────┴────────┴──────┴──────────────┴──────────────┘
+```
+Tuy nhiên, không phải instruction nào cũng có đầy đủ tất cả các thành phần trên. Tùy instruction, một hoặc nhiều trường có thể không xuất hiện. **Ví dụ**, `b8 3c 00 00 00`, có thể được disassemble thành `mov eax, 0x3c` Trong trường hợp này, encoding có thể được nhìn đơn giản như:
+
+```
+┌────────┬──────────────────────────┐
+│ Opcode │ Immediate                │
+├────────┼──────────────────────────┤
+│   b8   │ 3c 00 00 00              │
+└────────┴──────────────────────────┘
+```
+
+Trong đó:
+
+```
+b8
+│
+└── Opcode / opcode form
+
+3c 00 00 00
+│
+└── imm32 = 0x0000003c
+
+```
+
+CPU không nhìn chuỗi này dưới dạng chữ `mov eax, 0x3c`, mà nhận được các instruction bytes `b8 3c 00 00 00`. Sau đó decoder sử dụng quy tắc instruction encoding của ISA để xác định instruction tương ứng.
