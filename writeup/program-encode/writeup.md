@@ -568,7 +568,51 @@ CPU không nhìn chuỗi này dưới dạng chữ `mov eax, 0x3c`, mà nhận �
 
 ---
 
-Thoáng qua ta thấy ví dụ bên trên, ta thấy trước ví dụ là một bảng cấu trúc, nhưng ta cũng thấy dòng chữ ko phải cứ instruction nào cũng tuân theo hết các cấu trúc trên. Vậy bây giờ vì sao và làm thế nào để ta biết `b8` là thuộc trường opcode và `3c 00 00 00` là thuộc trường immediate (imm32)
+Thoáng qua ta thấy ví dụ bên trên, ta thấy trước ví dụ là một bảng cấu trúc, nhưng ta cũng thấy dòng chữ ko phải cứ instruction nào cũng tuân theo hết các cấu trúc trên. Vậy bây giờ vì sao và làm thế nào để ta biết `b8` là thuộc trường opcode và `3c 00 00 00` là thuộc trường immediate (imm32), ta cần hiểu CPU không tự đoán dựa trên hình dạng của byte. Nó dựa vào quy tắc encoding được ISA định nghĩa cho từng instruction form.
+
+Có thể hình dung Instruction Encoding giống như một grammar (ngữ pháp). **Ví dụ**, một encoding form có thể quy định `B8+rd id`. Trong đó:
+
+```
+B8+rd → opcode + mã register
+id    → immediate 32-bit
+```
+
+Khi decoder gặp `b8`, nó tra cứu quy tắc tương ứng và nhận ra rằng byte này thuộc form `B8+rd, imm32`, `b8` tương ứng với `B8 + 0`, nên register được chọn là `EAX`. Sau đó quy tắc của encoding cho biết instruction này còn cần một `imm32`. Do đó 4 byte tiếp theo được diễn giải là immediate:
+
+```
+b8 | 3c 00 00 00
+│       │
+│       └── imm32
+│
+└── opcode/form
+```
+
+Vì x86 sử dụng little-endian cho immediate nhiều byte:
+
+```
+3c 00 00 00
+        ↓
+0x0000003c
+```
+
+Kết quả là `mov eax, 0x3c`. Điểm quan trọng nằm ở đây:
+
+```
+b8
+│
+│ decode
+▼
+B8+rd, imm32
+│
+├── rd   → xác định register
+│
+└── imm32 → yêu cầu 4 byte tiếp theo
+                    │
+                    ▼
+             3c 00 00 00
+```
+
+Tức là byte 3c không tự nói rằng nó là immediate. Chính instruction form được xác định từ các byte phía trước quy định rằng những byte tiếp theo phải được diễn giải như imm32.
 
 <sub>--đã hết phần giải thích--</sub>
 
