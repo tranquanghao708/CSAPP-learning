@@ -568,7 +568,7 @@ CPU không nhìn chuỗi này dưới dạng chữ `mov eax, 0x3c`, mà nhận �
 
 ---
 
-Thoáng qua ta thấy ví dụ bên trên, ta thấy trước ví dụ là một bảng cấu trúc, nhưng ta cũng thấy dòng chữ ko phải cứ instruction nào cũng tuân theo hết các cấu trúc trên. Vậy bây giờ vì sao và làm thế nào để ta biết `b8` là thuộc trường opcode và `3c 00 00 00` là thuộc trường immediate (imm32), ta cần hiểu CPU không tự đoán dựa trên hình dạng của byte. Nó dựa vào quy tắc encoding được ISA định nghĩa cho từng instruction form.
+Thoáng qua ta thấy ví dụ bên trên, ta thấy trước ví dụ là một bảng cấu trúc, nhưng ta cũng thấy dòng chữ ko phải cứ instruction nào cũng tuân theo hết các cấu trúc trên. Vậy bây giờ vì sao và làm thế nào để ta biết `b8` là thuộc trường opcode và `3c 00 00 00` là thuộc trường immediate (`imm32`), ta cần hiểu CPU không tự đoán dựa trên hình dạng của byte. Nó dựa vào quy tắc encoding được ISA định nghĩa cho từng instruction form.
 
 Có thể hình dung Instruction Encoding giống như một grammar (ngữ pháp). **Ví dụ**, một encoding form có thể quy định `B8+rd id`. Trong đó:
 
@@ -612,7 +612,7 @@ B8+rd, imm32
              3c 00 00 00
 ```
 
-Tức là byte 3c không tự nói rằng nó là immediate. Chính instruction form được xác định từ các byte phía trước quy định rằng những byte tiếp theo phải được diễn giải như imm32.
+Tức là byte `3c` không tự nói rằng nó là immediate. Chính instruction form được xác định từ các byte phía trước quy định rằng những byte tiếp theo phải được diễn giải như `imm32`.
 
 <sub>--đã hết phần giải thích--</sub>
 
@@ -624,3 +624,15 @@ Tức là byte 3c không tự nói rằng nó là immediate. Chính instruction 
 </details>
 
 ### 2.1. Opcode
+
+Opcode là thành phần xác định operation hoặc opcode form mà instruction sử dụng. Nghĩa là mã nhị phân (hoặc mã hex) dùng để xác định phép toán mà CPU sẽ thực hiện. Bây giờ đơn giản, ta lấy lệnh hợp ngữ làm minh họa, bây giờ ta muốn thực hiện phép cộng với `32bit/6bit`, ta dùng lệnh `add` với hợp ngữ nhưng với opcode nó là `05`. Ta dựa vào đó so sánh như sau :
+
+<div align="center">
+
+| nhu cầu | hợp ngữ | opcode | giải thích lệnh opcode |
+|:-|:-:|:-:|:-|
+| cộng | `add` | `05` (32/16bits) | `05` là việc cộng với `32/16` bits |
+| trừ | `sub` | `2D id` hoặc `2B /r` | `2D id` là việc trừ giá trị tức thời, còn `2B /r` là trừ nội dung thanh ghi/bộ nhớ vào thanh ghi |
+| ... | ... | ... | ... |
+
+</div>
