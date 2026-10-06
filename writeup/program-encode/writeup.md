@@ -640,3 +640,30 @@ Opcode là thành phần xác định operation hoặc opcode form mà instructi
 ta thấy, lệnh hợp ngữ khi thao tác các nhu cầu hay hành vi, phép toán của CPU thì điển hành sẽ là lệnh riêng của nó như `add,sub,imul,div,v.v..` còn opcode thì cũng y chang, nhưng cái lệnh của nó sâu hơn và chi tiết hơn hợp ngữ, ví dụ muốn cộng nhưng cộng bao nhiêu bit, muốn cộng `32/16bits` thì dùng `05`, còn muốn trừ thì trừ ở đâu, trừ gía trị gì, trừ nội dung hay trừ gía trị tức thời. Nói chung nếu hợp ngữ sâu hơn C, thì opcode sâu hơn hợp ngữ, thế thì hợp ngữ cũng đâu phải là ác mộng lắm đâu
 
 ### 2.2. Operand
+
+Operand (toán hạng) là phần còn lại trong cấu trúc lệnh máy, nằm ngay sau Opcode. Chính là dữ liệu hoặc địa chỉ mà lệnh sẽ thao tác lên. Nghĩa là nếu opcode can thiệp cho CPU làm việc với phép toán, hành vi gì thì operand sẽ can thiệp và cung cấp cho CPU đó thực hành phép toán, hành vi đó vào cái gì. Ta thấy một lệnh máy thường có cấu trúc :
+
+```
+[ Opcode ] + [ Operand 1 ] + [ Operand 2 ] + … (có thể có thêm)
+```
+
+và lấy minh họa hợp ngữ, nếu `add` là cộng, CPU hiểu à nó là cộng nhưng nó cần biết thực hiện phép cộng ở phần nào với phần nào, bây giờ ta cập nhật lệnh hợp ngữ thành `add rax, 1` lúc này CPU hiểu à cộng 1 vào thanh ghi rax. Thì operand cũng y thế, ví dụ `05` là opcode cộng `32/16bits` thì cần phải cung cấp cộng vào ở các mục tiêu gì, lúc này cập nhật thêm operand để cộng 1 vào thanh ghi `05 01 00 00 00`
+
+Ta lưu ý số bit, thanh ghi rax là 64bits hoàn toàn cao so với `32bits`, ở byte `05 01 00 00 00` chỉ thực hiện tương đương lệnh `add eax, 1` thôi, thực tế ở đây khi dùng opcode `05` là nó đã thêm cái thanh ghi eax rồi, nên `01 00 00 00` là gía trị 1, theo little endian.
+
+<details>
+	<summary><b>[Câu hỏi]</b> Vì sao thay vì để riêng 01, thì lại thêm padding 00 00 00 phía sau?</summary>
+<table>
+<tr>
+<td>
+
+---
+
+<sub>--đã hết phần giải thích--</sub>
+
+---
+
+</td>
+</tr>
+</table>
+</details>
