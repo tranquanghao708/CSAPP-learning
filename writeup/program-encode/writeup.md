@@ -689,4 +689,37 @@ Register Encoding là cách mà x86 biến tên thanh ghi như `EAX, ECX, R8, RD
 > [!IMPORTANT]
 > Register code không phải địa chỉ của register. mã định danh thanh ghi trong encoding, không phải `edi = địa chỉ a`, `eax = địa chỉ b`, mà nó kiểu `edi = mã số` và opcode cộng mã số đó để thực hiện lệnh với thanh ghi có mã số đó
 
-Ngoài các encode cộng các mã thanh ghi vào opcode, còn có các chế độ mà Intel định nghĩa một encoding form kiểu `B8+rd ib/iw/id/iq`, trong đó `rd` đại diện cho mã thanh ghi đích.
+Ngoài các encode cộng các mã thanh ghi vào opcode, còn có các chế độ mà Intel định nghĩa một encoding form kiểu `B8+rd ib/iw/id/iq`, trong đó `rd` đại diện cho mã thanh ghi đích. Bây giờ cho các ví dụ :
+
+```
+mov ecx, 1 -> B8 + 001 = B9 => B9 01 00 00 00
+mov edx, 1 -> B8 + 010 = BA => BA 01 00 00 00
+mov ebx, 1 -> B8 + 011 = BB => BB 01 00 00 00
+mov esp, 1 -> B8 + 100 = BC => BC 01 00 00 00
+mov ebp, 1 -> B8 + 101 = BD => BD 01 00 00 00
+mov esi, 1 -> B8 + 110 = BE => BE 01 00 00 00
+mov edi, 1 -> B8 + 111 = BF => BF 01 00 00 00
+```
+
+Nhưng x86 không phải lúc nào cũng encode register trong opcode lý giải chi tiết tại chương [4. ModR/M Byte](#4-modrm-byte). Cho **Ví dụ**, `mov eax, ebx` lệnh này không dùng kiểu `B8+rd` như `mov eax, imm32`. Nó có dạng `opcode | ModR/M` và encoding là `89 D8` và ta chuyển `D8` thành binary là `11011000`. ModR/M có cấu trúc như sau:
+
+```
+┌──────┬───────┬───────┐
+│ mod  │ reg   │ r/m   │
+│  2b  │  3b   │  3b   │
+└──────┴───────┴───────┘
+```
+
+với `11011000` ta có :
+
+```
+11 | 011 | 000
+│     │     │
+│     │     └── r/m = 000 → EAX
+│     └──────── reg = 011 → EBX
+└────────────── mod = 11 → register
+```
+
+vì thế `89 D8` được encode thành `mov eax, imm32`. Ở đây register encoding nằm trong `ModR/M`, chứ không nằm trực tiếp trong opcode. `ModR/M` sẽ đươc nói rõ ở chương dưới
+
+- **Vậy điều kiện để reg encoding trong opcode?:** Là khi lệnh, hay instruction thực hiện hành vi cộng immediate value (giá trị tức thời) cố định vào thanh ghi ví dụ như `mov eax, 1` hay `mov rdi, 82` thì lúc này register encode sẽ được thực hiện opcode mà ko nằm trong `ModR/M`. Còn điều kiện để register encode thực hiện trong `ModR/M` thì khi lệnh hay instruction thực hiện hành vi lấy giá trị trong thanh ghi gán vào thanh ghi khác ví dụ `mov eax, ebx` hay `mov edi, esi` chẳng hạn thì mới thực hiện register encode trong `ModR/M`
