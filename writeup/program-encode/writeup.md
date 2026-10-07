@@ -669,7 +669,24 @@ Ta lưu ý số bit, thanh ghi rax là 64bits hoàn toàn cao so với `32bits`,
 
 ### 2.3. Register Encoding
 
-Register Encoding là cách mà x86 biến tên thanh ghi như `EAX, ECX, R8, RDI, v..v..` thành các bit/field nằm trong instruction encoding. Điểm quan trọng là CPU không lưu chữ EAX trong instruction. **Ví dụ** cho `mov eax, 1` CPU ko lưu nó như `MOV EAX, 1` mà nó lưu `B8 + register_code | imm32`, trong đó `eax` có register code là `000` và `B8 + 000 = B8` nên `B8 01 00 00 00`
+Register Encoding là cách mà x86 biến tên thanh ghi như `EAX, ECX, R8, RDI, v..v..` thành các bit/field nằm trong instruction encoding. Điểm quan trọng là CPU không lưu chữ EAX trong instruction. **Ví dụ** cho `mov eax, 1` CPU ko lưu nó như `MOV EAX, 1` mà nó lưu `B8 + register_code | imm32`, trong đó `eax` có register code là `000` và `B8 + 000 = B8` nên `B8 01 00 00 00`. Dựa vào đó ta có bảng `REG values` như sau :
+
+<div align="center">
+
+| REG values | 8bits | 16bits | 32bits |
+|-|-|-|-|
+| 000 | al | ax | eax |
+| 001 | cl | cx | ecx |
+| 010 | dl | dx | edx |
+| 011 | bl | bx | ebx |
+| 100 | ah | sp | esp |
+| 101 | ch | bp | ebp |
+| 110 | dh | si | esi |
+| 111 | bh | di | edi |
+
+</div>
 
 > [!IMPORTANT]
 > Register code không phải địa chỉ của register. mã định danh thanh ghi trong encoding, không phải `edi = địa chỉ a`, `eax = địa chỉ b`, mà nó kiểu `edi = mã số` và opcode cộng mã số đó để thực hiện lệnh với thanh ghi có mã số đó
+
+Ngoài các encode cộng các mã thanh ghi vào opcode, còn có các chế độ mà Intel định nghĩa một encoding form kiểu `B8+rd ib/iw/id/iq`, trong đó `rd` đại diện cho mã thanh ghi đích.
