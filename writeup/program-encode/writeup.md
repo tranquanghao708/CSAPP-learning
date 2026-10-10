@@ -774,4 +774,24 @@ Trong x86-64, displacement là một giá trị được mã hóa trực tiếp 
 
 **Ví dụ** xét instruction `mov eax, DWORD PTR [rbx + 8]` ý nghĩa của nó là đọc 4 byte từ địa chỉ `RBX + 8`, sau đó ghi dữ liệu vào `EAX`. Bây giờ giả sử ta cho địa chỉ cơ sở là `0x1000` thì `+8` là displacement, suy ra ta có `0x1000 + 8 = 0x1008` và kết quả địa chỉ `0x1008` chính là địa chỉ mà CPU truy cập để lấy 4byte trong đó
 
-- **Displacement xuất hiện như thế nào trong machine code?:**
+- **Displacement xuất hiện như thế nào trong machine code?:** Nó sẽ thành thế này `8B 43 08` và instruction encode này là của `mov eax, DWORD PTR [rbx + 8]`. Bây giờ ta bật GDB lên thực chiến luôn, vì cái câu hỏi này sẽ dễ hiểu hơn khi ta thực chiến. Ta cho code hợp ngữ sau:
+
+   ```asm
+section .text:
+	global _start
+_start:
+	mov eax, dword [rbx + 8]
+	mov eax, 60
+	mov rdi, 1
+	syscall
+   ```
+
+  > nasm -f elf64 asm.asm ; ld asm.o -o asm ; gdb -q ./asm
+
+  khi vào gdb ta ấn start và ta `disas /r 0x401000` là vaddr gốc của `_start` :
+
+  <p align="center">
+  	<img src="image/image1.png"/>
+  </p>
+
+  ta thấy, với gdb instruction encode là `8B 43 08` với assembly representation là `mov eax, DWORD PTR [rbx + 0x8]`
