@@ -779,11 +779,11 @@ Trong x86-64, displacement là một giá trị được mã hóa trực tiếp 
   ```asm
    section .text:
 	global _start
-_start:
-	mov eax, dword [rbx + 8]
-	mov eax, 60
-	mov rdi, 1
-	syscall
+  _start:
+	  mov eax, dword [rbx + 8]
+	  mov eax, 60
+	  mov rdi, 1
+	  syscall
   ```
 
   > nasm -f elf64 asm.asm ; ld asm.o -o asm ; gdb -q ./asm
