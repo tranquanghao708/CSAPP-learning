@@ -735,7 +735,7 @@ vì thế `89 D8` được encode thành `mov eax, ebx`. Ở đây register enco
 
 Immediate value (giá trị tức thời) là một giá trị hằng được mã hóa trực tiếp trong instruction, thay vì được lấy từ một thanh ghi hoặc đọc từ một địa chỉ bộ nhớ do toán hạng chỉ định. **Ví dụ** xét instruction sau `mov eax,1`, ý nghĩa này là gắn giá trị `1` vào thanh ghi `eax`, trong đó `1` là giá trị tức thời (immediate values) và `eax` là thanh ghi đích.
 
-Đối với các instruction ecode như `b8 01 00 00 00`, ta thấy và có thể phân tích `b8` là mã lệnh (opcode) dùng để thực hiện thao tác `MOV` nghĩa là di chuyển dữ liệu nhằm tải một giá trị hằng số trực tiếp vào một thanh ghi và `01 00 00 00` là Immediate 32-bit có giá trị số học là 1, được mã hóa theo little-endian
+Đối với các instruction ecode như `b8 01 00 00 00`, ta thấy và có thể phân tích `b8` là opcode của encoding form `MOV r32, imm32` khi mã thanh ghi đích là `EAX`, dạng tổng quát được mô tả là `B8+rd id`, trong đó `rd` mã hóa thanh ghi đích và `01 00 00 00` là Immediate 32-bit có giá trị số học là 1, được mã hóa theo little-endian
 
 Điều này cho thấy CPU không lưu chuỗi văn bản `mov eax, 1` trong instruction. Thay vào đó, instruction được biểu diễn bằng các byte mã máy, trong đó immediate value được mã hóa thành một trường dữ liệu của instruction. Tuy nhiên, immediate ko phải là thanh ghi hay bộ nhớ cao siêu gì, ta cần phân biệt rõ ba loại toán hạng sau :
 
