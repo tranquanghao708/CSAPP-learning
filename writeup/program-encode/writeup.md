@@ -776,15 +776,15 @@ Trong x86-64, displacement là một giá trị được mã hóa trực tiếp 
 
 - **Displacement xuất hiện như thế nào trong machine code?:** Nó sẽ thành thế này `8B 43 08` và instruction encode này là của `mov eax, DWORD PTR [rbx + 8]`. Bây giờ ta bật GDB lên thực chiến luôn, vì cái câu hỏi này sẽ dễ hiểu hơn khi ta thực chiến. Ta cho code hợp ngữ sau:
 
-   ```asm
-section .text:
+  ```asm
+   section .text:
 	global _start
 _start:
 	mov eax, dword [rbx + 8]
 	mov eax, 60
 	mov rdi, 1
 	syscall
-   ```
+  ```
 
   > nasm -f elf64 asm.asm ; ld asm.o -o asm ; gdb -q ./asm
 
