@@ -833,3 +833,27 @@ Instruction length là độ dài của một instruction sau khi được mã h
 </div>
 
 Lý do độ dài khác nhau là mỗi instruction sử dụng dạng mã hóa khác nhau. `nop` chỉ cần một byte. `mov eax, 1` cần opcode và `immediate 32-bit`. Trong khi đó, `mov eax, [rbx + 8]` cần opcode, `ModR/M` và `displacement 8-bit`. Vì vậy, không thể xác định độ dài instruction chỉ bằng cách nhìn vào tên lệnh assembly hoặc giá trị toán hạng. Ta phải dựa vào encoding cụ thể của instruction.
+
+<details>
+	<summary><b>[Câu hỏi]</b> vì sao reverse engineering cần phải hiểu instruction length?</summary>
+<table>
+<tr>
+<td>
+
+---
+
+Khi phân tích một binary, ta thường nhìn thấy một dãy byte liên tục trong vùng mã thực thi. Những byte này không tự mang theo ranh giới instruction theo cách mà con người có thể nhìn thấy trực tiếp. Disassembler phải giải mã dãy byte theo kiến trúc instruction set để xác định instruction bắt đầu ở đâu, kết thúc ở đâu và instruction tiếp theo nằm tại địa chỉ nào.
+
+**Ví dụ**, nếu một instruction dài 5 byte nhưng bị diễn giải nhầm thành instruction dài 3 byte, các byte còn lại có thể bị giải mã thành những instruction khác. Điều này có thể dẫn đến một luồng disassembly khác với luồng mà ta dự định phân tích. Vì vậy, hiểu Instruction Length giúp ta đọc kết quả từ GDB, objdump hoặc Ghidra chính xác hơn, đồng thời hiểu được một phần cơ sở của các kỹ thuật như linear disassembly, recursive traversal và anti-disassembly.
+
+<sub>--đã hết phần giải thích--</sub>
+
+---
+
+</td>
+</tr>
+</table>
+</details>
+
+## 3. REX Prefix
+### 3.1. REX Prefix là gì?
