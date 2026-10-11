@@ -794,4 +794,13 @@ Trong x86-64, displacement là một giá trị được mã hóa trực tiếp 
   	<img src="image/image1.png"/>
   </p>
 
-  ta thấy, với gdb instruction encode là `8B 43 08` với assembly representation là `mov eax, DWORD PTR [rbx + 0x8]`
+  ta thấy, với gdb instruction encode là `8B 43 08`, trong đó :
+
+  - `8B` : là opcode ý nghĩa của nó là xác định dạng lệnh `MOV r32, r/m32` nghĩa là đưa giá trị 32-bit từ thanh ghi hoặc toán hạng bộ nhớ vào thanh ghi 32-bit.
+  - `43` : đây là modR/M byte, cụ thể `43 = 0100001` khi dịch ra nhị phân :
+    - `mod = 01`: toán hạng bộ nhớ sử dụng displacement 8-bit.
+    - `reg = 000`: thanh ghi đích là `eax` vì `8B + 000 = 8B`
+    - `r/m = 011`: thanh ghi cơ sở `RBX` trong dạng địa chỉ này
+  - `08` : đây là displacement 8bit, giá trị `08` trong hệ hex là `8` trong hệ thập phân. CPU sử dụng nó làm độ lệch cộng với địa chỉ cơ sở RBX.
+
+  **Điểm quan trọng:** 08 không phải địa chỉ bộ nhớ hoàn chỉnh. Nó chỉ là độ lệch được mã hóa trong instruction. Với assembly representation của instruction encoding trên là `mov eax, DWORD PTR [rbx + 0x8]`,
