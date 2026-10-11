@@ -777,7 +777,7 @@ Trong x86-64, displacement là một giá trị được mã hóa trực tiếp 
 - **Displacement xuất hiện như thế nào trong machine code?:** Nó sẽ thành thế này `8B 43 08` và instruction encode này là của `mov eax, DWORD PTR [rbx + 8]`. Bây giờ ta bật GDB lên thực chiến luôn, vì cái câu hỏi này sẽ dễ hiểu hơn khi ta thực chiến. Ta cho code hợp ngữ sau:
 
   ```asm
-   section .text:
+   section .text
 	global _start
   _start:
 	  mov eax, dword [rbx + 8]
@@ -788,7 +788,7 @@ Trong x86-64, displacement là một giá trị được mã hóa trực tiếp 
 
   > nasm -f elf64 asm.asm ; ld asm.o -o asm ; gdb -q ./asm
 
-  khi vào gdb ta ấn start và ta `disas /r 0x401000` là vaddr gốc của `_start` :
+  khi vào gdb ta ấn start và ta `disas /r 0x401000` là vaddr của `_start` ko chắc đó có phải là vaddr gốc ko vì địa chỉ `_start` phụ thuộc vào linker và PIE. Với binary không PIE (như ld mặc định cũ) có thể là `0x401000`, nhưng hiện nay hầu hết binary là PIE thì địa chỉ sẽ là kiểu `0x555555554000 + offset`:
 
   <p align="center">
   	<img src="image/image1.png"/>
@@ -797,9 +797,9 @@ Trong x86-64, displacement là một giá trị được mã hóa trực tiếp 
   ta thấy, với gdb instruction encode là `8B 43 08`, trong đó :
 
   - `8B` : là opcode ý nghĩa của nó là xác định dạng lệnh `MOV r32, r/m32` nghĩa là đưa giá trị 32-bit từ thanh ghi hoặc toán hạng bộ nhớ vào thanh ghi 32-bit.
-  - `43` : đây là modR/M byte, cụ thể `43 = 0100001` khi dịch ra nhị phân :
+  - `43` : đây là [modR/M byte](#4-modrm-byte), cụ thể `43 = 01000011` khi dịch ra nhị phân :
     - `mod = 01`: toán hạng bộ nhớ sử dụng displacement 8-bit.
-    - `reg = 000`: thanh ghi đích là `eax` vì `8B + 000 = 8B`
+    - `reg = 000`: thanh ghi đích là `eax`
     - `r/m = 011`: thanh ghi cơ sở `RBX` trong dạng địa chỉ này
   - `08` : đây là displacement 8bit, giá trị `08` trong hệ hex là `8` trong hệ thập phân. CPU sử dụng nó làm độ lệch cộng với địa chỉ cơ sở RBX.
 
@@ -811,7 +811,9 @@ Trong x86-64, displacement là một giá trị được mã hóa trực tiếp 
   	<img src="image/image2.png"/>
   </p>
 
-  ta thấy, displacement và immediate khác nhau khá nhiều. Ở đây, ta soi byte displacement `8b 43 08` và byte immediate `b8 3c 00 00 00` và `bf 01 00 00 00`, ta thấy các byte immediate thường chỉ có `3c 00 00 00` và `01 00 00 00` vì nó chỉ transmit gía trị tức thời như số vào trong thanh ghi, còn byte displacement `8b 43 08` nó dùng truy cập bộ nhớ ,nhưng `displacement = 8` và cpu sử dụng nó làm độ lệch cộng với địa chỉ cơ sở `RBX`.
+  ta thấy, displacement và immediate khác nhau khá nhiều. Ở đây, ta soi byte displacement `8b 43 08` và byte immediate `b8 3c 00 00 00` và `bf 01 00 00 00`, ta thấy các byte immediate thường có `xx 3c 00 00 00` và `xx 01 00 00 00` (lấy từ ảnh) vì nó chỉ transmit gía trị tức thời như số vào trong thanh ghi ngoài ra còn có `8bit`,`16bit`,`32bit`, tùy instruction. Còn byte displacement `8b 43 08` nó dùng truy cập bộ nhớ ,nhưng `displacement = 8` và cpu sử dụng nó làm độ lệch cộng với địa chỉ cơ sở `RBX`.
 
 > [!IMPORTANT]
 > Displacement và Immediate hoàn toàn khác nhau, displacement là giá trị để làm độ lệch khi truy cập bộ nhớ còn immediate là giá trị gán trực tiếp vào một thanh ghi, hay cái gì đó
+
+### 2.6. Instruction Length
