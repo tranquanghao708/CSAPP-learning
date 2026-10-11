@@ -817,3 +817,19 @@ Trong x86-64, displacement là một giá trị được mã hóa trực tiếp 
 > Displacement và Immediate hoàn toàn khác nhau, displacement là giá trị để làm độ lệch khi truy cập bộ nhớ còn immediate là giá trị gán trực tiếp vào một thanh ghi, hay cái gì đó
 
 ### 2.6. Instruction Length
+
+Instruction length là độ dài của một instruction sau khi được mã hóa thành machine code, được tính bằng byte. Trong kiến trúc x86-64, các instruction có độ dài thay đổi (variable-length instruction encoding). Một instruction có thể chỉ dài 1 byte, nhưng cũng có thể dài nhiều byte tùy vào opcode, prefix, ModR/M, SIB, displacement và immediate mà instruction đó sử dụng.
+
+Đối với x86-64, độ dài tối đa của một instruction là 15 byte. Nếu quá trình giải mã gặp một instruction cần nhiều hơn 15 byte, nó không được xem là một instruction hợp lệ theo quy tắc mã hóa x86-64. Ví dụ các độ dài của instruction :
+
+<div align="center">
+
+| Instruction | machine code | instruction length |
+|-|-|-|
+| `mov eax, 1` | `B8 01 00 00 00` | 5byte |
+| `nop` | `90` | 1byte |
+| `mov eax, [rbx + 8]` | `8B 43 08` | 3byte |
+
+</div>
+
+Lý do độ dài khác nhau là mỗi instruction sử dụng dạng mã hóa khác nhau. `nop` chỉ cần một byte. `mov eax, 1` cần opcode và `immediate 32-bit`. Trong khi đó, `mov eax, [rbx + 8]` cần opcode, `ModR/M` và `displacement 8-bit`. Vì vậy, không thể xác định độ dài instruction chỉ bằng cách nhìn vào tên lệnh assembly hoặc giá trị toán hạng. Ta phải dựa vào encoding cụ thể của instruction.
