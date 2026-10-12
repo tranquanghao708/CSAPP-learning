@@ -857,3 +857,31 @@ Khi phân tích một binary, ta thường nhìn thấy một dãy byte liên t�
 
 ## 3. REX Prefix
 ### 3.1. REX Prefix là gì?
+
+**Encoding tương ứng:**
+
+#### 32-bit destination
+
+<span style="background:#dbeafe;color:#1e40af;padding:6px 12px;border-radius:8px;font-family:monospace;font-weight:600;margin-right:4px">B8</span>
+<span style="background:#1f2937;color:#e5e7eb;padding:6px 12px;border-radius:8px;font-family:monospace;margin-right:4px">01</span>
+<span style="background:#1f2937;color:#e5e7eb;padding:6px 12px;border-radius:8px;font-family:monospace;margin-right:4px">00</span>
+<span style="background:#1f2937;color:#e5e7eb;padding:6px 12px;border-radius:8px;font-family:monospace;margin-right:4px">00</span>
+<span style="background:#1f2937;color:#e5e7eb;padding:6px 12px;border-radius:8px;font-family:monospace">00</span>
+
+*5 byte · Opcode + immediate 32-bit*
+
+---
+
+#### 64-bit destination
+
+<span style="background:#fed7aa;color:#9a3412;padding:6px 12px;border-radius:8px;font-family:monospace;font-weight:600;margin-right:4px">48</span>
+<span style="background:#dbeafe;color:#1e40af;padding:6px 12px;border-radius:8px;font-family:monospace;font-weight:600;margin-right:4px">C7</span>
+<span style="background:#1f2937;color:#e5e7eb;padding:6px 12px;border-radius:8px;font-family:monospace;margin-right:4px">C0</span>
+<span style="background:#1f2937;color:#e5e7eb;padding:6px 12px;border-radius:8px;font-family:monospace;margin-right:4px">01</span>
+<span style="background:#1f2937;color:#e5e7eb;padding:6px 12px;border-radius:8px;font-family:monospace;margin-right:4px">00</span>
+<span style="background:#1f2937;color:#e5e7eb;padding:6px 12px;border-radius:8px;font-family:monospace;margin-right:4px">00</span>
+<span style="background:#1f2937;color:#e5e7eb;padding:6px 12px;border-radius:8px;font-family:monospace">00</span>
+
+*7 byte · REX prefix + opcode + ModR/M + immediate 32-bit*
+
+> Ở ví dụ thứ hai, `48` là REX prefix (`REX.W = 1`), báo rằng instruction sử dụng kích thước toán hạng 64-bit
