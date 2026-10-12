@@ -861,6 +861,10 @@ Khi phân tích một binary, ta thường nhìn thấy một dãy byte liên t�
 Trong x86-64, REX Prefix là một byte prefix đứng trước opcode, được dùng để mở rộng khả năng mã hóa instruction, đặc biệt là hỗ trợ thanh ghi `64-bit`, thanh ghi tổng quát `R8–R15` và các toán hạng `8-bit` bổ sung như `SPL`, `BPL`, `SIL`, `DIL`. Để biết Rex prefix xuất hiện thế nào, ta xét hai instruction :
 
 ```asm
-mov eax, 1
-mov rax, 1
+mov eax, 1 ; B8 01 00 00 00
+mov rax, 1 ; 48 C7 C0 01 00 00 00
 ```
+
+Ở ví dụ thứ hai, `48` là REX prefix (`REX.W = 1`), báo rằng instruction sử dụng kích thước toán hạng `64-bit` trong encoding này. Immediate vẫn là `32-bit` và được sign-extend thành `64-bit` khi thực thi.
+
+- **Lưu ý:** mov rax, 1 có nhiều encoding hợp lệ. **Ví dụ** trên dùng dạng `48 C7 C0 01 00 00 00`, một dạng khác dùng `48 B8 01 00 00 00 00 00 00 00`, với immediate `64-bit`. Vì vậy, không nên kết luận rằng mọi instruction `mov rax, 1` đều có cùng machine code.
