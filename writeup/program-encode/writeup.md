@@ -858,30 +858,9 @@ Khi phân tích một binary, ta thường nhìn thấy một dãy byte liên t�
 ## 3. REX Prefix
 ### 3.1. REX Prefix là gì?
 
-**Encoding tương ứng:**
+Trong x86-64, REX Prefix là một byte prefix đứng trước opcode, được dùng để mở rộng khả năng mã hóa instruction, đặc biệt là hỗ trợ thanh ghi `64-bit`, thanh ghi tổng quát `R8–R15` và các toán hạng `8-bit` bổ sung như `SPL`, `BPL`, `SIL`, `DIL`. Để biết Rex prefix xuất hiện thế nào, ta xét hai instruction :
 
-#### 32-bit destination
-
-![B8](https://img.shields.io/badge/B8-3b82f6?style=for-the-badge)
-![01](https://img.shields.io/badge/01-1f2937?style=for-the-badge)
-![00](https://img.shields.io/badge/00-1f2937?style=for-the-badge)
-![00](https://img.shields.io/badge/00-1f2937?style=for-the-badge)
-![00](https://img.shields.io/badge/00-1f2937?style=for-the-badge)
-
-*5 byte · Opcode + immediate 32-bit*
-
----
-
-#### 64-bit destination
-
-![48](https://img.shields.io/badge/48-f97316?style=for-the-badge)
-![C7](https://img.shields.io/badge/C7-3b82f6?style=for-the-badge)
-![C0](https://img.shields.io/badge/C0-1f2937?style=for-the-badge)
-![01](https://img.shields.io/badge/01-1f2937?style=for-the-badge)
-![00](https://img.shields.io/badge/00-1f2937?style=for-the-badge)
-![00](https://img.shields.io/badge/00-1f2937?style=for-the-badge)
-![00](https://img.shields.io/badge/00-1f2937?style=for-the-badge)
-
-*7 byte · REX prefix + opcode + ModR/M + immediate 32-bit*
-
-> Ở ví dụ thứ hai, `48` là REX prefix (`REX.W = 1`), báo rằng instruction sử dụng kích thước toán hạng 64-bit
+```asm
+mov eax, 1
+mov rax, 1
+```
