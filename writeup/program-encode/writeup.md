@@ -858,8 +858,30 @@ Khi phân tích một binary, ta thường nhìn thấy một dãy byte liên t�
 ## 3. REX Prefix
 ### 3.1. REX Prefix là gì?
 
-| 32-bit destination | | | | |
-|:---:|:---:|:---:|:---:|:---:|
-| <span style="background:#dbeafe;color:#1e40af;padding:4px 10px;border-radius:6px;font-family:monospace">B8</span> | <span style="background:#1f2937;color:white;padding:4px 10px;border-radius:6px;font-family:monospace">01</span> | <span style="background:#1f2937;color:white;padding:4px 10px;border-radius:6px;font-family:monospace">00</span> | <span style="background:#1f2937;color:white;padding:4px 10px;border-radius:6px;font-family:monospace">00</span> | <span style="background:#1f2937;color:white;padding:4px 10px;border-radius:6px;font-family:monospace">00</span> |
+**Encoding tương ứng:**
 
-5 byte · Opcode + immediate 32-bit
+#### 32-bit destination
+
+![B8](https://img.shields.io/badge/B8-3b82f6?style=for-the-badge)
+![01](https://img.shields.io/badge/01-1f2937?style=for-the-badge)
+![00](https://img.shields.io/badge/00-1f2937?style=for-the-badge)
+![00](https://img.shields.io/badge/00-1f2937?style=for-the-badge)
+![00](https://img.shields.io/badge/00-1f2937?style=for-the-badge)
+
+*5 byte · Opcode + immediate 32-bit*
+
+---
+
+#### 64-bit destination
+
+![48](https://img.shields.io/badge/48-f97316?style=for-the-badge)
+![C7](https://img.shields.io/badge/C7-3b82f6?style=for-the-badge)
+![C0](https://img.shields.io/badge/C0-1f2937?style=for-the-badge)
+![01](https://img.shields.io/badge/01-1f2937?style=for-the-badge)
+![00](https://img.shields.io/badge/00-1f2937?style=for-the-badge)
+![00](https://img.shields.io/badge/00-1f2937?style=for-the-badge)
+![00](https://img.shields.io/badge/00-1f2937?style=for-the-badge)
+
+*7 byte · REX prefix + opcode + ModR/M + immediate 32-bit*
+
+> Ở ví dụ thứ hai, `48` là REX prefix (`REX.W = 1`), báo rằng instruction sử dụng kích thước toán hạng 64-bit
