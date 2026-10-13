@@ -925,6 +925,15 @@ Ta thấy, lấy 4bit cho trường `fixed bit` và 4bit còn lại cho các tr�
     ```
 
     ta thấy, với lệnh đầu tiên là `mov eax, ebx` có instruction byte `89 D8` và lệnh này 32bit, nhưng với lệnh `mov rax, rbx` ta lại thấy nó có `48 89 D8` và byte `48` là byte `REX.W = 1` mà chúng ta vừa phân tích ở trên, nó chọn toán hạng 64bit cho dạng `MOV` này
+
+  - **Trường hợp B. Sử dụng thanh ghi R8–R15:** Xét các đoạn code assembly như sau:
+
+    ```asm
+	    mov r8d, eax ; 41 89 C0
+    ```
+
+    Ở đây, `41 = 01000001`, tức `REX.B = 1`. Bit mở rộng cho phép mã hóa `R8D` thay vì chỉ các thanh ghi thuộc nhóm `EAX–EDI`
+
     - **Vậy nếu là REX.W = 1, thì với hệ thống hay cận cảnh CPU nó thực sự được kéo rộng ra 64bit cao hơn như thế nào?:** nó không tự kéo giãn dữ liệu bên trong CPU. Nó làm thay đổi cách CPU giải mã instruction, từ đó chọn phép toán có độ rộng toán hạng 64 bit thay vì 32 bit. Ta cho instruction encode byte `89 D8` và `48 89 D8` :
 
       <p align="center">
@@ -941,13 +950,6 @@ Ta thấy, lấy 4bit cho trường `fixed bit` và 4bit còn lại cho các tr�
       ```
 
       Nếu CPU luôn đọc đúng một byte cho mỗi instruction, nó không thể giải mã đầy đủ `89 D8`. Ngược lại, nếu luôn đọc ba byte, instruction `nop` sẽ bị đọc lẫn với byte thuộc instruction tiếp theo. Vì vậy, x86-64 sử dụng instruction encoding có độ dài biến đổi. Một instruction có thể dài từ 1 đến 15 byte trong chế độ 64 bit.
-  - **Trường hợp B. Sử dụng thanh ghi R8–R15:** Xét các đoạn code assembly như sau:
-
-    ```asm
-	    mov r8d, eax ; 41 89 C0
-    ```
-
-    Ở đây, `41 = 01000001`, tức `REX.B = 1`. Bit mở rộng cho phép mã hóa `R8D` thay vì chỉ các thanh ghi thuộc nhóm `EAX–EDI`
     - **CPU nhận diện cấu trúc instruction như thế nào?:** để hiểu thì ta mô phỏng quá trình của nó như sau, với instruction encode byte `48 89 D8`.
 
 	  <div align="center">
@@ -958,8 +960,19 @@ Ta thấy, lấy 4bit cho trường `fixed bit` và 4bit còn lại cho các tr�
 
 	  </div>
 
-       Bước đầu tiên là nhận diện prefix, CPU nhận ra byte `48` là REX prefix trong chế độ 64 bit. Trường `W=1` yêu cầu dạng toán hạng 64 bit cho instruction này. Bước 2 là giải mã opcode, Opcode `89` xác định dạng `MOV r/m, r` nghĩa là sao chép dữ liệu từ toán hạng thanh ghi nguồn sang toán hạng đích `r/m`. Bước 3 là giải mã ModR/M, byte `D8` có giá trị nhị phân `11011000`
+       Bước đầu tiên là nhận diện prefix, CPU nhận ra byte `48` là REX prefix trong chế độ 64 bit. Trường `W=1` yêu cầu dạng toán hạng 64 bit cho instruction này. Bước 2 là giải mã opcode, Opcode `89` xác định dạng `MOV r/m, r` nghĩa là sao chép dữ liệu từ toán hạng thanh ghi nguồn sang toán hạng đích `r/m`. Bước 3 là giải mã [ModR/M](#4-modrm-byte), byte `D8` có giá trị nhị phân `11011000`:
 
+	  <div align="center">
+
+	  | mod | reg | r/m |
+	  |-|-|-|
+	  | 11 | 011 | 000 |
+
+	  </div>
+
+	    `mod=11` cho biết toán hạng `r/m` là thanh ghi, `reg=011` chỉ `RBX/EBX` tùy độ rộng, còn `r/m=000` chỉ `RAX/EAX` tùy độ rộng. Kết hợp với `REX.W=1`, instruction được giải mã thành `mov rax, rbx`. Lưu ý rằng đây là mô hình giải thích logic giải mã. Nó không khẳng định CPU phải xử lý từng trường bằng các bước tuần tự tách biệt theo đúng thứ tự trên trong phần cứng.
+
+    - **Nhưng CPU biết khi nào instruction kết thúc bằng cách nào?:**
 > [!IMPORTANT]
 > Trong mã hóa x86, việc có REX prefix còn ảnh hưởng đến cách diễn giải một số mã thanh ghi 8-bit:
 > - **Không có REX:** mã `100–111` có thể chỉ `AH`, `CH`, `DH`, `BH`.
