@@ -1,5 +1,8 @@
 # CSAPP : Program Encoding
 
+> Ngày bắt đầu viết : 23/9/2026
+> Ngày hoàn thành :
+
 **Mục lục**
 
 <table>
@@ -34,8 +37,7 @@
 - [3. REX Prefix](#3-rex-prefix)
   - [3.1. REX Prefix là gì?](#31-rex-prefix-là-gì)
   - [3.2. Cấu trúc byte REX](#32-cấu-trúc-byte-rex)
-  - [3.3. W, R, X và B](#33-w-r-x-và-b)
-  - [3.4. Ví dụ giải mã REX](#34-ví-dụ-giải-mã-rex)
+  - [3.3. Ví dụ giải mã REX](#34-ví-dụ-giải-mã-rex)
 
 - [4. ModR/M Byte](#4-modrm-byte)
   - [4.1. ModR/M là gì?](#41-modrm-là-gì)
@@ -881,6 +883,8 @@ mov rax, 1 ; 48 C7 C0 01 00 00 00
 
 - **Lưu ý:** `mov rax, 1` có nhiều encoding hợp lệ. **Ví dụ** trên dùng dạng `48 C7 C0 01 00 00 00`, một dạng khác dùng `48 B8 01 00 00 00 00 00 00 00`, với immediate `64-bit`. Vì vậy, không nên kết luận rằng mọi instruction `mov rax, 1` đều có cùng machine code.
 
+### 3.2. Cấu trúc byte REX
+
 Rex prefix có cấu trúc như sau
 
 <p align="center">
@@ -921,7 +925,14 @@ Ta thấy, lấy 4bit cho trường `fixed bit` và 4bit còn lại cho các tr�
     ```
 
     ta thấy, với lệnh đầu tiên là `mov eax, ebx` có instruction byte `89 D8` và lệnh này 32bit, nhưng với lệnh `mov rax, rbx` ta lại thấy nó có `48 89 D8` và byte `48` là byte `REX.W = 1` mà chúng ta vừa phân tích ở trên, nó chọn toán hạng 64bit cho dạng `MOV` này
-    - **Vậy nếu là REX.W = 1, thì với hệ thống hay cận cảnh CPU nó thực sự được kéo rộng ra 64bit cao hơn như thế nào?:** nó không tự kéo giãn dữ liệu bên trong CPU. Nó làm thay đổi cách CPU giải mã instruction, từ đó chọn phép toán có độ rộng toán hạng 64 bit thay vì 32 bit.
+    - **Vậy nếu là REX.W = 1, thì với hệ thống hay cận cảnh CPU nó thực sự được kéo rộng ra 64bit cao hơn như thế nào?:** nó không tự kéo giãn dữ liệu bên trong CPU. Nó làm thay đổi cách CPU giải mã instruction, từ đó chọn phép toán có độ rộng toán hạng 64 bit thay vì 32 bit. Ta cho instruction encode byte `89 D8` và `48 89 D8` :
+
+      <p align="center">
+	<img src="image/image3.png" alt="ảnh cấu trúc rex prefix">
+	  </p>
+
+      Hai instruction có cùng opcode `89` và cùng byte `ModR/M D8`. Khác biệt là instruction thứ hai có thêm byte `48`, tức `REX.W = 1`. CPU không nhìn thấy chuỗi ký tự `mov rax, rbx` như con người. Nó đọc byte instruction, giải mã các trường mã hóa, rồi xác định độ rộng toán hạng mà instruction yêu cầu. Từ đây suy ra CPU nó ko đọc từng byte, mà nó đọc một cụm byte, length hay chiều dài rộng byte tùy thuộc vào instruction
+	- **Nhưng vấn đề là sao CPU nó có thể biết để đọc một cụm byte?:**
   - **Trường hợp B. Sử dụng thanh ghi R8–R15:** Xét các đoạn code assembly như sau:
 
     ```asm
@@ -943,3 +954,5 @@ mov rax, rbx  ; 48 89 D8  -> 3 byte
 ```
 
 Đây cũng là lý do khi dump machine code, ta không nên mặc định rằng byte đầu tiên luôn là opcode. Nó có thể là một prefix như REX, phải giải mã theo cấu trúc instruction của x86-64. Tóm lại là REX Prefix không phải instruction độc lập. Nó là một byte bổ sung cho phép encoding x86-64 biểu diễn thêm thông tin về kích thước toán hạng và các thanh ghi mở rộng.
+
+### 3.3. Ví dụ giải mã REX
