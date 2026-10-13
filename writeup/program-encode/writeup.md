@@ -874,3 +874,21 @@ Rex prefix có cấu trúc như sau
 <p align="center">
 	<img src="image/image3.png" alt="ảnh cấu trúc rex prefix">
 </p>
+
+**Trong đó:**
+- `W`: Thường chọn kích thước toán hạng `64-bit` khi bằng `1`, tùy instruction.
+- `R`: Mở rộng trường `reg` của `ModR/M`, cho phép mã hóa thêm thanh ghi.
+- `X`: Mở rộng trường `index` của `SIB`.
+- `B`: Mở rộng trường `base` của `SIB` hoặc trường `r/m` của `ModR/M`, cũng có thể mở rộng thanh ghi được mã hóa trong opcode.
+
+ví dụ với `48`:
+
+```
+48 = 0100 1 0 0 0
+	   |  | | | |
+     0100 W R X B
+		  | | | |
+          1 0 0 0
+```
+
+Ta thấy, lấy 4bit cho trường `fixed bit` và 4bit còn lại cho các trường `WRXB`, ở đây byte `48` tương ứng với `REX.W = 1`, còn `R`, `X`, `B` đều bằng `0`. Lưu ý, `48` là byte lầ machine code, chứ ko phải là số nguyên hệ cơ số 2
