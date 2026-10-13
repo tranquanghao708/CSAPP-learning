@@ -948,6 +948,17 @@ Ta thấy, lấy 4bit cho trường `fixed bit` và 4bit còn lại cho các tr�
     ```
 
     Ở đây, `41 = 01000001`, tức `REX.B = 1`. Bit mở rộng cho phép mã hóa `R8D` thay vì chỉ các thanh ghi thuộc nhóm `EAX–EDI`
+    - **CPU nhận diện cấu trúc instruction như thế nào?:** để hiểu thì ta mô phỏng quá trình của nó như sau, với instruction encode byte `48 89 D8`.
+
+	  <div align="center">
+
+      | Rex | Opcode | ModR/M |
+	  |-|-|-|
+	  | 48 | 89 | D8 |
+
+	  </div>
+
+       Bước đầu tiên là nhận diện prefix, CPU nhận ra byte `48` là REX prefix trong chế độ 64 bit. Trường `W=1` yêu cầu dạng toán hạng 64 bit cho instruction này. Bước 2 là giải mã opcode, Opcode `89` xác định dạng `MOV r/m, r` nghĩa là sao chép dữ liệu từ toán hạng thanh ghi nguồn sang toán hạng đích `r/m`. Bước 3 là giải mã ModR/M, byte `D8` có giá trị nhị phân `11011000`
 
 > [!IMPORTANT]
 > Trong mã hóa x86, việc có REX prefix còn ảnh hưởng đến cách diễn giải một số mã thanh ghi 8-bit:
