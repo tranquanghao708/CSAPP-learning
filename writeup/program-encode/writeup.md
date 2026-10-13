@@ -867,7 +867,7 @@ mov rax, 1 ; 48 C7 C0 01 00 00 00
 
 Ở ví dụ thứ hai, `48` là REX prefix (`REX.W = 1`), báo rằng instruction sử dụng kích thước toán hạng `64-bit` trong encoding này. Immediate vẫn là `32-bit` và được sign-extend thành `64-bit` khi thực thi.
 
-- **Lưu ý:** mov rax, 1 có nhiều encoding hợp lệ. **Ví dụ** trên dùng dạng `48 C7 C0 01 00 00 00`, một dạng khác dùng `48 B8 01 00 00 00 00 00 00 00`, với immediate `64-bit`. Vì vậy, không nên kết luận rằng mọi instruction `mov rax, 1` đều có cùng machine code.
+- **Lưu ý:** `mov rax, 1` có nhiều encoding hợp lệ. **Ví dụ** trên dùng dạng `48 C7 C0 01 00 00 00`, một dạng khác dùng `48 B8 01 00 00 00 00 00 00 00`, với immediate `64-bit`. Vì vậy, không nên kết luận rằng mọi instruction `mov rax, 1` đều có cùng machine code.
 
 Rex prefix có cấu trúc như sau
 
@@ -892,3 +892,20 @@ ví dụ với `48`:
 ```
 
 Ta thấy, lấy 4bit cho trường `fixed bit` và 4bit còn lại cho các trường `WRXB`, ở đây byte `48` tương ứng với `REX.W = 1`, còn `R`, `X`, `B` đều bằng `0`. Lưu ý, `48` là byte lầ machine code, chứ ko phải là số nguyên hệ cơ số 2
+
+- **REX Prefix giúp mở rộng thanh ghi như thế nào?:**
+  - **Trường hợp A. Chọn toán hạng 64-bit:** Xét các đoạn code assembly như sau:
+
+    ```asm
+	    mov eax, ebx
+	    mov rax, rbx
+    ```
+
+    một instruction điển hình cho từng lệnh ta có :
+
+    ```asm
+	    mov eax, ebx ; 89 D8
+	    mov rax, rbx ; 48 89 D8
+    ```
+
+    ta thấy, với lệnh đầu tiên là `mov eax, ebx` có instruction byte `89 D8` và lệnh này 32bit, nhưng với lệnh `mov rax, rbx` ta lại thấy nó có `48 89 D8` và byte `48` là byte `REX.W = 1` mà chúng ta vừa phân tích ở trên, nó chọn toán hạng 64bit cho dạng `MOV` này
