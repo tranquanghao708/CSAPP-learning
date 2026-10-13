@@ -2,6 +2,10 @@
 
 **Mục lục**
 
+<table>
+<tr>
+<td width="50%" valign="top">
+
 - [1.Tổng quan về Program Encoding](#1tổng-quan-về-program-encoding)
 	- [1.1 Program Encoding là gì?](#11-program-encoding-là-gì)
 	- [1.2 Quá trình từ mã nguồn C tới machine code](#12-quá-trình-từ-mã-nguồn-c-tới-machine-code)
@@ -40,6 +44,10 @@
   - [4.4. Reg Field](#44-reg-field)
   - [4.5. R/M Field](#45-rm-field)
   - [4.6. Giải mã ModR/M bằng tay](#46-giải-mã-modrm-bằng-tay)
+
+</td>
+
+<td width="50%" valign="top">
 
 - [5. SIB Byte](#5-sib-byte)
   - [5.1. SIB là gì?](#51-sib-là-gì)
@@ -84,6 +92,10 @@
   - [10.1. Instruction được encode như thế nào?](#101-instruction-được-encode-như-thế-nào)
   - [10.2. Quy trình Decode một Instruction](#102-quy-trình-decode-một-instruction)
   - [10.3. Những gì cần nhớ](#103-những-gì-cần-nhớ)
+
+</td>
+</tr>
+</table>
 
 ---
 
