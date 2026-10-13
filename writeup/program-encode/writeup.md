@@ -868,3 +868,9 @@ mov rax, 1 ; 48 C7 C0 01 00 00 00
 Ở ví dụ thứ hai, `48` là REX prefix (`REX.W = 1`), báo rằng instruction sử dụng kích thước toán hạng `64-bit` trong encoding này. Immediate vẫn là `32-bit` và được sign-extend thành `64-bit` khi thực thi.
 
 - **Lưu ý:** mov rax, 1 có nhiều encoding hợp lệ. **Ví dụ** trên dùng dạng `48 C7 C0 01 00 00 00`, một dạng khác dùng `48 B8 01 00 00 00 00 00 00 00`, với immediate `64-bit`. Vì vậy, không nên kết luận rằng mọi instruction `mov rax, 1` đều có cùng machine code.
+
+Rex prefix có cấu trúc như sau
+
+<p align="center">
+	<img src="image/image3.png" alt="ảnh cấu trúc rex prefix">
+</p>
