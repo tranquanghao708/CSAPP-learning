@@ -932,7 +932,15 @@ Ta thấy, lấy 4bit cho trường `fixed bit` và 4bit còn lại cho các tr�
 	  </p>
 
       Hai instruction có cùng opcode `89` và cùng byte `ModR/M D8`. Khác biệt là instruction thứ hai có thêm byte `48`, tức `REX.W = 1`. CPU không nhìn thấy chuỗi ký tự `mov rax, rbx` như con người. Nó đọc byte instruction, giải mã các trường mã hóa, rồi xác định độ rộng toán hạng mà instruction yêu cầu. Từ đây suy ra CPU nó ko đọc từng byte, mà nó đọc một cụm byte, length hay chiều dài rộng byte tùy thuộc vào instruction
-	- **Nhưng vấn đề là sao CPU nó có thể biết để đọc một cụm byte?:**
+	- **Nhưng vấn đề là sao CPU nó có thể biết để đọc một cụm byte?:** CPU không cần biết trước toàn bộ độ dài. Nó sử dụng cơ chế nhận diện và giải mã tuần tự các trường của instruction để xác định ranh giới instruction. Trong CPU hiện đại, một số bước có thể diễn ra song song hoặc được tối ưu hóa, nhưng về mặt kiến trúc, ta có thể mô hình hóa quá trình như sau vì CPU không thể mặc định mỗi instruction có độ dài cố định, xét ba instruction :
+
+      ```asm
+	      nop                 ; 90 -> 1byte
+	      mov eax, ebx        ; 89 D8 -> 2byte
+	      mov rax, rbx        ; 48 89 D8 -> 3byte
+      ```
+
+      Nếu CPU luôn đọc đúng một byte cho mỗi instruction, nó không thể giải mã đầy đủ `89 D8`. Ngược lại, nếu luôn đọc ba byte, instruction `nop` sẽ bị đọc lẫn với byte thuộc instruction tiếp theo. Vì vậy, x86-64 sử dụng instruction encoding có độ dài biến đổi. Một instruction có thể dài từ 1 đến 15 byte trong chế độ 64 bit.
   - **Trường hợp B. Sử dụng thanh ghi R8–R15:** Xét các đoạn code assembly như sau:
 
     ```asm
