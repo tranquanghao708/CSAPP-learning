@@ -928,7 +928,7 @@ Ta thấy, lấy 4bit cho trường `fixed bit` và 4bit còn lại cho các tr�
     - **Vậy nếu là REX.W = 1, thì với hệ thống hay cận cảnh CPU nó thực sự được kéo rộng ra 64bit cao hơn như thế nào?:** nó không tự kéo giãn dữ liệu bên trong CPU. Nó làm thay đổi cách CPU giải mã instruction, từ đó chọn phép toán có độ rộng toán hạng 64 bit thay vì 32 bit. Ta cho instruction encode byte `89 D8` và `48 89 D8` :
 
       <p align="center">
-	<img src="image/image4.png" alt="ảnh cấu trúc rex prefix">
+	    <img src="image/image4.png" alt="ảnh cấu trúc rex prefix">
 	  </p>
 
       Hai instruction có cùng opcode `89` và cùng byte `ModR/M D8`. Khác biệt là instruction thứ hai có thêm byte `48`, tức `REX.W = 1`. CPU không nhìn thấy chuỗi ký tự `mov rax, rbx` như con người. Nó đọc byte instruction, giải mã các trường mã hóa, rồi xác định độ rộng toán hạng mà instruction yêu cầu. Từ đây suy ra CPU nó ko đọc từng byte, mà nó đọc một cụm byte, length hay chiều dài rộng byte tùy thuộc vào instruction
