@@ -934,14 +934,14 @@ Ta thấy, lấy 4bit cho trường `fixed bit` và 4bit còn lại cho các tr�
 
     Ở đây, `41 = 01000001`, tức `REX.B = 1`. Bit mở rộng cho phép mã hóa `R8D` thay vì chỉ các thanh ghi thuộc nhóm `EAX–EDI`
 
-    - **Vậy nếu là REX.W = 1, thì với hệ thống hay cận cảnh CPU nó thực sự được kéo rộng ra 64bit cao hơn như thế nào?:** nó không tự kéo giãn dữ liệu bên trong CPU. Nó làm thay đổi cách CPU giải mã instruction, từ đó chọn phép toán có độ rộng toán hạng 64 bit thay vì 32 bit. Ta cho instruction encode byte `89 D8` và `48 89 D8` :
+    - **Vậy nếu là REX.W = 1, thì với hệ thống hay cận cảnh Debugger nó thực sự được kéo rộng ra 64bit cao hơn như thế nào?:** nó không tự kéo giãn dữ liệu bên trong file hay CPU. Nó làm thay đổi cách chương trình/CPU thực thi instruction, từ đó chọn phép toán có độ rộng toán hạng 64 bit thay vì 32 bit. Ta cho instruction encode byte `89 D8` và `48 89 D8` :
 
       <p align="center">
 	    <img src="image/image4.png" alt="ảnh cấu trúc rex prefix">
 	  </p>
 
-      Hai instruction có cùng opcode `89` và cùng byte `ModR/M D8`. Khác biệt là instruction thứ hai có thêm byte `48`, tức `REX.W = 1`. CPU không nhìn thấy chuỗi ký tự `mov rax, rbx` như con người. Nó đọc byte instruction, giải mã các trường mã hóa, rồi xác định độ rộng toán hạng mà instruction yêu cầu. Từ đây suy ra CPU nó ko đọc từng byte, mà nó đọc một cụm byte, length hay chiều dài rộng byte tùy thuộc vào instruction
-	- **Nhưng vấn đề là sao CPU nó có thể biết để đọc một cụm byte?:** CPU không cần biết trước toàn bộ độ dài. Nó sử dụng cơ chế nhận diện và giải mã tuần tự các trường của instruction để xác định ranh giới instruction. Trong CPU hiện đại, một số bước có thể diễn ra song song hoặc được tối ưu hóa, nhưng về mặt kiến trúc, ta có thể mô hình hóa quá trình như sau vì CPU không thể mặc định mỗi instruction có độ dài cố định, xét ba instruction :
+      Hai instruction có cùng opcode `89` và cùng byte `ModR/M D8`. Khác biệt là instruction thứ hai có thêm byte `48`, tức `REX.W = 1`. Debbuger không nhìn thấy chuỗi ký tự `mov rax, rbx` như con người. Nó đọc byte instruction, giải mã các trường mã hóa, rồi xác định độ rộng toán hạng mà instruction yêu cầu. Từ đây suy ra debugger nó ko đọc từng byte, mà nó đọc một cụm byte, length hay chiều dài rộng byte tùy thuộc vào instruction và cũng đồng nghĩa ta có thể suy ra là CPU đã được thay đổi cách thực thi sang 64bit
+	- **Nhưng vấn đề là sao Debugger nó có thể biết để đọc một cụm byte?:** CPU không cần biết trước toàn bộ độ dài. Nó sử dụng cơ chế nhận diện và giải mã tuần tự các trường của instruction để xác định ranh giới instruction. Trong CPU hiện đại, một số bước có thể diễn ra song song hoặc được tối ưu hóa, nhưng về mặt kiến trúc, ta có thể mô hình hóa quá trình như sau vì CPU không thể mặc định mỗi instruction có độ dài cố định, xét ba instruction :
 
       ```asm
 	      nop                 ; 90 -> 1byte
@@ -950,7 +950,7 @@ Ta thấy, lấy 4bit cho trường `fixed bit` và 4bit còn lại cho các tr�
       ```
 
       Nếu CPU luôn đọc đúng một byte cho mỗi instruction, nó không thể giải mã đầy đủ `89 D8`. Ngược lại, nếu luôn đọc ba byte, instruction `nop` sẽ bị đọc lẫn với byte thuộc instruction tiếp theo. Vì vậy, x86-64 sử dụng instruction encoding có độ dài biến đổi. Một instruction có thể dài từ 1 đến 15 byte trong chế độ 64 bit.
-    - **CPU nhận diện cấu trúc instruction như thế nào?:** để hiểu thì ta mô phỏng quá trình của nó như sau, với instruction encode byte `48 89 D8`.
+    - **Debugger nhận diện cấu trúc instruction như thế nào?:** để hiểu thì ta mô phỏng quá trình của nó như sau, với instruction encode byte `48 89 D8`.
 
 	  <div align="center">
 
@@ -972,12 +972,13 @@ Ta thấy, lấy 4bit cho trường `fixed bit` và 4bit còn lại cho các tr�
 
 	    `mod=11` cho biết toán hạng `r/m` là thanh ghi, `reg=011` chỉ `RBX/EBX` tùy độ rộng, còn `r/m=000` chỉ `RAX/EAX` tùy độ rộng. Kết hợp với `REX.W=1`, instruction được giải mã thành `mov rax, rbx`. Lưu ý rằng đây là mô hình giải thích logic giải mã. Nó không khẳng định CPU phải xử lý từng trường bằng các bước tuần tự tách biệt theo đúng thứ tự trên trong phần cứng.
 
-    - **Nhưng CPU biết khi nào instruction kết thúc bằng cách nào?:** Instruction x86-64 không có một byte đánh dấu kết thúc chung như `END`. Thay vào đó, cấu trúc mã hóa của instruction quy định trường nào xuất hiện và trường đó dài bao nhiêu. Bộ giải mã xác định các trường bắt buộc dựa trên prefix và opcode. **Ví dụ** `90` là `NOP` và `NOP` được mã hóa bằng một byte, nên instruction kết thúc ngay sau byte đó. Tiếp tục, `89 D8` là dạng `MOV r/m32, r32` cần opcode `89` và byte ModR/M `D8`. Không có trường displacement hoặc immediate trong encoding này, nên instruction dài 2 byte.
+    - **Nhưng Debbuger biết khi nào instruction kết thúc bằng cách nào?:** Instruction x86-64 không có một byte đánh dấu kết thúc chung như `END`. Thay vào đó, cấu trúc mã hóa của instruction quy định trường nào xuất hiện và trường đó dài bao nhiêu. Bộ giải mã xác định các trường bắt buộc dựa trên prefix và opcode. **Ví dụ** `90` là `NOP` và `NOP` được mã hóa bằng một byte, nên instruction kết thúc ngay sau byte đó. Tiếp tục, `89 D8` là dạng `MOV r/m32, r32` cần opcode `89` và byte ModR/M `D8`. Không có trường displacement hoặc immediate trong encoding này, nên instruction dài 2 byte.
 > [!IMPORTANT]
 > Trong mã hóa x86, việc có REX prefix còn ảnh hưởng đến cách diễn giải một số mã thanh ghi 8-bit:
 > - **Không có REX:** mã `100–111` có thể chỉ `AH`, `CH`, `DH`, `BH`.
 > - **Có REX:** các mã tương ứng chỉ `SPL`, `BPL`, `SIL`, `DIL`.
-
+>
+> Chúng ta gọi cách thức biên dịch sang mã hợp ngữ là do debugger/decompiler thực hiện, thực chất các công cụ như debugger/decompiler nó mới quan trọng và cực đoan hóa các cái instruction length, đọc đâu, in đâu, hay rex prefix nhiêu đó, để cho ra hợp ngữ kết quả chính xác nhất. Nhưng với CPU thực tế, nó ko biết độ dài instruction là gì, nó cũng ko biết instruction là sao luôn, nó chỉ đọc các bit `0` và `1` từ đầu đến cuối và thực thi mù quáng thôi, còn cách nó thực thi thế nào tùy vào bit `0` và `1` biễu diễn theo quy định của cấu trúc ISA. Học program encode là để ta hiểu bit `0` và `1` nó sẽ cho CPU thực thi gì, làm hành vi gì và góp phần hiểu cơ chế của debugger
 REX Prefix có mối liên hệ với Instruction Length, REX prefix chiếm đúng 1 byte. Nếu một instruction cần REX prefix, byte này là một phần của instruction encoding và làm tổng độ dài tăng thêm một byte so với cùng dạng encoding không có prefix, nếu các thành phần còn lại giữ nguyên. **Ví dụ :**
 
 ```asm
