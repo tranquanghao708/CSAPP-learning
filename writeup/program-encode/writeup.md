@@ -979,6 +979,7 @@ Ta thấy, lấy 4bit cho trường `fixed bit` và 4bit còn lại cho các tr�
 > - **Có REX:** các mã tương ứng chỉ `SPL`, `BPL`, `SIL`, `DIL`.
 >
 > Chúng ta gọi cách thức biên dịch sang mã hợp ngữ là do debugger/decompiler thực hiện, thực chất các công cụ như debugger/decompiler nó mới quan trọng và cực đoan hóa các cái instruction length, đọc đâu, in đâu, hay rex prefix nhiêu đó, để cho ra hợp ngữ kết quả chính xác nhất. Nhưng với CPU thực tế, nó ko biết độ dài instruction là gì, nó cũng ko biết instruction là sao luôn, nó chỉ đọc các bit `0` và `1` từ đầu đến cuối và thực thi mù quáng thôi, còn cách nó thực thi thế nào tùy vào bit `0` và `1` biễu diễn theo quy định của cấu trúc ISA. Học program encode là để ta hiểu bit `0` và `1` nó sẽ cho CPU thực thi gì, làm hành vi gì và góp phần hiểu cơ chế của debugger
+
 REX Prefix có mối liên hệ với Instruction Length, REX prefix chiếm đúng 1 byte. Nếu một instruction cần REX prefix, byte này là một phần của instruction encoding và làm tổng độ dài tăng thêm một byte so với cùng dạng encoding không có prefix, nếu các thành phần còn lại giữ nguyên. **Ví dụ :**
 
 ```asm
