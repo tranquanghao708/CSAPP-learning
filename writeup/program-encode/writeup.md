@@ -972,7 +972,7 @@ Ta thấy, lấy 4bit cho trường `fixed bit` và 4bit còn lại cho các tr�
 
 	    `mod=11` cho biết toán hạng `r/m` là thanh ghi, `reg=011` chỉ `RBX/EBX` tùy độ rộng, còn `r/m=000` chỉ `RAX/EAX` tùy độ rộng. Kết hợp với `REX.W=1`, instruction được giải mã thành `mov rax, rbx`. Lưu ý rằng đây là mô hình giải thích logic giải mã. Nó không khẳng định CPU phải xử lý từng trường bằng các bước tuần tự tách biệt theo đúng thứ tự trên trong phần cứng.
 
-    - **Nhưng CPU biết khi nào instruction kết thúc bằng cách nào?:**
+    - **Nhưng CPU biết khi nào instruction kết thúc bằng cách nào?:** Instruction x86-64 không có một byte đánh dấu kết thúc chung như `END`. Thay vào đó, cấu trúc mã hóa của instruction quy định trường nào xuất hiện và trường đó dài bao nhiêu. Bộ giải mã xác định các trường bắt buộc dựa trên prefix và opcode. **Ví dụ** `90` là `NOP` và `NOP` được mã hóa bằng một byte, nên instruction kết thúc ngay sau byte đó. Tiếp tục, `89 D8` là dạng `MOV r/m32, r32` cần opcode `89` và byte ModR/M `D8`. Không có trường displacement hoặc immediate trong encoding này, nên instruction dài 2 byte.
 > [!IMPORTANT]
 > Trong mã hóa x86, việc có REX prefix còn ảnh hưởng đến cách diễn giải một số mã thanh ghi 8-bit:
 > - **Không có REX:** mã `100–111` có thể chỉ `AH`, `CH`, `DH`, `BH`.
