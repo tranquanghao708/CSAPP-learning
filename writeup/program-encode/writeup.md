@@ -37,7 +37,6 @@
 - [3. REX Prefix](#3-rex-prefix)
   - [3.1. REX Prefix là gì?](#31-rex-prefix-là-gì)
   - [3.2. Cấu trúc byte REX](#32-cấu-trúc-byte-rex)
-  - [3.3. Ví dụ giải mã REX](#34-ví-dụ-giải-mã-rex)
 
 - [4. ModR/M Byte](#4-modrm-byte)
   - [4.1. ModR/M là gì?](#41-modrm-là-gì)
@@ -989,4 +988,22 @@ mov rax, rbx  ; 48 89 D8  -> 3 byte
 
 Đây cũng là lý do khi dump machine code, ta không nên mặc định rằng byte đầu tiên luôn là opcode. Nó có thể là một prefix như REX, phải giải mã theo cấu trúc instruction của x86-64. Tóm lại là REX Prefix không phải instruction độc lập. Nó là một byte bổ sung cho phép encoding x86-64 biểu diễn thêm thông tin về kích thước toán hạng và các thanh ghi mở rộng.
 
-### 3.3. Ví dụ giải mã REX
+## 4. ModR/M Byte
+### 4.1. ModR/M là gì?
+
+ModR/M byte là một byte trong instruction encoding của x86/x86-64, dùng để xác định cách chỉ định toán hạng chẳng hạn thanh ghi nào được sử dụng, hoặc toán hạng có nằm trong bộ nhớ hay không. ModR/M là viết tắt của Mod, Register, Memory/Register. Một byte này được chia thành ba trường bit là `mod`, `reg` và `r/m`.
+
+### 4.2. Cấu trúc ModR/M
+
+ModR/M luôn có độ dài 1 byte = 8 bit:
+
+<p align="center">
+	<img src="image/image5.png" alt="cấu trúc ModR/M">
+</p>
+
+**Trong đó:**
+- `mod:` xác định cách diễn giải toán hạng `r/m`, ví dụ dùng thanh ghi trực tiếp hay địa chỉ bộ nhớ.
+- `reg:` chỉ định một thanh ghi hoặc một trường opcode mở rộng, tùy instruction.
+- `r/m:` chỉ định thanh ghi hoặc toán hạng bộ nhớ, tùy mod và dạng mã hóa.
+> [!IMPORTANT]
+> **Điểm quan trọng:** `reg` và `r/m` không phải lúc nào cũng chỉ thanh ghi. Ý nghĩa cụ thể còn phụ thuộc vào opcode và các prefix.
