@@ -1017,10 +1017,10 @@ ModR/M luôn có độ dài 1 byte = 8 bit:
 **Ví dụ 1:** Giải mã `89 D8`, ta đã biết `89` là opcode của dạng `MOV r/m32, r32` khi không có prefix thay đổi độ rộng toán hạng trong chế độ 64 bit. Byte D8 là ModR/M. Đầu tiên, chuyển nó sang nhị phân $$\large\texttt{D8}_{16}=\texttt{11011000}_2$$ và chúng ta tách 3bit thành 3 trường :
 
 ```
-D8 = 11     011   000
+D8 =  11     011   000
      ├─┤   ├───┤ ├───┤
      mod    reg   r/m
-	  |      |     |
+     |      |     |
      11     011   000
 ```
 
