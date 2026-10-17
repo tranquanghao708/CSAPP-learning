@@ -1014,7 +1014,7 @@ ModR/M luôn có độ dài 1 byte = 8 bit:
 - 4. Dựa vào opcode, chế độ hoạt động và các prefix để diễn giải từng trường.
 - 5. Kết hợp các trường để xác định toán hạng và viết lại instruction assembly.
 
-**Ví dụ 1:** Giải mã `89 D8`, ta đã biết `89` là opcode của dạng `MOV r/m32, r32` khi không có prefix thay đổi độ rộng toán hạng trong chế độ 64 bit. Byte D8 là ModR/M. Đầu tiên, chuyển nó sang nhị phân $$\large\texttt{D8}_{16}=\texttt{11011000}_2$$ và chúng ta tách 3bit thành 3 trường :
+**Ví dụ:** Giải mã `89 D8`, ta đã biết `89` là opcode của dạng `MOV r/m32, r32` khi không có prefix thay đổi độ rộng toán hạng trong chế độ 64 bit. Byte D8 là ModR/M. Đầu tiên, chuyển nó sang nhị phân $$\large\texttt{D8}_{16}=\texttt{11011000}_2$$ và chúng ta tách 3bit thành 3 trường :
 
 ```
 D8 =  11     011   000
@@ -1024,3 +1024,7 @@ D8 =  11     011   000
      11     011   000
 ```
 
+- **Bước 1:** là giải mã trường mod, trong đó `mod = 11`, trong ModR/M, `mod = 11` cho biết trường r/m chỉ một thanh ghi thay vì toán hạng bộ nhớ.
+- **Bước 2:** là giải mã trường reg, `reg = 011`. Với dạng instruction đang xét và không có REX.R, mã 011 chỉ thanh ghi EBX ở độ rộng 32 bit.
+- **Bước 3:** Giải mã trường r/m, ta có  `r/m = 000`, Do `mod = 11`, trường này chỉ thanh ghi EAX ở độ rộng 32 bit
+- **Bước 4:** Kết hợp với opcode, Opcode `89` xác định dạng `MOV r/m32, r32`. Trong dạng này, trường reg là toán hạng nguồn, còn trường r/m là toán hạng đích. Vì vậy `mov eax, ebx` là Instruction sao chép 32 bit từ EBX sang EAX. Trong chế độ 64 bit, việc ghi vào EAX đồng thời đặt 32 bit cao của RAX về 0.
