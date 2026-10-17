@@ -41,10 +41,7 @@
 - [4. ModR/M Byte](#4-modrm-byte)
   - [4.1. ModR/M là gì?](#41-modrm-là-gì)
   - [4.2. Cấu trúc ModR/M](#42-cấu-trúc-modrm)
-  - [4.3. Mod Field](#43-mod-field)
-  - [4.4. Reg Field](#44-reg-field)
-  - [4.5. R/M Field](#45-rm-field)
-  - [4.6. Giải mã ModR/M bằng tay](#46-giải-mã-modrm-bằng-tay)
+  - [4.3. Giải mã ModR/M bằng tay](#43-giải-mã-modrm-bằng-tay)
 
 </td>
 
@@ -1007,3 +1004,23 @@ ModR/M luôn có độ dài 1 byte = 8 bit:
 - `r/m:` chỉ định thanh ghi hoặc toán hạng bộ nhớ, tùy mod và dạng mã hóa.
 > [!IMPORTANT]
 > **Điểm quan trọng:** `reg` và `r/m` không phải lúc nào cũng chỉ thanh ghi. Ý nghĩa cụ thể còn phụ thuộc vào opcode và các prefix.
+
+### 4.3. Giải mã ModR/M bằng tay
+
+Ở các phần trước, chúng ta đã biết ModR/M byte có nhiệm vụ mã hóa thông tin về toán hạng của instruction. Tuy nhiên, để hiểu cách machine code được diễn giải thành assembly, chúng ta cần thực hành giải mã byte này bằng tay. Quá trình giải mã gồm các bước:
+- 1. Xác định opcode và quy tắc encoding của instruction.
+- 2. Chuyển ModR/M byte từ hexadecimal sang nhị phân.
+- 3. Tách 8 bit thành ba trường mod, reg và r/m.
+- 4. Dựa vào opcode, chế độ hoạt động và các prefix để diễn giải từng trường.
+- 5. Kết hợp các trường để xác định toán hạng và viết lại instruction assembly.
+
+**Ví dụ 1:** Giải mã `89 D8`, ta đã biết `89` là opcode của dạng `MOV r/m32, r32` khi không có prefix thay đổi độ rộng toán hạng trong chế độ 64 bit. Byte D8 là ModR/M. Đầu tiên, chuyển nó sang nhị phân $$\large\texttt{D8}_{16}=\texttt{11011000}_2$$ và chúng ta tách 3bit thành 3 trường :
+
+```
+D8 = 11     011   000
+     ├─┤   ├───┤ ├───┤
+     mod    reg   r/m
+	  |      |     |
+     11     011   000
+```
+
