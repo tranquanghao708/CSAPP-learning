@@ -38,14 +38,14 @@
   - [3.1. REX Prefix là gì?](#31-rex-prefix-là-gì)
   - [3.2. Cấu trúc byte REX](#32-cấu-trúc-byte-rex)
 
+</td>
+
+<td width="50%" valign="top">
+
 - [4. ModR/M Byte](#4-modrm-byte)
   - [4.1. ModR/M là gì?](#41-modrm-là-gì)
   - [4.2. Cấu trúc ModR/M](#42-cấu-trúc-modrm)
   - [4.3. Giải mã ModR/M bằng tay](#43-giải-mã-modrm-bằng-tay)
-
-</td>
-
-<td width="50%" valign="top">
 
 - [5. SIB Byte](#5-sib-byte)
   - [5.1. SIB là gì?](#51-sib-là-gì)
@@ -56,35 +56,12 @@
   - [5.6. Công thức địa chỉ của SIB](#56-công-thức-địa-chỉ-của-sib)
   - [5.7. Giải mã SIB bằng tay](#57-giải-mã-sib-bằng-tay)
 
-- [6. Ví dụ hoàn chỉnh](#6-ví-dụ-hoàn-chỉnh)
-  - [6.1. Register → Register](#61-register--register)
-  - [6.2. Register → Memory](#62-register--memory)
-  - [6.3. Memory Addressing](#63-memory-addressing)
-  - [6.4. Immediate Operand](#64-immediate-operand)
-  - [6.5. Instruction có Displacement](#65-instruction-có-displacement)
-  - [6.6. Instruction có SIB](#66-instruction-có-sib)
-  - [6.7. Tự decode một Instruction hoàn chỉnh](#67-tự-decode-một-instruction-hoàn-chỉnh)
-
-- [7. Từ Machine Code trở lại Assembly](#7-từ-machine-code-trở-lại-assembly)
-  - [7.1. Disassembler hoạt động như thế nào?](#71-disassembler-hoạt-động-như-thế-nào)
-  - [7.2. objdump](#72-objdump)
-  - [7.3. GDB](#73-gdb)
-  - [7.4. Ghidra](#74-ghidra)
-  - [7.5. Đối chiếu Byte ↔ Assembly](#75-đối-chiếu-byte--assembly)
-
 - [8. Object Code và ELF](#8-object-code-và-elf)
   - [8.1. Object File là gì?](#81-object-file-là-gì)
   - [8.2. Code Section](#82-code-section)
   - [8.3. Relocation](#83-relocation)
   - [8.4. Symbol và Symbol Table](#84-symbol-và-symbol-table)
   - [8.5. Từ Object File đến Executable](#85-từ-object-file-đến-executable)
-
-- [9. Thực hành với Compiler](#9-thực-hành-với-compiler)
-  - [9.1. gcc -S](#91-gcc--s)
-  - [9.2. gcc -c](#92-gcc--c)
-  - [9.3. objdump -d](#93-objdump--d)
-  - [9.4. readelf](#94-readelf)
-  - [9.5. So sánh Source → Assembly → Machine Code](#95-so-sánh-source--assembly--machine-code)
 
 - [10. Tổng kết](#10-tổng-kết)
   - [10.1. Instruction được encode như thế nào?](#101-instruction-được-encode-như-thế-nào)
@@ -1028,3 +1005,10 @@ D8 =  11     011   000
 - **Bước 2:** là giải mã trường reg, `reg = 011`. Với dạng instruction đang xét và không có REX.R, mã 011 chỉ thanh ghi EBX ở độ rộng 32 bit.
 - **Bước 3:** Giải mã trường r/m, ta có  `r/m = 000`, Do `mod = 11`, trường này chỉ thanh ghi EAX ở độ rộng 32 bit
 - **Bước 4:** Kết hợp với opcode, Opcode `89` xác định dạng `MOV r/m32, r32`. Trong dạng này, trường reg là toán hạng nguồn, còn trường r/m là toán hạng đích. Vì vậy `mov eax, ebx` là Instruction sao chép 32 bit từ EBX sang EAX. Trong chế độ 64 bit, việc ghi vào EAX đồng thời đặt 32 bit cao của RAX về 0.
+
+## 5. SIB Byte
+### 5.1. SIB là gì?
+
+SIB byte (Scale-Index-Base byte) là một byte trong mã máy x86/x86-64, dùng để mã hóa cách truy cập bộ nhớ bằng sự kết hợp của thanh ghi cơ sở (Base), thanh ghi chỉ số (Index) và hệ số nhân (Scale). Nói đơn giản ModR/M cho biết cấu trúc địa chỉ bộ nhớ ở mức cơ bản; khi cần cách tính địa chỉ phức tạp hơn, nó có thể chỉ định thêm một byte SIB
+
+### 5.2. Cấu trúc SIB
