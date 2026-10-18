@@ -63,6 +63,9 @@
   - [8.4. Symbol và Symbol Table](#84-symbol-và-symbol-table)
   - [8.5. Từ Object File đến Executable](#85-từ-object-file-đến-executable)
 
+- [7. Lập trình byte program]
+  - [lập trình tích hợp byte program trên file định dạng C]
+  - [lập trình tích hợ byte program trên file định dạng hợp ngữ]
 - [10. Tổng kết](#10-tổng-kết)
   - [10.1. Instruction được encode như thế nào?](#101-instruction-được-encode-như-thế-nào)
   - [10.2. Quy trình Decode một Instruction](#102-quy-trình-decode-một-instruction)
@@ -1012,3 +1015,9 @@ D8 =  11     011   000
 SIB byte (Scale-Index-Base byte) là một byte trong mã máy x86/x86-64, dùng để mã hóa cách truy cập bộ nhớ bằng sự kết hợp của thanh ghi cơ sở (Base), thanh ghi chỉ số (Index) và hệ số nhân (Scale). Nói đơn giản ModR/M cho biết cấu trúc địa chỉ bộ nhớ ở mức cơ bản; khi cần cách tính địa chỉ phức tạp hơn, nó có thể chỉ định thêm một byte SIB
 
 ### 5.2. Cấu trúc SIB
+
+SIB gồm 8 bit, chia thành ba trường:
+
+<p align="center">
+	<img src="image/image6.png" alt="cấu trúc sib byte">
+</p>
