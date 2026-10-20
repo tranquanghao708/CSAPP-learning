@@ -37,6 +37,7 @@
 - [3. REX Prefix](#3-rex-prefix)
   - [3.1. REX Prefix là gì?](#31-rex-prefix-là-gì)
   - [3.2. Cấu trúc byte REX](#32-cấu-trúc-byte-rex)
+  - [3.3. Các nhóm của Prefix ngoài Rex](#33-các-nhóm-của-prefix-ngoài-rex)
 
 </td>
 
@@ -1004,6 +1005,25 @@ mov rax, rbx  ; 48 89 D8  -> 3 byte
 ```
 
 Đây cũng là lý do khi dump machine code, ta không nên mặc định rằng byte đầu tiên luôn là opcode. Nó có thể là một prefix như REX, phải giải mã theo cấu trúc instruction của x86-64. Tóm lại là REX Prefix không phải instruction độc lập. Nó là một byte bổ sung cho phép encoding x86-64 biểu diễn thêm thông tin về kích thước toán hạng và các thanh ghi mở rộng.
+
+### 3.3. Các nhóm của Prefix ngoài Rex
+
+Vừa rồi, ta hiểu rex prefix nhưng rex chỉ là một phần của prefix, thực chất prefix là khái niệm rộng còn nhiều phần tử gộp nên nó. Các nhóm phần tử gồm `Lock`, `REP/REPNE`, `Operand-size override`, `Address-size override`, `Segment override`, `REX` từ đó ta lập thành một bảng như sau :
+
+<div align="center">
+
+| Nhóm |	Byte tiêu biểu |	Chức năng |
+|-|-|-|
+| Lock |	`F0`	| Yêu cầu ngữ nghĩa khóa cho các instruction hỗ trợ |
+| REP / REPNE |	`F3`, `F2` |	Lặp hoặc thay đổi ngữ nghĩa của một số instruction |
+| Operand-size override |	`66` |	Thay đổi kích thước toán hạng trong các trường hợp được quy định |
+| Address-size override	| `67` |	Thay đổi kích thước địa chỉ |
+| Segment override |	`2E`, `36`, `3E`, `26`, `64`, `65` |	Chọn segment override trong những trường hợp áp dụng |
+| REX |	`40–4F` |	Mở rộng thanh ghi và điều khiển kích thước toán hạng 64-bit |
+
+</div>
+
+Điểm khác biệt chính là REX có cấu trúc bit riêng để mở rộng encoding, chứ không chỉ là một byte báo thay đổi chung.
 
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
