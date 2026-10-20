@@ -759,6 +759,38 @@ Tuy nhiên không phải mọi immediate đều được sign-extend. Cách di�
 
 Trong x86-64, displacement là một giá trị được mã hóa trực tiếp trong instruction, dùng làm độ lệch khi tính địa chỉ hiệu dụng của toán hạng bộ nhớ. Nó thường được cộng với địa chỉ cơ sở (base) hoặc địa chỉ chỉ số (index) đã được nhân với hệ số (scale).
 
+<details>
+	<summary><b>[Câu hỏi]</b> Địa chỉ cơ sở, địa chỉ chỉ số, hệ số là gì?</summary>
+<table>
+<tr>
+<td>
+
+---
+
+Trong x86-64, base, index và scale là ba thành phần có thể phối hợp để tính địa chỉ bộ nhớ hiệu dụng (effective address). Ta sẽ gặp chúng khi giải mã byte SIB trong các instruction như `mov eax, [rbx + rcx*4 + 8]`. Trong đó :
+- **Base:** Hay còn được gọi là thanh ghi cơ sở dùng để chứa địa chỉ nền để tính địa chỉ cần truy cập. Ví dụ, `RBX = 0x1000`.
+- **Index:** Hay còn được gọi là thanh ghi chỉ số dùng để chứa giá trị chỉ số hoặc độ lệch dùng để xác định vị trí dữ liệu. Ví dụ, `RCX = 3`.
+- **Scale:** Hay còn được gọi là hệ số nhân dùng để nhân giá trị index với `1`, `2`, `4` hoặc `8` trước khi cộng vào địa chỉ cơ sở. Các hệ số này thuận tiện khi truy cập phần tử có kích thước tương ứng.
+
+Ngoài ba thành phần đó, địa chỉ còn có thể cộng thêm displacement, là một hằng số được mã hóa trực tiếp trong instruction. Từ đó suy ra công thức tương ứng là `EA = Base + Index x Scale + Displacement` và `EA` là effective address, tức địa chỉ hiệu dụng được tính ra. Không phải instruction nào cũng cần cả bốn thành phần. Ví dụ cụ thể với `mov eax, [rbx + rcx*4 + 8]`
+
+Giả sử hai thanh ghi `rbx` và `rcx` có giá trị lần lượt là `0x1000` và `3` và xét instruction `mov eax, DWORD PTR [rbx + rcx*4 + 8]`, lúc này quy tắc sẽ tính địa chỉ là như sau:
+
+<p align="center">
+	<img src="image/image7.png" alt="tính địa chỉ">
+</p>
+
+**Chú ý:** `RCX = 3` là giá trị chỉ số, không phải địa chỉ `0x3`. Sau khi nhân với scale `4`, nó tạo độ lệch `12` byte. Đó là lý do scale hữu ích khi truy cập mảng.
+
+<sub>--đã hết phần giải thích--</sub>
+
+---
+
+</td>
+</tr>
+</table>
+</details>
+
 > [!IMPORTANT]
 > displacement không phải bản thân địa chỉ bộ nhớ. Nó là một thành phần có thể được CPU dùng để tính địa chỉ cần truy cập.
 
