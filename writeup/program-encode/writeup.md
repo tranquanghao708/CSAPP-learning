@@ -782,6 +782,14 @@ Giả sử hai thanh ghi `rbx` và `rcx` có giá trị lần lượt là `0x100
 
 **Chú ý:** `RCX = 3` là giá trị chỉ số, không phải địa chỉ `0x3`. Sau khi nhân với scale `4`, nó tạo độ lệch `12` byte. Đó là lý do scale hữu ích khi truy cập mảng.
 
+- **Vì sao cần scale?:** Giả sử một mảng gồm các phần tử 32-bit, mỗi phần tử chiếm 4 byte:
+
+  <p align="center">
+    <img src="image/image8.png" alt="sơ đồ mảng 4byte">
+  </p>
+
+  Để truy cập `A[3]` chương trình sẽ thực hiện `EA = 0x1000 + 3 x 4 = 0x100C` nhưng hợp ngữ lại có cách biểu diễn bằng `mov eax, DWORD PTR [rbx + rcx*4]` với `RBX = 0x1000`, `RCX = 3`. Nếu phần tử là 64-bit, mỗi phần tử chiếm 8 byte, nên scale có thể là 8. Với phần tử 8-bit, scale thường là 1
+
 <sub>--đã hết phần giải thích--</sub>
 
 ---
