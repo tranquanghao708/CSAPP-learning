@@ -1143,3 +1143,16 @@ Trong đó :
 - **trường Base:** chiếm 3bit. Tác dụng là mã hóa thanh ghi base
 
 Công thức địa chỉ tổng quát là `EA = Base + Index x scale + Displacement`. Trong đó EA là effective address (địa chỉ hiệu dụng). Displacement nằm ở trường riêng của instruction nếu encoding yêu cầu, nó không nằm bên trong SIB.
+
+### 4.3. Giải mã ModR/M bằng tay
+
+Xét instruction sau `mov eax, DWORD PTR [rbx + rcx*4 + 8]`. Một encoding hợp lệ trong x86-64 là `8B 44 8B 08`, trong đó `8B` là opcode, `44` là ModR/M, `8B` là SIB, `08` là displacement. Bây giờ sự vào byte sib là `8B` ta tiến hành giải mã như sau :
+
+```
+8B = 10001011
+     10 001 011
+     ── ─── ───
+     SS Index Base
+```
+
+Ta thấy `SS = 10` suy ra `Scale = 4`, `Index = 001` suy ra thanh ghi `RCX`, `Base = 011` suy ra thanh ghi `RBX`, cộng thêm byte displacement là `08` vậy giờ ghép lại vào công thức tính địa chỉ ta có `EA = RBX + RCX x 4 + 8` và CPU sử dụng địa chỉ đó để đọc 4 byte vào EAX.
