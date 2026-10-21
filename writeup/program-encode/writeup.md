@@ -51,11 +51,7 @@
 - [5. SIB Byte](#5-sib-byte)
   - [5.1. SIB là gì?](#51-sib-là-gì)
   - [5.2. Cấu trúc SIB](#52-cấu-trúc-sib)
-  - [5.3. Scale](#53-scale)
-  - [5.4. Index](#54-index)
-  - [5.5. Base](#55-base)
-  - [5.6. Công thức địa chỉ của SIB](#56-công-thức-địa-chỉ-của-sib)
-  - [5.7. Giải mã SIB bằng tay](#57-giải-mã-sib-bằng-tay)
+  - [5.3. Giải mã SIB bằng tay](#53-giải-mã-sib-bằng-tay)
 
 - [8. Object Code và ELF](#8-object-code-và-elf)
   - [8.1. Object File là gì?](#81-object-file-là-gì)
@@ -773,7 +769,7 @@ Trong x86-64, base, index và scale là ba thành phần có thể phối hợp 
 - **Index:** Hay còn được gọi là thanh ghi chỉ số dùng để chứa giá trị chỉ số hoặc độ lệch dùng để xác định vị trí dữ liệu. Ví dụ, `RCX = 3`.
 - **Scale:** Hay còn được gọi là hệ số nhân dùng để nhân giá trị index với `1`, `2`, `4` hoặc `8` trước khi cộng vào địa chỉ cơ sở. Các hệ số này thuận tiện khi truy cập phần tử có kích thước tương ứng.
 
-Ngoài ba thành phần đó, địa chỉ còn có thể cộng thêm displacement, là một hằng số được mã hóa trực tiếp trong instruction. Từ đó suy ra công thức tương ứng là `EA = Base + Index x Scale + Displacement` và `EA` là effective address, tức địa chỉ hiệu dụng được tính ra. Không phải instruction nào cũng cần cả bốn thành phần. Ví dụ cụ thể với `mov eax, [rbx + rcx*4 + 8]`
+Ngoài ba thành phần đó, địa chỉ còn có thể cộng thêm displacement, là một hằng số được mã hóa trực tiếp trong instruction. Từ đó suy ra công thức tương ứng là `EA = Base + Index x Scale + Displacement` và `EA` là effective address công thức này sẽ chi tiết tại phần [5. SIB Byte](#5-sib-byte), tức địa chỉ hiệu dụng được tính ra. Không phải instruction nào cũng cần cả bốn thành phần. Ví dụ cụ thể với `mov eax, [rbx + rcx*4 + 8]`
 
 Giả sử hai thanh ghi `rbx` và `rcx` có giá trị lần lượt là `0x1000` và `3` và xét instruction `mov eax, DWORD PTR [rbx + rcx*4 + 8]`, lúc này quy tắc sẽ tính địa chỉ là như sau:
 
@@ -1140,3 +1136,10 @@ SIB gồm 8 bit, chia thành ba trường:
 <p align="center">
 	<img src="image/image6.png" alt="cấu trúc sib byte">
 </p>
+
+Trong đó :
+- **trường Scale:** chiếm 2bit. Tác dụng là chọn hệ số nhân của Index: `1`, `2`, `4` hoặc `8`
+- **trường Index:**	chiếm 3bit. Tác dụng là mã hóa thanh ghi index
+- **trường Base:** chiếm 3bit. Tác dụng là mã hóa thanh ghi base
+
+Công thức địa chỉ tổng quát là `EA = Base + Index x scale + Displacement`. Trong đó EA là effective address (địa chỉ hiệu dụng). Displacement nằm ở trường riêng của instruction nếu encoding yêu cầu, nó không nằm bên trong SIB.
