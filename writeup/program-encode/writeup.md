@@ -918,9 +918,9 @@ ví dụ với `48`:
 
 ```
 48 = 0100 1 0 0 0
-	   |  | | | |
+       |  | | | |
      0100 W R X B
-		  | | | |
+          | | | |
           1 0 0 0
 ```
 
@@ -1028,9 +1028,10 @@ Vừa rồi, ta hiểu rex prefix nhưng rex chỉ là một phần của prefix
 - **nhóm Lock prefix:** nhóm `lock` dùng để yêu cầu một thao tác đọc–sửa–ghi trên bộ nhớ được thực hiện theo cơ chế atomic, tức là các luồng CPU khác không thể chen vào giữa thao tác đó theo cách làm hỏng tính nguyên tử của phép cập nhật. Nhưng LOCK không dùng được với mọi instruction. Nó chỉ hợp lệ với những dạng instruction hỗ trợ ngữ nghĩa khóa theo kiến trúc x86.
 
   **Ví dụ:** cho `lock add`. Giả sử một biến `counter` nằm trong bộ nhớ và hai thread cùng tăng nó. Không có atomicity, thao tác tăng có thể tương đương với ba bước:
-  - 1. Đọc giá trị `counter` từ bộ nhớ.
-  - 2. Cộng `1`.
-  - 3. Ghi kết quả về bộ nhớ.
+  - 1.Đọc giá trị `counter` từ bộ nhớ.
+  - 2.Cộng `1`.
+  - 3.Ghi kết quả về bộ nhớ.
+  
   Nếu hai thread cùng đọc giá trị `10` trước khi bên nào ghi kết quả, cả hai có thể ghi `11`. Một lần tăng bị mất. Với `LOCK ADD`, thao tác cộng trên toán hạng bộ nhớ được thực hiện nguyên tử theo các quy tắc của kiến trúc `lock add dword [counter], 1`. Trong NASM, đây là cú pháp minh họa cho một phép cộng atomic vào biến bộ nhớ `counter`.
 
 ## 4. ModR/M Byte
