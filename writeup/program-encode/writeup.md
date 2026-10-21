@@ -1034,6 +1034,27 @@ Vừa rồi, ta hiểu rex prefix nhưng rex chỉ là một phần của prefix
   
   Nếu hai thread cùng đọc giá trị `10` trước khi bên nào ghi kết quả, cả hai có thể ghi `11`. Một lần tăng bị mất. Với `LOCK ADD`, thao tác cộng trên toán hạng bộ nhớ được thực hiện nguyên tử theo các quy tắc của kiến trúc `lock add dword [counter], 1`. Trong NASM, đây là cú pháp minh họa cho một phép cộng atomic vào biến bộ nhớ `counter`.
 
+  - **LOCK hoạt động ở mức phần cứng thế nào?:** Trên CPU hiện đại, LOCK không đơn giản có nghĩa là khóa toàn bộ bus hệ thống trong mọi trường hợp. Nếu vùng nhớ được khóa phù hợp với cơ chế coherence của cache, CPU thường có thể bảo đảm atomicity bằng cơ chế cache locking. Trong các trường hợp đặc biệt như truy cập bộ nhớ không phù hợp hoặc vượt ranh giới cache line, cơ chế mạnh hơn có thể cần thiết và chi phí có thể lớn hơn. Vì thế, cách hiểu đúng là LOCK yêu cầu ngữ nghĩa atomic theo kiến trúc, chứ không phải luôn khóa toàn bộ CPU hoặc toàn bộ bus.
+
+  Ví dụ, `F0` đứng trước `MOV` thông thường không tự động biến nó thành một phép MOV atomic hợp lệ. Nếu instruction không hỗ trợ `LOCK`, CPU có thể phát sinh lỗi `#UD` (Invalid Opcode).
+
+> [!NOTE]
+> **Ghi nhớ:** `LOCK` là prefix điều khiển ngữ nghĩa atomic của một số instruction, `REX` là prefix mang các bit mở rộng encoding. Cả hai đều là prefix, nhưng chức năng hoàn toàn khác nhau.
+
+- **nhóm REP / REPNE:** `REP` và `REPNE` là các prefix trong x86 dùng chủ yếu để lặp lại một số instruction xử lý chuỗi. Khác với `LOCK`, chúng không nhằm bảo đảm atomicity, khác với `REX`, chúng không dùng các bit W/R/X/B để mở rộng thanh ghi. Hai byte thường gặp là `F3` cho `REP`, `REPE` hoặc `REPZ`, tùy instruction và `F2` cho `REPNE` hoặc `REPNZ`, tùy instruction.
+  Trong đó `REP` là lặp lại instruction và `REPNE` là lặp cho đến khi không còn thỏa điều kiện, ví dụ `REP` cho :
+
+  ```asm
+  cld
+  mov ecx, 4
+  mov esi, source
+  mov edi, destination
+  rep movsb
+  ```
+
+  `MOVSB` sao chép một byte từ địa chỉ `DS:RSI` sang `ES:RDI` trong chế độ 64-bit, với các quy tắc segment tương ứng. `REP MOVSB` lặp thao tác sao chép theo số lần được chỉ định bởi `RCX`. Với `RCX = 4`, CPU thực hiện tối đa bốn lần sao chép byte, cập nhật `RSI`, `RDI` và giảm `RCX` sau mỗi lần lặp. `CLD` đặt Direction Flag về `0` để các con trỏ tăng lên sau mỗi lần xử lý. Và encoding của `rep movsb` là `F3 A4` trong đó `A4` là opcode của `MOVSB` còn `F3` yêu cầu lặp thao tác theo quy tắc của instruction này.
+
+Encoding của rep movsb:
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
 
