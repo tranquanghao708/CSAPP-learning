@@ -1013,7 +1013,7 @@ Vừa rồi, ta hiểu rex prefix nhưng rex chỉ là một phần của prefix
 <div align="center">
 
 | Nhóm |	Byte tiêu biểu |	Chức năng |
-|-|-|-|
+|:-|:-|:-|
 | Lock |	`F0`	| Yêu cầu ngữ nghĩa khóa cho các instruction hỗ trợ |
 | REP / REPNE |	`F3`, `F2` |	Lặp hoặc thay đổi ngữ nghĩa của một số instruction |
 | Operand-size override |	`66` |	Thay đổi kích thước toán hạng trong các trường hợp được quy định |
@@ -1053,8 +1053,37 @@ Vừa rồi, ta hiểu rex prefix nhưng rex chỉ là một phần của prefix
   ```
 
   `MOVSB` sao chép một byte từ địa chỉ `DS:RSI` sang `ES:RDI` trong chế độ 64-bit, với các quy tắc segment tương ứng. `REP MOVSB` lặp thao tác sao chép theo số lần được chỉ định bởi `RCX`. Với `RCX = 4`, CPU thực hiện tối đa bốn lần sao chép byte, cập nhật `RSI`, `RDI` và giảm `RCX` sau mỗi lần lặp. `CLD` đặt Direction Flag về `0` để các con trỏ tăng lên sau mỗi lần xử lý. Và encoding của `rep movsb` là `F3 A4` trong đó `A4` là opcode của `MOVSB` còn `F3` yêu cầu lặp thao tác theo quy tắc của instruction này.
+  Ví dụ cho `REPNE` xét :
 
-Encoding của rep movsb:
+  ```asm
+  cld
+  mov ecx, 100
+  mov edi, buffer
+  xor eax, eax
+  repne scasb
+  ```
+
+  `SCASB` so sánh giá trị trong `AL` với byte tại địa chỉ `ES:RDI`, đồng thời cập nhật các cờ trạng thái và con trỏ. `REPNE SCASB` lặp khi `RCX` chưa bằng 0 và `ZF = 0`, nghĩa là lần so sánh gần nhất chưa tìm thấy byte bằng `AL`. Trong ví dụ, `AL = 0`, nên đoạn mã tìm byte 0 trong vùng nhớ, tối đa 100 byte. Nó dừng khi tìm thấy byte bằng 0 hoặc khi hết số lần lặp. Encoding của `repne scasb` là `F2 AE` trong đó `F2` là `repne` và `AE` là `scasb`
+
+Phân biệt `REP`, `REPE` và `REPNE` ta có bảng so sánh như sau :
+
+<div align="center">
+
+| Prefix / tên |	Điều kiện lặp |
+|:-|:-|
+| `REP`	 | Tiếp tục khi bộ đếm khác 0 |
+| `REPE` / `REPZ` |	Tiếp tục khi bộ đếm khác 0 và `ZF = 1` |
+| `REPNE` / `REPNZ` |	Tiếp tục khi bộ đếm khác 0 và `ZF = 0` |
+
+</div>
+
+`REPE` và `REPZ` là hai tên cho cùng một dạng prefix `F3`, `REPNE` và `REPNZ` tương ứng với `F2`.
+
+> [!NOTE]
+> **Điểm cần nhớ:** ý nghĩa chính xác phụ thuộc vào instruction. Với `MOVSB`, `F3` dùng để lặp sao chép, còn với `SCASB`, prefix có thể kết hợp điều kiện dựa trên `ZF`.
+
+Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liên quan đến việc lặp và điều kiện lặp của các instruction được hỗ trợ, còn REX (`40–4F`) liên quan đến mở rộng encoding trong x86-64.
+
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
 
