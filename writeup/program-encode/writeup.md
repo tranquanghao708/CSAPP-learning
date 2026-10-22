@@ -1535,7 +1535,7 @@ Trong quy trình biên dịch và liên kết trên Linux x86-64, Object File sa
 
 <p align="center" valign="top">
 	<kbd>
-  <img src="image/image15.png" alt="hình ảnh object file đến executable" style="width: 3000px; max-width: none; height: auto;">
+  <img src="image/image15.png" alt="hình ảnh object file đến executable" style="width: 2500px; max-width: none; height: auto;">
 	<kbd>
 </p>
 
