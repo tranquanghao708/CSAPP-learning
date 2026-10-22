@@ -1144,7 +1144,7 @@ Trong đó :
 
 Công thức địa chỉ tổng quát là `EA = Base + Index x scale + Displacement`. Trong đó EA là effective address (địa chỉ hiệu dụng). Displacement nằm ở trường riêng của instruction nếu encoding yêu cầu, nó không nằm bên trong SIB.
 
-### 4.3. Giải mã ModR/M bằng tay
+### 5.3. Giải mã SIB bằng tay
 
 Xét instruction sau `mov eax, DWORD PTR [rbx + rcx*4 + 8]`. Một encoding hợp lệ trong x86-64 là `8B 44 8B 08`, trong đó `8B` là opcode, `44` là ModR/M, `8B` là SIB, `08` là displacement. Bây giờ sự vào byte sib là `8B` ta tiến hành giải mã như sau :
 
@@ -1155,4 +1155,27 @@ Xét instruction sau `mov eax, DWORD PTR [rbx + rcx*4 + 8]`. Một encoding hợ
      SS Index Base
 ```
 
-Ta thấy `SS = 10` suy ra `Scale = 4`, `Index = 001` suy ra thanh ghi `RCX`, `Base = 011` suy ra thanh ghi `RBX`, cộng thêm byte displacement là `08` vậy giờ ghép lại vào công thức tính địa chỉ ta có `EA = RBX + RCX x 4 + 8` và CPU sử dụng địa chỉ đó để đọc 4 byte vào EAX.
+Ta thấy `SS = 10` suy ra `Scale = 4`, `Index = 001` suy ra thanh ghi `RCX`, `Base = 011` suy ra thanh ghi `RBX`, cộng thêm byte displacement là `08` vậy giờ ghép lại vào công thức tính địa chỉ ta có `EA = RBX + RCX x 4 + 8` và CPU sử dụng địa chỉ đó để đọc 4 byte vào `EAX`.
+- **Nhưng làm sao Debugger biết phải đọc SIB?:** Debugger không nhìn byte `8B` rồi tự đoán rằng byte tiếp theo là SIB. Nó giải mã lần lượt:
+  - **Bước 1:** `8B` là dạng `MOV r32, r/m32` trong trường hợp này.
+  - **Bước 2:** Ta thấy và cho `ModR/M = 44` từ đó giải mã thành như sau:
+
+    ```
+    44 = 01000100
+    -------------
+      01  000 100
+      mod reg r/m
+    ```
+
+    **Trong đó:**
+      - `mod = 01`: dạng địa chỉ bộ nhớ có displacement 8-bit.
+      - `reg = 000`: thanh ghi đích EAX.
+      - `r/m = 100`: trong dạng địa chỉ này, báo rằng có byte SIB tiếp theo.
+  - Bước 3: Ta thấy và cho `SIB = 8B`, Debugger giải mã Base, Index và Scale như ví dụ trên.
+  - Bước 4: Ta cho `Displacement = 08`. Đọc thêm một byte displacement có dấu, ở đây là `+8`.
+
+  Vì vậy, chuỗi encoding được hiểu như sau
+
+  <p align="center">
+    <img src="image/image9.png" alt="chuỗi encoding">
+  </p>
