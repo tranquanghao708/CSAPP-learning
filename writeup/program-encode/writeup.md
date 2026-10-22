@@ -1415,3 +1415,37 @@ còn Symbol Table (bảng ký hiệu) là bảng chứa các bản ghi mô tả 
 
 > [!NOTE]
 > **Điểm cần nhớ:** Symbol Table không đơn giản chỉ là bảng tên hàm. Nó lưu metadata để linker, debugger và các công cụ phân tích hiểu những symbol đó đại diện cho gì.
+
+Cách xem Symbol Table bằng readelf, chúng ta tạo file `symbol.asm` và xét hợp ngữ sau :
+
+```asm
+global _start
+
+section .text
+_start:
+    mov eax, 60
+    xor edi, edi
+    syscall
+
+hello:
+    ret
+```
+
+Assemble thành ELF relocatable object `nasm -f elf64 symbol.asm -o symbol.o`. Xem bảng symbol thì ta dùng `readelf -s symbol.o`. Kết quả sẽ có dạng tương tự:
+
+```
+Symbol table '.symtab' contains ... entries:
+   Num:    Value          Size Type    Bind   Vis      Ndx Name
+     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND
+     1: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT    1 _start
+     2: 0000000000000009     0 NOTYPE  LOCAL  DEFAULT    1 hello
+```
+
+Đây là kết quả minh họa, offset và cách hiển thị cụ thể có thể khác tùy công cụ và file. Cách đọc:
+- `Value`: `_start` có giá trị 0 trong section của nó, hello có giá trị 9, tức offset 9 byte tính từ đầu section `.text` trong ví dụ này.
+- `Type`: `NOTYPE` có nghĩa loại symbol chưa được chỉ rõ là function hay object. NASM không nhất thiết tự đánh dấu nhãn thành `FUNC`.
+- `Bind`: `GLOBAL` cho biết `_start` có global binding, `LOCAL` cho biết `hello` chỉ có phạm vi liên kết cục bộ.
+- `Ndx`: 1 ở đây là chỉ số section chứa symbol, thường tương ứng `.text`, `UND` có nghĩa undefined, tức symbol chưa được định nghĩa trong file hiện tại.
+
+> [!NOTE]
+> Lưu ý: `Value = 0` ở file `.o` không có nghĩa chương trình sẽ chạy tại địa chỉ 0. Đây là file relocatable nên giá trị thường là offset tương đối với section, địa chỉ cuối cùng còn phụ thuộc quá trình link và cách nạp chương trình.
