@@ -1347,4 +1347,19 @@ Một relocation entry thường mô tả những thông tin như:
 
 </div>
 
-Không phải mọi relocation entry đều lưu tất cả các trường theo cùng một cách. Chẳng hạn, ELF64 có thể sử dụng `RELA`, trong đó addend được lưu rõ trong relocation entry.
+Không phải mọi relocation entry đều lưu tất cả các trường theo cùng một cách. Chẳng hạn, ELF64 có thể sử dụng `RELA`, trong đó addend được lưu rõ trong relocation entry. Cho **Ví dụ cụ thể** `call hello`, Trên x86-64, call rel32 có dạng mã hóa thông thường là `E8 xx xx xx xx` trong đó `E8` là opcode của near relative call còn bốn byte `xx` là độ lệch tương đối 32-bit có dấu.
+
+CPU tính địa chỉ đích theo công thức `Target = NextRIP + disp32`, trong đó `NextRIP` là địa chỉ ngay sau instruction call còn `disp32` là độ lệch được mã hóa trong bốn byte tiếp theo. Giả sử sau khi liên kết:
+
+```
+Địa chỉ call:   0x401000
+Địa chỉ kế tiếp: 0x401005
+Địa chỉ hello:  0x401020
+```
+
+Khi đó nó sẽ tính `disp32 = 0x401020 - 0x401005 = 0x1B`, giống nhưng tính phương trình cơ bản của toán học và Instruction sẽ được mã hóa thành `E8 1B 00 00 00`. Đây là minh họa cho kết quả cuối cùng. Trong thực tế, linker sử dụng relocation type phù hợp để tính giá trị và điền vào đúng vị trí.
+
+> [!NOTE]
+> **Lưu ý:** Relocation không nhất thiết có nghĩa là sửa toàn bộ instruction. Trong ví dụ này, linker thường chỉ cần điền bốn byte displacement, giữ nguyên opcode `E8`.
+
+### 6.4. Symbol và Symbol Table
