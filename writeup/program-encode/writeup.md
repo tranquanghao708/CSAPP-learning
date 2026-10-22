@@ -1534,7 +1534,7 @@ Không phải mọi file đều trải qua các bước giống hệt nhau. Ví 
 
 <td>
 
-<p align="center">
+<p align="center" valign="top">
 	<kbd>
   <img src="image/image15.png" alt="hình ảnh object file đến executable" width="1500%" length="1200%">
 	<kbd>
