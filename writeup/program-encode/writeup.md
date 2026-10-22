@@ -1519,15 +1519,30 @@ objdump -t program       # Hiển thị bảng symbol
 ### 6.5. Từ Object File đến Executable
 
 Trong quy trình biên dịch và liên kết trên Linux x86-64, Object File sang Executable là quá trình biến các file object có thể còn tham chiếu chưa được giải quyết thành một file thực thi có cấu trúc phù hợp để hệ điều hành nạp và chạy. Ta cần hiểu 4 việc chính:
+
+<table>
+<tr>
+<td>
+
 - **1.Symbol resolution — giải quyết symbol:** xác định symbol được tham chiếu được định nghĩa ở đâu.
 - **2.Relocation — hiệu chỉnh tham chiếu:** tính và ghi các giá trị địa chỉ hoặc displacement cần thiết.
 - **3.Layout:** sắp xếp các section thành các vùng nhớ và segment phù hợp.
 - **4.Executable generation:** tạo file ELF executable với entry point và program headers.
-Không phải mọi file đều trải qua các bước giống hệt nhau. Ví dụ dưới đây dùng NASM, ELF64 và GNU ld trên Linux. Từ đó, ta có một bức tranh tổng quát
+Không phải mọi file đều trải qua các bước giống hệt nhau. Ví dụ dưới đây dùng NASM, ELF64 và GNU ld trên Linux.
+
+</td>
+
+<td>
 
 <p align="center">
+	<kbd>
   <img src="image/image15.png" alt="hình ảnh object file đến executable">
+	<kbd>
 </p>
+
+</td>
+</tr>
+</table>
 
 > [!NOTE]
 > **Lưu ý:** linker không chạy chương trình. Linker tạo executable; kernel chịu trách nhiệm nạp chương trình khi mày thực thi nó.
