@@ -53,12 +53,13 @@
   - [5.2. Cấu trúc SIB](#52-cấu-trúc-sib)
   - [5.3. Giải mã SIB bằng tay](#53-giải-mã-sib-bằng-tay)
 
-- [8. Object Code và ELF](#8-object-code-và-elf)
-  - [8.1. Object File là gì?](#81-object-file-là-gì)
-  - [8.2. Code Section](#82-code-section)
-  - [8.3. Relocation](#83-relocation)
-  - [8.4. Symbol và Symbol Table](#84-symbol-và-symbol-table)
-  - [8.5. Từ Object File đến Executable](#85-từ-object-file-đến-executable)
+- [6. Object Code và ELF](#6-object-code-và-elf)
+  - [6.1. Object code là gì?](#61-object-code-là-gì)
+  - [6.2. ELF là gì?](#62-elf-là-gì)
+  - [6.2. Code Section](#62-code-section)
+  - [6.3. Relocation](#63-relocation)
+  - [6.4. Symbol và Symbol Table](#64-symbol-và-symbol-table)
+  - [6.5. Từ Object File đến Executable](#65-từ-object-file-đến-executable)
 
 - [7. Lập trình byte program]
   - [lập trình tích hợp byte program trên file định dạng C]
@@ -1171,11 +1172,76 @@ Ta thấy `SS = 10` suy ra `Scale = 4`, `Index = 001` suy ra thanh ghi `RCX`, `B
       - `mod = 01`: dạng địa chỉ bộ nhớ có displacement 8-bit.
       - `reg = 000`: thanh ghi đích EAX.
       - `r/m = 100`: trong dạng địa chỉ này, báo rằng có byte SIB tiếp theo.
-  - Bước 3: Ta thấy và cho `SIB = 8B`, Debugger giải mã Base, Index và Scale như ví dụ trên.
-  - Bước 4: Ta cho `Displacement = 08`. Đọc thêm một byte displacement có dấu, ở đây là `+8`.
+  - **Bước 3:** Ta thấy và cho `SIB = 8B`, Debugger giải mã Base, Index và Scale như ví dụ trên.
+  - **Bước 4:** Ta cho `Displacement = 08`. Đọc thêm một byte displacement có dấu, ở đây là `+8`.
 
   Vì vậy, chuỗi encoding được hiểu như sau
 
   <p align="center">
     <img src="image/image9.png" alt="chuỗi encoding">
   </p>
+
+> [!IMPORTANT]
+> **Điều quan trọng nhất cần thuộc ở giai đoạn này:** ModR/M quyết định có SIB hay không, còn SIB mã hóa cách kết hợp Base, Index và Scale để tính địa chỉ.
+
+## 6. Object Code và ELF
+
+Object code là mã máy được tạo ra từ quá trình biên dịch hoặc lắp ráp, thường đi kèm với thông tin cần thiết để liên kết chương trình. Còn ELF là một định dạng tệp quy định cách tổ chức mã máy và các thông tin liên quan để linker, loader và những công cụ phân tích có thể xử lý.
+
+> [!NOTE]
+> **Điểm cần phân biệt:** Object code là khái niệm về nội dung mã, ELF là một định dạng chứa nội dung đó. ELF không đồng nghĩa với mã máy.
+
+### 6.1. Object code là gì?
+
+Object code là mã được tạo ra sau khi mã nguồn được chuyển đổi qua compiler hoặc assembler. Trong ngữ cảnh x86-64, nó thường chứa các byte mã máy, nhưng một object file thực tế còn có thể chứa dữ liệu, symbol, relocation và các metadata khác. **Ví dụ** Assembly:
+
+```asm
+global _start
+
+section .text
+_start:
+    mov eax, 1
+    ret
+```
+
+Biên dịch bằng NASM `nasm -f elf64 asm.asm -o asm.o`. Tệp `asm.o` là một object file, object Code là mã được tạo ra sau khi mã nguồn được chuyển đổi qua compiler hoặc assembler còn object file là nơi chứa các mã đó. Ta có thể xem các byte trong section `.text` bằng `objdump -d -Mintel asm.o`. **Ví dụ** output:
+
+```asm
+0000000000000000 <_start>:
+   0: b8 01 00 00 00    mov eax, 1
+   5: c3                ret
+```
+
+**Ở đây:**
+
+<div align="center">
+
+| Byte	| Instruction	| Ý nghĩa |
+|:-|-:|:-|
+| `B8 01 00 00 00` |	`mov eax, 1` |	Nạp giá trị 1 vào EAX |
+| `C3`	| `ret` |	Trở về địa chỉ trả về trên stack |
+
+</div>
+
+Đó là các byte mã máy. Tuy nhiên, trong object file, địa chỉ và các tham chiếu có thể chưa được linker giải quyết hoàn toàn.
+
+### 6.2. ELF là gì?
+
+ELF là viết tắt của Executable and Linkable Format. Đây là định dạng nhị phân được sử dụng trên nhiều hệ thống Unix-like, bao gồm Linux, cho executable, object file, shared library và một số loại tệp khác. Một tệp ELF không chỉ chứa instruction. Nó có cấu trúc để các công cụ biết dữ liệu nào nằm ở đâu và cần xử lý như thế nào. Nó có cấu trúc :
+
+<p align="center">
+<img src="image/image10.png" alt="cấu trúc ELF">
+</p>
+
+Một số section chúng ta thường gặp:
+
+| Section |	Chức năng |
+|-|-|
+| `.text` |	Thường chứa instruction của chương trình |
+| `.rodata` |	Dữ liệu chỉ đọc, chẳng hạn chuỗi hằng |
+| `.data` |	Dữ liệu đã khởi tạo, có thể ghi |
+| `.bss` | Dữ liệu chưa khởi tạo tường minh, thường được cấp phát và khởi tạo bằng 0 khi chạy |
+| `.symtab`	| Bảng symbol phục vụ liên kết và phân tích, nếu có |
+| `.rela.text`	| Thông tin relocation liên quan đến section `.text` trên các ELF sử dụng kiểu relocation này |
+
+Không phải ELF nào cũng có đầy đủ tất cả các section trên. Chẳng hạn, executable đã được strip có thể không còn `.symtab`.
