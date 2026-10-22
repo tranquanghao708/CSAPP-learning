@@ -1363,3 +1363,55 @@ Khi đó nó sẽ tính `disp32 = 0x401020 - 0x401005 = 0x1B`, giống nhưng t�
 > **Lưu ý:** Relocation không nhất thiết có nghĩa là sửa toàn bộ instruction. Trong ví dụ này, linker thường chỉ cần điền bốn byte displacement, giữ nguyên opcode `E8`.
 
 ### 6.4. Symbol và Symbol Table
+
+Trong ELF và quá trình liên kết chương trình, Symbol là một mục định danh một thực thể mà chương trình hoặc trình liên kết cần tham chiếu; còn Symbol Table là bảng lưu thông tin về các symbol đó. Để hiểu chính xác, chúng ta nên phân biệt ba thứ: tên trong source code, symbol, và địa chỉ máy.
+
+Symbol (ký hiệu) là một định danh mà assembler, linker hoặc debugger sử dụng để tham chiếu đến một thực thể trong chương trình. **Ví dụ**, viết một file NASM:
+
+```asm
+global _start
+
+section .text
+_start:
+    mov eax, 60
+    xor edi, edi
+    syscall
+
+hello:
+    ret
+```
+
+Trong ví dụ này:
+- `_start` là symbol đại diện cho vị trí bắt đầu đoạn mã của chương trình.
+- `hello` là symbol đại diện cho vị trí của lệnh `ret`.
+- `60` và `0` là các giá trị immediate, không phải symbol trong ví dụ này.
+
+Symbol không nhất thiết phải là một hàm. Nó có thể đại diện cho một hàm, biến, nhãn hoặc một đối tượng khác tùy ngữ cảnh. Ví dụ trong C:
+
+```c
+int counter = 10;
+
+int add(int a, int b) {
+    return a + b;
+}
+```
+
+Các tên counter và add có thể trở thành symbol trong file object. Tuy nhiên, không phải mọi tên xuất hiện trong source code đều được giữ lại thành symbol trong file đầu ra.
+
+còn Symbol Table (bảng ký hiệu) là bảng chứa các bản ghi mô tả symbol. Trong ELF, một symbol entry có thể chứa các trường như:
+
+<div align="center">
+
+| Trường |	Ý nghĩa |
+|:-|:-|
+| `st_name`	| Offset đến tên symbol trong string table |
+| `st_value`	| Giá trị symbol, thường là địa chỉ hoặc offset tùy loại file và symbol |
+| `st_size`	| Kích thước đối tượng được symbol đại diện, nếu xác định được |
+| `st_info`	| Thông tin về loại symbol và binding |
+| `st_other`	| Thông tin thuộc tính khác |
+| `st_shndx`	| Section index liên quan đến symbol |
+
+</div>
+
+> [!NOTE]
+> **Điểm cần nhớ:** Symbol Table không đơn giản chỉ là bảng tên hàm. Nó lưu metadata để linker, debugger và các công cụ phân tích hiểu những symbol đó đại diện cho gì.
