@@ -1528,7 +1528,7 @@ Trong quy trình biên dịch và liên kết trên Linux x86-64, Object File sa
 - **2.Relocation — hiệu chỉnh tham chiếu:** tính và ghi các giá trị địa chỉ hoặc displacement cần thiết.
 - **3.Layout:** sắp xếp các section thành các vùng nhớ và segment phù hợp.
 - **4.Executable generation:** tạo file ELF executable với entry point và program headers.
-Không phải mọi file đều trải qua các bước giống hệt nhau. Ví dụ dưới đây dùng NASM, ELF64 và GNU ld trên Linux.
+- Không phải mọi file đều trải qua các bước giống hệt nhau. Ví dụ này là mô tả sơ đồ khi dùng NASM, ELF64 và GNU ld trên Linux.
 
 </td>
 
