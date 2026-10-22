@@ -1295,3 +1295,56 @@ Phân biệt Section với Segment. Đây là điểm quan trọng khi học ELF
 </div>
 
 Một section `.text` có thể nằm bên trong một `PT_LOAD` segment có quyền thực thi. Nhưng section và segment không phải cùng một thứ: segment có thể chứa nhiều section, và loader chủ yếu dựa vào program headers chứ không cần section header table để nạp executable thông thường.
+
+### 6.3. Relocation
+
+Relocation là quá trình điều chỉnh các tham chiếu địa chỉ trong mã máy hoặc dữ liệu khi linker hoặc loader xác định được vị trí mà chúng cần trỏ tới. Trong ELF, relocation còn là tên gọi của cơ chế và các bản ghi mô tả những vị trí cần được điều chỉnh.
+
+Để hiểu tại sao cần relocation, mày hãy tưởng tượng đang viết Assembly và muốn gọi một hàm nằm trong một tệp object khác. Khi NASM tạo `asm.o`, nó có thể chưa biết chính xác địa chỉ cuối cùng của hàm đó. Linker cần xử lý tham chiếu ấy khi ghép các object file lại.
+
+**Vấn đề:** assembler chưa biết địa chỉ cuối cùng, cho hai tệp hợp ngữ như sau:
+
+> main.asm
+
+```asm
+global _start
+extern hello
+
+section .text
+_start:
+    call hello
+    ret
+```
+
+> hello.asm
+
+```asm
+global hello
+
+section .text
+hello:
+    ret
+```
+
+Khi assemble `main.asm`, NASM biết rằng call cần gọi `hello`, nhưng `hello` nằm trong object file khác. Địa chỉ cuối cùng của nó còn phụ thuộc vào quá trình liên kết.
+
+Trên x86-64, lệnh `call rel32` thường mã hóa một độ lệch tương đối 32-bit có dấu, tính từ địa chỉ instruction tiếp theo đến đích gọi. Nếu chưa biết đích, assembler chưa thể điền giá trị cuối cùng một cách chính xác. Đây là lúc relocation phát huy tác dụng. Cách relocation hoạt động:
+
+<p align="center">
+<img src="image/image12.png" alt="cách relocation hoạt động">
+</p>
+
+Một relocation entry thường mô tả những thông tin như:
+
+<div align="center">
+
+| Thành phần |	Ý nghĩa |
+|:-|:-|
+| Offset |	Vị trí trong section cần được xử lý |
+| Type |	Quy tắc tính toán relocation |
+| Symbol |	Symbol mà tham chiếu liên quan đến |
+| Addend |	Giá trị cộng thêm trong phép tính relocation |
+
+</div>
+
+Không phải mọi relocation entry đều lưu tất cả các trường theo cùng một cách. Chẳng hạn, ELF64 có thể sử dụng `RELA`, trong đó addend được lưu rõ trong relocation entry.
