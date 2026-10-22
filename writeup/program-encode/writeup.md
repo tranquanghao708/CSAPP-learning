@@ -56,7 +56,7 @@
 - [6. Object Code và ELF](#6-object-code-và-elf)
   - [6.1. Object code là gì?](#61-object-code-là-gì)
   - [6.2. ELF là gì?](#62-elf-là-gì)
-  - [6.2. Code Section](#62-code-section)
+  - [6.3. Code Section](#62-code-section)
   - [6.3. Relocation](#63-relocation)
   - [6.4. Symbol và Symbol Table](#64-symbol-và-symbol-table)
   - [6.5. Từ Object File đến Executable](#65-từ-object-file-đến-executable)
@@ -1235,6 +1235,8 @@ ELF là viết tắt của Executable and Linkable Format. Đây là định d�
 
 Một số section chúng ta thường gặp:
 
+<div align="center">
+
 | Section |	Chức năng |
 |-|-|
 | `.text` |	Thường chứa instruction của chương trình |
@@ -1244,4 +1246,30 @@ Một số section chúng ta thường gặp:
 | `.symtab`	| Bảng symbol phục vụ liên kết và phân tích, nếu có |
 | `.rela.text`	| Thông tin relocation liên quan đến section `.text` trên các ELF sử dụng kiểu relocation này |
 
+</div>
+
 Không phải ELF nào cũng có đầy đủ tất cả các section trên. Chẳng hạn, executable đã được strip có thể không còn `.symtab`.
+
+### 6.3. Code Section
+
+Trong ELF, Code Section thường chỉ section chứa mã máy của chương trình, phổ biến nhất là section `.text`. Đây là nơi lưu các instruction mà CPU sẽ thực thi sau khi mã được nạp vào bộ nhớ. Cho **ví dụ:**
+
+```asm
+global _start
+
+section .text
+_start:
+    mov eax, 1
+    mov ebx, 0
+    ret
+```
+
+trong mã nguồn ta thấy có dòng `section .text`, nghĩa là nó yêu cầu NASM đặt các byte được sinh ra từ phần mã tiếp theo vào section `.text`. Sau khi assemble, các instruction được mã hóa thành byte:
+
+```
+B8 01 00 00 00    ; mov eax, 1
+BB 00 00 00 00    ; mov ebx, 0
+C3                ; ret
+```
+
+Đó là các byte mã máy nằm trong .text của object file, với điều kiện mã nguồn được assemble đúng như ví dụ.
