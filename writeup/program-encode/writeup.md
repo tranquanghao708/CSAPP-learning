@@ -1477,8 +1477,39 @@ Symbol table '.symtab' contains ... entries:
 
   Assemble từng file `nasm -f elf64 main.asm -o main.o` và `nasm -f elf64 hello.asm -o hello.o`. Kiểm tra symbol trong `main.o` ta dùng `readelf -s main.o`. Trong `main.o`, symbol `hello` có thể xuất hiện với `Ndx = UND` vì file này biết tên `hello` nhưng chưa chứa định nghĩa của nó.
 
-  Kiểm tra relocation ta dùng `readelf -r main.o` và `objdump -dr -Mintel main.o`. Ta thấy lệnh `call hello` cần địa chỉ đích để tính displacement tương đối của lệnh `call`. Vì `hello` được định nghĩa trong file khác, assembler có thể để lại một relocation entry để linker xử lý. Sau đó link `ld main.o hello.o -o program`. Lúc này, linker tìm định nghĩa hello trong các object file đầu vào, xác định vị trí cuối cùng và xử lý relocation tương ứng. Quá trình này cho thấy hai cấu trúc có liên quan nhưng khác nhau:
-- **Symbol Table:** cung cấp thông tin về symbol, bao gồm tên, loại, binding và vị trí liên quan.
-- **Relocation Table:** ghi lại những vị trí cần được hiệu chỉnh và thông tin cần thiết để linker hoặc thành phần liên kết tiếp theo thực hiện việc đó.
+  <p align="center">
+    <img src="image/image13.png" alt="hình ảnh kết quả lệnh readelf -s main.o">
+  </p>
+
+  Kiểm tra relocation ta dùng `readelf -r main.o` và `objdump -dr -Mintel main.o`:
+
+  <p align="center">
+    <img src="image/image14.png" alt="hình ảnh kết quả lệnh readelf -r main.o và objdump -dr -Mintel main.o">
+  </p>
+
+  Ta thấy lệnh `call hello` cần địa chỉ đích để tính displacement tương đối của lệnh `call`. Vì `hello` được định nghĩa trong file khác, assembler có thể để lại một relocation entry để linker xử lý. Sau đó link `ld main.o hello.o -o program`. Lúc này, linker tìm định nghĩa hello trong các object file đầu vào, xác định vị trí cuối cùng và xử lý relocation tương ứng. Quá trình này cho thấy hai cấu trúc có liên quan nhưng khác nhau:
+  - **Symbol Table:** cung cấp thông tin về symbol, bao gồm tên, loại, binding và vị trí liên quan.
+  - **Relocation Table:** ghi lại những vị trí cần được hiệu chỉnh và thông tin cần thiết để linker hoặc thành phần liên kết tiếp theo thực hiện việc đó.
 
   Không phải symbol nào cũng cần relocation; relocation chỉ cần khi có tham chiếu cần được xử lý hoặc hiệu chỉnh.
+
+Phân biệt `.symtab` và `.dynsym`. Trong ELF, ta có thể gặp hai bảng symbol thường thấy:
+
+| Bảng |	Mục đích |
+|:-|:-|
+| `.symtab`	| Bảng symbol đầy đủ hơn phục vụ liên kết và phân tích, thường có thể bị loại bỏ khi strip |
+| `.dynsym`	| Bảng symbol phục vụ liên kết động, chẳng hạn giữa executable và shared libraries |
+
+Không phải ELF nào cũng có cả hai. Một executable liên kết tĩnh, một object file hoặc một file đã bị strip có thể có cấu trúc khác nhau. Các lệnh hữu ích:
+
+```bash
+readelf -S program       # Xem section headers
+readelf -s program       # Xem symbol tables
+nm -n program            # Liệt kê symbol theo giá trị
+objdump -t program       # Hiển thị bảng symbol
+```
+
+> [!IMPORTANT]
+> Symbol là định danh gắn với một thực thể hoặc vị trí trong chương trình, Symbol Table là cấu trúc dữ liệu lưu metadata của các symbol. Linker sử dụng thông tin này để liên kết các tham chiếu giữa những object file và xử lý các relocation cần thiết.
+
+### 6.5. Từ Object File đến Executable
