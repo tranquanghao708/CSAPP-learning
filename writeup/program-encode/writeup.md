@@ -1273,3 +1273,25 @@ C3                ; ret
 ```
 
 Đó là các byte mã máy nằm trong .text của object file, với điều kiện mã nguồn được assemble đúng như ví dụ.
+
+- **Section .text nằm ở đâu trong ELF?:** Có thể hình dung ELF như một tệp có nhiều vùng dữ liệu được phân loại:
+
+  <p align="center">
+    <img src="image/image11.png" alt="vùng dữ liệu được phân loại">
+  </p>
+
+  **lưu ý:** `.text` là tên section phổ biến theo quy ước, không phải mọi section chứa mã đều bắt buộc phải mang tên `.text`.
+
+Phân biệt Section với Segment. Đây là điểm quan trọng khi học ELF để reverse engineering. Dựa vào đó, ta có bảng so sánh như sau:
+
+<div align="center">
+
+| Section |	Segment |
+|:-|:-|
+| Phân loại nội dung phục vụ liên kết và phân tích |	Mô tả các vùng cần ánh xạ khi nạp chương trình |
+| Được mô tả trong section header table |	Được mô tả trong program header table |
+| **Ví dụ:** `.text`, `.data`, `.rodata` |	**Ví dụ:** `LOAD`, `GNU_STACK`, `DYNAMIC` |
+
+</div>
+
+Một section `.text` có thể nằm bên trong một `PT_LOAD` segment có quyền thực thi. Nhưng section và segment không phải cùng một thứ: segment có thể chứa nhiều section, và loader chủ yếu dựa vào program headers chứ không cần section header table để nạp executable thông thường.
