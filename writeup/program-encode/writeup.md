@@ -1533,7 +1533,7 @@ Trong quy trình biên dịch và liên kết trên Linux x86-64, Object File sa
 
 <td>
 	<kbd>
-  <img src="image/image15.png" alt="hình ảnh object file đến executable" style="width: 1400px; max-width: none; height: auto;">
+  <img src="image/image15.png" alt="hình ảnh object file đến executable" style="width: 1200px; max-width: none; height: auto;">
 	<kbd>
 </td>
 </tr>
