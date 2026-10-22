@@ -1449,3 +1449,36 @@ Symbol table '.symtab' contains ... entries:
 
 > [!NOTE]
 > Lưu ý: `Value = 0` ở file `.o` không có nghĩa chương trình sẽ chạy tại địa chỉ 0. Đây là file relocatable nên giá trị thường là offset tương đối với section, địa chỉ cuối cùng còn phụ thuộc quá trình link và cách nạp chương trình.
+
+- **Symbol liên quan thế nào đến Linker và Relocation?:** Xét hai file assembly riêng biệt.
+  > main.asm
+
+  ```asm
+  global _start
+  extern hello
+
+  section .text
+  _start:
+      call hello
+      mov eax, 60
+      xor edi, edi
+      syscall
+  ```
+
+  > hello.asm
+
+  ```asm
+  global hello
+
+  section .text
+  hello:
+      ret
+  ```
+
+  Assemble từng file `nasm -f elf64 main.asm -o main.o` và `nasm -f elf64 hello.asm -o hello.o`. Kiểm tra symbol trong `main.o` ta dùng `readelf -s main.o`. Trong `main.o`, symbol `hello` có thể xuất hiện với `Ndx = UND` vì file này biết tên `hello` nhưng chưa chứa định nghĩa của nó.
+
+  Kiểm tra relocation ta dùng `readelf -r main.o` và `objdump -dr -Mintel main.o`. Ta thấy lệnh `call hello` cần địa chỉ đích để tính displacement tương đối của lệnh `call`. Vì `hello` được định nghĩa trong file khác, assembler có thể để lại một relocation entry để linker xử lý. Sau đó link `ld main.o hello.o -o program`. Lúc này, linker tìm định nghĩa hello trong các object file đầu vào, xác định vị trí cuối cùng và xử lý relocation tương ứng. Quá trình này cho thấy hai cấu trúc có liên quan nhưng khác nhau:
+- **Symbol Table:** cung cấp thông tin về symbol, bao gồm tên, loại, binding và vị trí liên quan.
+- **Relocation Table:** ghi lại những vị trí cần được hiệu chỉnh và thông tin cần thiết để linker hoặc thành phần liên kết tiếp theo thực hiện việc đó.
+
+  Không phải symbol nào cũng cần relocation; relocation chỉ cần khi có tham chiếu cần được xử lý hoặc hiệu chỉnh.
