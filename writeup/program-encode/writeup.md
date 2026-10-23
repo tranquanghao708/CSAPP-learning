@@ -1138,7 +1138,7 @@ Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liê
   - `0x67` liên quan đến kích thước địa chỉ (address size).
   Trong chế độ 64-bit, kích thước địa chỉ mặc định của phần lớn lệnh truy cập bộ nhớ là 64-bit. Prefix `0x67` có thể chuyển kích thước địa chỉ đó xuống 32-bit. Để hiểu rõ hơn, ta xét lệnh hợp ngữ sau `mov eax, DWORD PTR [rbx + rcx*4 + 8]`, lúc này CPU phải thực hiện hai việc khác nhau đó là tính địa chỉ bộ nhớ và truy cập dữ liệu
 
-  Đầu tiên ta nói tới việc tính toán địa chỉ bộ nhớ, ta đã biêt công thức tính địa chỉ bộ nhớ là `EA = RBX + RCX x 4 + 8` dựa vào đoạn lệnh hợp ngữ đã được xét trên, trong đó EA (Effective Address) là địa chỉ hiệu dụng được tính từ các thanh ghi và displacement. Kế tiếp, ta nói tới việc truy cập dữ liệu ở đây CPU đọc 4 byte tại địa chỉ `EA`, sau đó ghi giá trị vào `EAX` (vì `4byte = 32bits`, mà `eax` là thanh ghi 32bits). Ta có
+  Đầu tiên ta nói tới việc tính toán địa chỉ bộ nhớ, ta đã biêt công thức tính địa chỉ bộ nhớ là `EA = RBX + RCX x 4 + 8` dựa vào đoạn lệnh hợp ngữ đã được xét trên, trong đó EA (Effective Address) là địa chỉ hiệu dụng được tính từ các thanh ghi và displacement. Kế tiếp, ta nói tới việc truy cập dữ liệu ở đây CPU đọc 4 byte tại địa chỉ `EA`, sau đó ghi giá trị vào `EAX` (vì `4byte = 32bits`, mà `eax` là thanh ghi 32bits). Ta có:
 
   <div align="center">
 
@@ -1152,7 +1152,34 @@ Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liê
 
   </div>
 
-  Như vậy, kích thước dữ liệu được đọc không quyết định kích thước địa chỉ được sử dụng.
+  Như vậy, kích thước dữ liệu được đọc không quyết định kích thước địa chỉ được sử dụng. Trong chế độ 64-bit, đối với những lệnh áp dụng quy tắc address-size override:
+
+  <div align="center">
+
+  | Trường hợp | Address size | Cách tính địa chỉ |
+  |---|---:|---|
+  | Không có `67` | 64-bit | Dùng địa chỉ theo quy tắc 64-bit |
+  | Có `67` | 32-bit | Dùng địa chỉ theo quy tắc 32-bit |
+
+  </div>
+
+  Khi address size là 32-bit, các thanh ghi địa chỉ dùng trong phép tính sẽ được diễn giải theo dạng 32-bit tương ứng. Kết quả địa chỉ hiệu dụng được tính theo quy tắc 32-bit và được zero-extend lên 64-bit để tạo địa chỉ tuyến tính trong chế độ 64-bit. **Ví dụ**, nếu phép tính địa chỉ 32bit cho kết quả:
+
+  ```
+  EA32=0x12345678
+  EA32​=0x12345678
+  ```
+
+  thì địa chỉ được mở rộng thành:
+
+  ```
+  EA64=0x0000000012345678
+  EA64​=0x0000000012345678
+  ```
+
+  Nó không được sign-extend thành `0xFFFFFFFF12345678`.
+
+  **Lưu ý:** Không phải mọi cách viết địa chỉ 64-bit đều có thể được thay thế trực tiếp bằng cách thêm 67. Khi address size thay đổi, cấu trúc địa chỉ được mã hóa và các trường hợp đặc biệt của ModR/M, SIB cũng có thể thay đổi.
 
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
