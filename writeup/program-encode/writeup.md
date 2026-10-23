@@ -1109,6 +1109,7 @@ Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liê
   Các mã trên là những encoding tương ứng trong chế độ 64-bit. Bây giờ, ta phân tích từng trường hợp:
   - **Trường hợp 1:** Không có prefix xét `89 D8` trong đó `89` là opcode `MOV r/m, r` và `D8` là ModR/M `mod=11, reg=011, r/m=000`. `89` chọn dạng lệnh `MOV r/m, r`. Với encoding này, ModR/M `D8` chỉ ra đích là `EAX`, nguồn là `EBX` khi kích thước toán hạng mặc định là 32-bit. Kết quả thành lệnh `mov eax, ebx`
   - **Trường hợp 2:** Có prefix `66 66 89 D8` trong đó `66` là Operand-size override, `89` là Opcode, `D8` là ModR/M. Prefix `66` yêu cầu kích thước toán hạng 16-bit đối với lệnh này. Kết quả ra lệnh hoàn chỉnh `mov ax, bx`
+
     **Lưu ý:** `66` không thay đổi cấu trúc byte ModR/M `D8`. Nó thay đổi cách giải mã kích thước toán hạng của lệnh.
 
   - **Trường hợp 3:** Có REX.W `48 89 D8`, trong đó `48` là REX prefix `W=1, R=0, X=0, B=0`, `89` là Opcode, `D8` là ModR/M. Bit `W=1` yêu cầu kích thước toán hạng 64-bit đối với lệnh này. Kết quả ra lệnh hoàn chỉnh `mov rax, rbx`
@@ -1132,7 +1133,10 @@ Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liê
   Các lệnh số nguyên này có thể sử dụng prefix `66` để chỉ định kích thước toán hạng 16-bit. Tuy nhiên, không phải lệnh nào cũng tuân theo quy tắc đơn giản này. Một số opcode có kích thước toán hạng cố định, một số có quy tắc riêng, và một số lệnh có thể sử dụng `66` cho ý nghĩa khác.
 
   Đặc biệt, đối với các lệnh SIMD, prefix `66` có thể tham gia lựa chọn biến thể opcode thay vì chỉ đơn thuần thay đổi kích thước toán hạng số nguyên. Vì vậy, cần xem xét opcode cụ thể trước khi kết luận ý nghĩa của prefix.
-- **nhóm Address-size override:**
+- **nhóm Address-size override:** Address-Size Override là prefix dùng để thay đổi kích thước địa chỉ mà CPU sử dụng khi giải mã một số lệnh. Mã byte của prefix này là `67`. Nó thuộc nhóm Legacy Prefixes, cùng nhóm với Operand-Size Override (`66`). Điểm quan trọng nhất:
+  - `0x66` liên quan đến kích thước toán hạng dữ liệu (operand size).
+  - `0x67` liên quan đến kích thước địa chỉ (address size).
+  Trong chế độ 64-bit, kích thước địa chỉ mặc định của phần lớn lệnh truy cập bộ nhớ là 64-bit. Prefix `0x67` có thể chuyển kích thước địa chỉ đó xuống 32-bit.
 
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
