@@ -1304,6 +1304,11 @@ Relocation là quá trình điều chỉnh các tham chiếu địa chỉ trong 
 
 **Vấn đề:** assembler chưa biết địa chỉ cuối cùng, cho hai tệp hợp ngữ như sau:
 
+<div align="center">
+<table>
+<tr>
+<td>
+
 > main.asm
 
 ```asm
@@ -1316,6 +1321,9 @@ _start:
     ret
 ```
 
+</td>
+<td>
+
 > hello.asm
 
 ```asm
@@ -1325,6 +1333,11 @@ section .text
 hello:
     ret
 ```
+
+</td>
+</tr>
+</table>
+</div>
 
 Khi assemble `main.asm`, NASM biết rằng call cần gọi `hello`, nhưng `hello` nằm trong object file khác. Địa chỉ cuối cùng của nó còn phụ thuộc vào quá trình liên kết.
 
@@ -1588,3 +1601,29 @@ hello:
 - `global hello`: công khai symbol hello để file object khác có thể liên kết tới nó.
 - `extern hello`: khai báo rằng `hello` được định nghĩa bên ngoài file này.
 - `call hello`: tham chiếu đến symbol `hello`, nhưng khi assemble riêng `main.asm`, assembler chưa biết địa chỉ cuối cùng của `hello`.
+
+Bước 1, Assemble thành Object File, ta dùng lệnh biên dịch `nasm -f elf64 main.asm -o main.o` và `nasm -f elf64 hello.asm -o hello.o`. Lúc này có hai file `main.o`, `hello.o`. Sau đó ta kiểm tra loại file, dùng lệnh `file main.o hello.o`
+
+<p align="center">
+  <img src="image/image16.png" alt="file result">
+</p>
+
+Cả hai đều là ELF relocatable object (ET_REL), chưa phải executable hoàn chỉnh. Bước 2, ta kiểm tra Symbol Table, để làm được việc này thì ta dùng hai lệnh `readelf -s main.o` và `readelf -s hello.o`
+
+<p align="center">
+  <img src="image/image17.png" alt="kiểm tra symbol table">
+</p>
+
+Trong `main.o`, symbol `hello` được khai báo nhưng chưa được định nghĩa trong file đó. Nó thường có `Ndx = UND` — undefined. Trong `hello.o`, symbol `hello` được định nghĩa tại một vị trí thuộc section `.text`.
+
+<div align="center">
+
+| File |	Symbol |	Trạng thái |
+|:-:|:-:|:-|
+| `main.o` |	`_start` |	Đã định nghĩa |
+| `main.o`	| `hello` |	Chưa định nghĩa trong file này |
+| `hello.o`	| `hello` |	Đã định nghĩa |
+
+</div>
+
+Đây là lý do linker cần Symbol Table: nó dùng thông tin symbol để tìm định nghĩa tương ứng với những tham chiếu chưa được giải quyết.
