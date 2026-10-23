@@ -1543,3 +1543,48 @@ Không phải mọi file đều trải qua các bước giống hệt nhau. Ví 
 
 > [!NOTE]
 > **Lưu ý:** linker không chạy chương trình. Linker tạo executable; kernel chịu trách nhiệm nạp chương trình khi ta thực thi nó.
+
+Cho ví dụ để quan sát hai Object File liên kết với nhau như thế nào. Ta tạo hai file assembly:
+
+<div align="center">
+<table>
+<tr>
+<td>
+
+> main.asm
+
+```asm
+global _start
+extern hello
+
+section .text
+_start:
+    call hello
+
+    mov eax, 60
+    xor edi, edi
+    syscall
+```
+
+</td>
+<td>
+
+> hello.asm
+
+```asm
+global hello
+
+section .text
+hello:
+    ret
+```
+
+</td>
+</tr>
+</table>
+</div>
+
+**Ở đây:**
+- `global hello`: công khai symbol hello để file object khác có thể liên kết tới nó.
+- `extern hello`: khai báo rằng `hello` được định nghĩa bên ngoài file này.
+- `call hello`: tham chiếu đến symbol `hello`, nhưng khi assemble riêng `main.asm`, assembler chưa biết địa chỉ cuối cùng của `hello`.
