@@ -1110,8 +1110,8 @@ Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liê
   - **Trường hợp 1:** Không có prefix xét `89 D8` trong đó `89` là opcode `MOV r/m, r` và `D8` là ModR/M `mod=11, reg=011, r/m=000`. `89` chọn dạng lệnh `MOV r/m, r`. Với encoding này, ModR/M `D8` chỉ ra đích là `EAX`, nguồn là `EBX` khi kích thước toán hạng mặc định là 32-bit. Kết quả thành lệnh `mov eax, ebx`
   - **Trường hợp 2:** Có prefix `66 66 89 D8` trong đó `66` là Operand-size override, `89` là Opcode, `D8` là ModR/M. Prefix `66` yêu cầu kích thước toán hạng 16-bit đối với lệnh này. Kết quả ra lệnh hoàn chỉnh `mov ax, bx`
 
-> [!NOTE]
-> **Lưu ý:** `66` không thay đổi cấu trúc byte ModR/M `D8`. Nó thay đổi cách giải mã kích thước toán hạng của lệnh.
+  > [!NOTE]
+  > **Lưu ý:** `66` không thay đổi cấu trúc byte ModR/M `D8`. Nó thay đổi cách giải mã kích thước toán hạng của lệnh.
 
   - **Trường hợp 3:** Có REX.W `48 89 D8`, trong đó `48` là REX prefix `W=1, R=0, X=0, B=0`, `89` là Opcode, `D8` là ModR/M. Bit `W=1` yêu cầu kích thước toán hạng 64-bit đối với lệnh này. Kết quả ra lệnh hoàn chỉnh `mov rax, rbx`
 
