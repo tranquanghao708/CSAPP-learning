@@ -1136,7 +1136,23 @@ Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liê
 - **nhóm Address-size override:** Address-Size Override là prefix dùng để thay đổi kích thước địa chỉ mà CPU sử dụng khi giải mã một số lệnh. Mã byte của prefix này là `67`. Nó thuộc nhóm Legacy Prefixes, cùng nhóm với Operand-Size Override (`66`). Điểm quan trọng nhất:
   - `0x66` liên quan đến kích thước toán hạng dữ liệu (operand size).
   - `0x67` liên quan đến kích thước địa chỉ (address size).
-  Trong chế độ 64-bit, kích thước địa chỉ mặc định của phần lớn lệnh truy cập bộ nhớ là 64-bit. Prefix `0x67` có thể chuyển kích thước địa chỉ đó xuống 32-bit.
+  Trong chế độ 64-bit, kích thước địa chỉ mặc định của phần lớn lệnh truy cập bộ nhớ là 64-bit. Prefix `0x67` có thể chuyển kích thước địa chỉ đó xuống 32-bit. Để hiểu rõ hơn, ta xét lệnh hợp ngữ sau `mov eax, DWORD PTR [rbx + rcx*4 + 8]`, lúc này CPU phải thực hiện hai việc khác nhau đó là tính địa chỉ bộ nhớ và truy cập dữ liệu
+
+  Đầu tiên ta nói tới việc tính toán địa chỉ bộ nhớ, ta đã biêt công thức tính địa chỉ bộ nhớ là `EA = RBX + RCX x 4 + 8` dựa vào đoạn lệnh hợp ngữ đã được xét trên, trong đó EA (Effective Address) là địa chỉ hiệu dụng được tính từ các thanh ghi và displacement. Kế tiếp, ta nói tới việc truy cập dữ liệu ở đây CPU đọc 4 byte tại địa chỉ `EA`, sau đó ghi giá trị vào `EAX` (vì `4byte = 32bits`, mà `eax` là thanh ghi 32bits). Ta có
+
+  <div align="center">
+
+  | Thuộc tính | Giá trị |
+  |---|---|
+  | Operand size | 32-bit |
+  | Address size | 64-bit |
+  | Thanh ghi dữ liệu | `EAX` |
+  | Thanh ghi địa chỉ | `RBX`, `RCX` |
+  | Kích thước dữ liệu đọc | 4 byte |
+
+  </div>
+
+  Như vậy, kích thước dữ liệu được đọc không quyết định kích thước địa chỉ được sử dụng.
 
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
