@@ -1222,6 +1222,57 @@ Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liê
   </div>
 
   Các encoding trên được xét trong chế độ 64-bit.
+- **nhóm Segment override:** Segment Override Prefix là prefix cho phép chỉ định segment register được sử dụng khi truy cập bộ nhớ, thay vì segment mặc định của instruction. Các byte prefix tương ứng là:
+
+  <div align="center">
+
+  | Prefix | Segment register | Tên |
+  |---|---|---|
+  | `26` | `ES` | Extra Segment |
+  | `2E` | `CS` | Code Segment |
+  | `36` | `SS` | Stack Segment |
+  | `3E` | `DS` | Data Segment |
+  | `64` | `FS` | FS Segment |
+  | `65` | `GS` | GS Segment |
+
+  </div>
+
+  Đây là các Legacy Prefixes trong bộ mã lệnh x86. Tuy nhiên, khi học x86-64, chúng ta cần chú ý một điểm: `FS` và `GS` vẫn có ý nghĩa đặc biệt trong chế độ 64-bit, trong khi các segment override khác thường không làm thay đổi địa chỉ bộ nhớ theo cách chúng từng làm trong chế độ 32-bit.
+
+  Trong kiến trúc x86 truyền thống, địa chỉ bộ nhớ có thể được hình thành thông qua cơ chế phân đoạn (segmentation). Các segment register gồm:
+
+  ```
+  CS    Code Segment
+  DS    Data Segment
+  SS    Stack Segment
+  ES    Extra Segment
+  FS    Additional Segment
+  GS    Additional Segment
+  ```
+
+  Trong chế độ 32-bit, các segment register có thể tham gia vào quá trình hình thành địa chỉ tuyến tính. **Ví dụ**, một lệnh truy cập bộ nhớ có thể sử dụng segment mặc định tùy thuộc vào loại địa chỉ:
+
+  ```asm
+  mov eax, [ebx]       ; Thông thường dùng DS
+  mov eax, [ebp]       ; Thông thường dùng SS
+  ```
+
+  Ở đây, `EBX` thường dẫn đến việc sử dụng `DS`, còn địa chỉ dựa trên `EBP` mặc định sử dụng `SS`. Có thể hình dung đơn giản:
+
+  ```
+  Effective Address
+         |
+         v
+  Segment Selection
+         |
+         v
+  Linear Address
+         |
+         v
+  Memory Access
+  ```
+
+  Đây là mô hình khái quát. Chi tiết chuyển đổi địa chỉ phụ thuộc vào chế độ hoạt động của CPU và cấu hình phân đoạn.
 
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
