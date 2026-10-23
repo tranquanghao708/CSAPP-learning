@@ -1646,7 +1646,7 @@ E8 xx xx xx xx
 <div align="center">
 
 $$\Large
-\text{Target}=\text{RIP}_{\text{next}}+\operatorname{signext}(\text{disp32})
+\text{Target}=\text{RIP}_{\text{next}}+\text{signext(disp32)}
 $$
 
 </div>
@@ -1686,7 +1686,7 @@ Kết quả đầu ra có thể như sau :
 > thực hiện hai lệnh `file program` và `readelf -h program`
 
 <p align="center">
-  <img src="image/image19.png" alt="kiểm tra relocation table">
+  <img src="image/image19.png" alt="kiểm tra ELF executable">
 </p>
 </td>
 <td>
@@ -1694,7 +1694,7 @@ Kết quả đầu ra có thể như sau :
 > thực hiện hai lệnh `readelf -l program` và `objdump -d -Mintel program`
 
 <p align="center">
-  <img src="image/image20.png" alt="kiểm tra relocation table">
+  <img src="image/image20.png" alt="kiểm tra ELF executable">
 </p>
 </td>
 </tr>
@@ -1712,7 +1712,7 @@ Bước 5 — Chạy thử, ta dùng `./program ; echo $?`, kết quả trả v�
 Chương trình không in gì ra màn hình. Nó gọi `hello`, quay về `_start`, rồi gọi Linux syscall `exit` với mã thoát bằng `0`. Thử strace xem :
 
 <p align="center">
-  <img src="image/image22.png" alt="chạy thử soi kết quả trả về">
+  <img src="image/image22.png" alt="chạy thử soi với strace">
 </p>
 
 kết quả đúng là `exit(0)`
