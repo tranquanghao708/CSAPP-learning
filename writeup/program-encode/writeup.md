@@ -1542,4 +1542,4 @@ Trong quy trình biên dịch và liên kết trên Linux x86-64, Object File sa
 Không phải mọi file đều trải qua các bước giống hệt nhau. Ví dụ này là mô tả sơ đồ khi dùng NASM, ELF64 và GNU ld trên Linux.
 
 > [!NOTE]
-> **Lưu ý:** linker không chạy chương trình. Linker tạo executable; kernel chịu trách nhiệm nạp chương trình khi mày thực thi nó.
+> **Lưu ý:** linker không chạy chương trình. Linker tạo executable; kernel chịu trách nhiệm nạp chương trình khi ta thực thi nó.
