@@ -1626,4 +1626,93 @@ Trong `main.o`, symbol `hello` được khai báo nhưng chưa được định 
 
 </div>
 
-Đây là lý do linker cần Symbol Table: nó dùng thông tin symbol để tìm định nghĩa tương ứng với những tham chiếu chưa được giải quyết.
+Đây là lý do linker cần Symbol Table: nó dùng thông tin symbol để tìm định nghĩa tương ứng với những tham chiếu chưa được giải quyết. Bước 3, là kiểm tra Relocation Table, để kiểm tra phần này ta dùng lệnh `readelf -r main.o` và `objdump -dr -Mintel main.o`, kết quả như sau :
+
+<p align="center">
+  <img src="image/image18.png" alt="kiểm tra relocation table">
+</p>
+
+Trong `main.o`, lệnh `call hello` có thể đi kèm một relocation entry. Trước khi liên kết, mã máy của `call rel32` có dạng tổng quát:
+
+```
+E8 xx xx xx xx
+│  └─────────┘
+│   disp32 chưa được giải quyết
+└── opcode CALL
+```
+
+`disp32` là displacement có dấu 32 bit. CPU tính địa chỉ đích của lệnh gọi bằng:
+
+<div align="center">
+
+$$\Large
+\text{Target}=\text{RIP}_{\text{next}}+\operatorname{signext}(\text{disp32})
+$$
+
+</div>
+
+Trong file object, assembler chưa biết vị trí cuối cùng của hello, nên nó để lại thông tin relocation để linker xử lý. Với relocation PC-relative, phép tính thường có dạng `D=S+A-P`. Trong đó:
+- `S`: giá trị địa chỉ của symbol đích.
+- `A`: addend, tức giá trị cộng thêm theo quy ước relocation.
+- `P`: địa chỉ của vị trí relocation.
+- `D`: giá trị cần ghi vào trường displacement.
+Với các relocation `rel32` của x86-64, addend thường bù cho việc CPU tính tương đối từ địa chỉ ngay sau lệnh. Cách biểu diễn cụ thể phụ thuộc relocation type.
+
+> [!IMPORTANT]
+> **Điểm quan trọng:** relocation entry không phải là một lệnh CPU. Nó là metadata để linker biết cần sửa chỗ nào và sửa như thế nào.
+
+Bước 4, là bước link thành Executable, cái này đơn giản, chỉ cần link các file object lại thành một chương trình mà có thể nạp vào, thực thi chuẩn bài bản của hệ thống. Ta dùng lệnh `ld main.o hello.o -o program`. Lệnh này yêu cầu linker kết hợp hai object file thành executable program. Về mặt khái niệm, linker thực hiện:
+- 1.Tìm định nghĩa của hello trong hello.o.
+- 2.Xác định vị trí của các section trong executable.
+- 3.Tính displacement của call hello.
+- 4.Ghi giá trị thích hợp vào trường disp32.
+- 5.Tạo ELF executable chứa entry point và program headers.
+Ta có thể kiểm tra kết quả với các lệnh sau :
+
+```bash
+file program
+readelf -h program
+readelf -l program
+objdump -d -Mintel program
+```
+
+Kết quả đầu ra có thể như sau :
+
+<div align="center">
+<table>
+<tr>
+<td>
+
+> thực hiện hai lệnh `file program` và `readelf -h program`
+
+<p align="center">
+  <img src="image/image19.png" alt="kiểm tra relocation table">
+</p>
+</td>
+<td>
+
+> thực hiện hai lệnh `readelf -l program` và `objdump -d -Mintel program`
+
+<p align="center">
+  <img src="image/image20.png" alt="kiểm tra relocation table">
+</p>
+</td>
+</tr>
+</table>
+</div>
+
+Trong `readelf -h`, chú ý trường `Type` và `Entry point address`. Với lệnh `ld` trực tiếp theo ví dụ này, file thường là `executable ELF` kiểu `EXEC`, chi tiết phụ thuộc cấu hình linker. Trong `readelf -l`, ta sẽ thấy các program headers mô tả những segment dùng khi nạp chương trình. Đây là điểm khác với section headers mà ta hiện đang xem bằng `readelf -S`.
+
+Bước 5 — Chạy thử, ta dùng `./program ; echo $?`, kết quả trả về là `0`
+
+<p align="center">
+  <img src="image/image21.png" alt="chạy thử soi kết quả trả về">
+</p>
+
+Chương trình không in gì ra màn hình. Nó gọi `hello`, quay về `_start`, rồi gọi Linux syscall `exit` với mã thoát bằng `0`. Thử strace xem :
+
+<p align="center">
+  <img src="image/image22.png" alt="chạy thử soi kết quả trả về">
+</p>
+
+kết quả đúng là `exit(0)`
