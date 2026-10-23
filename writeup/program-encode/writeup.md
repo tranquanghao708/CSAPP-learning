@@ -1701,7 +1701,17 @@ Kết quả đầu ra có thể như sau :
 </table>
 </div>
 
-Trong `readelf -h`, chú ý trường `Type` và `Entry point address`. Với lệnh `ld` trực tiếp theo ví dụ này, file thường là `executable ELF` kiểu `EXEC`, chi tiết phụ thuộc cấu hình linker. Trong `readelf -l`, ta sẽ thấy các program headers mô tả những segment dùng khi nạp chương trình. Đây là điểm khác với section headers mà ta hiện đang xem bằng `readelf -S`.
+Trong `readelf -h`, chú ý trường `Type` và `Entry point address`. Với lệnh `ld` trực tiếp theo ví dụ này, file thường là `executable ELF` kiểu `EXEC`, chi tiết phụ thuộc cấu hình linker :
+
+<p align="center">
+  <img src="image/image19.png" alt="kiểm tra ELF executable">
+</p>
+
+Trong `readelf -l`, ta sẽ thấy các program headers mô tả những segment dùng khi nạp chương trình. Đây là điểm khác với section headers mà ta xem bằng `readelf -S`.
+
+<p align="center">
+  <img src="image/image20.png" alt="kiểm tra ELF executable">
+</p>
 
 Bước 5 — Chạy thử, ta dùng `./program ; echo $?`, kết quả trả về là `0`
 
