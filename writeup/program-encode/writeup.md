@@ -1272,7 +1272,19 @@ Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liê
   Memory Access
   ```
 
-  Đây là mô hình khái quát. Chi tiết chuyển đổi địa chỉ phụ thuộc vào chế độ hoạt động của CPU và cấu hình phân đoạn.
+  Đây là mô hình khái quát. Chi tiết chuyển đổi địa chỉ phụ thuộc vào chế độ hoạt động của CPU và cấu hình phân đoạn. Để biết cách Segment Override Prefix hoạt động ta xét lệnh `mov eax, [ebx]`. Trong chế độ 32-bit, lệnh này thông thường sử dụng segment `DS`. Nếu muốn chỉ định segment `FS`, có thể viết `mov eax, fs:[ebx]`. Mã máy tương ứng có dạng `64 8B 03`, ta phân tích từng byte như sau :
+
+  <div align="center">
+
+  | Byte | Ý nghĩa |
+  |---|---|
+  | `64` | Segment override prefix: `FS` |
+  | `8B` | Opcode: `MOV r32, r/m32` |
+  | `03` | ModR/M: chỉ định thanh ghi đích và địa chỉ bộ nhớ |
+
+  </div>
+
+  Lệnh được giải mã thành `mov eax, DWORD PTR fs:[ebx]`. Trong chế độ 32-bit, địa chỉ tuyến tính được hình thành từ địa chỉ hiệu dụng cộng với segment base, theo cơ chế phân đoạn đang được thiết lập.
 
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
