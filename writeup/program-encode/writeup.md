@@ -1725,4 +1725,29 @@ Chương trình không in gì ra màn hình. Nó gọi `hello`, quay về `_star
   <img src="image/image22.png" alt="chạy thử soi với strace">
 </p>
 
-kết quả đúng là `exit(0)`
+kết quả đúng là `exit(0)`.
+
+- **Điều gì thực sự thay đổi từ .o sang executable?:** Ta xét bảng so sánh sau để trực quan hóa cách giải quyết vấn đề :
+
+  <div align="center">
+
+  | Thuộc tính |	Object File (.o) |	Executable |
+  |:-|:-|:-|
+  | ELF type |	`ET_REL` |	Thường là `ET_EXEC` hoặc `ET_DYN` |
+  | Section `.text` |	Có thể chứa mã máy |	Chứa mã máy đã được liên kết |
+  | Symbol |	Có thể có symbol undefined |	Các tham chiếu cần thiết cho liên kết tĩnh đã được giải quyết |
+  | Relocation |	Có thể còn relocation cần xử lý |	Nhiều relocation tĩnh đã được áp dụng, vẫn có thể còn relocation động |
+  | Địa chỉ	 | Thường là offset tương đối với section |	Địa chỉ phụ thuộc kiểu executable và cách nạp |
+  | Program headers |	Thông thường không có vai trò nạp executable như ở file thực thi |	Mô tả các segment dùng khi nạp |
+
+  </div>
+
+  **Một chi tiết nâng cao:** Executable không nhất thiết chứa địa chỉ tuyệt đối cho mọi tham chiếu. Ví dụ, `call rel32` vẫn dùng displacement tương đối; linker tính displacement thích hợp thay vì thay nó bằng một địa chỉ tuyệt đối 64 bit. Với PIE và shared libraries, một số relocation còn được xử lý lúc tải hoặc lúc liên kết động.
+
+> [!NOTE]
+> Phân biệt ba khái niệm
+> - Symbol resolution: xác định symbol nào đáp ứng tham chiếu đang cần giải quyết.
+> - Relocation: tính và áp dụng giá trị cần thiết tại vị trí được đánh dấu.
+> - Linking: toàn bộ quá trình kết hợp object file, giải quyết symbol, xử lý relocation và tạo đầu ra liên kết.
+>
+> **Nói ngắn gọn:** Symbol cho linker biết cần tìm cái gì; relocation cho linker biết cần sửa ở đâu và theo cách nào; linker dùng cả hai để tạo executable.
