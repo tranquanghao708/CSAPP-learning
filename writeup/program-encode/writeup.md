@@ -1181,6 +1181,31 @@ Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liê
 
   **Lưu ý:** Không phải mọi cách viết địa chỉ 64-bit đều có thể được thay thế trực tiếp bằng cách thêm 67. Khi address size thay đổi, cấu trúc địa chỉ được mã hóa và các trường hợp đặc biệt của ModR/M, SIB cũng có thể thay đổi.
 
+  Ví dụ bằng mã máy x86-64. Xét lệnh `mov eax, DWORD PTR [rbx]`, một encoding hợp lệ trong chế độ 64-bit là `8B 03`. Phân tích:
+
+  <div align="center">
+
+  | Byte | Ý nghĩa |
+  |---|---|
+  | `8B` | Opcode `MOV r32, r/m32` |
+  | `03` | ModR/M: `mod=00`, `reg=000`, `r/m=011` |
+
+  </div>
+
+  ModR/M chỉ định:
+    - `reg=000`: EAX.
+    - `mod=00, r/m=011`: địa chỉ bộ nhớ `[RBX]` trong chế độ 64-bit với address size mặc định.
+  Lệnh được giải mã thành `mov eax, DWORD PTR [rbx]`. Nếu thêm prefix `67` ta có `67 8B 03` thì trong chế độ 64-bit, encoding này được giải mã theo address size 32-bit và có kết quả là `mov eax, DWORD PTR [ebx]`
+
+  Ý nghĩa là CPU sử dụng địa chỉ 32-bit trong EBX, rồi zero-extend kết quả thành địa chỉ 64-bit trước khi truy cập bộ nhớ. So sánh hai encoding:
+
+  ```asm
+  8B 03       → MOV EAX, DWORD PTR [RBX]
+  67 8B 03    → MOV EAX, DWORD PTR [EBX]
+  ```
+
+  Opcode 8B và byte ModR/M `03` không thay đổi, prefix `67` làm thay đổi cách diễn giải địa chỉ.
+
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
 
