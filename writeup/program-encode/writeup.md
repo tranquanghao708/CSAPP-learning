@@ -1197,14 +1197,31 @@ Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liê
     - `mod=00, r/m=011`: địa chỉ bộ nhớ `[RBX]` trong chế độ 64-bit với address size mặc định.
   Lệnh được giải mã thành `mov eax, DWORD PTR [rbx]`. Nếu thêm prefix `67` ta có `67 8B 03` thì trong chế độ 64-bit, encoding này được giải mã theo address size 32-bit và có kết quả là `mov eax, DWORD PTR [ebx]`
 
-  Ý nghĩa là CPU sử dụng địa chỉ 32-bit trong EBX, rồi zero-extend kết quả thành địa chỉ 64-bit trước khi truy cập bộ nhớ. So sánh hai encoding:
+  Ý nghĩa là CPU sử dụng địa chỉ 32-bit trong `EBX`, rồi zero-extend kết quả thành địa chỉ 64-bit trước khi truy cập bộ nhớ. So sánh hai encoding:
 
   ```asm
   8B 03       → MOV EAX, DWORD PTR [RBX]
   67 8B 03    → MOV EAX, DWORD PTR [EBX]
   ```
 
-  Opcode 8B và byte ModR/M `03` không thay đổi, prefix `67` làm thay đổi cách diễn giải địa chỉ.
+  Opcode `8B` và byte ModR/M `03` không thay đổi, prefix `67` làm thay đổi cách diễn giải địa chỉ. Phân biệt `66` và `67` qua một ví dụ ta xét lệnh `mov eax, DWORD PTR [rbx]`.
+
+  Nếu thêm `66`, kích thước toán hạng của lệnh `MOV` này chuyển sang 16-bit như `66 8B 03` tương ứng `mov ax, WORD PTR [rbx]`. Dữ liệu được đọc là 2 byte, địa chỉ vẫn sử dụng address size 64-bit.
+
+  Nếu thêm `67` như  `67 8B 03`, tương ứng `mov eax, DWORD PTR [ebx]`. Dữ liệu vẫn là 4 byte, nhưng địa chỉ sử dụng address size 32-bit. Từ đó ta có bảng so sánh như sau:
+
+  <div align="center">
+
+  | Encoding | Operand size | Address size | Đích |
+  |---|---:|---:|---|
+  | `8B 03` | 32-bit | 64-bit | `EAX` |
+  | `66 8B 03` | 16-bit | 64-bit | `AX` |
+  | `67 8B 03` | 32-bit | 32-bit | `EAX` |
+  | `66 67 8B 03` | 16-bit | 32-bit | `AX` |
+
+  </div>
+
+  Các encoding trên được xét trong chế độ 64-bit.
 
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
