@@ -1096,13 +1096,34 @@ Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liê
 
   Ba lệnh trên đều thực hiện phép sao chép dữ liệu giữa các thanh ghi, nhưng kích thước toán hạng khác nhau. Cụ thể:
 
+  <div align="center">
+
   | Lệnh | Kích thước | Mã máy |
   |---|---:|---|
   | `mov eax, ebx` | 32-bit | `89 D8` |
   | `mov ax, bx` | 16-bit | `66 89 D8` |
   | `mov rax, rbx` | 64-bit | `48 89 D8` |
 
-  Các mã trên là những encoding tương ứng trong chế độ 64-bit.
+  </div>
+
+  Các mã trên là những encoding tương ứng trong chế độ 64-bit. Bây giờ, ta phân tích từng trường hợp:
+  - **Trường hợp 1:** Không có prefix xét `89 D8` trong đó `89` là opcode `MOV r/m, r` và `D8` là ModR/M `mod=11, reg=011, r/m=000`. `89` chọn dạng lệnh `MOV r/m, r`. Với encoding này, ModR/M `D8` chỉ ra đích là `EAX`, nguồn là `EBX` khi kích thước toán hạng mặc định là 32-bit. Kết quả thành lệnh `mov eax, ebx`
+  - **Trường hợp 2:** Có prefix `66 66 89 D8` trong đó `66` là Operand-size override, `89` là Opcode, `D8` là ModR/M. Prefix `66` yêu cầu kích thước toán hạng 16-bit đối với lệnh này. Kết quả ra lệnh hoàn chỉnh `mov ax, bx`
+
+> [!NOTE]
+> **Lưu ý:** `66` không thay đổi cấu trúc byte ModR/M `D8`. Nó thay đổi cách giải mã kích thước toán hạng của lệnh.
+
+  - **Trường hợp 3:** Có REX.W `48 89 D8`, trong đó `48` là REX prefix `W=1, R=0, X=0, B=0`, `89` là Opcode, `D8` là ModR/M. Bit `W=1` yêu cầu kích thước toán hạng 64-bit đối với lệnh này. Kết quả ra lệnh hoàn chỉnh `mov rax, rbx`
+
+  Vậy, tóm lại với ví dụ này ra kết quả như sau:
+
+  ```asm
+  89 D8       → mov eax, ebx
+  66 89 D8    → mov ax, bx
+  48 89 D8    → mov rax, rbx
+  ```
+
+  **Tuy nhiên:** `0x66` ko phải phải lúc nào cũng chuyển 32-bit thành 16-bit, đây là điểm rất quan trọng
 
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
