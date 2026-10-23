@@ -1081,6 +1081,29 @@ Phân biệt `REP`, `REPE` và `REPNE` ta có bảng so sánh như sau :
 
 Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liên quan đến việc lặp và điều kiện lặp của các instruction được hỗ trợ, còn REX (`40–4F`) liên quan đến mở rộng encoding trong x86-64.
 
+- **nhóm Operand-size override:** Operand-size override là nhóm prefix dùng để thay đổi kích thước toán hạng mặc định của một số lệnh x86. Byte mã máy của prefix này là `66`. Nó thuộc nhóm Legacy Prefixes, không phải REX prefix. Khái niệm operand size là kích thước toán hạng mà lệnh thao tác, chẳng hạn `16`, `32` hoặc `64` bit.
+  Trong x86, kích thước toán hạng mặc định phụ thuộc vào chế độ hoạt động của CPU và từng lệnh. Trong chế độ 64-bit, với nhiều lệnh số nguyên thông thường:
+  - Mặc định là 32-bit.
+  - Prefix `0x66` thường chuyển kích thước toán hạng từ 32-bit sang 16-bit.
+  - Prefix REX với bit `W = 1` thường yêu cầu kích thước toán hạng 64-bit.
+  **Ví dụ:** Xét 3 lệnh :
+
+  ```asm
+  mov eax, ebx
+  mov ax, bx
+  mov rax, rbx
+  ```
+
+  Ba lệnh trên đều thực hiện phép sao chép dữ liệu giữa các thanh ghi, nhưng kích thước toán hạng khác nhau. Cụ thể:
+
+  | Lệnh | Kích thước | Mã máy |
+  |---|---:|---|
+  | `mov eax, ebx` | 32-bit | `89 D8` |
+  | `mov ax, bx` | 16-bit | `66 89 D8` |
+  | `mov rax, rbx` | 64-bit | `48 89 D8` |
+
+  Các mã trên là những encoding tương ứng trong chế độ 64-bit.
+
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
 
