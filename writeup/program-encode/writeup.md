@@ -1,7 +1,8 @@
 # CSAPP : Program Encoding
 
 > Ngày bắt đầu viết : 23/9/2026
-> Ngày hoàn thành :
+
+> Ngày hoàn thành : 24/10/2026
 
 **Mục lục**
 
@@ -64,10 +65,10 @@
 - [7. Lập trình byte program](#7-lập-trình-byte-program)
   - [7.1. lập trình tích hợp byte program trên file định dạng C](#71-lập-trình-tích-hợp-byte-program-trên-file-định-dạng-c)
   - [7.2. lập trình tích hợp byte program trên file định dạng hợp ngữ](#72-lập-trình-tích-hợp-byte-program-trên-file-định-dạng-hợp-ngữ)
-- [10. Tổng kết](#10-tổng-kết)
-  - [10.1. Instruction được encode như thế nào?](#101-instruction-được-encode-như-thế-nào)
-  - [10.2. Quy trình Decode một Instruction](#102-quy-trình-decode-một-instruction)
-  - [10.3. Những gì cần nhớ](#103-những-gì-cần-nhớ)
+- [8. Tổng kết](#10-tổng-kết)
+  - [8.1. Instruction được encode như thế nào?](#101-instruction-được-encode-như-thế-nào)
+  - [8.2. Quy trình Decode một Instruction](#102-quy-trình-decode-một-instruction)
+  - [8.3. Những gì cần nhớ](#103-những-gì-cần-nhớ)
 
 </td>
 </tr>
@@ -883,6 +884,8 @@ Khi phân tích một binary, ta thường nhìn thấy một dãy byte liên t�
 </table>
 </details>
 
+---
+
 ## 3. REX Prefix
 ### 3.1. REX Prefix là gì?
 
@@ -1314,6 +1317,8 @@ Với các truy cập bộ nhớ thông thường, có thể mô hình hóa đ�
 
   - **Nhóm REX:** cái nhóm này đã được nêu rõ ở phần đầu rồi, có thể xem lại ở phần [3. REX Prefix](#3-rex-prefix). REX là nhóm prefix đặc biệt trong chế độ 64-bit, có giá trị từ `0x40` đến `0x4F`. Nó có cấu trúc `0100WRXB`, tuy nhiên mấy nhóm còn lại như Operand-Size Override, address-size override, Lock, Rep chúng chỉ có các byte riêng lẻ của chúng, chúng ko có cấu trúc `0100WRXB` như rex prefix
 
+---
+
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
 
@@ -1357,6 +1362,8 @@ D8 =  11     011   000
 - **Bước 2:** là giải mã trường reg, `reg = 011`. Với dạng instruction đang xét và không có REX.R, mã 011 chỉ thanh ghi EBX ở độ rộng 32 bit.
 - **Bước 3:** Giải mã trường r/m, ta có  `r/m = 000`, Do `mod = 11`, trường này chỉ thanh ghi EAX ở độ rộng 32 bit
 - **Bước 4:** Kết hợp với opcode, Opcode `89` xác định dạng `MOV r/m32, r32`. Trong dạng này, trường reg là toán hạng nguồn, còn trường r/m là toán hạng đích. Vì vậy `mov eax, ebx` là Instruction sao chép 32 bit từ EBX sang EAX. Trong chế độ 64 bit, việc ghi vào EAX đồng thời đặt 32 bit cao của RAX về 0.
+
+---
 
 ## 5. SIB Byte
 ### 5.1. SIB là gì?
@@ -1416,6 +1423,8 @@ Ta thấy `SS = 10` suy ra `Scale = 4`, `Index = 001` suy ra thanh ghi `RCX`, `B
 
 > [!IMPORTANT]
 > **Điều quan trọng nhất cần thuộc ở giai đoạn này:** ModR/M quyết định có SIB hay không, còn SIB mã hóa cách kết hợp Base, Index và Scale để tính địa chỉ.
+
+---
 
 ## 6. Object Code và ELF
 
@@ -1985,6 +1994,8 @@ kết quả đúng là `exit(0)`.
 >
 > **Nói ngắn gọn:** Symbol cho linker biết cần tìm cái gì; relocation cho linker biết cần sửa ở đâu và theo cách nào; linker dùng cả hai để tạo executable.
 
+---
+
 ## 7. Lập trình byte program
 
 Lập trình byte program là việc tận dụng các kiến thức về instruction encode như prefix, opcode, modR/M, sib, Displacement v..v.. để tạo nên một chương trình thực thi hoàn chỉnh. Chúng ta có thể tận dụng các trình như `nasm`, `gcc` chẳng hạn để biên dịch chúng
@@ -2066,3 +2077,473 @@ Kết quả như sau:
 </p>
 
 ta thấy, nó chèn trực tiếp các byte code ở trong mã nguồn mà chúng ta code sang tệp nhị phân và khi link lại với `ld` thì thành chương trình thực thi, khi chạy nó vẫn y nguyên cơ chế, hành vi để thực hiện như ý tưởng dự tính của chúng ta. Với `objdump` thì ra kết quả sang hợp ngữ đúng những gì chúng ta ghi chú trong mã nguồn chỉ khác là đầu ra của nó là hợp ngữ dạng `at&t` thay vì `intel`
+
+---
+
+## 8. Tổng kết
+
+Sau khi đi qua toàn bộ các phần từ tổng quan về Program Encoding, cấu trúc instruction, các nhóm prefix, ModR/M, SIB cho đến Object Code, ELF và lập trình byte program, chúng ta có thể tổng hợp lại những kiến thức cốt lõi để hiểu rõ hơn cách một chương trình được biểu diễn thành machine code, cách CPU giải mã các byte đó và cách tổ chức chúng thành một chương trình có thể thực thi.
+
+Điểm quan trọng nhất của chương này không phải là ghi nhớ toàn bộ opcode hay học thuộc các bảng encoding, mà là hiểu được các byte trong một instruction được tổ chức như thế nào, mỗi trường có vai trò gì và làm thế nào để đi từ một instruction encoding đến hành vi thực tế của CPU.
+
+### 8.1. Instruction được encode như thế nào?
+
+Như chúng ta đã tìm hiểu ở các phần trước, instruction trong kiến trúc x86-64 được biểu diễn bằng một dãy byte. Dãy byte này không phải một chuỗi dữ liệu ngẫu nhiên mà tuân theo các quy tắc encoding được định nghĩa bởi ISA.
+
+Một instruction có thể được cấu tạo từ những thành phần như sau:
+
+```
+┌──────────┬────────┬────────┬──────┬──────────────┬───────────┐
+│ Prefixes │ Opcode │ ModR/M │ SIB  │ Displacement │ Immediate │
+└──────────┴────────┴────────┴──────┴──────────────┴───────────┘
+```
+
+Tuy nhiên, đây chỉ là mô hình tổng quát. Không phải instruction nào cũng chứa đầy đủ tất cả các thành phần trên. Việc xác định trường nào xuất hiện, kích thước của trường đó và cách diễn giải nó phụ thuộc vào encoding form cụ thể của instruction.
+
+Để dễ hình dung, ta xét ví dụ:
+
+```asm
+mov eax, 0x3c
+```
+
+Machine code:
+
+```text
+B8 3C 00 00 00
+```
+
+Có thể phân tích như sau:
+
+```
+B8 | 3C 00 00 00
+│          │
+│          └── Immediate 32-bit
+│
+└── Opcode encoding form B8+rd
+```
+
+Trong encoding form này, `B8` tương ứng với trường hợp thanh ghi đích là `EAX`, còn bốn byte tiếp theo biểu diễn immediate 32-bit theo little-endian.
+
+Khi thực thi, instruction đưa giá trị `0x3C` vào `EAX`. Vì thao tác ghi vào thanh ghi 32-bit tổng quát trong chế độ 64-bit sẽ xóa 32 bit cao của thanh ghi tương ứng, kết quả là:
+
+```
+EAX = 0x0000003C
+RAX = 0x000000000000003C
+```
+
+Qua ví dụ này, ta thấy machine code không lưu chuỗi văn bản `mov eax, 0x3c`. Nó lưu các byte mà CPU sẽ diễn giải theo quy tắc encoding của x86-64.
+
+**Vậy làm thế nào để xác định các byte trong một instruction?** Chúng ta cần nắm được vai trò của từng thành phần trong encoding.
+
+#### 8.1.1. Prefix
+
+Prefix là các byte hoặc trường encoding đứng trước opcode theo những quy tắc nhất định, có thể thay đổi cách diễn giải instruction hoặc mở rộng khả năng mã hóa.
+
+Đối với những nhóm prefix đã tìm hiểu, ta cần nhớ:
+
+<div align="center">
+
+| Nhóm | Vai trò khái quát |
+|:-|:-|
+| REX | Hỗ trợ mã hóa toán hạng 64-bit trong các instruction phù hợp và mở rộng mã thanh ghi |
+| Operand-size override (`66`) | Thay đổi kích thước toán hạng trong những encoding form phù hợp |
+| Address-size override (`67`) | Thay đổi kích thước địa chỉ được sử dụng để tính effective address |
+| Segment override | Chọn segment register cho toán hạng bộ nhớ; trong x86-64, FS và GS đặc biệt quan trọng |
+| LOCK (`F0`) | Yêu cầu ngữ nghĩa khóa đối với những instruction hỗ trợ prefix này |
+| REPNE/REP và các biến thể (`F2`, `F3`) | Có ý nghĩa phụ thuộc vào instruction; ngoài các thao tác chuỗi còn có những encoding sử dụng chúng theo cách riêng |
+
+</div>
+
+Với REX, ta có cấu trúc:
+
+```
+┌────────┬───┬───┬───┬───┐
+│  0100  │ W │ R │ X │ B │
+└────────┴───┴───┴───┴───┘
+```
+
+Trong đó:
+
+- `W`: thường chọn kích thước toán hạng 64-bit khi bằng `1`, tùy instruction.
+- `R`: mở rộng trường `reg` của ModR/M.
+- `X`: mở rộng trường `index` của SIB.
+- `B`: mở rộng trường `r/m` của ModR/M, trường `base` của SIB hoặc mã thanh ghi được mã hóa trong opcode, tùy encoding form.
+
+Ví dụ:
+
+```asm
+mov eax, ebx
+mov rax, rbx
+```
+
+Encoding tương ứng:
+
+```text
+89 D8
+48 89 D8
+```
+
+Byte `48` là REX prefix với `W=1`, làm thay đổi cách mã hóa toán hạng của instruction `MOV` này từ 32-bit sang 64-bit.
+
+Tuy nhiên, không phải nhóm prefix nào cũng có cấu trúc bit giống REX. Những prefix như `66`, `67`, `F0`, `F2`, `F3` thường được nhận diện bằng giá trị byte cụ thể và có quy tắc diễn giải riêng.
+
+#### 8.1.2. Opcode và Register Encoding
+
+Opcode hoặc opcode encoding form xác định operation và cách tổ chức các trường của instruction. Một số encoding form còn mã hóa trực tiếp mã thanh ghi vào các bit của opcode. Ví dụ:
+
+```asm
+mov eax, 1
+mov ecx, 1
+```
+
+Encoding:
+
+```text
+B8 01 00 00 00
+B9 01 00 00 00
+```
+
+Trong encoding form `B8+rd id`, ba bit thấp của opcode biểu diễn mã thanh ghi đích. Vì vậy, thay đổi thanh ghi đích có thể làm thay đổi opcode. Tuy nhiên, không phải mọi instruction đều mã hóa thanh ghi trực tiếp trong opcode. Một số encoding sử dụng ModR/M để biểu diễn thanh ghi hoặc toán hạng bộ nhớ. Ví dụ:
+
+```asm
+mov eax, ebx
+```
+
+Encoding:
+
+```text
+89 D8
+```
+
+Ở đây, `89` là opcode và `D8` là byte ModR/M. Do đó, khi phân tích instruction, ta không thể mặc định rằng mã thanh ghi luôn nằm trong opcode hoặc luôn nằm trong ModR/M. Phải xác định encoding form cụ thể trước khi diễn giải các trường.
+
+#### 8.1.3. ModR/M và SIB
+
+ModR/M là một byte có cấu trúc:
+
+```
+┌────────┬────────┬────────┐
+│  mod   │  reg   │  r/m   │
+│  2 bit │  3 bit │  3 bit │
+└────────┴────────┴────────┘
+```
+
+ModR/M giúp xác định cách biểu diễn toán hạng và có thể chứa mã thanh ghi hoặc thông tin chọn cách truy cập bộ nhớ. Ví dụ:
+
+```asm
+mov eax, ebx
+```
+
+Encoding:
+
+```text
+89 D8
+```
+
+Byte ModR/M:
+
+```
+D8 = 11011000
+
+11011000
+│  │  │
+│  │  └── r/m = 000
+│  └───── reg = 011
+└──────── mod = 11
+```
+
+Trong encoding form của `89 /r`, `mod=11` biểu thị toán hạng thanh ghi. Trường `reg` chọn `EBX`, còn `r/m` chọn `EAX`, tạo thành instruction `mov eax, ebx`. Đối với các toán hạng bộ nhớ, SIB có thể được sử dụng để mã hóa thông tin base, index và scale. Cấu trúc SIB:
+
+```
+┌────────┬────────┬────────┐
+│ scale  │ index  │  base  │
+│ 2 bit  │ 3 bit  │ 3 bit  │
+└────────┴────────┴────────┘
+```
+
+Với các encoding địa chỉ phù hợp, effective address có thể được tính theo công thức:
+
+<div align="center">
+
+$$\Large
+EA = Base + Index \times Scale + Displacement
+$$
+
+</div>
+
+**Trong đó:**
+
+- `Base`: giá trị của thanh ghi cơ sở nếu encoding sử dụng base.
+- `Index`: giá trị của thanh ghi chỉ số nếu encoding sử dụng index.
+- `Scale`: hệ số nhân `1`, `2`, `4` hoặc `8`.
+- `Displacement`: độ lệch được mã hóa trực tiếp trong instruction nếu có.
+
+Không phải mọi địa chỉ đều chứa đầy đủ bốn thành phần này. Một số encoding còn có các trường hợp đặc biệt, chẳng hạn không có base hoặc sử dụng địa chỉ tương đối với RIP. Vì vậy, khi decode ModR/M và SIB, chúng ta cần xét cả opcode, prefix và chế độ địa chỉ, thay vì chỉ nhìn riêng một byte rồi kết luận.
+
+#### 8.1.4. Immediate, Displacement và Instruction Length
+
+Immediate là giá trị được mã hóa trực tiếp trong instruction. Displacement là độ lệch được sử dụng khi tính địa chỉ hiệu dụng trong những encoding có trường này. Hai khái niệm này không đồng nghĩa với nhau. Ví dụ:
+
+```asm
+mov eax, 1
+mov eax, DWORD PTR [rbx + 8]
+```
+
+Encoding:
+
+```text
+B8 01 00 00 00
+8B 43 08
+```
+
+Ở instruction đầu tiên, `01 00 00 00` là immediate 32-bit có giá trị `1`. Ở instruction thứ hai, `08` là displacement 8-bit có giá trị `8`, được sử dụng để tính địa chỉ truy cập bộ nhớ từ `RBX`. Ngoài ra, cần phân biệt kích thước của trường được mã hóa với kích thước toán hạng mà instruction thao tác. Một immediate 8-bit có thể được sign-extend khi instruction yêu cầu, nhưng không phải mọi immediate đều được mở rộng theo cùng một cách.
+
+Cuối cùng, x86-64 sử dụng instruction encoding có độ dài biến thiên. Mỗi instruction có thể chiếm số byte khác nhau, tối đa 15 byte theo quy tắc mã hóa x86-64. Độ dài instruction phụ thuộc vào encoding form, prefix và các trường được sử dụng. Vì vậy, không thể chỉ dựa vào tên mnemonic để xác định số byte của instruction.
+
+### 8.2. Quy trình Decode một Instruction
+
+Sau khi hiểu các thành phần của instruction encoding, chúng ta có thể xây dựng một quy trình giải mã tổng quát. Giả sử gặp dãy byte:
+
+```text
+48 8B 43 08
+```
+
+Ta cần xác định instruction tương ứng bằng cách áp dụng các quy tắc encoding của x86-64.
+
+#### Bước 1: Xác định chế độ giải mã và các prefix
+
+Byte đầu tiên:
+
+```text
+48
+```
+
+Đây là REX prefix:
+
+```
+48 = 0100 1000
+     0100 W R X B
+          1 0 0 0
+```
+
+Suy ra `REX.W=1`, còn `R`, `X`, `B` bằng `0`. Trong encoding này, `REX.W=1` chọn toán hạng 64-bit cho instruction `MOV` đang xét.
+
+#### Bước 2: Xác định opcode
+
+Byte tiếp theo:
+
+```text
+8B
+```
+
+Opcode `8B` thuộc encoding form:
+
+```text
+MOV r16/32/64, r/m16/32/64
+```
+
+Kích thước toán hạng cụ thể phụ thuộc vào prefix và các quy tắc áp dụng. Trong trường hợp này, `REX.W=1` chọn kích thước 64-bit.
+
+#### Bước 3: Decode ModR/M
+
+Byte tiếp theo:
+
+```text
+43 = 01000011
+```
+
+Chia thành các trường:
+
+```
+01 | 000 | 011
+│     │     │
+│     │     └── r/m = 011
+│     └──────── reg = 000
+└────────────── mod = 01
+```
+
+Với encoding form `8B /r`:
+
+- `reg=000` chọn thanh ghi đích `RAX` khi `REX.W=1`.
+- `mod=01` biểu thị toán hạng bộ nhớ có displacement 8-bit.
+- `r/m=011` chọn base `RBX` trong trường hợp này.
+
+Vì `r/m` không chỉ định cách mã hóa yêu cầu SIB, instruction không cần SIB byte.
+
+#### Bước 4: Decode Displacement
+
+Byte cuối cùng:
+
+```text
+08
+```
+
+Do `mod=01`, byte này là displacement 8-bit có dấu, với giá trị `+8`.
+
+Địa chỉ hiệu dụng được tính:
+
+$$
+EA = RBX + 8
+$$
+
+Instruction đọc 8 byte từ địa chỉ hiệu dụng đó và đưa dữ liệu vào `RAX`.
+
+#### Kết quả
+
+Toàn bộ encoding:
+
+```text
+48 8B 43 08
+```
+
+Được giải mã thành:
+
+```asm
+mov rax, QWORD PTR [rbx + 8]
+```
+
+Có thể tóm tắt quy trình decode tổng quát như sau:
+
+```
+Machine-code bytes
+        │
+        ▼
+Xác định chế độ giải mã
+và các prefix
+        │
+        ▼
+Xác định opcode / encoding form
+        │
+        ▼
+Giải mã ModR/M nếu có
+        │
+        ▼
+Giải mã SIB nếu được yêu cầu
+        │
+        ▼
+Xác định displacement và immediate
+theo encoding form
+        │
+        ▼
+Xác định ranh giới instruction
+và assembly representation
+```
+
+Đây là mô hình khái quát để học và phân tích instruction encoding. Trên thực tế, thứ tự và sự hiện diện của các trường phụ thuộc vào encoding form cụ thể. Với các định dạng như VEX và EVEX, việc giải mã còn cần diễn giải những trường riêng của định dạng đó.
+
+**Điểm quan trọng:** không thể xác định chắc chắn ý nghĩa của một byte chỉ bằng giá trị của nó. Cần xét byte đó trong ngữ cảnh của toàn bộ instruction encoding và ISA.
+
+### 8.3. Những gì cần nhớ
+
+Sau khi hoàn thành chương này, có một số kiến thức quan trọng cần ghi nhớ.
+
+#### 8.3.1. Machine Code và Assembly
+
+- Assembly là cách biểu diễn instruction bằng mnemonic và toán hạng để con người đọc được.
+- Machine code là các byte mã hóa instruction theo ISA cụ thể.
+- Disassembler phân tích machine code và tạo ra assembly representation.
+- Một instruction có thể có nhiều encoding hợp lệ, tùy theo toán hạng và encoding form.
+- Không phải mọi byte nằm trong vùng mã đều chắc chắn là instruction; cần phân biệt code, data, padding và các vùng khác.
+
+#### 8.3.2. Instruction Encoding
+
+- Opcode hoặc opcode encoding form xác định operation và cấu trúc mã hóa của instruction.
+- Prefix có thể thay đổi cách diễn giải instruction hoặc mở rộng khả năng mã hóa.
+- REX có cấu trúc bit `0100WRXB`, nhưng không phải mọi nhóm prefix đều dùng cấu trúc bit giống REX.
+- Register encoding có thể nằm trong opcode, ModR/M hoặc những trường khác tùy encoding form.
+- ModR/M gồm ba trường `mod`, `reg` và `r/m`.
+- SIB gồm ba trường `scale`, `index` và `base`.
+- Immediate là giá trị được mã hóa trực tiếp trong instruction.
+- Displacement là độ lệch được sử dụng để tính địa chỉ hiệu dụng.
+- Instruction length phụ thuộc vào encoding cụ thể và không vượt quá 15 byte trong x86-64.
+
+#### 8.3.3. Object Code và ELF
+
+Một chương trình thực thi không chỉ gồm machine code. Trên Linux, ELF còn có các cấu trúc phục vụ việc liên kết, nạp và thực thi chương trình.
+
+Cần phân biệt:
+
+| Thành phần | Vai trò |
+|:-|:-|
+| `.text` | Section thường chứa mã máy |
+| `.data` | Section thường chứa dữ liệu đã khởi tạo có thể ghi |
+| `.rodata` | Section thường chứa dữ liệu chỉ đọc |
+| Symbol Table | Lưu thông tin về symbol như hàm, biến và các định danh liên quan |
+| Relocation | Mô tả những vị trí cần được điều chỉnh theo quy tắc liên kết |
+| Section Headers | Mô tả các section trong ELF |
+| Program Headers | Mô tả các segment phục vụ việc nạp chương trình |
+| Entry Point | Địa chỉ bắt đầu thực thi được khai báo trong ELF |
+
+Cần nhớ rằng section và segment không phải cùng một khái niệm. Linker làm việc với object file để giải quyết symbol, xử lý relocation và tạo đầu ra liên kết. Khi thực thi, hệ điều hành chủ yếu dựa vào program headers để xác định các segment cần nạp.
+
+#### 8.3.4. Từ Source Code đến CPU Execution
+
+Quy trình tổng quát có thể được biểu diễn như sau:
+
+```
+C source
+   │
+   ▼
+Preprocessing
+   │
+   ▼
+Compilation
+   │
+   ▼
+Assembly
+   │
+   ▼
+Object File (.o)
+   │
+   ▼
+Linking
+   │
+   ▼
+ELF Executable
+   │
+   ▼
+OS Loader
+   │
+   ▼
+Virtual Address Space
+   │
+   ▼
+CPU Fetch → Decode → Execute
+```
+
+Đây là mô hình khái quát. Với chương trình C, compilation có thể tạo assembly trước khi assembler chuyển nó thành object file; với assembly viết trực tiếp, ta có thể bắt đầu từ assembler. Các thư viện động và relocation động còn có thể cần xử lý trong quá trình nạp hoặc liên kết động.
+
+Một điểm đặc biệt quan trọng là CPU thực thi instruction bytes trong bộ nhớ, không thực thi trực tiếp văn bản assembly hay đọc nguyên file ELF như một chuỗi instruction liên tục.
+
+#### 8.3.5. Lập trình Byte Program
+
+Lập trình byte program là việc tự xây dựng hoặc tích hợp machine-code bytes dựa trên hiểu biết về instruction encoding, sau đó tổ chức chúng theo cách phù hợp để kiểm tra hoặc thực thi.
+
+Có thể dùng những công cụ sau:
+
+| Công cụ | Mục đích |
+|:-|:-|
+| `NASM` | Assemble assembly hoặc khai báo byte trực tiếp bằng `db` |
+| `GCC` | Biên dịch chương trình C |
+| `ld` | Link object file thành executable |
+| `objdump` | Disassemble và kiểm tra mã máy |
+| `readelf` | Kiểm tra cấu trúc ELF |
+| `xxd` | Quan sát byte hoặc chuyển đổi hex dump thành dữ liệu nhị phân |
+| `GDB` | Debug chương trình và quan sát instruction khi thực thi |
+
+Nếu khai báo machine code trong mảng `uint8_t` của C, các byte ban đầu chỉ là dữ liệu. Muốn CPU thực thi chúng như instruction, chương trình phải chuyển luồng thực thi tới vùng nhớ chứa các byte đó, đồng thời đáp ứng các yêu cầu về quyền bộ nhớ, ABI và môi trường thực thi.
+
+Nếu dùng NASM với directive `db`, assembler sẽ ghi các byte được chỉ định vào output. Sau đó có thể link object file thành ELF executable, miễn là chương trình có cấu trúc và các thành phần cần thiết để thực thi.
+
+Cần phân biệt rõ:
+
+- **Machine-code bytes:** các byte biểu diễn instruction.
+- **Raw binary:** file chứa dữ liệu nhị phân nhưng không nhất thiết có cấu trúc executable.
+- **Object file:** file chứa mã máy cùng metadata phục vụ liên kết.
+- **ELF executable:** file có cấu trúc phục vụ việc nạp và thực thi chương trình.
+
+Cuối cùng, cần kiểm chứng chương trình ở nhiều mức khác nhau: encoding có đúng không, ELF có cấu trúc phù hợp không và hành vi thực thi có đúng như dự kiến không.
+
+---
+
+**Tổng kết lại:** Program Encoding giúp chúng ta hiểu mối liên hệ giữa assembly representation, machine-code bytes và cách CPU diễn giải instruction theo ISA. Khi nắm được prefix, opcode, ModR/M, SIB, displacement, immediate và instruction length, chúng ta có thể chủ động phân tích encoding thay vì chỉ phụ thuộc vào kết quả disassembly. Khi kết hợp kiến thức này với ELF, symbol, relocation và linker, chúng ta có thể hiểu sâu hơn quá trình biến các byte mã máy thành một chương trình có thể thực thi trên hệ thống.
