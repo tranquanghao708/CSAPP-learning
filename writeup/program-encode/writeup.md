@@ -61,9 +61,9 @@
   - [6.4. Symbol và Symbol Table](#64-symbol-và-symbol-table)
   - [6.5. Từ Object File đến Executable](#65-từ-object-file-đến-executable)
 
-- [7. Lập trình byte program]
-  - [lập trình tích hợp byte program trên file định dạng C]
-  - [lập trình tích hợ byte program trên file định dạng hợp ngữ]
+- [7. Lập trình byte program](#7-lập-trình-byte-program)
+  - [7.1. lập trình tích hợp byte program trên file định dạng C](#71-lập-trình-tích-hợp-byte-program-trên-file-định-dạng-c)
+  - [7.2. lập trình tích hợp byte program trên file định dạng hợp ngữ](#72-lập-trình-tích-hợp-byte-program-trên-file-định-dạng-hợp-ngữ)
 - [10. Tổng kết](#10-tổng-kết)
   - [10.1. Instruction được encode như thế nào?](#101-instruction-được-encode-như-thế-nào)
   - [10.2. Quy trình Decode một Instruction](#102-quy-trình-decode-một-instruction)
@@ -1979,8 +1979,10 @@ kết quả đúng là `exit(0)`.
 
 > [!NOTE]
 > Phân biệt ba khái niệm
-> - Symbol resolution: xác định symbol nào đáp ứng tham chiếu đang cần giải quyết.
-> - Relocation: tính và áp dụng giá trị cần thiết tại vị trí được đánh dấu.
-> - Linking: toàn bộ quá trình kết hợp object file, giải quyết symbol, xử lý relocation và tạo đầu ra liên kết.
+> - **Symbol resolution:** xác định symbol nào đáp ứng tham chiếu đang cần giải quyết.
+> - **Relocation:** tính và áp dụng giá trị cần thiết tại vị trí được đánh dấu.
+> - **Linking:** toàn bộ quá trình kết hợp object file, giải quyết symbol, xử lý relocation và tạo đầu ra liên kết.
 >
 > **Nói ngắn gọn:** Symbol cho linker biết cần tìm cái gì; relocation cho linker biết cần sửa ở đâu và theo cách nào; linker dùng cả hai để tạo executable.
+
+## 7. Lập trình byte program
