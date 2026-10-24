@@ -2041,7 +2041,7 @@ int main(void){
 kết quả như sau :
 
 <p align="center">
-  <img src="image/image23.png" alt="kết quả byte instruction">
+  <img src="image/image24.png" alt="kết quả byte instruction">
 </p>
 
 thực chất đây là chương trình thực hiện phép cộng thông thường thôi, nhưng với cái này chỉ phục vụ cho việc minh họa, ví dụ để có thể dễ dàng hiểu rõ hơn
