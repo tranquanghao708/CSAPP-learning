@@ -1284,7 +1284,12 @@ Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liê
 
   </div>
 
-  Lệnh được giải mã thành `mov eax, DWORD PTR fs:[ebx]`. Trong chế độ 32-bit, địa chỉ tuyến tính được hình thành từ địa chỉ hiệu dụng cộng với segment base, theo cơ chế phân đoạn đang được thiết lập.
+  Lệnh được giải mã thành `mov eax, DWORD PTR fs:[ebx]`. Trong chế độ 32-bit, địa chỉ tuyến tính được hình thành từ địa chỉ hiệu dụng cộng với segment base, theo cơ chế phân đoạn đang được thiết lập. Trong chế độ 64-bit, kiến trúc đơn giản hóa phần lớn cơ chế phân đoạn đối với các địa chỉ thông thường. Cụ thể:
+  - `CS`, `DS`, `ES` và `SS` thường có segment base bằng 0 trong chế độ 64-bit.
+  - Các segment override tương ứng thường không làm thay đổi địa chỉ tuyến tính của những truy cập bộ nhớ thông thường.
+  - `FS` và `GS` vẫn có thể có segment base khác 0.
+  - Vì vậy, `FS` và `GS` có thể làm thay đổi địa chỉ bộ nhớ thực tế được truy cập.
+Với các truy cập bộ nhớ thông thường, có thể mô hình hóa địa chỉ tuyến tính trong chế độ 64-bit như sau `Linear Address = Effective Address} + Segment Base`. Trong đó, `FS` và `GS` có thể đóng góp một segment base khác 0.
 
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
