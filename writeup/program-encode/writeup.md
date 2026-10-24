@@ -1986,3 +1986,28 @@ kết quả đúng là `exit(0)`.
 > **Nói ngắn gọn:** Symbol cho linker biết cần tìm cái gì; relocation cho linker biết cần sửa ở đâu và theo cách nào; linker dùng cả hai để tạo executable.
 
 ## 7. Lập trình byte program
+
+Lập trình byte program là việc tận dụng các kiến thức về instruction encode như prefix, opcode, modR/M, sib, Displacement v..v.. để tạo nên một chương trình thực thi hoàn chỉnh. Chúng ta có thể tận dụng các trình như `nasm`, `gcc` chẳng hạn để biên dịch chúng
+
+### 7.1. lập trình tích hợp byte program trên file định dạng C
+
+### 7.2. lập trình tích hợp byte program trên file định dạng hợp ngữ
+
+Phần này, chúng ta dùng hợp ngữ để tích hợp các byte instruction vào, điển hình với lệnh `db` nghĩa là nó yêu cầu `nasm` ko làm gì, chỉ thấy gì ở trong lệnh thì chèn nguyên bản hết vào file thực thi, ko thêm bớt gì. **Ví dụ:**
+
+```asm
+section .text
+	global _start
+_start:
+	db 0xB9, 0x3c, 0x00, 0x00, 0x00 ; mov ecx, 60
+	db 0x89, 0xc8 ; mov eax, ecx
+	db 0x0f, 0x05 ; syscall
+```
+
+Kết quả như sau:
+
+<p align="center">
+  <img src="image/image23.png" alt="kết quả byte instruction">
+</p>
+
+ta thấy, nó chèn trực tiếp các byte code ở trong mã nguồn mà chúng ta code sang tệp nhị phân và khi link lại với `ld` thì thành chương trình thực thi, khi chạy nó vẫn y nguyên cơ chế, hành vi để thực hiện như ý tưởng dự tính của chúng ta. Với `objdump` thì ra kết quả sang hợp ngữ đúng những gì chúng ta ghi chú trong mã nguồn chỉ khác là đầu ra của nó là hợp ngữ dạng `at&t` thay vì `intel`
