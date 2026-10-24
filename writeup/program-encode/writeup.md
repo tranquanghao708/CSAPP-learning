@@ -1289,7 +1289,30 @@ Tóm lại, `F0` (LOCK) liên quan đến atomicity, `F2`/`F3` (REP-family) liê
   - Các segment override tương ứng thường không làm thay đổi địa chỉ tuyến tính của những truy cập bộ nhớ thông thường.
   - `FS` và `GS` vẫn có thể có segment base khác 0.
   - Vì vậy, `FS` và `GS` có thể làm thay đổi địa chỉ bộ nhớ thực tế được truy cập.
-Với các truy cập bộ nhớ thông thường, có thể mô hình hóa địa chỉ tuyến tính trong chế độ 64-bit như sau `Linear Address = Effective Address} + Segment Base`. Trong đó, `FS` và `GS` có thể đóng góp một segment base khác 0.
+Với các truy cập bộ nhớ thông thường, có thể mô hình hóa địa chỉ tuyến tính trong chế độ 64-bit như sau `Linear Address = Effective Address + Segment Base`. Trong đó, `FS` và `GS` có thể đóng góp một segment base khác 0.
+
+  **Ví dụ:** FS trong mã máy x86-64, `mov eax, DWORD PTR fs:[rax]` lệnh này có encoding `64 8B 00`. Phân tích, `64` là FS segment override, `8B` là `MOV r32, r/m32`, `00` là ModR/M trong đó ModR/M `00` có `mod=00, reg=000, r/m=000` (tất cả đều là `0` theo byte của nó). Trong chế độ 64-bit với address size mặc định, trường `r/m=000` chỉ địa chỉ dựa trên RAX.
+
+  Vì có prefix FS, CPU truy cập địa chỉ dựa trên `Linear Address = RAX + FS.base`. Giả sử:
+
+  ```
+  RAX     = 0x1000
+  FS.base = 0x70000000
+  ```
+
+  Thì ta có `Linear Address = 0x1000 + 0x70000000 = 0x70001000`.Đây là ví dụ minh họa cách tính địa chỉ, giá trị `FS.base` thực tế phụ thuộc cấu hình hệ thống và tiến trình. Từ đây chúng ta có bảng so sánh dưới đây để phân biệt Operand-size override và Address-size override với Segment override khác nhau như thế nào
+
+  <div align="center">
+
+  | Prefix | Ví dụ | Chức năng |
+  |---|---|---|
+  | Operand-size override | `66` | Thay đổi kích thước toán hạng theo quy tắc của instruction |
+  | Address-size override | `67` | Thay đổi kích thước địa chỉ được sử dụng |
+  | Segment override | `64` | Chọn segment `FS` cho truy cập bộ nhớ |
+
+  </div>
+
+  - **Nhóm REX:** cái nhóm này đã được nêu rõ ở phần đầu rồi, có thể xem lại ở phần [3. REX Prefix](#3-rex-prefix). REX là nhóm prefix đặc biệt trong chế độ 64-bit, có giá trị từ `0x40` đến `0x4F`. Nó có cấu trúc `0100WRXB`, tuy nhiên mấy nhóm còn lại như Operand-Size Override, address-size override, Lock, Rep chúng chỉ có các byte riêng lẻ của chúng, chúng ko có cấu trúc `0100WRXB` như rex prefix
 
 ## 4. ModR/M Byte
 ### 4.1. ModR/M là gì?
