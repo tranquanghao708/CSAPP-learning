@@ -1991,6 +1991,61 @@ Lập trình byte program là việc tận dụng các kiến thức về instru
 
 ### 7.1. lập trình tích hợp byte program trên file định dạng C
 
+Ở đây, chúng ta tích hợp byte instruction với C. Nghĩa là, ta code một đoạn C và gắn một đoạn instruction encode và đoạn C đó sẽ thực hiện hành vi để thực thi cấc byte instruction encode. Cho ví dụ:
+
+```c
+#define _GNU_SOURCE
+
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include <sys/mman.h>
+#include <unistd.h>
+
+typedef int (*add_fn)(int, int);
+
+int main(void){
+    const uint8_t code[] = {
+        0x89, 0xF8,  // mov eax, edi
+        0x01, 0xF0,  // add eax, esi
+        0xC3         // ret
+    };
+
+    size_t size = sizeof(code);
+
+    void *mem = mmap(
+        NULL,
+        (size_t) sysconf(_SC_PAGESIZE),
+        PROT_READ | PROT_WRITE | PROT_EXEC,
+        MAP_PRIVATE | MAP_ANONYMOUS,
+        -1,
+        0
+    );
+
+    if (mem == MAP_FAILED) {
+        perror("mmap");
+        return 1;
+    }
+
+    memcpy(mem, code, size);
+    add_fn add = (add_fn) mem;
+    int result = add(10, 20);
+
+    printf("10 + 20 = %d\n", result);
+
+    munmap(mem, (size_t) sysconf(_SC_PAGESIZE));
+    return 0;
+}
+```
+
+kết quả như sau :
+
+<p align="center">
+  <img src="image/image23.png" alt="kết quả byte instruction">
+</p>
+
+thực chất đây là chương trình thực hiện phép cộng thông thường thôi, nhưng với cái này chỉ phục vụ cho việc minh họa, ví dụ để có thể dễ dàng hiểu rõ hơn
+
 ### 7.2. lập trình tích hợp byte program trên file định dạng hợp ngữ
 
 Phần này, chúng ta dùng hợp ngữ để tích hợp các byte instruction vào, điển hình với lệnh `db` nghĩa là nó yêu cầu `nasm` ko làm gì, chỉ thấy gì ở trong lệnh thì chèn nguyên bản hết vào file thực thi, ko thêm bớt gì. **Ví dụ:**
