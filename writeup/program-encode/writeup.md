@@ -66,9 +66,9 @@
   - [7.1. lập trình tích hợp byte program trên file định dạng C](#71-lập-trình-tích-hợp-byte-program-trên-file-định-dạng-c)
   - [7.2. lập trình tích hợp byte program trên file định dạng hợp ngữ](#72-lập-trình-tích-hợp-byte-program-trên-file-định-dạng-hợp-ngữ)
 - [8. Tổng kết](#10-tổng-kết)
-  - [8.1. Instruction được encode như thế nào?](#101-instruction-được-encode-như-thế-nào)
-  - [8.2. Quy trình Decode một Instruction](#102-quy-trình-decode-một-instruction)
-  - [8.3. Những gì cần nhớ](#103-những-gì-cần-nhớ)
+  - [8.1. Instruction được encode như thế nào?](#81-instruction-được-encode-như-thế-nào)
+  - [8.2. Quy trình Decode một Instruction](#82-quy-trình-decode-một-instruction)
+  - [8.3. Những gì cần nhớ](#83-những-gì-cần-nhớ)
 
 </td>
 </tr>
@@ -306,6 +306,21 @@ Nó sẽ đọc các byte trong bộ nhớ ảo (vmem) vào hệ thống CPU, k�
 
 ---
 
+CPU cần fetch vì instruction bytes trong memory chỉ là dữ liệu được lưu trữ, CPU phải lấy chúng vào quá trình xử lý thì mới có thể decode và execute instruction. Có thể hiểu theo trình tự sau:
+- **1.Fetch:** Lấy instruction bytes từ memory dựa trên địa chỉ thực thi hiện tại.
+- **2.Decode:** Giải mã các byte để xác định instruction, toán hạng và cách thực thi.
+- **3.Execute:** Thực hiện thao tác mà instruction yêu cầu.
+Ví dụ với instruction `mov eax, 0x3c`, machine code tương ứng `B8 3C 00 00 00`. Giả sử instruction bắt đầu tại địa chỉ `0x401000`.
+- **Trước fetch:** Các byte `B8 3C 00 00 00` nằm trong memory. CPU chưa thể thực thi instruction này nếu chưa lấy và xử lý mã lệnh tương ứng.
+- **Fetch:** CPU lấy instruction bytes từ hệ thống bộ nhớ vào pipeline xử lý instruction.
+- **Decode:** CPU xác định `B8` là opcode của dạng `MOV r32, imm32` và các byte tiếp theo biểu diễn immediate `0x0000003C`.
+- **Execute:** CPU ghi giá trị `0x3C` vào thanh ghi `EAX`.
+
+- **Vì sao CPU không execute trực tiếp từ memory?:** Vì memory lưu trữ instruction bytes, còn CPU có các bộ phận chuyên trách để giải mã và thực thi chúng. CPU không coi một dãy byte bất kỳ là một thao tác đã được thực hiện. Ngoài ra, instruction có độ dài thay đổi trên x86-64, từ 1 đến 15 byte. CPU phải xác định ranh giới instruction khi giải mã, không thể mặc định rằng mỗi instruction luôn tương ứng với 4 byte hay 8 byte.
+
+- **Một lưu ý về phần cứng hiện đại:** fetch không nhất thiết là một lần đọc memory đúng bằng độ dài của một instruction. CPU thường lấy dữ liệu theo các khối, tận dụng instruction cache và các cơ chế dự đoán, sau đó cung cấp instruction bytes cho bộ giải mã.
+
+**Tóm lại:** Fetch đưa instruction bytes vào luồng xử lý của CPU, decode xác định ý nghĩa của chúng, execute thực hiện thao tác tương ứng. Ba bước này là mô hình khái niệm hữu ích để hiểu quá trình thực thi, dù CPU hiện đại có thể xử lý nhiều instruction đồng thời ở các giai đoạn khác nhau.
 
 <sub>--đã hết phần giải thích--</sub>
 
