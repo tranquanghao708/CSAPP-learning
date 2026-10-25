@@ -310,7 +310,9 @@ CPU cần fetch vì instruction bytes trong memory chỉ là dữ liệu đượ
 - **1.Fetch:** Lấy instruction bytes từ memory dựa trên địa chỉ thực thi hiện tại.
 - **2.Decode:** Giải mã các byte để xác định instruction, toán hạng và cách thực thi.
 - **3.Execute:** Thực hiện thao tác mà instruction yêu cầu.
+
 Ví dụ với instruction `mov eax, 0x3c`, machine code tương ứng `B8 3C 00 00 00`. Giả sử instruction bắt đầu tại địa chỉ `0x401000`.
+
 - **Trước fetch:** Các byte `B8 3C 00 00 00` nằm trong memory. CPU chưa thể thực thi instruction này nếu chưa lấy và xử lý mã lệnh tương ứng.
 - **Fetch:** CPU lấy instruction bytes từ hệ thống bộ nhớ vào pipeline xử lý instruction.
 - **Decode:** CPU xác định `B8` là opcode của dạng `MOV r32, imm32` và các byte tiếp theo biểu diễn immediate `0x0000003C`.
