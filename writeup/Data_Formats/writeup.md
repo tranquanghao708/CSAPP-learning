@@ -99,3 +99,40 @@
 </table>
 
 ---
+
+## 1. Tổng quan về Data Formats
+### 1.1. Data Formats là gì?
+
+Data Formats (định dạng dữ liệu) là cách xác định dữ liệu được biểu diễn và lưu trữ như thế nào trong máy tính, đặc biệt là về kích thước (bit-width), kiểu dữ liệu và cách CPU diễn giải dữ liệu đó. Ở mức máy tính, CPU không trực tiếp hiểu các khái niệm như int, char, float hay double theo cách lập trình viên nhìn thấy. CPU xử lý các bit nhị phân. Vì vậy, để thao tác chính xác, chương trình và kiến trúc CPU phải xác định dữ liệu có kích thước bao nhiêu và được diễn giải theo dạng nào.
+
+Ví dụ xét cùng một giá trị như :
+
+```c
+int a = 10;
+long b = 10;
+```
+
+Trên Linux x86-64 sử dụng mô hình dữ liệu LP64:
+
+<div align="center">
+
+| Kiểu dữ liệu | Kích thước | Bit |
+| char	| 1 byte | 8 bit |
+| short	| 2 byte | 16 bit |
+| int	| 4 byte | 32 bit |
+| long	| 8 byte | 64 bit |
+| float	| 4 byte | 32 bit |
+| double |	8 byte | 64 bit |
+
+</div>
+
+Mặc dù `a` và `b` cùng mang giá trị `10`, chúng có kích thước lưu trữ khác nhau. Điều này ảnh hưởng đến cách trình biên dịch sinh mã máy và cách CPU thực hiện các thao tác trên dữ liệu. Trong kiến trúc x86-64, kích thước toán hạng thường được thể hiện thông qua các hậu tố của lệnh AT&T:
+
+```asm
+movb $10, %al     # 8-bit
+movw $10, %ax     # 16-bit
+movl $10, %eax    # 32-bit
+movq $10, %rax    # 64-bit
+```
+
+Các hậu tố `b`, `w`, `l`, `q` lần lượt biểu thị kích thước `8`, `16`, `32` và `64` bit.
