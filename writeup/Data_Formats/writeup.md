@@ -117,6 +117,7 @@ Trên Linux x86-64 sử dụng mô hình dữ liệu LP64:
 <div align="center">
 
 | Kiểu dữ liệu | Kích thước | Bit |
+|-|-|-|
 | char	| 1 byte | 8 bit |
 | short	| 2 byte | 16 bit |
 | int	| 4 byte | 32 bit |
