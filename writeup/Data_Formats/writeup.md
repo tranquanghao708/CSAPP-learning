@@ -158,4 +158,11 @@ Mặc dù các lệnh trên đều đưa giá trị 10 vào thanh ghi, kích th�
 - `movw`: 16 bit.
 - `movl`: 32 bit.
 - `movq`: 64 bit.
+
 Nếu không xác định đúng kích thước toán hạng, chương trình có thể đọc hoặc ghi dữ liệu không đúng với mục đích ban đầu.
+
+Kế tiếp là xác định cách diễn giải dữ liệu (Data Interpretation). Một chuỗi bit không tự mang ý nghĩa duy nhất. Cách diễn giải phụ thuộc vào định dạng dữ liệu và thao tác mà chương trình thực hiện
+
+> Điều này cũng đã được đề cập nhiều ở chương [Two-Complement-Code](https://github.com/tranquanghao708/CSAPP-learning/blob/main/writeup/two-complement-code/two-complement-code.md)
+
+Ví dụ, cùng một mẫu bit 8-bit chẳng hạn như `11111111`
