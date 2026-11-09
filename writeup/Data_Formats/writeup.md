@@ -167,10 +167,14 @@ Kế tiếp là xác định cách diễn giải dữ liệu (Data Interpretatio
 
 Ví dụ, cùng một mẫu bit 8-bit chẳng hạn như `11111111` Có thể được diễn giải thành:
 
+<div align="center">
+
 | Kiểu diễn giải |	Giá trị |
 |:-|:-:|
 | Unsigned integer	| 255 |
 | Signed integer (Two's Complement) |	-1 |
+
+</div>
 
 Điều này đặc biệt quan trọng trong Machine-Level Programming vì CPU có những lệnh và điều kiện xử lý khác nhau tùy theo việc dữ liệu được xem là số nguyên có dấu hay không dấu. Ví dụ:
 
@@ -182,3 +186,7 @@ movzx eax, al    ; Zero extension
 Hai lệnh trên đều mở rộng dữ liệu 8-bit lên 32-bit, nhưng cách mở rộng khác nhau:
 - `movsx`: bảo toàn ý nghĩa số có dấu.
 - `movzx`: mở rộng bằng cách thêm các bit 0 ở phía trên.
+
+### 1.3. Mối quan hệ giữa C Data Types và Machine-Level Data Formats
+
+Trong ngôn ngữ C, Data Types (kiểu dữ liệu) xác định cách chương trình khai báo, lưu trữ và thao tác với dữ liệu. Khi chương trình được biên dịch, trình biên dịch phải chuyển những kiểu dữ liệu này thành các dạng dữ liệu và thao tác tương ứng với kiến trúc máy đích. Đây chính là mối quan hệ giữa C Data Types và Machine-Level Data Formats: kiểu dữ liệu C cung cấp ngữ nghĩa ở cấp độ ngôn ngữ lập trình, còn Machine-Level Data Formats thể hiện cách dữ liệu được biểu diễn và thao tác ở cấp độ máy.
