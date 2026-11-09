@@ -137,3 +137,25 @@ movq $10, %rax    # 64-bit
 ```
 
 Các hậu tố `b`, `w`, `l`, `q` lần lượt biểu thị kích thước `8`, `16`, `32` và `64` bit.
+
+### 1.2. Vai trò của Data Formats trong Machine-Level Programming
+
+Trong Machine-Level Programming, Data Formats đóng vai trò xác định CPU sẽ thao tác với dữ liệu theo kích thước nào và dữ liệu đó được diễn giải ra sao trong quá trình thực thi lệnh máy.
+
+Ở cấp độ ngôn ngữ C, lập trình viên có thể khai báo các kiểu dữ liệu như int, long, float hoặc double. Tuy nhiên, khi chương trình được biên dịch thành mã máy, những kiểu dữ liệu này phải được chuyển thành các dạng toán hạng cụ thể mà kiến trúc CPU hỗ trợ. Data Formats giúp kết nối giữa kiểu dữ liệu ở cấp độ ngôn ngữ lập trình và cách CPU xử lý dữ liệu ở cấp độ máy.
+
+Đầu tiên ta nói đến là xác định kích thước toán hạng. Data Formats xác định số bit mà một lệnh máy sẽ đọc, ghi hoặc xử lý. Ví dụ:
+
+```asm
+movb $10, %al
+movw $10, %ax
+movl $10, %eax
+movq $10, %rax
+```
+
+Mặc dù các lệnh trên đều đưa giá trị 10 vào thanh ghi, kích thước toán hạng của chúng khác nhau:
+- `movb`: 8 bit.
+- `movw`: 16 bit.
+- `movl`: 32 bit.
+- `movq`: 64 bit.
+Nếu không xác định đúng kích thước toán hạng, chương trình có thể đọc hoặc ghi dữ liệu không đúng với mục đích ban đầu.
