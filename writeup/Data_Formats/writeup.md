@@ -165,4 +165,20 @@ Kế tiếp là xác định cách diễn giải dữ liệu (Data Interpretatio
 
 > Điều này cũng đã được đề cập nhiều ở chương [Two-Complement-Code](https://github.com/tranquanghao708/CSAPP-learning/blob/main/writeup/two-complement-code/two-complement-code.md)
 
-Ví dụ, cùng một mẫu bit 8-bit chẳng hạn như `11111111`
+Ví dụ, cùng một mẫu bit 8-bit chẳng hạn như `11111111` Có thể được diễn giải thành:
+
+| Kiểu diễn giải |	Giá trị |
+|:-|:-:|
+| Unsigned integer	| 255 |
+| Signed integer (Two's Complement) |	-1 |
+
+Điều này đặc biệt quan trọng trong Machine-Level Programming vì CPU có những lệnh và điều kiện xử lý khác nhau tùy theo việc dữ liệu được xem là số nguyên có dấu hay không dấu. Ví dụ:
+
+```asm
+movsx eax, al    ; Sign extension
+movzx eax, al    ; Zero extension
+```
+
+Hai lệnh trên đều mở rộng dữ liệu 8-bit lên 32-bit, nhưng cách mở rộng khác nhau:
+- `movsx`: bảo toàn ý nghĩa số có dấu.
+- `movzx`: mở rộng bằng cách thêm các bit 0 ở phía trên.
