@@ -190,3 +190,23 @@ Hai lệnh trên đều mở rộng dữ liệu 8-bit lên 32-bit, nhưng cách 
 ### 1.3. Mối quan hệ giữa C Data Types và Machine-Level Data Formats
 
 Trong ngôn ngữ C, Data Types (kiểu dữ liệu) xác định cách chương trình khai báo, lưu trữ và thao tác với dữ liệu. Khi chương trình được biên dịch, trình biên dịch phải chuyển những kiểu dữ liệu này thành các dạng dữ liệu và thao tác tương ứng với kiến trúc máy đích. Đây chính là mối quan hệ giữa C Data Types và Machine-Level Data Formats: kiểu dữ liệu C cung cấp ngữ nghĩa ở cấp độ ngôn ngữ lập trình, còn Machine-Level Data Formats thể hiện cách dữ liệu được biểu diễn và thao tác ở cấp độ máy.
+
+Đầu tiên là C data types, kiểu dữ liệu ở cấp độ ngôn ngữ C. C cung cấp nhiều kiểu dữ liệu khác nhau để lập trình viên biểu diễn thông tin:
+
+```c
+char a = 10;
+short b = 20;
+int c = 30;
+long d = 40;
+
+float e = 1.5f;
+double f = 2.5;
+```
+
+Mỗi kiểu dữ liệu có những đặc điểm riêng:
+- Kích thước lưu trữ.
+- Phạm vi giá trị có thể biểu diễn.
+- Cách diễn giải dữ liệu.
+- Những phép toán được phép thực hiện.
+
+Tuy nhiên, kích thước của một số kiểu dữ liệu phụ thuộc vào ABI và nền tảng biên dịch. Vì vậy, không thể mặc định rằng long luôn có kích thước 64-bit trên mọi hệ thống.
