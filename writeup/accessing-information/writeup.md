@@ -8,6 +8,10 @@
 
 [1. Machine-Level Programming: Accessing Information](#1-machine-level-programming-accessing-information)
   - [1.1. Introduction to Accessing Information](#11-introduction-to-accessing-information)
+    - [1.1.1. Accessing Information là gì?]()
+    - [1.1.2. Vai trò của Accessing Information trong Machine-Level Programming](112-vai-trò-của-accessing-information-trong-machine-level-programming)
+    - [1.1.3. Accessing Information trong quá trình thực thi chương trình](#113-accessing-information-trong-quá-trình-thực-thi-chương-trình)
+    - [1.1.4. Các thành phần liên quan đến Accessing Information](#114-các-thành-phần-liên-quan-đến-accessing-information)
   - [1.2. General-Purpose Registers](#12-general-purpose-registers)
   - [1.3. Register Naming Conventions](#13-register-naming-conventions)
   - [1.4. Data Movement Instructions](#14-data-movement-instructions)
@@ -88,7 +92,7 @@
 4. **Operand Selection - Выбор операндов:** Xác định toán hạng mà một lệnh Assembly sẽ sử dụng.
 5. **Stack Access - Доступ к стеку:** Truy cập dữ liệu trên ngăn xếp trong quá trình thực thi chương trình.
 
-## 1.1.3. Accessing Information trong quá trình thực thi chương trình
+#### 1.1.3. Accessing Information trong quá trình thực thi chương trình
 
 Xét đoạn chương trình C:
 
@@ -117,7 +121,9 @@ Quá trình thực hiện:
 
 Sau khi thực hiện, `EAX` chứa giá trị `30`. Ví dụ này cho thấy CPU có thể truy cập và thao tác với dữ liệu trực tiếp thông qua các thanh ghi mà không cần truy cập RAM cho từng phép toán.
 
-## 1.1.4. Các thành phần liên quan đến Accessing Information
+#### 1.1.4. Các thành phần liên quan đến Accessing Information
+
+<div align="center">
 
 | Thành phần | Vai trò |
 |---|---|
@@ -128,15 +134,7 @@ Sau khi thực hiện, `EAX` chứa giá trị `30`. Ví dụ này cho thấy CP
 | Machine Instructions - Машинные инструкции | Xác định thao tác mà CPU thực hiện |
 | Stack - Куча | Lưu trữ dữ liệu phục vụ quá trình thực thi chương trình |
 
-## 1.1.5. Mục tiêu nghiên cứu
-
-Nghiên cứu Accessing Information nhằm hiểu được cách chương trình C được biểu diễn và thực thi ở cấp độ máy, đặc biệt là:
-
-- Cách các thanh ghi x86-64 được tổ chức và sử dụng.
-- Cách lệnh Assembly truy cập các toán hạng.
-- Cách dữ liệu được di chuyển giữa Registers và Memory.
-- Cách CPU tính toán địa chỉ bộ nhớ.
-- Cách Stack được sử dụng trong quá trình thực thi chương trình.
+</div>
 
 ### 1.2. General-Purpose Registers
 ### 1.3. Register Naming Conventions
